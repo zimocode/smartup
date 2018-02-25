@@ -1,0 +1,48 @@
+smartup.su_apps#su_apps_extmgm{
+	
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm{
+	width: 320px;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm li{
+	border: 1px solid #ccf;
+	padding: 0 8px;
+	margin: 1px 0;
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	box-sizing: border-box;
+	border-radius: 3px;	
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: pointer;
+	list-style-type: none;
+	text-align: left;
+	transition:all .4s ease-in-out;
+	background-repeat:no-repeat;
+	background-position: 3px center;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm li:hover{
+	padding-left: 25px;
+	color: #fff;
+	background-color: #5677fc !important;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_enabled{
+	background-color: #fff;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_disabled{
+	background-color: rgba(0,0,0,.3) /* #9e9e9e */;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_disableall{
+	height: 30px !important;
+	line-height: 30px !important;
+	border: 1px solid #777 !important;
+	background: #ccf;
+	text-align: center !important;
+	font-weight: bold;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_disableall:hover{
+	padding-left: 0;
+}

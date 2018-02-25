@@ -1,0 +1,35 @@
+smartup.su_apps#su_apps_base64 .base64box{
+	/*width: 400px;*/
+	margin: 8px;
+}
+smartup.su_apps#su_apps_base64 .base_code,
+smartup.su_apps#su_apps_base64 .base_str{
+	text-align: center;
+}
+smartup.su_apps#su_apps_base64 .base_code{
+	position: absolute;
+	left: -500px;
+	top: 8px;
+	background-color: #fff;
+	padding-bottom: 8px;
+	transition:all .4s ease-in-out;
+}
+smartup.su_apps#su_apps_base64 .base_areastr,
+smartup.su_apps#su_apps_base64 .base_areacode{
+	width: 360px;
+	height: 180px;
+	margin-bottom: 8px;
+	/*margin-bottom: 10px;*/
+}
+smartup.su_apps#su_apps_base64 .su_copyright{
+	font-size: 12px;
+	color: #777;
+	border-top: 1px solid #eee;
+	text-align: center;
+	padding-top: 5px;
+	margin-top: 10px;
+}
+smartup.su_apps#su_apps_base64 .su_copyright a{
+	color: #777;
+	text-decoration: none;
+}

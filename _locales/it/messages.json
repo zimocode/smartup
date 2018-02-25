@@ -1,0 +1,1358 @@
+{
+  "ext_des": {
+    "message": "Una migliore gestione delle gestures (movimenti e gesti). Principali funzioni: movimenti del mouse, simple drag, super drag, movimenti del pulsante e della rotellina del mouse."
+  },
+  "ext_name":{
+    "message":"smartUp Gestures"
+  },
+  "ext_desb": {
+    "message": "smartUp aiuta ad usare Firefox in maniera più veloce ed efficiente, attraverso la gestione dei movimenti del mouse e dei link. E' possibile eseguire operazioni come la chiusura di una scheda o di ridurre ad icona o ingrandire la finestra del browser. E' anche possibile eseguire un'altra estensione (con poche modifiche)."
+  },
+  "ext_ver": {
+    "message": "Versione:"
+  },
+  "ext_site": {
+    "message": "Sito web:"
+  },
+  "ext_email": {
+    "message": "Feedback:"
+  },
+  "icon_tip":{
+    "message":"smartUp Gestures can't works perfectly in this tab!"
+  },
+  "opt_title": {
+    "message": "Impostazioni"
+  },
+  "menu_save": {
+    "message": "Salva impostazioni"
+  },
+  "menu_reset": {
+    "message": "Reimposta pagina corrente"
+  },
+  "menu_autosave": {
+    "message": "Salva impostazioni automaticamente"
+  },
+  "menu_popactions":{
+    "message":"Azioni popup:"
+  },
+  "menu_opts":{
+    "message":"Opzioni"
+  },
+  "menu_about":{
+    "message":"Informazioni"
+  },
+  "menuplus_opennew":{
+    "message":"Apri in una nuova scheda"
+  },
+  "menuplus_exit":{
+    "message":"Esci"
+  },
+  "con_name": {
+    "message": "Nome:"
+  },
+  "con_timeout": {
+    "message": "Timeout"
+  },
+  "con_timeout_nomenu":{
+    "message":"Non mostrare menu contestuale"
+  },
+  "con_minlength": {
+    "message": "Lunghezza minima della linea"
+  },
+  "con_icon": {
+    "message": "Mostra icona nella barra indirizzo"
+  },
+  "con_autosave": {
+    "message": "Salva impostazioni automaticamente"
+  },
+  "con_notif": {
+    "message": "Mostra notifica aggiornamenti"
+  },
+  "con_miniappnotif":{
+    "message": "Mostra notifica da mini-apps"
+  },
+  "con_linux": {
+    "message": "Correggi bug menu contestuale Linux/Mac (doppio clic pulsante destro per mostrare menu contestuale)"
+  },
+  "con_mgesmode": {
+    "message": "Modalità operativa:"
+  },
+  "con_mgesholdkey": {
+    "message": "Tieni premuto questo tasto per disabilitare temporaneamente i movimenti del mouse:"
+  },
+  "con_drgbox": {
+    "message": "Abilita drag nelle caselle di testo"
+  },
+  "con_drgtobox": {
+    "message": "Se il trascinamento avviene verso una casella di testo, cancella l'azione"
+  },
+  "con_drgurl": {
+    "message": "Converti in URL, se il testo lo permette"
+  },
+  "con_drgimg": {
+    "message": "Come immagine, se il link contiene un'immagine"
+  },
+  "con_drgholdkey": {
+    "message": "Tieni premuto questo tasto per disattivare temporaneamente il trascinamento:"
+  },
+  "con_drgholdimgkey": {
+    "message": "Se il link contiene un'immagine, tieni premuto questo tasto per trascinare l'immagine invece del link:"
+  },
+  "con_enabletxt": {
+    "message": "Trascinamento testo"
+  },
+  "con_enablelnk": {
+    "message": "Trascinamento link"
+  },
+  "con_enableimg": {
+    "message": "Trascinamento immagine"
+  },
+  "con_lang":{
+    "message":"Lingua:"
+  },
+  "con_export":{
+    "message":"Clicca qui per esportare la configurazione."
+  },
+  "con_setbg":{
+    "message":"Personalizza immagine di sfondo"
+  },
+  "con_bgnote0":{
+    "message":"Si tratta dell'immagine di sfondo corrente, che è possibile cambiare."
+  },
+  "con_bgnote1":{
+    "message":"questo cambiamento non verrà sincronizzato."
+  },
+  "con_theme":{
+    "message":"Tema per la pagina delle opzioni:"
+  },
+  "con_drgcursor":{
+    "message":"Modifica stile mouse in removibile (non funziona con le impostazioni predefinite di alcuni browsers)"
+  },
+  "con_notename":{
+    "message":"Nota per questa azione:"
+  },
+  "con_notechk":{
+    "message":"mostra nota nella scheda."
+  },
+  "con_autosync":{
+    "message":"Configurazione sincronizzazione automatica"
+  },
+  "con_esc":{
+    "message":"Premi [ESC] per cancellare l'operazione corrente"
+  },
+  "con_background":{
+    "message":"Imposta l'esecuzione di Chrome sempre in background, smartUp funzionerà meglio (richiede autorizzazione 'background')"
+  },
+  "con_draggable":{
+    "message":"Disattiva il trascinamento, quando l'elemento trascinato è impostato come trascinabile [draggable=true]"
+  },
+  "stnm_per_pers": {
+    "message": "Gestione autorizzazioni"
+  },
+  "stnm_settings": {
+    "message": "Impostazioni"
+  },
+  "stnm_function": {
+    "message": "Funzioni attivate"
+  },
+  "stnm_opts": {
+    "message": "Impostazioni pagina delle opzioni"
+  },
+  "stnm_txtengine": {
+    "message": "Gestione motori di ricerca testo"
+  },
+  "stnm_imgengine": {
+    "message": "Gestione motori di ricerca immagini"
+  },
+  "stnm_script": {
+    "message": "Gestione script"
+  },
+  "stnm_linux": {
+    "message": "Impostazioni Linux/Mac"
+  },
+  "stnm_importconf": {
+    "message": "Importa configurazione"
+  },
+  "stnm_exportconf": {
+    "message": "Esporta configurazione"
+  },
+  "stnm_syncconf":{
+    "message": "Sincronizza configurazione"
+  },
+  "stnm_resetconf": {
+    "message": "Reimposta tutte le opzioni di configurazione"
+  },
+  "stnm_drgsw": {
+    "message": "Trascinamento attivo"
+  },
+  "stnm_resetapps":{
+    "message":"Reimposta tutta la configurazione delle mini-apps"
+  },
+  "stnm_action":{
+    "message":"Modifica azioni"
+    },
+  "des_pers": {
+    "message": "Per ulteriori informazioni, visitare https://developer.chrome.com/extensions/permission_warnings "
+  },
+  "des_pers1":{
+    "message":"E' possibile eliminare qualsiasi autorizzazione in ogni momento, attraverso Impostazioni>Generali>Autorizzazioni"
+  },
+  "des_lang":{
+    "message": "smartUp imposterà la lingua inglese o quella di sistema."
+  },
+  "des_linux": {
+    "message": "Questa opzione è valida solo su piattaforma non-Windows. Doppio clic col tasto destro per mostrare il menu contestuale."
+  },
+  "des_sync": {
+    "message": "La configurazione sarà sincronizzata con il browser, in caso di log-in già effettuato e se il browser supporta la caratteristica."
+  },
+  "des_sync1":{
+    "message":"Se è impossibile connettersi al servizio Google, o se è impossibile salvare la configurazione che si reimposta sempre all'ultima salvata, è possibile tentare di deselezionare questa opzione, esportando la configurazione per salvare le impostazioni."
+  },
+  "des_item": {
+    "message": "Fai clic sull'elemento per modificarlo, fai clic sulla 'X' per eliminarlo, e su '+' per aggiungere un nuovo elemento."
+  },
+  "des_fnswitch": {
+    "message": "Opzione basata su bisogni individuali. Si consiglia di disattivare l'opzione, non comunemente usata."
+  },
+  "des_resetapps":{
+    "message":"Se alcune mini-apps non funzionano, prova a reimpostare la configurazione delle mini-apps. Questa operazione cancellerà le configurazioni di tutte le mini-apps. L'operazione è irreversibile."
+  },
+  "s_default": {
+    "message": "Predefinito"
+  },
+  "s_current": {
+    "message": "Corrente"
+  },
+  "s_others": {
+    "message": "Altro"
+  },
+  "s_all": {
+    "message": "Tutto"
+  },
+  "s_head": {
+    "message": "Intestazione"
+  },
+  "s_last": {
+    "message": "Pie' di pagina"
+  },
+  "s_left": {
+    "message": "Sinistra"
+  },
+  "s_right": {
+    "message": "Destra"
+  },
+  "s_lefts": {
+    "message": "Sinistre"
+  },
+  "s_rights": {
+    "message": "Destre"
+  },
+  "s_up": {
+    "message": "Su"
+  },
+  "s_down": {
+    "message": "Giù"
+  },
+  "s_top": {
+    "message": "In cima"
+  },
+  "s_bottom": {
+    "message": "In fondo"
+  },
+  "s_leftmost": {
+    "message": "Più a sinistra"
+  },
+  "s_rightmost": {
+    "message": "Più a destra"
+  },
+  "s_frame": {
+    "message": "Cornice"
+  },
+  "s_on": {
+    "message": "On"
+  },
+  "s_off": {
+    "message": "Off"
+  },
+  "s_yes": {
+    "message": "Sì"
+  },
+  "s_no": {
+    "message": "No"
+  },
+  "s_new": {
+    "message": "Nuova scheda"
+  },
+  "s_back": {
+    "message": "Nuova scheda (in secondo piano)"
+  },
+  "s_win": {
+    "message": "Nuova finestra"
+  },
+  "s_winback": {
+    "message": "Nuova finestra (in secondo piano)"
+  },
+  "s_incog": {
+    "message": "Anonima"
+  },
+  "s_unpin": {
+    "message": "Sblocca"
+  },
+  "s_pinned": {
+    "message": "Blocca"
+  },
+  "s_normal": {
+    "message": "Normale"
+  },
+  "s_popup": {
+    "message": "Popup"
+  },
+  "s_panel": {
+    "message": "Panello"
+  },
+  "s_detached_panel": {
+    "message": "Pannello staccato"
+  },
+  "s_tabele_title":{
+    "message":"Titolo della scheda"
+  },
+  "s_tabele_url":{
+    "message":"URL della scheda"
+  },
+  "s_tabele_aslnk":{
+    "message":"Come link"
+  },
+  "s_cr_set":{
+    "message":"Impostazioni"
+  },
+  "s_cr_ext":{
+    "message":"Estensioni"
+  },
+  "s_cr_history":{
+    "message":"Cronologia"
+  },
+  "s_cr_app":{
+    "message":"Apps"
+  },
+  "s_cr_dl":{
+    "message":"Download"
+  },
+  "s_cr_bookmark":{
+    "message":"Segnalibri"
+  },
+  "s_cr_flag":{
+    "message":"Flag"
+  },
+  "s_unicode":{
+    "message":"Unicode"
+  },
+  "s_uri":{
+    "message":"encodeURI"
+  },
+  "s_uric":{
+    "message":"encodeURIComponent"
+  },
+  "s_none": {
+    "message": "Nessuno"
+  },
+  "s_ctrl": {
+    "message": "Ctrl"
+  },
+  "s_alt": {
+    "message": "Alt"
+  },
+  "s_shift": {
+    "message": "Maiusc"
+  },
+  "s_mousebutton1": {
+    "message": "Pulsante centrale"
+  },
+  "s_mousebutton2": {
+    "message": "Pulsante destro"
+  },
+  "s_o_follow": {
+    "message": "Segui"
+  },
+  "s_o_center": {
+    "message": "Centra"
+  },
+  "s_o_hover": {
+    "message": "Stile link"
+  },
+  "s_o_ui_bottom": {
+    "message": "In fondo"
+  },
+  "s_in": {
+    "message": "Zoom +"
+  },
+  "s_out": {
+    "message": "Zoom -"
+  },
+  "s_reset": {
+    "message": "Reimposta"
+  },
+  "s_audible":{
+    "message":"Audible tabs"
+  },
+  "n_notif":{
+    "message":"Mostra notifiche per le azioni"
+  },
+  "n_tab":{
+    "message":"Scheda destinazione:"
+  },
+  "n_tab_single":{
+    "message":"Scheda destinazione:"
+  },
+  "n_tab_lrhl":{
+    "message":"Scheda destinazione:"
+  },
+  "n_close": {
+    "message": "Scheda destinazione:"
+  },
+  "n_reload_clear": {
+    "message": "Cancella cache"
+  },
+  "n_close_sel": {
+    "message": "Scheda selezionata:"
+  },
+  "n_close_keep":{
+    "message":"Mantieni aperta la finestra alla chiusura dell'ultima scheda."
+  },
+  "n_closePin":{
+    "message":"Do not close the pinned tab."
+  },
+  "n_closeConfirm":{
+    "message":"Need to confirm, when closing multiple tabs."
+  },
+  "n_closetab":{
+    "message":"Chiudi la scheda dopo aver completato l'azione."
+  },
+  "n_optype": {
+    "message": "Tipo apertura:"
+  },
+  "n_position": {
+    "message": "Posizione:"
+  },
+  "n_position_lrhl":{
+    "message":"Posizione:"
+  },
+  "n_new_position": {
+    "message": "Posizione:"
+  },
+  "n_index":{
+    "message":"Posizione:"
+  },
+  "n_index_new":{
+    "message":"Posizione:"
+  },
+  "n_wintype": {
+    "message": "Tipo finestra:"
+  },
+  "n_winincog": {
+    "message": "Finestra anonima"
+  },
+  "n_win": {
+    "message": "Finestra destinazione:"
+  },
+  "n_effect": {
+    "message": "Con effetti di scorrimento"
+  },
+  "n_pin": {
+    "message": "Blocca la scheda"
+  },
+  "n_content": {
+    "message": "Contenuto:"
+  },
+  "n_encoding":{
+    "message":"Codifica:"
+  },
+  "n_target_np":{
+    "message":"Stile apertura:"
+  },
+  "n_npkey_n":{
+    "message":"Parole chiave:"
+  },
+  "n_npkey_p":{
+    "message":"Parole chiave:"
+  },
+  "n_dlbar":{
+    "message":"Mostra barra download"
+  },
+  "n_crpages":{
+    "message":"Pagine interne:"
+  },
+  "n_copytabele_content":{
+    "message":"Tipo copia:"
+  },
+  "n_script":{
+    "message":"Script:"
+  },
+  "n_jq": {
+    "message": "Inietta JQ"
+  },
+  "n_txtengine": {
+    "message": "Motore di ricerca testo:"
+  },
+  "n_imgengine": {
+    "message": "Motore di ricerca immagine:"
+  },
+  "n_zoom":{
+    "message":"Tipo zoom:"
+  },
+  "n_scroll":{
+    "message":"Tipo scorrimento:"
+  },
+  "n_num":{
+    "message":"Numero:"
+  },
+  "n_closebox":{
+    "message":"Chiudi la finestra dopo aver fatto clic su un elemento della lista."
+  },
+  "n_snap":{
+    "message":"Direzione snap:"
+  },
+  "n_url":{
+    "message":"URL:"
+  },
+  "n_dialog":{
+    "message":"Show dialog box"
+  },
+  "script": {
+    "message": "Script"
+  },
+  "ag_none": {
+    "message": "Nessuno"
+  },
+  "ag_nav": {
+    "message": "Navigazione"
+  },
+  "ag_scroll": {
+    "message": "Scorrimento"
+  },
+  "ag_tab": {
+    "message": "Scheda"
+  },
+  "ag_window": {
+    "message": "Finestra"
+  },
+  "ag_copy": {
+    "message": "Copia"
+  },
+  "ag_txt": {
+    "message": "Testi"
+  },
+  "ag_lnk": {
+    "message": "Link"
+  },
+  "ag_img": {
+    "message": "Immagini"
+  },
+  "ag_others": {
+    "message": "Altro"
+  },
+  "ag_search": {
+    "message": "Ricerca"
+  },
+  "ag_exp":{
+    "message":"Sperimentale"
+  },
+  "ag_chrome":{
+    "message":"Informazioni su Chrome"
+  },
+  "ag_apps":{
+    "message":"Mini APPs"
+  },
+  "ag_su":{
+    "message":"Informazioni su smartUp"
+  },
+  "ag_dep":{
+    "message":"Obsoleto"
+  },
+  "none": {
+    "message": "Nessuno"
+  },
+  "back": {
+    "message": "Indietro"
+  },
+  "forward": {
+    "message": "Avanti"
+  },
+  "stop": {
+    "message": "Stop"
+  },
+  "scroll": {
+    "message": "Scorri"
+  },
+  "next": {
+    "message": "Pagina successiva"
+  },
+  "previous": {
+    "message": "Pagina precedente"
+  },
+  "pretab": {
+    "message": "Passa alla pagine precedente"
+  },
+  "reload": {
+    "message": "Ricarica"
+  },
+  "close": {
+    "message": "Chiudi scheda"
+  },
+  "newtab": {
+    "message": "Nuova scheda"
+  },
+  "reopen": {
+    "message": "Riapri scheda chiusa"
+  },
+  "open": {
+    "message": "Apri URL"
+  },
+  "openclip": {
+    "message": "Apri URL negli appunti"
+  },
+  "duplicate": {
+    "message": "Copia scheda"
+  },
+  "detach": {
+    "message": "Separa scheda"
+  },
+  "pin": {
+    "message": "Blocca scheda"
+  },
+  "switchtab": {
+    "message": "Scambia scheda"
+  },
+  "move": {
+    "message": "Muovi scheda"
+  },
+  "newwin": {
+    "message": "Nuova finestra"
+  },
+  "closewin": {
+    "message": "Chiudi finestra"
+  },
+  "max": {
+    "message": "Ingrandisci"
+  },
+  "min": {
+    "message": "Riduci a icona"
+  },
+  "full": {
+    "message": "Schermo intero"
+  },
+  "copytabas": {
+    "message": "Copia con formato personalizzato"
+  },
+  "capture": {
+    "message": "Screenshot"
+  },
+  "viewsource": {
+    "message": "Visualizza sorgente"
+  },
+  "optionspage": {
+    "message": "Apri pagina opzioni"
+  },
+  "copytxt": {
+    "message": "Copia testi"
+  },
+  "txtsearch": {
+    "message": "Cerca testi"
+  },
+  "txtsearchclip":{
+    "message":"Search Texts from Clipboard"
+  },
+  "openlnk": {
+    "message": "Apri link"
+  },
+  "copylnkurl": {
+    "message": "Copia URL link"
+  },
+  "copylnktxt": {
+    "message": "Copia testo link"
+  },
+  "copylnkaslnk": {
+    "message": "Copia Link"
+  },
+  "copylnkas": {
+    "message": "Copia link con nome..."
+  },
+  "openimg": {
+    "message": "Apri immagine"
+  },
+  "saveimg": {
+    "message": "Salva immagine"
+  },
+  "saveimgas": {
+    "message": "Salva immagine con nome..."
+  },
+  "copyimgurl": {
+    "message": "Copia URL immagine"
+  },
+  "imgsearch": {
+    "message": "Cerca immagine"
+  },
+  "paste": {
+    "message": "Incolla testo"
+  },
+  "source": {
+    "message": "Visualizza sorgente"
+  },
+  "reloadext": {
+    "message": "Ricarica smartUp"
+  },
+  "restart": {
+    "message": "Riavvia Chrome"
+  },
+  "Exit": {
+    "message": "Esci da Chrome"
+  },
+  "copytabele": {
+    "message": "Copia elemento della scheda"
+  },
+  "crpages":{
+    "message":"Pagine interne di Chrome"
+  },
+  "dldir":{
+    "message":"Apri cartella predefinita dei download"
+  },
+  "bookmark":{
+    "message":"Aggiungi segnalibro"
+  },
+  "bookmarklnk":{
+    "message":"Aggiungi segnalibro"
+  },
+  "zoom":{
+    "message":"Zoom"
+  },
+  "zoom_dep":{
+    "message":"Zoom"
+  },
+  "savepage":{
+    "message":"Salva pagina"
+  },
+  "tablist":{
+    "message":"Elenco schede"
+  },
+  "upperlevel":{
+    "message":"Vai al livello superiore"
+  },
+  "increment":{
+    "message":"Increment Number in URL"
+  },
+  "decrement":{
+    "message":"Decrement Number in URL"
+  },
+  "extdisable":{
+    "message":"Disable smartUp in current tab temporarily"
+  },
+  "general": {
+    "message": "Generali"
+  },
+  "recentbk":{
+    "message":"Segnalibri recenti"
+  },
+  "recentht":{
+    "message":"Cronologia recente"
+  },
+  "dllink":{
+    "message":"Save Link"
+  },
+  "savepdf":{
+    "message":"Save as PDF"
+  },
+  "copyimg":{
+    "message":"Copy Image"
+  },
+  "set_bk":{
+    "message":"Set Open Bookmarks in new Tabs"
+  },
+  "set_search":{
+    "message":"Set Open Search Results in new Tabs"
+  },
+  "readermode":{
+    "message":"Reader Mode"
+  },
+  "mges": {
+    "message": "Movimenti del mouse"
+  },
+  "rges": {
+    "message": "Movimenti del pulsante del mouse"
+  },
+  "wges": {
+    "message": "Movimenti della rotellina"
+  },
+  "sdrg": {
+    "message": "Simple Drag (trascinamento di base)"
+  },
+  "drg": {
+    "message": "Super Drag (trascinamento avanzato)"
+  },
+  "about": {
+    "message": "Informazioni"
+  },
+  "changelog":{
+    "message":"Modifica log"
+  },
+  "translate":{
+    "message":"Traduzione"
+  },
+  "thanks":{
+    "message":"Ringraziamenti"
+  },
+  "setting": {
+    "message": "Impostazioni"
+  },
+  "ui": {
+    "message": "Aspetto"
+  },
+  "fnswitch": {
+    "message": "Funzioni attivate"
+  },
+  "searchmgr": {
+    "message": "Motori di ricerca"
+  },
+  "scriptmgr": {
+    "message": "Script personalizzati"
+  },
+  "linux": {
+    "message": "Impostazioni Linux/Mac"
+  },
+  "per":{
+    "message":"Autorizzazioni"
+  },
+  "conf": {
+    "message": "Configurazione"
+  },
+  "gesmgr": {
+    "message": "Azioni"
+  },
+  "tdrg": {
+    "message": "Azioni testo"
+  },
+  "ldrg": {
+    "message": "Azioni link"
+  },
+  "idrg": {
+    "message": "Azioni immagine"
+  },
+  "tsdrg": {
+    "message": "Azioni testo"
+  },
+  "lsdrg": {
+    "message": "Azioni link"
+  },
+  "isdrg": {
+    "message": "Azioni immagine"
+  },
+  "ui_line_enable": {
+    "message": "Mostra linea di tratteggio"
+  },
+  "ui_direct_enable": {
+    "message": "Mostra suggerimenti in tempo reale"
+  },
+  "ui_tip_enable": {
+    "message": "Mostra nome dell'azione"
+  },
+  "ui_color": {
+    "message": "Colore"
+  },
+  "ui_width": {
+    "message": "Dimensione"
+  },
+  "ui_opacity": {
+    "message": "Trasparenza"
+  },
+  "ui_bgcolor": {
+    "message": "Colore sfondo"
+  },
+  "ui_style": {
+    "message": "Stile"
+  },
+  "msg_saved": {
+    "message": "Impostazioni salvate correttamente."
+  },
+  "msg_reset2": {
+    "message": "I dati inseriti non sono corretti, l'operazione è stata cancellata."
+  },
+  "msg_reset": {
+    "message": "Nota: Questa operazione reimposterà tutte le opzioni, e non è reversibile. Inserire 'ReSeT' per continuare ..."
+  },
+  "msg_confimport": {
+    "message": "Errore file di configurazione."
+  },
+  "msg_importver": {
+    "message": "smartUp deve essere aggiornato all'ultima versione prima di importare questa configurazione."
+  },
+  "msg_dellast": {
+    "message": "E' l'ultima, è necessario mantenerla."
+  },
+  "msg_delinuse": {
+    "message": "E' in uso, non può essere eliminata."
+  },
+  "msg_delpers": {
+    "message": "L'autorizzazione è stata eliminata."
+  },
+  "msg_delpers_fail": {
+    "message": "E' un'autorizzazione di base di smartUp, non può essere eliminata."
+  },
+  "msg_dirnone": {
+    "message": "Si prega di tracciare una linea"
+  },
+  "msg_dirrepeat": {
+    "message": "The direction repeated, try again!"
+  },
+  "msg_blank":{
+    "message":"Devi digitare qualcosa per continuare."
+  },
+  "msg_setbg":{
+    "message":"Qualcosa è andato storto."
+  },
+  "msg_first":{
+    "message":"Grazie per aver installato questa estensione.<br \/><li>smartUp è gratuita, vi sarei grado se la valutaste con cinque stelle.<li>If it's the first time to install, it has been working. Try to hold right button to draw up and right?! If you have installed, wait a minute, it is syncing your settings data in background.<li>For some reasons, some actions can not work in this options page.(scroll,script...).<li>Becouse of Chrome's limitations, smartUp cant work in some tabs too.(newtab,setting page...)<li>There are a few actions, you'll add more."
+  },
+  "test_mges": {
+    "message": "Disegna la linea qui."
+  },
+  "test_tdrg": {
+    "message": "Questo è un testo d'esempio. Selezionare il testo e trascinare per tratteggiare la linea, e selezionare l'azione richiesta."
+  },
+  "test_ldrg": {
+    "message": "<a href='###'> Questo è un link d'esempio, trascinare il link e tratteggiare linee, e selezionare l'azione richiesta.</A>"
+  },
+  "test_idrg": {
+    "message": "Questa è un'immagine d'esempio. Trascinare l'immagine e tratteggiare la linea, e selezionare l'azione richiesta: <img src='../icon.png' />"
+  },
+  "tip_actionname": {
+    "message": "Nome azione personalizzata"
+  },
+  "btn_save": {
+    "message": "SALVA"
+  },
+  "btn_cancel": {
+    "message": "ANNULLA"
+  },
+  "btn_done": {
+    "message": "FATTO"
+  },
+  "btn_del":{
+    "message":"ELIMINA"
+  },
+  "btn_continue":{
+    "message":"CONTINUA"
+  },
+  "btn_next":{
+    "message":"SUCCESSIVO"
+  },
+  "btn_back":{
+    "message":"PRECEDENTE"
+  },
+  "btn_decode":{
+    "message":"DECODIFICA"
+  },
+  "btn_encode":{
+    "message":"CODIFICA"
+  },
+  "btn_play":{
+    "message":"RIPRODUCI"
+  },
+  "btn_pause":{
+    "message":"PAUSA"
+  },
+  "btn_resume":{
+    "message":"RIPRENDI"
+  },
+  "btn_stop":{
+    "message":"STOP"
+  },
+  "btn_resetapps":{
+    "message":"Reimposta configurazione Mini-apps"
+  },
+  "init_openlnk_bg": {
+    "message": "Apri link in secondo piano"
+  },
+  "init_close_current": {
+    "message": "Chiudi scheda corrente"
+  },
+  "init_search_bg": {
+    "message": "Cerca testo in secondo piano"
+  },
+  "init_reload_current": {
+    "message": "Ricarica scheda corrente"
+  },
+  "init_reload_clear": {
+    "message": "Ricarica scheda corrente senza cache"
+  },
+  "init_switch_left": {
+    "message": "Passa alla scheda a sinistra"
+  },
+  "init_switch_right": {
+    "message": "Passa alla scheda a destra"
+  },
+  "init_openimg_bg": {
+    "message": "Apri immagine in secondo piano"
+  },
+  "init_searchtxt_bg":{
+    "message": "Cerca testi in secondo piano"
+  },
+  "init_searchimg_bg": {
+    "message": "Cerca immagine in secondo piano"
+  },
+  "init_scroll_up":{
+    "message":"Scorri su"
+  },
+  "init_scroll_down":{
+    "message":"Scorri giù"
+  },
+  "init_scroll_top":{
+    "message":"Scorri all'inizio"
+  },
+  "init_scroll_bottom":{
+    "message":"Scorri fino in fondo"
+  },
+  "getper_title":{
+    "message":"Richiesta autorizzazioni"
+  },
+  "getper_des":{
+    "message":"Per usare l'azione, sono richieste le seguenti autorizzazioni:"
+  },
+  "getper_btn":{
+    "message":"Ottieni autorizzazioni"
+  },
+  "getper_after":{
+    "message":"Le autorizzazioni sono state concesse. Riprovare con l'ultimo gesto/movimento usato. Qualche volta è necessario riavviare Chrome.<br \/>Questa pagina si chiuderà tra "
+  },
+  "getper_des1":{
+    "message":"Puoi cancellare le autorizzazioni richieste in qualsiasi momento, attraverso Impostazioni>Generali>Autorizzazioni"
+  },
+  "getper_fail":{
+    "message":"Impossibile ottenere le autorizzazioni! \nAggiornare Chrome all'ultima versione."
+  },
+  "wel_title":{
+    "message":"Benvenuti"
+  },
+  "notif_title":{
+    "message":"Notifica smartUp"
+  },
+  "notif_dlok":{
+    "message":"Download completed!"
+  },
+  "notif_dlerr":{
+    "message":"download error!"
+  },
+  "notif_title_update":{
+    "message":"Notifica aggiornamento"
+  },
+  "notif_title_appsave":{
+    "message":"Notifica Mini-apps"
+  },
+  "notif_con_appsave":{
+    "message":"Le modifiche sono state salvate."
+  },
+  "notif_con_bkdel":{
+    "message":"Segnalibro cancellato."
+  },
+  "notif_con_bkadd":{
+    "message":"Segnalibro aggiunto."
+  },
+  "notif_con_dlok":{
+    "message":"Download completato."
+  },
+  "notif_btn_open":{
+    "message":"Apri pagina opzioni"
+  },
+  "notif_con_dnimgerr":{
+    "message":"Errore durante il salvataggio dell'immagine"
+  },
+  "notif_con_dnimg":{
+    "message":"L'immagine è stata scaricata."
+  },
+  "lang_auto":{
+    "message":"Auto"
+  },
+  "lang_en":{
+    "message":"English (en)"
+  },
+  "title_newengine":{
+    "message":"Aggiungi nuovo motore di ricerca"
+  },
+  "title_newaction":{
+    "message":"Aggiungi nuova azione"
+  },
+  "title_newscript":{
+    "message":"Aggiungi nuovo script"
+  },
+  "title_editaction":{
+    "message":"Modifica azioni"
+  },
+  "title_editengine":{
+    "message":"Modifica motori di ricerca"
+  },
+  "title_editscript":{
+    "message":"Modifica script"
+  },
+  "title_editdirect":{
+    "message":"Modifica direzioni"
+  },
+  "tip_editdir":{
+    "message":"Modifica direzioni"
+  },
+  "tip_resetcur":{
+    "message":"Reimposta la pagina corrente"
+  },
+  "tip_addnew":{
+    "message":"Aggiungi nuovo"
+  },
+  "rss":{
+    "message":"RSS"
+  },
+  "random":{
+    "message":"Numero casuale"
+  },
+  "extmgm":{
+    "message":"Gestione estensioni"
+  },
+  "appslist":{
+    "message":"Elenco Mini APPs"
+  },
+  "app_random_bound":{
+    "message":"Bound:"
+  },
+  "app_random_num":{
+    "message":"Numero:"
+  },
+  "app_random_norepeat":{
+    "message":"Ripetizione OFF"
+  },
+  "app_random_fill":{
+    "message":"Fill all digital"
+  },
+  "app_extmgm_disableall":{
+    "message":"Disattiva tutto"
+  },
+  "recentclosed":{
+    "message":"Chiuse di recente"
+  },
+  "app_recentclosed_tabs":{
+    "message":"schede"
+  },
+  "synced":{
+    "message":"Schede sincronizzate"
+  },
+  "app_synced_switch":{
+    "message":"Passa al dispositivo sincronizzato: "
+  },
+  "app_synced_nodevice":{
+    "message":"non esiste nessun dispositivo sincronizzato."
+  },
+  "app_tip_opt":{
+    "message":"Opzioni"
+  },
+  "app_rss_menu":{
+    "message":"Menu"
+  },
+  "app_rss_new":{
+    "message":"Nuovo"
+  },
+  "app_rss_subplace":{
+    "message":"RSS2.0"
+  },
+  "app_recentbk_recentlength":{
+    "message":"Numero:"
+  },
+  "app_recentht_recentlength":{
+    "message":"Numero:"
+  },
+  "app_recentclosed_recentlength":{
+    "message":"Numero:"
+  },
+  "base64":{
+    "message":"Codice Base64"
+  },
+  "mail":{
+    "message":"Condividi tramite email"
+  },
+  "n_mail":{
+    "message":"Tipo di email:"
+  },
+  "n_mail_domain":{
+    "message":"*Dominio di Google Apps:"
+  },
+  "n_mail_prefix":{
+    "message":"Prefisso per l'oggetto:"
+  },
+  "s_defaultmail":{
+    "message":"Programma gestione email di sistema"
+  },
+  "s_gmail":{
+    "message":"Gmail"
+  },
+  "s_gmailapps":{
+    "message":"*Gmail con Google Apps"
+  },
+  "qr":{
+    "message":"Codice QR"
+  },
+  "app_qr_url":{
+    "message":"URL della scheda corrente."
+  },
+  "app_qr_title":{
+    "message":"Titolo della scheda corrente."
+  },
+  "app_qr_seltxt":{
+    "message":"Testi selezionati."
+  },
+  "app_qr_sellnk":{
+    "message":"URK dei link trascinati/selezionati"
+  },
+  "app_qr_customer":{
+    "message":"Testo personalizzato."
+  },
+  "print":{
+    "message":"Stampa"
+  },
+  "mute":{
+    "message":"Scheda senza riproduzione audio"
+  },
+  "snap":{
+    "message":"Allinea finestra"
+  },
+  "numc":{
+    "message":"Conversione numeri"
+  },
+  "app_numc_from":{
+    "message":"Da:"
+  },
+  "app_numc_to":{
+    "message":"A:"
+  },
+  "tts":{
+    "message":"Text To Speech"
+  },
+  "n_gender":{
+    "message":"Genere:"
+  },
+  "n_rate":{
+    "message":"Velocità:"
+  },
+  "n_voicename":{
+    "message":"Motore di sintesi vocale:"
+  },
+  "n_pitch":{
+    "message":"Tonalità:"
+  },
+  "n_volume":{
+    "message":"Volume:"
+  },
+  "s_female":{
+    "message":"Femminile"
+  },
+  "s_male":{
+    "message":"Maschile"
+  },
+  "speaker":{
+    "message":"Pronuncia del testo"
+  },
+  "jslist":{
+    "message":"Elenco script personalizzati"
+  },
+  "ui_withdir":{
+    "message":"con suggerimenti direzione del nome dell'azione"
+  },
+  "ui_note_enable":{
+    "message":"Mostra nota azione"
+  },
+  "ui_allaction_enable":{
+    "message":"Mostra tutte le possibili azioni"
+  },
+  "theme_colorful":{
+    "message":"Colorata"
+  },
+  "theme_bg":{
+    "message":"Immagine di sfondo"
+  },
+  "tks_bug":{
+    "message":"Questi amici mi hanno aiutato nel testare e riferire bug dell'estensione: "
+  },
+  "tks_tl":{
+    "message":"Questi amici mi hanno aiutato nella traduzione dell'estensione: "
+  },
+  "tks_pjt":{
+    "message":"Si è fatto uso o riferimento ai seguenti progetti: "
+  },
+  "rges0":{
+    "message":"Clic tasto destro tenendo premuto il pulsante sinistro"
+  },
+  "rges1":{
+    "message":"Clic tasto sinistro tenendo premuto il pulsande destro"
+  },
+  "wges0":{
+    "message":"Scorri su tenendo premuto il tasto sinistro"
+  },
+  "wges1":{
+    "message":"Scorri giù tenendo premuto il tasto sinistro"
+  },
+  "wges2":{
+    "message":"Scorri su tenendo premuto il tasto destro"
+  },
+  "wges3":{
+    "message":"Scorri giù tenendo premuto il tasto destro"
+  },
+  "pop":{
+    "message":"Azioni popup"
+  },
+  "icon":{
+    "message":"Azioni icone"
+  },
+  "ctm":{
+    "message":"Menu contestuale"
+  },
+  "action":{
+    "message":"Azioni"
+  },
+  "ctm_add":{
+    "message":"Aggiungi i seguenti elementi al menu contestuale:"
+  },
+  "ctm_fnswitch":{
+    "message":"Menus of switching features"
+  },
+  "ctm_disable":{
+    "message":"Disattiva temporaneamente smartUp nella scheda corrente"
+  },
+  "ctm_opt":{
+    "message":"Opzioni"
+  },
+  "icon_type":{
+    "message":"Choose work type:"
+  },
+  "icon_back":{
+    "message":"In secondo piano"
+  },
+  "icon_back_des":{
+    "message":"L'azione non può ottenere un valore dalla pagina, e funzionerà in qualsiasi scheda, inclusa la scheda vuota."
+  },
+  "icon_front":{
+    "message":"In primo piano"
+  },
+  "icon_front_des":{
+    "message":"L'azione chiederà di accedere alle informazioni dalla pagina per poter operare."
+  },
+  "icon_showname":{
+    "message":"Mostra nome azione sull'icona"
+  },
+  "pop_last":{
+    "message":"Imposta l'ultima zione come quella predefinita"
+  },
+  "about_ver":{
+    "message":"VERSIONE"
+  },
+  "about_url":{
+    "message":"URL"
+  },
+  "review":{
+    "message":"Revisione"
+  },
+  "perdes_browsersettings":{"message":"Because using mouse gestures on non-Windows platforms conflicts with right-click menus, ensuring a better operating experience, smartUp Gestures needs to request this permission to fix the bug (only Firefox). After getting permission, you need to restart the browser to make it works. For more information: https://developer.mozilla.org/Add-ons/WebExtensions/API/browserSettings. This page only show only one time, or set it again from: General>Linux/Mac Settings>Try to set context menu popup after mouseup."},
+  "opt_mouseup":{"message":"Try to set context menu popup after mouseup"},
+  "des_mouseup":{"message":"Fix the conflict between the mouse gesture and the context menu. Only Firefox 58+. Need request permission 'browserSettings'."}
+}

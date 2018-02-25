@@ -1,0 +1,346 @@
+{
+	"log": [
+		{
+			"ver":"5.5.270.801",
+			"date":"2018.02.25",
+			"content":[
+				"new actions(firefox): open [bookmarks]/[search results] in new tabs, reader mode",
+				"fix bug: conflicted to mouseup on linux(firefox)."
+			]
+		},
+		{
+			"ver":"5.4.136.783",
+			"date":"2018.01.14",
+			"content":[
+				"new actions(firefox): save as pdf, copy image",
+				"add save link to drag>links",
+				"fix bug: mini-apps can't work sometimes"
+			]
+		},
+		{
+			"ver":"5.3.131.778",
+			"date":"2018.01.09",
+			"content":[
+				"fix bug: request many permissions"
+			]
+		},
+		{
+			"ver":"5.3.130.775",
+			"date":"2018.01.08",
+			"content":[
+				"improve mini-apps"
+			]
+		},
+		{
+			"ver":"5.1.1602.764",
+			"date":"2017.12.17",
+			"content":[
+				"new action: search text from clipboard",
+				"update the image engine of baidu",
+				"fixed bug: simple drag cant works sometimes"
+			]
+		},
+		{
+			"ver":"5.1.1576.761",
+			"date":"2017.12.03",
+			"content":[
+				"fixed bug: drag link cant work sometimes, open URL cant add some links, image actions cant work for mouse gestures, option -Convert to URL, if the text can be- cant work sometimes."
+			]
+		},
+		{
+			"ver":"5.1.1476.754",
+			"date":"2017.11.22",
+			"content":[
+				"new action: save link",
+				"fixed bugs"
+			]	
+		},
+		{
+			"ver":"5.1.1240.747",
+			"date":"2017.09.27",
+			"content":[
+				"new actions: Go Upper Level,increment/decrement url,disable in current tab temporarily",
+				"new options for action: close tab",
+				"fixed bug: when adding new action of super drag, cant drag the text; export/import config error in firefox; rocker gestures be triggered error"
+			]	
+		},
+		{
+			"ver":"5.0.868.727",
+			"date":"2017.07.10",
+			"content":[
+				"new option: Disable drag, when the dragged element was set as draggable",
+				"fixed bug: Switch to Previous Tab can't work; when enable show next possible action, the UI display wrong",
+				"improve translation and UI"
+			]	
+		},
+		{
+			"ver":"5.0.737.715",
+			"date":"2017.06.01",
+			"content":[
+				"fixed bug: import configuration fails, sometimes"
+			]
+		},
+		{
+			"ver":"5.0.638.713",
+			"date":"2017.05.21",
+			"content":[
+				"русский",
+				"New Russian translation(ru)"
+			]
+		},
+		{
+			"ver":"5.0.527.707",
+			"date":"2017.04.30",
+			"content":[
+				"fixed bug: In some specific cases, configuration is reset to default."
+			]
+		},
+		{
+			"ver":"5.0.504.704",
+			"date":"2017.04.12",
+			"content":[
+				"works with Firefox",
+				"more options for actions: open url in clipboard,Copy Tab",
+				"delete option: display language",
+				"fixed bugs: action stop cant work, The configuration file is written with redundant information, Do NOT popup context menu cant work, reset current page cant work"
+			]
+		},
+		{
+			"ver":"4.1.256.673",
+			"date":"2017.02.13",
+			"content":[
+				"fix bug: Enable drag in text box cant work"
+			]
+		},
+		{
+			"ver":"4.1.251.672",
+			"date":"2017.02.08",
+			"content":[
+				"new actions: <i>Switch to Previous Tab</i>, <i>custom script list</i>",
+				"new option: When dragging to a text box, cancel the drag action",
+				"fix bugs: action name layout error, ESC to cancel cant work"
+			]
+		}
+	],
+	"oldlog": [
+		{
+			"ver":"4.0.1575.663",
+			"date":"2016.12.02",
+			"content":[
+				"fix bugs:wheel gestures cant work, turn off console.log"
+			]
+		},
+		{
+			"ver":"4.0.1575.662",
+			"date":"2016.12.02",
+			"content":[
+				"fix bugs"
+			]
+		},
+		{
+			"ver":"4.0.1231.647",
+			"date":"2016.09.19",
+			"content":[
+				"new: <i>popup actions</i>, <i>icon action</i>,<i>context menu</i>",
+				"delete Show ICON in address bar",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "3.1.765.516",
+			"date": "2016.06.16",
+			"content":[
+				"new: add qr to simple drag and super drag",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "3.0.505.406",
+			"date": "2016.04.10",
+			"content":[
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "3.0.486.401",
+			"date": "2016.04.02",
+			"content":[
+				"new: rocker gestures, wheel gestures",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "2.13.377.374",
+			"date": "2016.03.13",
+			"content":[
+				"new option: Make Chrome always work in background",
+				"new open type: new window, new window (background)",
+				"fix bugs: view source cant work, scroll cant work in frame"
+			]
+		},
+		{
+			"ver": "2.12.1354.368",
+			"date": "2015.10.21",
+			"content":[
+				"fix bugs: when there is more than 10 search engines,cant set the right engine"
+			]
+		},
+		{
+			"ver": "2.12.1338.367",
+			"date": "2015.10.07",
+			"content":[
+				"new action: <i>snap window</i>",
+				"new option: <i>Auto sync configuration</i> (for chinese, firefox and edge), <i>Press [ESC] to cancel current operation</i> and <i>Do NOT popup context menu</i> (for timeout)",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "2.11.1218.357",
+			"date": "2015.09.08",
+			"content":[
+				"new action: <i>mute tab</i>",
+				"add an option: change drag cursor",
+				"add new options to <i>save page</i>, <i>add bookmark</i>, <i>pin</i>: close tab, show/hide download bar, show/hide notification, target tab",
+				"change some options to checkbox"
+			]
+		},
+		{
+			"ver": "2.10.1113.350",
+			"date": "2015.08.22",
+			"content":[
+				"backup configuration before upgrading",
+				"fix bugs: cant popup contextmenu sometimes"
+			]
+		},
+		{
+			"ver": "2.10.1087.344",
+			"date": "2015.08.08",
+			"content":[
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "2.9.864.334",
+			"date": "2015.07.06",
+			"content":[
+				"delete option: <i>Mini-apps' window, DO NOT be zoomed by Chrome</i>; add option: <i>Show notification from mini-apps</i>",
+				"new action for links: <i>QR code</i>",
+				"improve some actions, add option 'show notification' to <i>download image</i> and <i>add bookmark</i>, add options to <i>view source</i>, <i>reopen closed tab</i> only works on chrome 37+ for now. ",
+				"improve mini-apps",
+				"fix bugs and improve Chinese (Simplified) translation"
+			]
+		},
+		{
+			"ver": "2.8.525.315",
+			"date": "2015.04.28",
+			"content":[
+				"new action for links: add bookmark.",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "2.8.374.311",
+			"date": "2015.03.10",
+			"content":[
+				"theme for options page.",
+				"check the version when importing configuration. smaller configuration size. reset both local and synced configuration when reseting.",
+				"fix bugs: cant click sometimes, an error console log when draging, An unneeded option of script action."
+			]
+		},
+		{
+			"ver": "2.7.251.301",
+			"date": "2015.02.08",
+			"content":[
+				"fix bugs: an early configuration upgrade error, simple drag actions cant be edited and so on"
+			]
+		},
+		{
+			"ver": "2.7.153.286",
+			"date": "2015.01.29",
+			"content":[
+				"rewrite part of appearance, add some new options, <i>note</i>, <i>direction tips</i>, <i>Show next all possible actions</i>, and so on.",
+				"fix bugs"
+			]
+		},
+		{
+			"ver": "2.6.1617.266",
+			"date": "2014.12.31",
+			"content": ["new action: <i>text to speech</i>", "new mini-apps: <i>speaker</i>", "improve action: <i>QR code</i>", "fix bugs"]
+		},
+		{
+			"ver": "2.5.1608.261",
+			"date": "2014.12.23",
+			"content": ["merry christmas"]
+		},
+		{
+			"ver": "2.5.1606.258",
+			"date": "2014.12.21",
+			"content": ["smartUp can works when it is first installed, when it is updated to a new version, and when Chrome is updated to a new version.", "new mini-app: <i>numerals converter</i>", "fix bug: blocked context menu when use mouse gestures by middle button on linux/mac."]
+		},
+		{
+			"ver": "2.5.1585.252",
+			"date": "2014.12.11",
+			"content": ["fix bug: can't work on old version of chrome."]
+		},
+		{
+			"ver": "2.5.1581.251",
+			"date": "2014.12.07",
+			"content": ["renamed smartUp Gestures", "new actions: <i>sharing with email</i>,<i>base64 code</i>,<i>QR code</i>,<i>print</i>", "new option: <i>Mini-apps' window, DO NOT be zoomed by Browser</i>", "improve action of <i>detach tab</i>", "fix bugs"]
+		},
+		{
+			"ver": "2.4.1472.238",
+			"date": "2014.11.18",
+			"content": ["new action: <i>miniAPPs list</i>", "improve miniApps", "fix many bugs"]
+		},
+		{
+			"ver": "2.3.1354.217",
+			"date": "2014.10.21",
+			"content": ["new actions: <i>recent closed tab</i>, <i>synced tabs</i>", "improve action of <i>zoom</i>, <i>reopen closed tab</i>; delete <i>zoom2</i>"]
+		},
+		{
+			"ver": "2.2.1344.213",
+			"date": "2014.10.12",
+			"content": ["new miniapps actions: <i>random number, rss, extensions management</i>", "improve action of <i>close</i>, added <i>keep window, when closing last tab</i>.", "new configuration backup", "continue to improve options page and fixes bug"]
+		},
+		{
+			"ver": "2.1.1240.205",
+			"date": "2014.09.27",
+			"content": ["improve options page and fixes bug"]
+		},
+		{
+			"ver": "2.1.1217.201",
+			"date": "2014.09.07",
+			"content": ["new: experimental action - <i>zoom2</i>", "new action: <i>rencent bookmark/history</i>", "bug fixes"]
+		},
+		{
+			"ver": "2.0.1114.178 ",
+			"date": "2014.08.23",
+			"content": ["upgrade to ver2.0", "new: rewrite options page", "bug fixes"]
+		},
+		{
+			"ver": "1.2.858.163",
+			"date": "2014.07.01",
+			"content": ["new: display language switch(english/local)", "new: limited multi-language support", "new actions: <i>tabs list</i>"]
+		},
+		{
+			"ver": "1.2.761.161",
+			"date": "2014.06.22",
+			"content": ["new: update notification(disabled by default)", "new actions: <i>zoom, add bookmark, save page(as mhtml)</i>", "use <i>scroll</i> instead of <i>up/down/top/bottom</i>, added <i>left/right/leftmost/rightmost</i> to this action.", "bug fixes"]
+		},
+		{
+			"ver": "1.1.643.151",
+			"date": "2014.05.26",
+			"content": ["new: permissions management", "new actions: <i>copy text/link/tab's element/image url, paste text, chrome internal page, reload smartup, next/previous page, save image</i>", "linux support", "bug fixes"]
+		},
+		{
+			"ver": "1.0.525.138",
+			"date": " 2014.04.29",
+			"content": ["bug fixes"]
+		},
+		{
+			"ver": "1.0.518.132",
+			"date": " 2014.04.22",
+			"content": ["first version"]
+		}
+	]
+}

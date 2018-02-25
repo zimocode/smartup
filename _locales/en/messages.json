@@ -1,0 +1,1389 @@
+{
+  "ext_des": {
+    "message": "A better gestures extension. Features include: mouse gestures, simple drag, super drag, rocker gestures and wheel gestures."
+  },
+  "ext_name":{
+    "message":"smartUp Gestures"
+  },
+  "ext_desb": {
+    "message": "smartUp will help you to use chrome smartly and quickly, features include mouse gestures, simple drag, super drag and so on. With it, you can quickly complete many common operations, such as close tab/new tab, Minimize/Maximize window. And, you can start up another extension too( with few changes ) . "
+  },
+  "ext_ver": {
+    "message": "Version No.:"
+  },
+  "ext_site": {
+    "message": "Site:"
+  },
+  "ext_email": {
+    "message": "Feedback:"
+  },
+  "icon_tip":{
+    "message":"smartUp Gestures can't works perfectly in this tab!"
+  },
+  "opt_title": {
+    "message": "Settings"
+  },
+  "menu_save": {
+    "message": "Save Settings"
+  },
+  "menu_reset": {
+    "message": "Reset Current Page"
+  },
+  "menu_autosave": {
+    "message": "Auto Save Settings"
+  },
+  "menu_popactions":{
+    "message":"Popup actions:"
+  },
+  "menu_opts":{
+    "message":"Options"
+  },
+  "menu_about":{
+    "message":"About"
+  },
+  "menuplus_opennew":{
+    "message":"Open in new tab"
+  },
+  "menuplus_exit":{
+    "message":"Exit"
+  },
+  "con_name": {
+    "message": "Name:"
+  },
+  "con_timeout": {
+    "message": "Timeout"
+  },
+  "con_timeout_nomenu":{
+    "message":"Do NOT popup context menu"
+  },
+  "con_minlength": {
+    "message": "The minimum length of the line drawing"
+  },
+  "con_icon": {
+    "message": "Show ICON in address bar"
+  },
+  "con_autosave": {
+    "message": "Auto save settings"
+  },
+  "con_notif": {
+    "message": "Show update notification"
+  },
+  "con_miniappnotif":{
+    "message": "Show notification from mini-apps"
+  },
+  "con_linux": {
+    "message": "Use double right-click button to popup context menu"
+  },
+  "con_mgesmode": {
+    "message": "Operating mode:"
+  },
+  "con_mgesholdkey": {
+    "message": "Hold the following key to disable mouse gestures temporarily :"
+  },
+  "con_drgbox": {
+    "message": "Enable drag in text box"
+  },
+  "con_drgtobox": {
+    "message": "When dragging to a text box, cancel the drag action"
+  },
+  "con_drgurl": {
+    "message": "Convert to URL, if the text can be"
+  },
+  "con_drgimg": {
+    "message": "As an image, if the Link contains an image"
+  },
+  "con_drgholdkey": {
+    "message": "Hold the following key to disable Drag temporarily:"
+  },
+  "con_drgholdimgkey": {
+    "message": "If the Link contains image, Hold the following key to use Drag-image instead of Drag-link :"
+  },
+  "con_enabletxt": {
+    "message": "Text Drag"
+  },
+  "con_enablelnk": {
+    "message": "Link Drag"
+  },
+  "con_enableimg": {
+    "message": "Image Drag"
+  },
+  "con_lang":{
+    "message":"Displays language:"
+  },
+  "con_export":{
+    "message":"Click here to export configuration."
+  },
+  "con_setbg":{
+    "message":"Customize background image"
+  },
+  "con_bgnote0":{
+    "message":"Its current background image, you can change to your own."
+  },
+  "con_bgnote1":{
+    "message":"this changeing will not be synced!"
+  },
+  "con_theme":{
+    "message":"Theme for options page:"
+  },
+  "con_drgcursor":{
+    "message":"Change mouse style to removable(some browser's default features don't work)"
+  },
+  "con_notename":{
+    "message":"Note for this action:"
+  },
+  "con_notechk":{
+    "message":"show the note in tab."
+  },
+  "con_autosync":{
+    "message":"Auto sync configuration"
+  },
+  "con_esc":{
+    "message":"Press [ESC] to cancel current operation"
+  },
+  "con_background":{
+    "message":"Make Chrome always work in background , so smartUp will work better. (will request 'background' permission)"
+  },
+  "con_draggable":{
+    "message":"Disable drag, when the dragged element was set as draggable[draggable=true]"
+  },
+  "stnm_per_pers": {
+    "message": "Permissions Management"
+  },
+  "stnm_settings": {
+    "message": "Settings"
+  },
+  "stnm_function": {
+    "message": "Features ON"
+  },
+  "stnm_opts": {
+    "message": "Settings of Options Page"
+  },
+  "stnm_txtengine": {
+    "message": "Texts Search Engine Management"
+  },
+  "stnm_imgengine": {
+    "message": "Images Search Engine Management"
+  },
+  "stnm_script": {
+    "message": "Script Management"
+  },
+  "stnm_linux": {
+    "message": "Linux/Mac Settings"
+  },
+  "stnm_importconf": {
+    "message": "Import Configuration"
+  },
+  "stnm_exportconf": {
+    "message": "Export Configuration"
+  },
+  "stnm_syncconf":{
+    "message": "Sync Configuration"
+  },
+  "stnm_resetconf": {
+    "message": "Reset All Configuration"
+  },
+  "stnm_drgsw": {
+    "message": "Drag ON"
+  },
+  "stnm_resetapps":{
+    "message":"Reset  all mini-apps configuration"
+  },
+  "stnm_action":{
+    "message":"Edit actions"
+    },
+  "des_pers": {
+    "message": "For more information, visit https://developer.chrome.com/extensions/permission_warnings "
+  },
+  "des_pers1":{
+    "message":"You can always delete these requested permissions from Settings>General>Permissions"
+  },
+  "des_lang":{
+    "message": "smartUp will display in English or chrome's display language. "
+  },
+  "des_linux": {
+    "message": "To be sure smartUp works, need to double clicking right button to pop up context menu for non-Windows OS platforms, or, check the next option."
+  },
+  "des_sync": {
+    "message": "The configuration will be synced with the browser, if you are already logged in to the browser and the browser supports this feature."
+  },
+  "des_sync1":{
+    "message":"If you can't connect the browser's service (Google,Mozilla and so on) easily, or configuration cant be saved and aways reset to last one, you may try to uncheck this, by exporting the configuration to preserve your settings."
+  },
+  "des_item": {
+    "message": "Click item to edit, click 'X' to delete, and, '+' to add a new item."
+  },
+  "des_fnswitch": {
+    "message": "Based on individual needs to choose, advised to turn off the feature which is not commonly used."
+  },
+  "des_resetapps":{
+    "message":"If some mini-apps cant work, try to reset mini-apps configuration. This operation will clear all mini-apps configurations, and cant be undone!"
+  },
+  "s_default": {
+    "message": "Default"
+  },
+  "s_current": {
+    "message": "Current"
+  },
+  "s_others": {
+    "message": "Others"
+  },
+  "s_all": {
+    "message": "All"
+  },
+  "s_head": {
+    "message": "Head"
+  },
+  "s_last": {
+    "message": "Last"
+  },
+  "s_left": {
+    "message": "Left"
+  },
+  "s_right": {
+    "message": "Right"
+  },
+  "s_lefts": {
+    "message": "Lefts"
+  },
+  "s_rights": {
+    "message": "Rights"
+  },
+  "s_up": {
+    "message": "Up"
+  },
+  "s_down": {
+    "message": "Down"
+  },
+  "s_top": {
+    "message": "Top"
+  },
+  "s_bottom": {
+    "message": "Bottom"
+  },
+  "s_leftmost": {
+    "message": "Leftmost"
+  },
+  "s_rightmost": {
+    "message": "Rightmost"
+  },
+  "s_frame": {
+    "message": "Frame"
+  },
+  "s_on": {
+    "message": "On"
+  },
+  "s_off": {
+    "message": "Off"
+  },
+  "s_yes": {
+    "message": "Yes"
+  },
+  "s_no": {
+    "message": "No"
+  },
+  "s_new": {
+    "message": "New tab"
+  },
+  "s_back": {
+    "message": "New tab (background)"
+  },
+  "s_win": {
+    "message": "New window"
+  },
+  "s_winback": {
+    "message": "New window (background)"
+  },
+  "s_incog": {
+    "message": "Incognito"
+  },
+  "s_unpin": {
+    "message": "Unpin"
+  },
+  "s_pinned": {
+    "message": "Pin"
+  },
+  "s_normal": {
+    "message": "Normal"
+  },
+  "s_popup": {
+    "message": "Popup"
+  },
+  "s_panel": {
+    "message": "Panel"
+  },
+  "s_detached_panel": {
+    "message": "Detached Panel"
+  },
+  "s_tabele_title":{
+    "message":"Tab's title"
+  },
+  "s_tabele_url":{
+    "message":"Tab's URL"
+  },
+  "s_tabele_aslnk":{
+    "message":"As link"
+  },
+  "s_cr_set":{
+    "message":"Settings"
+  },
+  "s_cr_ext":{
+    "message":"Extensions"
+  },
+  "s_cr_history":{
+    "message":"History"
+  },
+  "s_cr_app":{
+    "message":"Apps"
+  },
+  "s_cr_dl":{
+    "message":"Downloads"
+  },
+  "s_cr_bookmark":{
+    "message":"Bookmarks"
+  },
+  "s_cr_flag":{
+    "message":"Flags"
+  },
+  "s_unicode":{
+    "message":"Unicode"
+  },
+  "s_uri":{
+    "message":"encodeURI"
+  },
+  "s_uric":{
+    "message":"encodeURIComponent"
+  },
+  "s_none": {
+    "message": "None"
+  },
+  "s_ctrl": {
+    "message": "Ctrl"
+  },
+  "s_alt": {
+    "message": "Alt"
+  },
+  "s_shift": {
+    "message": "Shift"
+  },
+  "s_mousebutton1": {
+    "message": "Middle Button"
+  },
+  "s_mousebutton2": {
+    "message": "Right Button"
+  },
+  "s_o_follow": {
+    "message": "Follow"
+  },
+  "s_o_center": {
+    "message": "Center"
+  },
+  "s_o_hover": {
+    "message": "Link style"
+  },
+  "s_o_ui_bottom": {
+    "message": "Bottom"
+  },
+  "s_in": {
+    "message": "Zoom in"
+  },
+  "s_out": {
+    "message": "Zoom out"
+  },
+  "s_reset": {
+    "message": "Reset"
+  },
+  "s_audible":{
+    "message":"Audible tabs"
+  },
+  "n_notif":{
+    "message":"Show notifications from action"
+  },
+  "n_tab":{
+    "message":"Target Tab:"
+  },
+  "n_tab_single":{
+    "message":"Target Tab:"
+  },
+  "n_tab_lrhl":{
+    "message":"Target Tab:"
+  },
+  "n_close": {
+    "message": "Target Tab:"
+  },
+  "n_reload_clear": {
+    "message": "Clear Cache"
+  },
+  "n_close_sel": {
+    "message": "Selected Tab:"
+  },
+  "n_close_keep":{
+    "message":"Keep window, when closing last tab."
+  },
+  "n_closePin":{
+    "message":"Do not close the pinned tab."
+  },
+  "n_closeConfirm":{
+    "message":"Need to confirm, when closing multiple tabs."
+  },
+  "n_closetab":{
+    "message":"Close tab after completing action."
+  },
+  "n_optype": {
+    "message": "Open Type:"
+  },
+  "n_position": {
+    "message": "Position:"
+  },
+  "n_position_lrhl":{
+    "message":"Position:"
+  },
+  "n_new_position": {
+    "message": "Position:"
+  },
+  "n_index":{
+    "message":"Position:"
+  },
+  "n_index_new":{
+    "message":"Position:"
+  },
+  "n_wintype": {
+    "message": "Window Type:"
+  },
+  "n_winincog": {
+    "message": "Incognito Window"
+  },
+  "n_win": {
+    "message": "Target Window:"
+  },
+  "n_effect": {
+    "message": "With scroll effects"
+  },
+  "n_pin": {
+    "message": "Pin the tab"
+  },
+  "n_content": {
+    "message": "Content:"
+  },
+  "n_encoding":{
+    "message":"Encoding:"
+  },
+  "n_target_np":{
+    "message":"Open style:"
+  },
+  "n_npkey_n":{
+    "message":"Key words:"
+  },
+  "n_npkey_p":{
+    "message":"Key words:"
+  },
+  "n_dlbar":{
+    "message":"Show download bar"
+  },
+  "n_crpages":{
+    "message":"Internal pages:"
+  },
+  "n_copytabele_content":{
+    "message":"Copy type:"
+  },
+  "n_script":{
+    "message":"Script:"
+  },
+  "n_jq": {
+    "message": "Inject JQ"
+  },
+  "n_txtengine": {
+    "message": "Texts engine:"
+  },
+  "n_imgengine": {
+    "message": "Images engine:"
+  },
+  "n_zoom":{
+    "message":"Zoom type:"
+  },
+  "n_scroll":{
+    "message":"Scroll Type:"
+  },
+  "n_num":{
+    "message":"Number:"
+  },
+  "n_closebox":{
+    "message":"Close window, after clicked list item."
+  },
+  "n_snap":{
+    "message":"Snap direction:"
+  },
+  "n_url":{
+    "message":"URL:"
+  },
+  "n_dialog":{
+    "message":"Show dialog box"
+  },
+  "script": {
+    "message": "Script"
+  },
+  "ag_none": {
+    "message": "None"
+  },
+  "ag_nav": {
+    "message": "Navigation"
+  },
+  "ag_scroll": {
+    "message": "Scroll"
+  },
+  "ag_tab": {
+    "message": "Tab"
+  },
+  "ag_window": {
+    "message": "Window"
+  },
+  "ag_copy": {
+    "message": "Copy"
+  },
+  "ag_txt": {
+    "message": "Texts"
+  },
+  "ag_lnk": {
+    "message": "Links"
+  },
+  "ag_img": {
+    "message": "Images"
+  },
+  "ag_others": {
+    "message": "Others"
+  },
+  "ag_search": {
+    "message": "Search"
+  },
+  "ag_exp":{
+    "message":"Experimental"
+  },
+  "ag_chrome":{
+    "message":"About Chrome"
+  },
+  "ag_apps":{
+    "message":"Mini APPs"
+  },
+  "ag_su":{
+    "message":"About smartUp"
+  },
+  "ag_dep":{
+    "message":"Deprecated"
+  },
+  "none": {
+    "message": "None"
+  },
+  "back": {
+    "message": "Back"
+  },
+  "forward": {
+    "message": "Forward"
+  },
+  "stop": {
+    "message": "Stop"
+  },
+  "scroll": {
+    "message": "Scroll"
+  },
+  "next": {
+    "message": "Next Page"
+  },
+  "previous": {
+    "message": "Previous Page"
+  },
+  "pretab": {
+    "message": "Switch to Previous Tab"
+  },
+  "reload": {
+    "message": "Reload"
+  },
+  "close": {
+    "message": "Close Tab"
+  },
+  "newtab": {
+    "message": "New Tab"
+  },
+  "reopen": {
+    "message": "Reopen Closed Tab"
+  },
+  "open": {
+    "message": "Open URL"
+  },
+  "openclip": {
+    "message": "Open URL in Clipboard"
+  },
+  "duplicate": {
+    "message": "Copy Tab"
+  },
+  "detach": {
+    "message": "Detach Tab"
+  },
+  "pin": {
+    "message": "Pin Tab"
+  },
+  "switchtab": {
+    "message": "Switch Tab"
+  },
+  "move": {
+    "message": "Move Tab"
+  },
+  "newwin": {
+    "message": "New Window"
+  },
+  "closewin": {
+    "message": "Close Window"
+  },
+  "max": {
+    "message": "Maximize"
+  },
+  "min": {
+    "message": "Minimize"
+  },
+  "full": {
+    "message": "Full Screen"
+  },
+  "copytabas": {
+    "message": "Copy With Custom Format "
+  },
+  "capture": {
+    "message": "Screenshot"
+  },
+  "viewsource": {
+    "message": "View Source"
+  },
+  "optionspage": {
+    "message": "Open Options Page"
+  },
+  "copytxt": {
+    "message": "Copy Texts"
+  },
+  "txtsearch": {
+    "message": "Search Texts"
+  },
+  "txtsearchclip":{
+    "message":"Search Texts from Clipboard"
+  },
+  "openlnk": {
+    "message": "Open Link"
+  },
+  "copylnkurl": {
+    "message": "Copy Link URL"
+  },
+  "copylnktxt": {
+    "message": "Copy Link Text"
+  },
+  "copylnkaslnk": {
+    "message": "Copy Link"
+  },
+  "copylnkas": {
+    "message": "Copy Link As ..."
+  },
+  "openimg": {
+    "message": "Open Image"
+  },
+  "saveimg": {
+    "message": "Save Image"
+  },
+  "saveimgas": {
+    "message": "Save Image As ..."
+  },
+  "copyimgurl": {
+    "message": "Copy Image URL"
+  },
+  "imgsearch": {
+    "message": "Search Image"
+  },
+  "paste": {
+    "message": "Paste Text"
+  },
+  "source": {
+    "message": "View Source"
+  },
+  "reloadext": {
+    "message": "Reload smartUp"
+  },
+  "restart": {
+    "message": "Restart Chrome"
+  },
+  "Exit": {
+    "message": "Exit Chrome"
+  },
+  "copytabele": {
+    "message": "Copy Tab's Element"
+  },
+  "crpages":{
+    "message":"Chrome Internal Pages"
+  },
+  "dldir":{
+    "message":"Open Default Downloads Folder"
+  },
+  "bookmark":{
+    "message":"Add Bookmark"
+  },
+  "bookmarklnk":{
+    "message":"Add Bookmark"
+  },
+  "zoom":{
+    "message":"Zoom"
+  },
+  "zoom_dep":{
+    "message":"Zoom"
+  },
+  "savepage":{
+    "message":"Save Page"
+  },
+  "tablist":{
+    "message":"Tabs List"
+  },
+  "upperlevel":{
+    "message":"Go Upper Level"
+  },
+  "increment":{
+    "message":"Increment Number in URL"
+  },
+  "decrement":{
+    "message":"Decrement Number in URL"
+  },
+  "extdisable":{
+    "message":"Disable smartUp in current tab temporarily"
+  },
+  "general": {
+    "message": "General"
+  },
+  "recentbk":{
+    "message":"Recent Bookmarks"
+  },
+  "recentht":{
+    "message":"Recent History"
+  },
+  "dllink":{
+    "message":"Save Link"
+  },
+  "savepdf":{
+    "message":"Save as PDF"
+  },
+  "copyimg":{
+    "message":"Copy Image"
+  },
+  "set_bk":{
+    "message":"Set Open Bookmarks in new Tabs"
+  },
+  "set_search":{
+    "message":"Set Open Search Results in new Tabs"
+  },
+  "readermode":{
+    "message":"Reader Mode"
+  },
+  "mges": {
+    "message": "Mouse Gestures"
+  },
+  "rges": {
+    "message": "Rocker Gestures"
+  },
+  "wges": {
+    "message": "Wheel Gestures"
+  },
+  "sdrg": {
+    "message": "Simple Drag"
+  },
+  "drg": {
+    "message": "Super Drag"
+  },
+  "about": {
+    "message": "About"
+  },
+  "changelog":{
+    "message":"Change Log"
+  },
+  "translate":{
+    "message":"Translation"
+  },
+  "thanks":{
+    "message":"Thanks To"
+  },
+  "setting": {
+    "message": "Settings"
+  },
+  "ui": {
+    "message": "Appearance"
+  },
+  "fnswitch": {
+    "message": "Features ON"
+  },
+  "searchmgr": {
+    "message": "Search Engines"
+  },
+  "scriptmgr": {
+    "message": "Custom Scripts"
+  },
+  "linux": {
+    "message": "Linux/Mac Settings"
+  },
+  "per":{
+    "message":"Permissions"
+  },
+  "conf": {
+    "message": "Configuration"
+  },
+  "gesmgr": {
+    "message": "Actions"
+  },
+  "tdrg": {
+    "message": "Text Actions"
+  },
+  "ldrg": {
+    "message": "Link Actions"
+  },
+  "idrg": {
+    "message": "Image Actions"
+  },
+  "tsdrg": {
+    "message": "Text Actions"
+  },
+  "lsdrg": {
+    "message": "Link Actions"
+  },
+  "isdrg": {
+    "message": "Image Actions"
+  },
+  "ui_line_enable": {
+    "message": "Show drawing line"
+  },
+  "ui_direct_enable": {
+    "message": "Show real-time direction tips"
+  },
+  "ui_tip_enable": {
+    "message": "Show action name"
+  },
+  "ui_color": {
+    "message": "Color"
+  },
+  "ui_width": {
+    "message": "Size"
+  },
+  "ui_opacity": {
+    "message": "Opacity"
+  },
+  "ui_bgcolor": {
+    "message": "Background color"
+  },
+  "ui_style": {
+    "message": "Style"
+  },
+  "msg_saved": {
+    "message": "Settings saved!"
+  },
+  "msg_reset2": {
+    "message": "Entered incorrectly, the operation has been canceled!"
+  },
+  "msg_reset": {
+    "message": "Note: This operation will reset all configurations, and can not be undone! Input 'ReSeT' to continue ..."
+  },
+  "msg_confimport": {
+    "message": "Configuration file error! ! !"
+  },
+  "msg_importver": {
+    "message": "smartUp must be upgraded to the latest version before importing this configuration."
+  },
+  "msg_dellast": {
+    "message": "It is the LAST one, we need to keep it."
+  },
+  "msg_delinuse": {
+    "message": "It is in used, can not be deleted."
+  },
+  "msg_delpers": {
+    "message": "The permission has been deleted."
+  },
+  "msg_delpers_fail": {
+    "message": "Its a basic permission for smartUp, cant be deleted."
+  },
+  "msg_dirnone": {
+    "message": "Please drawing line!"
+  },
+  "msg_dirrepeat": {
+    "message": "The direction repeated, try again!"
+  },
+  "msg_blank":{
+    "message":"You must enter something to continue!"
+  },
+  "msg_setbg":{
+    "message":"Something is wrong!!"
+  },
+  "msg_first":{
+    "message":"Thank you for installing this extension.<br \/><li>smartUp is free, I'm glad, if you give a five stars rating.<li>If it's the first time to install, it has been working. Try to hold right button to draw up and right?! If you have installed, wait a minute, it is syncing your settings data in background.<li>For some reasons, some actions can not work in this options page.(scroll,script...).<li>Becouse of Chrome's limitations, smartUp cant work in some tabs too.(newtab,setting page...)<li>There are a few actions, you'll add more."
+  },
+  "test_mges": {
+    "message": "Drawing line in here."
+  },
+  "test_tdrg": {
+    "message": "This is a bunch of test text, select the text and drag to draw the line, and then select the action you need."
+  },
+  "test_ldrg": {
+    "message": "<a href='###'> This is a test link, drag the link and draw lines, and select action you need. </ A>"
+  },
+  "test_idrg": {
+    "message": "This is a test image, drag the image and draw the line, and then select the action you need: <img src='../icon.png' />"
+  },
+  "tip_actionname": {
+    "message": "Customization action name"
+  },
+  "btn_save": {
+    "message": "SAVE"
+  },
+  "btn_cancel": {
+    "message": "CANCEL"
+  },
+  "btn_done": {
+    "message": "DONE"
+  },
+  "btn_del":{
+    "message":"DELETE"
+  },
+  "btn_continue":{
+    "message":"CONTINUE"
+  },
+  "btn_next":{
+    "message":"NEXT"
+  },
+  "btn_back":{
+    "message":"BACK"
+  },
+  "btn_decode":{
+    "message":"DECODE"
+  },
+  "btn_encode":{
+    "message":"ENCODE"
+  },
+  "btn_play":{
+    "message":"PLAY"
+  },
+  "btn_pause":{
+    "message":"PAUSE"
+  },
+  "btn_resume":{
+    "message":"RESUME"
+  },
+  "btn_stop":{
+    "message":"STOP"
+  },
+  "btn_resetapps":{
+    "message":"Reset Mini-apps Configuration"
+  },
+  "btn_reset":{
+    "message":"RESET"
+  },
+  "init_openlnk_bg": {
+    "message": "Open link in background"
+  },
+  "init_close_current": {
+    "message": "Close current tab"
+  },
+  "init_search_bg": {
+    "message": "Search text in background"
+  },
+  "init_reload_current": {
+    "message": "Reload current tab"
+  },
+  "init_reload_clear": {
+    "message": "Reload current tab without cache"
+  },
+  "init_switch_left": {
+    "message": "Switch to left tab"
+  },
+  "init_switch_right": {
+    "message": "Switch to right tab"
+  },
+  "init_openimg_bg": {
+    "message": "Open image in background"
+  },
+  "init_searchtxt_bg":{
+    "message": "Search texts in background"
+  },
+  "init_searchimg_bg": {
+    "message": "Search image in background"
+  },
+  "init_scroll_up":{
+    "message":"Scroll up"
+  },
+  "init_scroll_down":{
+    "message":"Scroll down"
+  },
+  "init_scroll_top":{
+    "message":"Scroll top"
+  },
+  "init_scroll_bottom":{
+    "message":"Scroll bottom"
+  },
+  "getper_title":{
+    "message":"Permission Request"
+  },
+  "getper_des":{
+    "message":"To use the action, need to require more permissions:"
+  },
+  "getper_btn":{
+    "message":"Get Permissons"
+  },
+  "getper_after":{
+    "message":"Permissions request successful! Please re-try the last gesture. It will work after Chrome be restarted, sometimes.<br \/>This page will be closed in "
+  },
+  "getper_des1":{
+    "message":"You can always delete these requested permissions from Settings>General>Permissions"
+  },
+  "getper_fail":{
+    "message":"Failure to get permissions! \nChrome must be upgraded to latest version."
+  },
+  "wel_title":{
+    "message":"Welcome"
+  },
+  "notif_title":{
+    "message":"smartUp Notification"
+  },
+  "notif_dlok":{
+    "message":"Download completed!"
+  },
+  "notif_dlerr":{
+    "message":"download error!"
+  },
+  "notif_title_update":{
+    "message":"Update Notification"
+  },
+  "notif_title_appsave":{
+    "message":"Mini-apps Notification"
+  },
+  "notif_con_appsave":{
+    "message":"The changing has been saved."
+  },
+  "notif_con_bkdel":{
+    "message":"Have deleted the bookmark."
+  },
+  "notif_con_bkadd":{
+    "message":"Have added the bookmark."
+  },
+  "notif_con_dlok":{
+    "message":"Download completed!"
+  },
+  "notif_btn_open":{
+    "message":"Open options page"
+  },
+  "notif_con_dnimgerr":{
+    "message":"Save image error!"
+  },
+  "notif_con_dnimg":{
+    "message":"The image has been downloaded."
+  },
+  "lang_auto":{
+    "message":"Auto"
+  },
+  "lang_en":{
+    "message":"English (en)"
+  },
+  "title_newengine":{
+    "message":"Add new engine"
+  },
+  "title_newaction":{
+    "message":"Add new action"
+  },
+  "title_newscript":{
+    "message":"Add new script"
+  },
+  "title_editaction":{
+    "message":"Edit actions"
+  },
+  "title_editengine":{
+    "message":"Edit engine"
+  },
+  "title_editscript":{
+    "message":"Edit script"
+  },
+  "title_editdirect":{
+    "message":"Edit directions"
+  },
+  "tip_editdir":{
+    "message":"Edit directions"
+  },
+  "tip_resetcur":{
+    "message":"Reset current page"
+  },
+  "tip_addnew":{
+    "message":"Add New"
+  },
+  "rss":{
+    "message":"RSS"
+  },
+  "random":{
+    "message":"Random Number"
+  },
+  "extmgm":{
+    "message":"Extensions Management"
+  },
+  "appslist":{
+    "message":"Mini APPs list"
+  },
+  "app_random_bound":{
+    "message":"Bound:"
+  },
+  "app_random_num":{
+    "message":"Number:"
+  },
+  "app_random_norepeat":{
+    "message":"No-repeat"
+  },
+  "app_random_fill":{
+    "message":"Fill all digital"
+  },
+  "app_extmgm_disableall":{
+    "message":"Disable All"
+  },
+  "recentclosed":{
+    "message":"Recent Closed"
+  },
+  "app_recentclosed_tabs":{
+    "message":"tabs"
+  },
+  "synced":{
+    "message":"Synced Tabs"
+  },
+  "app_synced_switch":{
+    "message":"Switch synced device: "
+  },
+  "app_synced_nodevice":{
+    "message":"there's no synced device."
+  },
+  "app_tip_opt":{
+    "message":"Options"
+  },
+  "app_rss_menu":{
+    "message":"Menu"
+  },
+  "app_rss_new":{
+    "message":"New"
+  },
+  "app_rss_subplace":{
+    "message":"RSS2.0"
+  },
+  "app_recentbk_recentlength":{
+    "message":"Number:"
+  },
+  "app_recentht_recentlength":{
+    "message":"Number:"
+  },
+  "app_recentclosed_recentlength":{
+    "message":"Number:"
+  },
+  "base64":{
+    "message":"Base64 Code"
+  },
+  "mail":{
+    "message":"Sharing with Email"
+  },
+  "n_mail":{
+    "message":"Email Type:"
+  },
+  "n_mail_domain":{
+    "message":"*Domain for Google Apps:"
+  },
+  "n_mail_prefix":{
+    "message":"Prefix for Subject:"
+  },
+  "s_defaultmail":{
+    "message":"System's mail application"
+  },
+  "s_gmail":{
+    "message":"Gmail"
+  },
+  "s_gmailapps":{
+    "message":"*Gmail with Google Apps"
+  },
+  "qr":{
+    "message":"QR Code"
+  },
+  "app_qr_url":{
+    "message":"URL of current tab."
+  },
+  "app_qr_title":{
+    "message":"Title of current tab."
+  },
+  "app_qr_seltxt":{
+    "message":"Selected texts."
+  },
+  "app_qr_sellnk":{
+    "message":"Selected/dragged link's URL"
+  },
+  "app_qr_customer":{
+    "message":"Customized text."
+  },
+  "print":{
+    "message":"Print"
+  },
+  "mute":{
+    "message":"Mute tab"
+  },
+  "snap":{
+    "message":"Snap window"
+  },
+  "numc":{
+    "message":"Numerals Converter"
+  },
+  "app_numc_from":{
+    "message":"From:"
+  },
+  "app_numc_to":{
+    "message":"To:"
+  },
+  "tts":{
+    "message":"Text To Speech"
+  },
+  "n_gender":{
+    "message":"Gender:"
+  },
+  "n_rate":{
+    "message":"Rate:"
+  },
+  "n_voicename":{
+    "message":"Voice Engine:"
+  },
+  "n_pitch":{
+    "message":"Pitch:"
+  },
+  "n_volume":{
+    "message":"Volume:"
+  },
+  "s_female":{
+    "message":"Female"
+  },
+  "s_male":{
+    "message":"Male"
+  },
+  "speaker":{
+    "message":"Text Speaker"
+  },
+  "jslist":{
+    "message":"Custom Script List"
+  },
+  "ui_withdir":{
+    "message":"with direction tips of the action name"
+  },
+  "ui_note_enable":{
+    "message":"Show action note"
+  },
+  "ui_allaction_enable":{
+    "message":"Show next all possible actions"
+  },
+  "theme_colorful":{
+    "message":"Colorful"
+  },
+  "theme_bg":{
+    "message":"Background image"
+  },
+  "tks_bug":{
+    "message":"These friends helped testing and reporting bugs: "
+  },
+  "tks_tl":{
+    "message":"These friends helped to translate: "
+  },
+  "tks_pjt":{
+    "message":"Refered/used the following project: "
+  },
+  "rges0":{
+    "message":"Right-click with holding left button"
+  },
+  "rges1":{
+    "message":"Left-click with holding right button"
+  },
+  "wges0":{
+    "message":"Scroll UP with holding LEFT button"
+  },
+  "wges1":{
+    "message":"Scroll DOWN with holding LEFT button"
+  },
+  "wges2":{
+    "message":"Scroll UP with holding RIGHT button"
+  },
+  "wges3":{
+    "message":"Scroll DOWN with holding RIGHT button"
+  },
+  "pop":{
+    "message":"Popup Actions"
+  },
+  "icon":{
+    "message":"Icon Actions"
+  },
+  "ctm":{
+    "message":"Context Menu"
+  },
+  "action":{
+    "message":"Actions"
+  },
+  "ctm_add":{
+    "message":"Add the following items to contextMenu:"
+  },
+  "ctm_fnswitch":{
+    "message":"Menus of switching features"
+  },
+  "ctm_disable":{
+    "message":"Disable smartUp in current tab temporarily"
+  },
+  "ctm_opt":{
+    "message":"Options"
+  },
+  "icon_type":{
+    "message":"Choose work type:"
+  },
+  "icon_back":{
+    "message":"Background"
+  },
+  "icon_back_des":{
+    "message":"The action cant get value from page, and, the action will work in any tab includ blank tab."
+  },
+  "icon_front":{
+    "message":"Front"
+  },
+  "icon_front_des":{
+    "message":"The action will get data from page , it is for actions which need access data from tab."
+  },
+  "icon_showname":{
+    "message":"Show action name on the Icon"
+  },
+  "pop_last":{
+    "message":"Set the last action as default one"
+  },
+  "about_ver":{
+    "message":"VERSION"
+  },
+  "about_url":{
+    "message":"URL"
+  },
+  "review":{
+    "message":"Review"
+  },
+
+  "savepdf_footerCenter":{"message":"The text for the page's center footer"},
+  "savepdf_footerLeft":{"message":"The text for the page's left footer"},
+  "savepdf_footerRight":{"message":"The text for the page's right footer"},
+  "savepdf_headerCenter":{"message":"The text for the page's center header"},
+  "savepdf_headerLeft":{"message":"The text for the page's left header"},
+  "savepdf_headerRight":{"message":"The text for the page's right header"},
+  "savepdf_marginBottom":{"message":"The margin between the page content and the bottom edge of the paper (inches)"},
+  "savepdf_marginLeft":{"message":"The margin between the page content and the left edge of the paper (inches)"},
+  "savepdf_marginRight":{"message":"The margin between the page content and the right edge of the paper (inches)"},
+  "savepdf_marginTop":{"message":"The margin between the page content and the top edge of the paper (inches)"},
+  "savepdf_orientation":{"message":"Page orientation"},
+  "savepdf_paperHeight":{"message":"The paper height in paper size units"},
+  "savepdf_paperSizeUnit":{"message":"The paper size unit"},
+  "savepdf_paperWidth":{"message":"The paper width in paper size units"},
+  "savepdf_scaling":{"message":"Page content scaling factor"},
+  "savepdf_showBackgroundColors":{"message":"Whether the page background colors should be shown"},
+  "savepdf_showBackgroundImages":{"message":"Whether the page background images should be shown"},
+  "savepdf_shrinkToFit":{"message":"Whether the page content should shrink to fit the page width (overrides scaling)"},
+  "savepdf_portrait":{"message":"portrait"},
+  "savepdf_landscape":{"message":"landscape"},
+  "savepdf_inches":{"message":"inches"},
+  "savepdf_millimeters":{"message":"millimeters"},
+  "savepdf_info":{
+    "message":"For setting headers and footers, you can include certain special characters in the strings you supply. These will be replaced in the rendered output as follows:<ul><li>\"&P\": the page number, like \"2\"</li><li>\"&PT\": the page number and the total number of pages, like \"2 of 3\"</li><li>\"&D\": the current date/time</li><li>\"&T\": the page title</li><li>\"&U\": the page URL</li></ul></br>For more information: <a href='https:\/\/developer.mozilla.org/Add-ons/WebExtensions/API/tabs/PageSettings' target='_blank'>tabs.PageSettings - Mozilla | MDN</a>"
+  },
+  "place_string":{"message":"Enter Strings"},
+  "place_number":{"message":"Enter Number"},
+  "perdes_browsersettings":{"message":"Because using mouse gestures on non-Windows platforms conflicts with right-click menus, ensuring a better operating experience, smartUp Gestures needs to request this permission to fix the bug (only Firefox). After getting permission, you need to restart the browser to make it works. For more information: https://developer.mozilla.org/Add-ons/WebExtensions/API/browserSettings. This page only show only one time, or set it again from: General>Linux/Mac Settings>Try to set context menu popup after mouseup."},
+  "opt_mouseup":{"message":"Try to set context menu popup after mouseup"},
+  "des_mouseup":{"message":"Fix the conflict between the mouse gesture and the context menu. Only Firefox 58+. Need request permission 'browserSettings'."}
+}

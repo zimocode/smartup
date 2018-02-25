@@ -1,0 +1,1361 @@
+{
+  "ext_des": {
+    "message": "一个更好的手势类扩展。功能包括：鼠标手势，简易拖曳，超级拖曳，摇杆手势和滚轮手势。"
+  },
+  "ext_name":{
+    "message":"smartUp手势"
+  },
+  "ext_desb": {
+    "message": "借助smartUp，你可以轻松自如、方便快捷的操控浏览器。功能包括鼠标手势、简易拖曳、超级拖曳等，更多功能还在不断更新中。通过smartUp，我们可以快速地完成相当多的浏览器操作，比如开关浏览器标签页、最大化/最小化窗口等等。当然，你也可以通过smartUp快速的拉起其他扩展（这些扩展可能需要一点点的改动）。"
+  },
+  "ext_ver": {
+    "message": "版本号:"
+  },
+  "ext_site": {
+    "message": "官网:"
+  },
+  "ext_email": {
+    "message": "反馈:"
+  },
+  "icon_tip":{
+    "message":"smartUp手势在当前页面不能正常运行！"
+  },
+  "opt_title": {
+    "message": "设置"
+  },
+  "menu_save": {
+    "message": "保存设置"
+  },
+  "menu_reset": {
+    "message": "重置当前页设置"
+  },
+  "menu_autosave": {
+    "message": "自动保存设置"
+  },
+  "menu_popactions":{
+    "message":"弹出菜单操作："
+  },
+  "menu_opts":{
+    "message":"选项"
+  },
+  "menu_about":{
+    "message":"关于"
+  },
+  "menuplus_opennew":{
+    "message":"在新标签页中打开"
+  },
+  "menuplus_exit":{
+    "message":"关闭"
+  },
+  "con_name": {
+    "message": "名称:"
+  },
+  "con_timeout": {
+    "message": "超时取消"
+  },
+  "con_timeout_nomenu":{
+    "message":"不弹出右键菜单"
+  },
+  "con_minlength": {
+    "message": "画线起效的最小长度"
+  },
+  "con_icon": {
+    "message": "在地址栏中显示图标"
+  },
+  "con_autosave": {
+    "message": "自动保存设置"
+  },
+  "con_notif": {
+    "message": "显示更新提示"
+  },
+  "con_miniappnotif":{
+    "message": "显示来至迷你应用的提示"
+  },
+  "con_linux": {
+    "message": "设置通过双击鼠标右键来打开右键菜单。"
+  },
+  "con_mgesmode": {
+    "message": "操作模式："
+  },
+  "con_mgesholdkey": {
+    "message": "按住以下键来临时禁用鼠标手势："
+  },
+  "con_drgbox": {
+    "message": "在文本框中启用手势"
+  },
+  "con_drgtobox": {
+    "message": "当目标被拖曳到文本框时，取消拖曳操作"
+  },
+  "con_drgurl": {
+    "message": "转换为网址，如果可以"
+  },
+  "con_drgimg": {
+    "message": "视为图片，如果该链接包含有图片"
+  },
+  "con_drgholdkey": {
+    "message": "按住以下键来临时禁用拖曳："
+  },
+  "con_drgholdimgkey": {
+    "message": "如果链接包含图片，按住以下键使用拖曳图片，而不使用拖曳链接："
+  },
+  "con_enabletxt": {
+    "message": "文本拖曳"
+  },
+  "con_enablelnk": {
+    "message": "链接拖曳"
+  },
+  "con_enableimg": {
+    "message": "图片拖曳"
+  },
+  "con_lang":{
+    "message":"显示的语言："
+  },
+  "con_export":{
+    "message":"点击导出配置"
+  },
+  "con_setbg":{
+    "message":"自定义背景图片"
+  },
+  "con_bgnote0":{
+    "message":"以上显示的是当前的背景图片，你可以更换为其它图片。"
+  },
+  "con_bgnote1":{
+    "message":"这里设置的背景图片，不会被同步！"
+  },
+  "con_theme":{
+    "message":"设置页主题："
+  },
+  "con_drgcursor":{
+    "message":"更改拖曳时鼠标的样式（某些浏览器默认的拖曳功能会失效）"
+  },
+  "con_notename":{
+    "message":"备注："
+  },
+  "con_notechk":{
+    "message":"在标签页中显示该备注。"
+  },
+  "con_autosync":{
+    "message":"自动同步配置"
+  },
+  "con_esc":{
+    "message":"按[ESC]键取消当前操作"
+  },
+  "con_background":{
+    "message":"使Chrome一直保持后台运行以加快smartup手势的响应速度。（需要请求background权限）"
+  },
+  "con_draggable":{
+    "message":"当被拖动元素被设置为可拖动时[draggable=true]，禁用拖曳"
+  },
+  "stnm_per_pers": {
+    "message": "权限管理"
+  },
+  "stnm_settings": {
+    "message": "设置"
+  },
+  "stnm_function": {
+    "message": "功能开启"
+  },
+  "stnm_opts": {
+    "message": "设置页选项"
+  },
+  "stnm_txtengine": {
+    "message": "文本搜索引擎管理"
+  },
+  "stnm_imgengine": {
+    "message": "图片搜索引擎管理"
+  },
+  "stnm_script": {
+    "message": "脚本管理"
+  },
+  "stnm_linux": {
+    "message": "Linux/OSX选项"
+  },
+  "stnm_importconf": {
+    "message": "导入设置"
+  },
+  "stnm_exportconf": {
+    "message": "导出设置"
+  },
+  "stnm_syncconf":{
+    "message": "同步设置"
+  },
+  "stnm_resetconf": {
+    "message": "重置所有设置"
+  },
+  "stnm_drgsw": {
+    "message": "拖曳开启"
+  },
+  "stnm_resetapps":{
+    "message":"重置所有迷你应用设置"
+  },
+  "stnm_action":{
+    "message":"修改操作"
+    },
+  "des_pers": {
+    "message": "详情请参考https://developer.chrome.com/extensions/permission_warnings。"
+  },
+  "des_pers1":{
+    "message":"你随时可以从以下位置删除这些权限：设置》通用选项》权限管理。"
+  },
+  "des_linux": {
+    "message": "由于非Windows平台上，鼠标右键菜单与鼠标手势的操作有冲突，才采用这种折中的方案来保障手势的正常运行。"
+  },
+  "des_sync": {
+    "message": "配置文件将随同浏览器被同步，如果你已经登录且浏览器支持该功能。"
+  },
+  "des_sync1":{
+    "message":"如果你的电脑与Google的服务器连接不顺畅，或者扩展的配置经常被重置，可以试试不选中此项。请尝试通过导出配置文件来保存你的设置。"
+  },
+  "des_item": {
+    "message": "单击列表项进入编辑，点击“X”删除，“+”添加。"
+  },
+  "des_fnswitch": {
+    "message": "建议按需启用，禁用不会用到的功能。"
+  },
+  "des_resetapps":{
+    "message":"如果某些迷你应用不能正常工作，你可以试着重置所有迷你应用的设置。注意：此操作将清空所有迷你应用的设置，且不能撤销。"
+  },
+  "s_default": {
+    "message": "默认"
+  },
+  "s_current": {
+    "message": "当前"
+  },
+  "s_others": {
+    "message": "其他"
+  },
+  "s_all": {
+    "message": "所有"
+  },
+  "s_head": {
+    "message": "首"
+  },
+  "s_last": {
+    "message": "尾"
+  },
+  "s_left": {
+    "message": "左边"
+  },
+  "s_right": {
+    "message": "右边"
+  },
+  "s_lefts": {
+    "message": "所有左边"
+  },
+  "s_rights": {
+    "message": "所有右边"
+  },
+  "s_up": {
+    "message": "上"
+  },
+  "s_down": {
+    "message": "下"
+  },
+  "s_top": {
+    "message": "顶部"
+  },
+  "s_bottom": {
+    "message": "底部"
+  },
+  "s_leftmost": {
+    "message": "最左边"
+  },
+  "s_rightmost": {
+    "message": "最右边"
+  },
+  "s_frame": {
+    "message": "Frame"
+  },
+  "s_on": {
+    "message": "开"
+  },
+  "s_off": {
+    "message": "关"
+  },
+  "s_yes": {
+    "message": "是"
+  },
+  "s_no": {
+    "message": "否"
+  },
+  "s_new": {
+    "message": "新标签"
+  },
+  "s_back": {
+    "message": "新标签（后台）"
+  },
+  "s_win": {
+    "message": "新窗口"
+  },
+  "s_winback": {
+    "message": "新窗口（后台）"
+  },
+  "s_incog": {
+    "message": "隐身窗口"
+  },
+  "s_unpin": {
+    "message": "不固定"
+  },
+  "s_pinned": {
+    "message": "固定"
+  },
+  "s_normal": {
+    "message": "常规"
+  },
+  "s_popup": {
+    "message": "Popup"
+  },
+  "s_panel": {
+    "message": "Panel"
+  },
+  "s_detached_panel": {
+    "message": "Detached Panel"
+  },
+  "s_tabele_title":{
+    "message":"标签页的标题"
+  },
+  "s_tabele_url":{
+    "message":"标签页的网址"
+  },
+  "s_tabele_aslnk":{
+    "message":"作为链接"
+  },
+  "s_cr_set":{
+    "message":"设置"
+  },
+  "s_cr_ext":{
+    "message":"扩展"
+  },
+  "s_cr_history":{
+    "message":"历史纪录"
+  },
+  "s_cr_app":{
+    "message":"应用"
+  },
+  "s_cr_dl":{
+    "message":"下载内容"
+  },
+  "s_cr_bookmark":{
+    "message":"书签管理器"
+  },
+  "s_cr_flag":{
+    "message":"Flags"
+  },
+  "s_unicode":{
+    "message":"Unicode"
+  },
+  "s_uri":{
+    "message":"encodeURI"
+  },
+  "s_uric":{
+    "message":"encodeURIComponent"
+  },
+  "s_none": {
+    "message": "无"
+  },
+  "s_ctrl": {
+    "message": "Ctrl"
+  },
+  "s_alt": {
+    "message": "Alt"
+  },
+  "s_shift": {
+    "message": "Shift"
+  },
+  "s_mousebutton1": {
+    "message": "鼠标中键"
+  },
+  "s_mousebutton2": {
+    "message": "鼠标右键"
+  },
+  "s_o_follow": {
+    "message": "跟随"
+  },
+  "s_o_center": {
+    "message": "居中"
+  },
+  "s_o_hover": {
+    "message": "链接样式"
+  },
+  "s_o_ui_bottom": {
+    "message": "底部"
+  },
+  "s_in": {
+    "message": "放大"
+  },
+  "s_out": {
+    "message": "缩小"
+  },
+  "s_reset": {
+    "message": "重置"
+  },
+  "s_audible":{
+    "message":"有声音的标签页"
+  },
+  "n_notif":{
+    "message":"显示操作提示"
+  },
+  "n_tab":{
+    "message":"目标标签页："
+  },
+  "n_tab_single":{
+    "message":"目标标签页："
+  },
+  "n_tab_lrhl":{
+    "message":"目标标签页："
+  },
+  "n_close": {
+    "message": "目标标签页："
+  },
+  "n_reload_clear": {
+    "message": "清除缓存"
+  },
+  "n_close_sel": {
+    "message": "选中标签页："
+  },
+  "n_close_keep":{
+    "message":"当关闭的是最后一个标签页时，不关闭窗口。"
+  },
+  "n_closePin":{
+    "message":"不关闭被固定的标签页。"
+  },
+  "n_closeConfirm":{
+    "message":"关闭多个标签页前需要确认。"
+  },
+  "n_closetab":{
+    "message":"操作完成后关闭标签页"
+  },
+  "n_optype": {
+    "message": "打开方式："
+  },
+  "n_position": {
+    "message": "位置："
+  },
+  "n_position_lrhl":{
+    "message":"位置："
+  },
+  "n_new_position": {
+    "message": "位置："
+  },
+  "n_index":{
+    "message":"位置："
+  },
+  "n_index_new":{
+    "message":"位置："
+  },
+  "n_wintype": {
+    "message": "窗口类型："
+  },
+  "n_winincog": {
+    "message": "隐身窗口"
+  },
+  "n_win": {
+    "message": "目标窗口："
+  },
+  "n_effect": {
+    "message": "附加滚动特效"
+  },
+  "n_pin": {
+    "message": "固定标签页"
+  },
+  "n_content": {
+    "message": "内容："
+  },
+  "n_encoding":{
+    "message":"编码："
+  },
+  "n_target_np":{
+    "message":"打开方式："
+  },
+  "n_npkey_n":{
+    "message":"关键词："
+  },
+  "n_npkey_p":{
+    "message":"关键词："
+  },
+  "n_dlbar":{
+    "message":"显示下载栏"
+  },
+  "n_crpages":{
+    "message":"浏览器内部页面："
+  },
+  "n_copytabele_content":{
+    "message":"复制类型："
+  },
+  "n_script":{
+    "message":"脚本："
+  },
+  "n_jq": {
+    "message": "插入JQ"
+  },
+  "n_txtengine": {
+    "message": "文本引擎："
+  },
+  "n_imgengine": {
+    "message": "图片引擎："
+  },
+  "n_zoom":{
+    "message":"缩放类型："
+  },
+  "n_scroll":{
+    "message":"滚动类型："
+  },
+  "n_num":{
+    "message":"数量："
+  },
+  "n_closebox":{
+    "message":"点击列表项后关闭窗口。"
+  },
+  "n_snap":{
+    "message":"分屏方向："
+  },
+  "n_url":{
+    "message":"URL:"
+  },
+  "n_dialog":{
+    "message":"显示对话框"
+  },
+  "script": {
+    "message": "运行脚本"
+  },
+  "ag_none": {
+    "message": "无"
+  },
+  "ag_nav": {
+    "message": "导航"
+  },
+  "ag_scroll": {
+    "message": "滚动"
+  },
+  "ag_tab": {
+    "message": "标签页"
+  },
+  "ag_window": {
+    "message": "窗口"
+  },
+  "ag_copy": {
+    "message": "复制黏贴"
+  },
+  "ag_txt": {
+    "message": "文本"
+  },
+  "ag_lnk": {
+    "message": "链接"
+  },
+  "ag_img": {
+    "message": "图片"
+  },
+  "ag_others": {
+    "message": "其他"
+  },
+  "ag_search": {
+    "message": "搜索"
+  },
+  "ag_exp":{
+    "message":"实验"
+  },
+  "ag_chrome":{
+    "message":"浏览器相关"
+  },
+  "ag_apps":{
+    "message":"迷你应用"
+  },
+  "ag_su":{
+    "message":"smartUp相关"
+  },
+  "ag_dep":{
+    "message":"即将删除"
+  },
+  "none": {
+    "message": "无"
+  },
+  "back": {
+    "message": "后退"
+  },
+  "forward": {
+    "message": "前进"
+  },
+  "stop": {
+    "message": "停止"
+  },
+  "scroll": {
+    "message": "滚动"
+  },
+  "next": {
+    "message": "下一页"
+  },
+  "previous": {
+    "message": "上一页"
+  },
+  "pretab": {
+    "message": "切换到上一个标签页"
+  },
+  "reload": {
+    "message": "刷新"
+  },
+  "close": {
+    "message": "关闭标签页"
+  },
+  "newtab": {
+    "message": "新建标签页"
+  },
+  "reopen": {
+    "message": "重新打开关闭的标签页"
+  },
+  "open": {
+    "message": "打开自定义网址"
+  },
+  "openclip": {
+    "message": "打开粘贴板中的网址"
+  },
+  "duplicate": {
+    "message": "复制标签页"
+  },
+  "detach": {
+    "message": "分离标签页"
+  },
+  "pin": {
+    "message": "固定标签页"
+  },
+  "switchtab": {
+    "message": "切换标签页"
+  },
+  "move": {
+    "message": "移动标签页"
+  },
+  "newwin": {
+    "message": "新建窗口"
+  },
+  "closewin": {
+    "message": "关闭窗口"
+  },
+  "max": {
+    "message": "最大化"
+  },
+  "min": {
+    "message": "最小化"
+  },
+  "full": {
+    "message": "全屏"
+  },
+  "copytabas": {
+    "message": "按自定义格式复制"
+  },
+  "capture": {
+    "message": "截屏"
+  },
+  "viewsource": {
+    "message": "查看源代码"
+  },
+  "optionspage": {
+    "message": "打开设置页"
+  },
+  "copytxt": {
+    "message": "复制文本"
+  },
+  "txtsearch": {
+    "message": "搜索文本"
+  },
+  "txtsearchclip":{
+    "message":"搜索剪贴板中的文本"
+  },
+  "openlnk": {
+    "message": "打开链接"
+  },
+  "copylnkurl": {
+    "message": "复制链接网址"
+  },
+  "copylnktxt": {
+    "message": "复制链接文本"
+  },
+  "copylnkaslnk": {
+    "message": "复制链接"
+  },
+  "copylnkas": {
+    "message": "复制为自定义格式..."
+  },
+  "openimg": {
+    "message": "打开图片"
+  },
+  "saveimg": {
+    "message": "保存图片"
+  },
+  "saveimgas": {
+    "message": "图片另存为..."
+  },
+  "copyimgurl": {
+    "message": "复制图片网址"
+  },
+  "imgsearch": {
+    "message": "图片搜索"
+  },
+  "paste": {
+    "message": "粘贴文本"
+  },
+  "source": {
+    "message": "查看源代码"
+  },
+  "reloadext": {
+    "message": "重启smartUp"
+  },
+  "restart": {
+    "message": "重启浏览器"
+  },
+  "Exit": {
+    "message": "退出浏览器"
+  },
+  "copytabele": {
+    "message": "复制标签页元素"
+  },
+  "crpages":{
+    "message":"浏览器内部页面"
+  },
+  "dldir":{
+    "message":"打开默认下载文件夹"
+  },
+  "bookmark":{
+    "message":"添加书签"
+  },
+  "bookmarklnk":{
+    "message":"添加书签"
+  },
+  "zoom":{
+    "message":"缩放"
+  },
+  "zoom_dep":{
+    "message":"缩放"
+  },
+  "savepage":{
+    "message":"保存网页"
+  },
+  "tablist":{
+    "message":"标签页列表"
+  },
+  "upperlevel":{
+    "message":"转到上一级"
+  },
+  "increment":{
+    "message":"网址自增一"
+  },
+  "decrement":{
+    "message":"网址自减一"
+  },
+  "extdisable":{
+    "message":"在当前页暂时禁用smartUp手势"
+  },
+  "general": {
+    "message": "通用选项"
+  },
+  "recentbk":{
+    "message":"最近书签"
+  },
+  "recentht":{
+    "message":"最近历史纪录"
+  },
+  "dllink":{
+    "message":"下载链接"
+  },
+  "savepdf":{
+    "message":"另存为PDF文件"
+  },
+  "copyimg":{
+    "message":"复制图片"
+  },
+  "set_bk":{
+    "message":"设置在新标签页中打开书签"
+  },
+  "set_search":{
+    "message":"设置在新标签页中打开搜索结果"
+  },
+  "readermode":{
+    "message":"阅读模式"
+  },
+  "mges": {
+    "message": "鼠标手势"
+  },
+  "rges": {
+    "message": "摇杆手势"
+  },
+  "wges": {
+    "message": "滚轮手势"
+  },
+  "sdrg": {
+    "message": "简易拖曳"
+  },
+  "drg": {
+    "message": "超级拖曳"
+  },
+  "about": {
+    "message": "关于"
+  },
+  "changelog":{
+    "message":"更新日志"
+  },
+  "translate":{
+    "message":"翻译"
+  },
+  "thanks":{
+    "message":"致谢"
+  },
+  "setting": {
+    "message": "设置"
+  },
+  "ui": {
+    "message": "外观"
+  },
+  "fnswitch": {
+    "message": "功能开启"
+  },
+  "searchmgr": {
+    "message": "搜索引擎"
+  },
+  "scriptmgr": {
+    "message": "用户脚本"
+  },
+  "linux": {
+    "message": "Linux/OSX选项"
+  },
+  "per":{
+    "message":"权限管理"
+  },
+  "conf": {
+    "message": "配置管理"
+  },
+  "gesmgr": {
+    "message": "操作"
+  },
+  "tdrg": {
+    "message": "文本操作"
+  },
+  "ldrg": {
+    "message": "链接操作"
+  },
+  "idrg": {
+    "message": "图片操作"
+  },
+  "tsdrg": {
+    "message": "文本操作"
+  },
+  "lsdrg": {
+    "message": "链接操作"
+  },
+  "isdrg": {
+    "message": "图片操作"
+  },
+  "ui_line_enable": {
+    "message": "显示画线"
+  },
+  "ui_direct_enable": {
+    "message": "显示实时方向提示"
+  },
+  "ui_tip_enable": {
+    "message": "显示操作名称"
+  },
+  "ui_color": {
+    "message": "颜色"
+  },
+  "ui_width": {
+    "message": "大小"
+  },
+  "ui_opacity": {
+    "message": "不透明度"
+  },
+  "ui_bgcolor": {
+    "message": "背景色"
+  },
+  "ui_style": {
+    "message": "类型"
+  },
+  "msg_saved": {
+    "message": "设置已保存！"
+  },
+  "msg_reset2": {
+    "message": "输入不正确，操作已取消！"
+  },
+  "msg_reset": {
+    "message": "注意：此操作将重置所有设置，且不能撤销。输入 ReSeT 以继续..."
+  },
+  "msg_confimport": {
+    "message": "配置文件错误！！！"
+  },
+  "msg_importver": {
+    "message": "导入该配置文件前，需要先将smarUp升级到最新版本。"
+  },
+  "msg_dellast": {
+    "message": "这是最后一项了，需要至少保留一个！"
+  },
+  "msg_delinuse": {
+    "message": "正在使用中，不能删除！"
+  },
+  "msg_delpers": {
+    "message": "该权限已经移除！"
+  },
+  "msg_delpers_fail": {
+    "message": "这是一个必须权限，不能删除！"
+  },
+  "msg_dirnone": {
+    "message": "请在框内画线！"
+  },
+  "msg_dirrepeat": {
+    "message": "方向重复，请重试！"
+  },
+  "msg_blank":{
+    "message":"有地方还没输入内容，请确认！"
+  },
+  "msg_setbg":{
+    "message":"出错了~"
+  },
+  "msg_first":{
+    "message":"感谢安装本扩展！<br \/><li>smartUp是一款免费的扩展，如果你觉得满意的话，请给个五星好评，这样我才有继续更新的动力。<li>如果你是首次安装，扩展已经在正常运行了。试着按着右键，然后向上再向右画线试试吧。如果你曾经安装过，扩展正在后台同步设置，请稍等片刻。<li>由于某些原因，某些操作不能在这个页面工作（如滚动、用户脚本等）。<li>由于浏览器安全方面的限制，smartUp在某些特定页面也不能正常工作（如新标签、浏览器设置页）<li>本扩展包含了相等多的操作，我们默认只设置了少量，你可以根据自己的情况，增删及编辑。"
+  },
+  "test_mges": {
+    "message": "请在此画线！"
+  },
+  "test_tdrg": {
+    "message": "这是一段测试文本，选中文本并拖曳画线，然后选择你所需要的操作即可。"
+  },
+  "test_ldrg": {
+    "message": "<a href='###'>这是一个测试链接，拖动此链接并画线，然后选择你所需要的操作。</ a>"
+  },
+  "test_idrg": {
+    "message": "这是测试用图片，拖动改图片并画线，然后选择所需操作： <img src='../icon.png' />"
+  },
+  "tip_actionname": {
+    "message": "使用自定义操作名称"
+  },
+  "btn_save": {
+    "message": "保存"
+  },
+  "btn_cancel": {
+    "message": "取消"
+  },
+  "btn_done": {
+    "message": "确定"
+  },
+  "btn_del":{
+    "message":"删除"
+  },
+  "btn_continue":{
+    "message":"继续"
+  },
+  "btn_next":{
+    "message":"下一步"
+  },
+  "btn_back":{
+    "message":"返回"
+  },
+  "btn_decode":{
+    "message":"解码"
+  },
+  "btn_encode":{
+    "message":"编码"
+  },
+  "btn_play":{
+    "message":"播放"
+  },
+  "btn_pause":{
+    "message":"暂停"
+  },
+  "btn_resume":{
+    "message":"继续"
+  },
+  "btn_stop":{
+    "message":"停止"
+  },
+  "btn_resetapps":{
+    "message":"重置迷你应用设置"
+  },
+  "btn_reset":{
+    "message":"重置"
+  },
+  "init_openlnk_bg": {
+    "message": "在后台标签页中打开链接"
+  },
+  "init_close_current": {
+    "message": "关闭当前标签页"
+  },
+  "init_search_bg": {
+    "message": "搜索文本并在后台标签页中打开"
+  },
+  "init_reload_current": {
+    "message": "刷新当前标签页"
+  },
+  "init_reload_clear": {
+    "message": "强制刷新"
+  },
+  "init_switch_left": {
+    "message": "切换到左边标签页"
+  },
+  "init_switch_right": {
+    "message": "切换到右边标签页"
+  },
+  "init_openimg_bg": {
+    "message": "在后台标签页中打开图片"
+  },
+  "init_searchtxt_bg":{
+    "message": "搜索文本并在后台标签页中打开"
+  },
+  "init_searchimg_bg": {
+    "message": "搜索图片并在后台标签页中打开"
+  },
+  "init_scroll_up":{
+    "message":"向上滚动"
+  },
+  "init_scroll_down":{
+    "message":"向下滚动"
+  },
+  "init_scroll_top":{
+    "message":"到顶部"
+  },
+  "init_scroll_bottom":{
+    "message":"到底部"
+  },
+  "getper_title":{
+    "message":"权限请求"
+  },
+  "getper_des":{
+    "message":"要完成当前操作，需要请求以下额外的权限："
+  },
+  "getper_btn":{
+    "message":"获取权限"
+  },
+  "getper_after":{
+    "message":"获取权限成功！请重试上一个操作。某些情况下，需要重启浏览器才能生效！<br \/>当前页面将在以下倒计时后关闭  "
+  },
+  "getper_des1":{
+    "message":"你随时可以从以下位置删除这些权限：设置》通用选项》权限管理。"
+  },
+  "getper_fail":{
+    "message":"获取权限失败！请将浏览器升级到最新版再试。"
+  },
+  "wel_title":{
+    "message":"欢迎"
+  },
+  "notif_title":{
+    "message":"smartUp消息"
+  },
+  "notif_dlok":{
+    "message":"下载完成！"
+  },
+  "notif_dlerr":{
+    "message":"下载出错！"
+  },
+  "notif_title_update":{
+    "message":"更新提示"
+  },
+  "notif_title_appsave":{
+    "message":"迷你应用消息"
+  },
+  "notif_con_appsave":{
+    "message":"设置已保存！"
+  },
+  "notif_con_bkdel":{
+    "message":"已经删除该书签"
+  },
+  "notif_con_bkadd":{
+    "message":"已经成功添加书签"
+  },
+  "notif_con_dlok":{
+    "message":"下载完成！"
+  },
+  "notif_btn_open":{
+    "message":"打开设置页"
+  },
+  "notif_con_dnimgerr":{
+    "message":"保存图片出错！"
+  },
+  "notif_con_dnimg":{
+    "message":"图片下载完成！"
+  },
+  "lang_auto":{
+    "message":"自动"
+  },
+  "lang_en":{
+    "message":"英文（en）"
+  },
+  "title_newengine":{
+    "message":"添加新引擎"
+  },
+  "title_newaction":{
+    "message":"添加新操作"
+  },
+  "title_newscript":{
+    "message":"添加新脚本"
+  },
+  "title_editaction":{
+    "message":"编辑操作"
+  },
+  "title_editengine":{
+    "message":"编辑引擎"
+  },
+  "title_editscript":{
+    "message":"编辑脚本"
+  },
+  "title_editdirect":{
+    "message":"编辑画线"
+  },
+  "tip_editdir":{
+    "message":"编辑画线"
+  },
+  "tip_resetcur":{
+    "message":"重置当前页设置"
+  },
+  "tip_addnew":{
+    "message":"新增"
+  },
+  "rss":{
+    "message":"RSS"
+  },
+  "random":{
+    "message":"随机数"
+  },
+  "extmgm":{
+    "message":"扩展管理"
+  },
+  "appslist":{
+    "message":"迷你应用列表"
+  },
+  "app_random_bound":{
+    "message":"范围："
+  },
+  "app_random_num":{
+    "message":"数量："
+  },
+  "app_random_norepeat":{
+    "message":"不重复"
+  },
+  "app_random_fill":{
+    "message":"补全数位"
+  },
+  "app_extmgm_disableall":{
+    "message":"全部禁用"
+  },
+  "recentclosed":{
+    "message":"最近关闭标签页"
+  },
+  "app_recentclosed_tabs":{
+    "message":"tabs"
+  },
+  "synced":{
+    "message":"同步的标签页"
+  },
+  "app_synced_switch":{
+    "message":"选择同步的设备： "
+  },
+  "app_synced_nodevice":{
+    "message":"没有同步的设备。"
+  },
+  "app_tip_opt":{
+    "message":"设置"
+  },
+  "app_rss_menu":{
+    "message":"菜单"
+  },
+  "app_rss_new":{
+    "message":"新增"
+  },
+  "app_rss_subplace":{
+    "message":"RSS2.0"
+  },
+  "app_recentbk_recentlength":{
+    "message":"数量："
+  },
+  "app_recentht_recentlength":{
+    "message":"数量："
+  },
+  "app_recentclosed_recentlength":{
+    "message":"数量："
+  },
+  "base64":{
+    "message":"Base64编码"
+  },
+  "mail":{
+    "message":"通过Email分享"
+  },
+  "n_mail":{
+    "message":"Email类型："
+  },
+  "n_mail_domain":{
+    "message":"*Google Apps域名："
+  },
+  "n_mail_prefix":{
+    "message":"Prefix for Subject:"
+  },
+  "s_defaultmail":{
+    "message":"系统默认"
+  },
+  "s_gmail":{
+    "message":"Gmail"
+  },
+  "s_gmailapps":{
+    "message":"*Gmail with Google Apps"
+  },
+  "qr":{
+    "message":"二维码"
+  },
+  "app_qr_url":{
+    "message":"当前标签页的网址"
+  },
+  "app_qr_title":{
+    "message":"当前标签页的标题"
+  },
+  "app_qr_seltxt":{
+    "message":"选中的文本"
+  },
+  "app_qr_sellnk":{
+    "message":"选中/拖曳链接的网址"
+  },
+  "app_qr_customer":{
+    "message":"自定义文本"
+  },
+  "print":{
+    "message":"打印"
+  },
+  "mute":{
+    "message":"静音"
+  },
+  "snap":{
+    "message":"窗口分屏"
+  },
+  "numc":{
+    "message":"进制转换"
+  },
+  "app_numc_from":{
+    "message":"From:"
+  },
+  "app_numc_to":{
+    "message":"To:"
+  },
+  "tts":{
+    "message":"文本转语音"
+  },
+  "n_gender":{
+    "message":"性别："
+  },
+  "n_rate":{
+    "message":"语速："
+  },
+  "n_voicename":{
+    "message":"语音引擎："
+  },
+  "n_pitch":{
+    "message":"音调："
+  },
+  "n_volume":{
+    "message":"音量："
+  },
+  "s_female":{
+    "message":"女"
+  },
+  "s_male":{
+    "message":"男"
+  },
+  "speaker":{
+    "message":"文本朗读"
+  },
+  "jslist":{
+    "message":"自定义脚本列表"
+  },
+  "ui_withdir":{
+    "message":"在操作名称中包含方向提示"
+  },
+  "ui_note_enable":{
+    "message":"显示操作备注"
+  },
+  "ui_allaction_enable":{
+    "message":"显示后续可能的操作"
+  },
+  "theme_colorful":{
+    "message":"多彩"
+  },
+  "theme_bg":{
+    "message":"背景图"
+  },
+  "tks_bug":{
+    "message":"以下朋友帮助过测试及提交BUG："
+  },
+  "tks_tl":{
+    "message":"这些朋友帮助翻译扩展："
+  },
+  "tks_pjt":{
+    "message":"参考/使用了以下项目："
+  },
+  "rges0":{
+    "message":"按住左键再右击"
+  },
+  "rges1":{
+    "message":"按住右键再左击"
+  },
+  "wges0":{
+    "message":"按住左键再向上滚动"
+  },
+  "wges1":{
+    "message":"按住左键再向下滚动"
+  },
+  "wges2":{
+    "message":"按住右键再向上滚动"
+  },
+  "wges3":{
+    "message":"按住右键再向下滚动"
+  },
+  "pop":{
+    "message":"弹出菜单操作"
+  },
+  "icon":{
+    "message":"图标操作"
+  },
+  "ctm":{
+    "message":"右键菜单"
+  },
+  "action":{
+    "message":"操作"
+  },
+  "ctm_add":{
+    "message":"添加以下项到右键菜单："
+  },
+  "ctm_fnswitch":{
+    "message":"开关功能选项的菜单"
+  },
+  "ctm_disable":{
+    "message":"在当前页暂时禁用smartUp手势"
+  },
+  "ctm_opt":{
+    "message":"设置"
+  },
+  "icon_type":{
+    "message":"选择工作模式："
+  },
+  "icon_back":{
+    "message":"后台"
+  },
+  "icon_back_des":{
+    "message":"操作不能从页面中获取数据，同时，操作可以在所有页面中运行，包括空白页。"
+  },
+  "icon_front":{
+    "message":"前台"
+  },
+  "icon_front_des":{
+    "message":"操作可以从页面中获取数据，适用于需要获取数据的操作。"
+  },
+  "icon_showname":{
+    "message":"在图标处显示操作的名称"
+  },
+  "pop_last":{
+    "message":"设置上一次的操作为默认"
+  },
+  "about_ver":{
+    "message":"版本"
+  },
+  "about_url":{
+    "message":"网址"
+  },
+  "review":{
+    "message":"评分与评论"
+  },
+  "aliqr1801":{
+    "message":"扫码领红包"
+  },
+  "perdes_browsersettings":{"message":"由于非Windows平台上，鼠标右键菜单在按下鼠标按键按下后就出现，导致与使用右键操作的鼠标手势冲突，导致鼠标手势不可用。为消除该影响，smartUp手势需要请求额外的权限（‘browserSettings’）来改变右键菜单的弹出方式（仅Firefox）。本页面只出现一次，你也可以通过以下路径再次尝试开启：通用选项》Linux/MAC选项》尝试设置右键菜单延后出现。详情请参考：https://developer.mozilla.org/Add-ons/WebExtensions/API/browserSettings。"},
+  "opt_mouseup":{"message":"尝试设置右键菜单延后出现"},
+  "des_mouseup":{"message":"该选项可以消除右键菜单与鼠标手势操作的冲突。需要请求'browserSettings'权限，仅适用于Firefox58+。"}
+}

@@ -1,0 +1,30 @@
+smartup.su_apps#su_apps_numc span{
+	display: inline-block;
+}
+smartup.su_apps#su_apps_numc .numcbox{
+	text-align: left;
+	padding: 8px;
+	width: 240px;
+}
+smartup.su_apps#su_apps_numc .su_numc_input,
+smartup.su_apps#su_apps_numc .su_numc_output{
+	width: 260px;
+	height: 40px;
+	/*margin-bottom: 5px;*/
+	font-size: 16px;
+	font-weight: bold;
+    margin: 6px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+smartup.su_apps#su_apps_numc .su_numc_span{
+	/*width: 80px;*/
+	display: inline-block;
+	padding-left: 10px;
+}
+smartup.su_apps#su_apps_numc .su_numc_btn{
+	width: 100%;
+	margin: 0;
+	padding: 0 8px;
+	box-sizing: border-box;
+}

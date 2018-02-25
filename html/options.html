@@ -1,0 +1,552 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Loading...</title>
+    <script src="../js/ui.js"></script>
+    <script src="../js/event.js"></script>
+    <script src="../js/base64.min.js"></script>
+    <script src="../js/namespace.js" type="text/javascript"></script>
+    <link href="../css/options.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body style="background:#d0d9ff;padding-top:100px;padding-bottom:10px;">
+    <div style="position: fixed;right: 0;top: 100px;">
+        <textarea id="output"></textarea>
+        <button id="paste">Paste</button>        
+    </div>
+
+    <div id="ad171217_btn">扫码领红包</div>
+    <div id="msgbox"></div>
+    <div id="welcomebox">
+        <div id="welcome">
+            <div id="wel_title" data-i18n="wel_title"></div>
+            <div id="wel_con1"></div>
+            <!-- <ul>
+                <li data-i18n="wel_li1"></li>
+                <li data-i18n="wel_li2"></li>
+                <li data-i18n="wel_li3"></li>
+                <li data-i18n="wel_li4"></li>
+            </ul>   -->           
+        </div>
+    </div>
+    <smartup class="su_apps" style="display:none;">
+        <div class="box_head" style="">
+            <span class="box_title"></span>
+            <div class="box_btn_close">x</div>
+        </div>
+        <div class="box_main">
+            <div class="box_content"></div>
+            <div class="box_submit">
+                <input class="box_btn box_btn_del" style="float:left;" type="button" value="delete">
+                <input class="box_btn box_btn_cancel" type="button" value="cancel">
+                <input class="box_btn box_btn_save" type="button" value="save">
+            </div>
+            <div class="box_des">
+                <ul></ul>
+            </div>
+        </div>
+    </smartup>
+    <ul class="menupluscontent">
+        <li class="menu_hide" id="resetcurrent" data-i18n="menu_reset"></li>
+        <li class="menu_hide rate" data-i18n="review"></li>
+        <li class="menu_hide menuplus_autosave" style="text-indent:-10px;border-top:1px solid rgba(134, 134, 134, 0.3)"><input class="init change-checkbox menu_hide cancel_hide" data-confobj="general|settings" data-confele="autosave" type="checkbox"><label class="menu_hide cancel_hide" style="cursor:pointer;" data-i18n="menu_autosave"></label></li>
+        <li class="menu_hide menuplus_save" id="menuplus_save" data-i18n="menu_save"></li>
+        <li class="menu_hide menuplus_opennew" data-i18n="menuplus_opennew" style="border-top:1px solid rgba(134, 134, 134, 0.3)"></li>
+        <li class="menu_hide menuplus_exit" data-i18n="menuplus_exit"></li>
+    </ul>
+    <nav>
+        <!-- <img id="nav_logo" src="../icon.png"> -->
+        <img id="nav_img" src="../image/menu.svg">
+        <span id="nav_txt">smartUp Gestures</span>
+        <div id="nav_btn">
+            <img id="nav_reset" src="../image/reset_cur.png" title="_i18n" data-i18n="tip_resetcur">
+            <img class="menuplus_save nav_btn_save" src="../image/save.png" title="_i18n" data-i18n="menu_save">
+            <img id="nav_menu" src="../image/menuplus.svg">            
+        </div>
+    </nav>
+    <menu>
+        <div id="menu_topbox" style="border-bottom: 1px solid #d0d9ff;">
+            <span id="menu_name">smartUp</span>
+            <img id="menu_logo" src="../icon.png">
+        </div>
+        <div style="clear:both;"></div>
+        <div id="menubox"></div>
+        <div id="menu_bottom" class="rate">
+            <img src="../image/star.png">
+            <span data-i18n="review"></span>
+        </div>
+    </menu>
+
+    <div id="top" style="height:260px;background:#e91e63;position: fixed;left: 0;top: 0;z-index: 0;width: 100%;"></div>
+    <div id="loadingbox">Loading<img src="../image/loading.gif"></div>
+    <div id="btn_add" title="_i18n" data-i18n="tip_addnew">+</div>
+    <div id="main">
+        <div class="set set-00" data-confobj="general|settings" data-conf0="general" data-conf1="settings">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <input id="con-timeout" class="init change-checkbox" data-confele="timeout" type="checkbox"><label for="con-timeout" data-i18n="con_timeout"></label><br />
+                <input class="init uirange change-range" data-confele="timeoutvalue" type="range" min="100" max="10000" step="100" style="margin-left:24px;"><span class="uirangebox">2</span><span class="box_unit">( ms )</span><br />
+                <input id="con-timeout_nomenu" class="init change-checkbox" data-confele="timeout_nomenu" type="checkbox" style="margin-left:24px;"><label for="con-timeout_nomenu" data-i18n="con_timeout_nomenu"></label><br />
+                <label data-i18n="con_minlength"></label><br />
+                <input class="init uirange change-range" data-confele="minlength" type="range" min="5" max="20" style="margin-left:24px;"><span class="uirangebox">2</span><span class="box_unit">( px )</span><br />
+                <!-- <input class="init change-checkbox" data-confele="icon" type="checkbox"><label data-i18n="con_icon"></label><br /> -->
+                <!-- <input class="init change-checkbox" data-confele="boxzoom" type="checkbox"><label data-i18n="con_boxzoom"></label> -->
+                <input id="con-notif" class="init change-checkbox" data-conf0="" data-conf1="settings" data-confele="notif" type="checkbox"><label for="con-notif" data-i18n="con_notif"></label><br />
+                <input class="init change-checkbox" data-conf0="" data-conf1="settings" data-confele="appnotif" type="checkbox"><label data-i18n="con_miniappnotif"></label><br />
+                <input class="init change-checkbox" data-confele="esc" type="checkbox"><label data-i18n="con_esc"></label><br />
+                <input class="change-background" id="change-background" type="checkbox"><label for="change-background" data-i18n="con_background"></label>
+            </div>
+            <div class="setname" data-i18n="stnm_opts"></div>
+            <div class="setcontent">
+                <input id="con-autosave" class="init change-checkbox" data-confele="autosave" type="checkbox"><label for="con-autosave" data-i18n="con_autosave"></label><br />
+                <!-- <label data-i18n="con_lang">language：</label><br />
+                <select name="" id="con-lang" class="init setmargin" data-confele="lang">
+                    <option data-i18n="lang_auto" value="lang_auto">local</option>
+                    <option data-i18n="lang_en" value="lang_en">English</option>
+                </select>
+                <div class="setdes" data-i18n="des_lang" style="padding-top:0;"></div> -->
+                <label data-i18n="con_theme"></label><br />
+                <select name="" id="" class="init change setmargin" data-confele="theme">
+                    <option data-i18n="theme_colorful" value="colorful"></option>
+                    <option data-i18n="theme_bg" value="bg"></option>
+                </select>
+                <a href="###" id="setbg", data-i18n="con_setbg"></a>
+            </div>
+        </div>
+        <div class="set set-01" data-confobj="general|fnswitch" data-conf0="general" data-conf1="fnswitch">
+            <div class="setname" data-i18n="stnm_function"></div>
+            <div class="setcontent"></div>
+        </div>
+        <div class="set set-02 confobj" data-confobj="general|engine" data-conf0="general" data-conf1="engine">
+            <div class="setname" data-i18n="stnm_txtengine"></div>
+            <div class="setcontent">
+                <ul class="con-item txtengine tengine ul_txtengine item-tengine confobj" data-confobj="general|engine|txtengine"></ul>
+                <div id="add-txtengine" class="item_add item-add item-edit item-engine edit-engine click-add add-txtengine btn_engine" title="_i18n" data-i18n="tip_addnew" data-confobj="general|engine|txtengine">+</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="setname" data-i18n="stnm_imgengine"></div>
+            <div class="setcontent">
+                <ul class="con-item iengine ul_imgengine ul_iengine confobj" data-confobj="general|engine|imgengine"></ul>
+                <div id="add-imgengine" class="item_add item-add item-edit item-engine edit-engine click-add add-imgengine btn_engine" title="_i18n" data-i18n="tip_addnew" data-confobj="general|engine|imgengine">+</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="setdes" data-i18n="des_item"></div>
+        </div>
+        <div class="set set-03" data-confobj="general|script" data-conf0="general" data-conf1="script">
+            <div class="setname" data-i18n="stnm_script"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_script confobj" data-confobj="general|script|script"></ul>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="setdes" data-i18n="des_item"></div>
+        </div>
+        <div class="set set-04" data-confobj="general|linux" data-conf0="general" data-conf1="linux">
+            <div class="setname" data-i18n="stnm_linux"></div>
+            <div class="setcontent">
+                <input id="con-linux" class="init change-checkbox" data-confele="cancelmenu" type="checkbox"><label for="con-linux" data-i18n="con_linux"></label>
+                <div id="des-linux" class="opt_des" data-i18n="des_linux"></div>
+                <input id="con_mouseup" class="" data-confele="mouseup" type="checkbox"><label for="con_mouseup" data-i18n="opt_mouseup">Set context menu popup after MOUSEUP</label>
+                <div class="opt_des" data-i18n="des_mouseup"></div>
+            </div>
+        </div>
+        <div class="set set-05" data-confobj="" data-conf0="" data-conf1="">
+            <div class="setname" data-i18n="stnm_per_pers"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_pers confobj" data-confobj="per_pers"></ul>
+                <div style="clear:both;"></div>
+            </div>
+<!--             <div class="setname" data-i18n="stnm_per_orgs"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_orgs confobj" data-confobj="per_orgs"></ul>
+                <div style="clear:both;"></div>
+            </div> -->
+            <div class="setdes" data-i18n="des_pers"></div>
+        </div>
+        <div id="set-conf" class="set set-06" data-confobj="general|sync">
+            <div class="setname" data-i18n="stnm_importconf"></div>
+            <div class="setcontent">
+                <input type="file" id="import_file"><br />
+                <!-- <input type="button" id="conf_import" data-i18n="stnm_importconf"> -->
+            </div>
+            <div class="setname" data-i18n="stnm_exportconf"></div>
+            <div class="setcontent">
+                <!-- <input type="button" id="conf_export" data-i18n="stnm_exportconf"> -->
+                <span id="export_tip"></span>
+            </div>
+            <div class="setname" data-i18n="stnm_resetapps"></div>
+            <div class="setcontent">
+                <input type="button"  id="conf_reset_apps" data-i18n="btn_resetapps">
+                <div class="setdes" data-i18n="des_resetapps"></div>
+            </div>
+            <div class="setname" data-i18n="stnm_resetconf"></div>
+            <div class="setcontent">
+                <input type="button" id="conf_reset" data-i18n="stnm_resetconf"><br />
+<!--                 <div style="margin-top:10px;">
+                    <input type="button" id="conf_backup" data-i18n="stnm_backup">
+                    <div class="setdes" data-i18n="<des_backup">When smartUp was upgraded to a new version, the configuration of last version will be saved automatically sometimes. If something is wrong, you can reset to the saved configuration.</div>
+                </div> -->
+            </div>
+            <div class="setname" data-i18n="stnm_syncconf"></div>
+            <div class="setcontent">
+                <input id="autosync" class="init change-checkbox" data-confele="autosync" type="checkbox"><label for="autosync" data-i18n="con_autosync"></label>
+                <br /> 
+                <!-- <input type="button" id="conf_clear" data-i18n="con_clearsync"> -->
+                <div class="setdes" data-i18n="des_sync"></div>
+                <div class="setdes" data-i18n="des_sync1"></div>
+            </div>
+        </div>
+        <div id="set-mgsmgr" class="set set-10" data-confobj="mges|settings">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <label data-i18n="con_mgesmode"></label><br />
+                <select name="" id="" class="init setmargin change-select" data-confele="model">
+                    <option value=4 data-i18n="s_mousebutton1"></option>
+                    <option value=2 data-i18n="s_mousebutton2"></option>
+                </select><br />
+                <label data-i18n="con_mgesholdkey"></label><br />
+                <select name="" id="" class="init setmargin change-select" data-confele="holdkey">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select><br />
+                <input class="init change-checkbox" data-confele="txttourl" type="checkbox"><label data-i18n="con_drgurl"></label><br />
+                <input class="init change-checkbox" data-confele="lnktoimg" type="checkbox"><label data-i18n="con_drgimg"></label>
+            </div>
+        </div>
+        <div id="set-mgesui" class="set set-11" data-confobj="mges|ui">
+            <div class="setname" data-i18n="ui"></div>
+            <div class="setcontent" data-confobj="mges|ui"></div>
+        </div>
+        <div id="set-mgsmgr" class="set set-12 confobj" data-confobj="mges|actions">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_mges"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+        </div>
+        <div class="set set-20" data-confobj="sdrg|settings" data-conf0="sdrg" data-conf1="settings">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <input class="init change-checkbox" data-confele="drgbox" type="checkbox"><label data-i18n="con_drgbox"></label><br />
+                <input class="init change-checkbox" data-confele="drgtobox" type="checkbox"><label data-i18n="con_drgtobox"></label><br />
+                <input class="init change-checkbox" data-confele="drgurl" type="checkbox"><label data-i18n="con_drgurl"></label><br />
+                <input class="init change-checkbox" data-confele="drgimg" type="checkbox"><label data-i18n="con_drgimg"></label><br />
+                <input class="init change-checkbox" data-confele="drgcursor" type="checkbox"><label data-i18n="con_drgcursor"></label><br />
+                <input class="init change-checkbox" data-confele="draggable" type="checkbox" name=""><label data-i18n="con_draggable"></label><br />
+                <label data-i18n="con_drgholdkey"></label><br />
+                <select data-confele="holdkey" name="" id="" class="setmargin init change-select">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select><br />
+                <label data-i18n="con_drgholdimgkey"></label><br />
+                <select data-confele="holdimgkey" name="" id="" class="setmargin init change-select">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select>
+            </div>
+            <div class="setname" data-i18n="stnm_drgsw"></div>
+            <div class="setcontent">
+                <input class="init change-checkbox" data-confele="txt" type="checkbox"><label data-i18n="con_enabletxt"></label><br />
+                <input class="init change-checkbox" data-confele="lnk" type="checkbox"><label data-i18n="con_enablelnk"></label><br />
+                <input class="init change-checkbox" data-confele="img" type="checkbox"><label data-i18n="con_enableimg"></label>
+            </div>
+        </div>
+        <div id="set-drgtxt" data-confobj="sdrg|tsdrg" class="set set-21">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_tsdrg"></ul>
+            </div>
+        </div>
+        <div id="set-drgtxt" data-confobj="sdrg|lsdrg" class="set set-22">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_lsdrg"></ul>
+            </div>
+        </div>
+        <div id="set-drgtxt" data-confobj="sdrg|isdrg" class="set set-23">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_isdrg"></ul>
+            </div>
+        </div>
+        <div class="set set-30" data-confobj="drg|settings" data-conf0="drg">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <input class="init change-checkbox" data-confele="drgbox" type="checkbox"><label data-i18n="con_drgbox"></label><br />
+                <input class="init change-checkbox" data-confele="drgtobox" type="checkbox"><label data-i18n="con_drgtobox"></label><br />
+                <input class="init change-checkbox" data-confele="drgurl" type="checkbox"><label data-i18n="con_drgurl"></label><br />
+                <input class="init change-checkbox" data-confele="drgimg" type="checkbox"><label data-i18n="con_drgimg"></label><br />
+                <input class="init change-checkbox" data-confele="drgcursor" type="checkbox"><label data-i18n="con_drgcursor"></label><br />
+                <input class="init change-checkbox" data-confele="draggable" type="checkbox" name=""><label data-i18n="con_draggable"></label><br />
+                <!-- <input class="init change-checkbox" data-confele="clickcancel" type="checkbox"><label>With right click to cancel drag action.右键点击取消拖曳操作。</label><br /> -->
+                <label data-i18n="con_drgholdkey"></label><br />
+                <select data-confele="holdkey" name="" id="" class="setmargin init change-select">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select><br />
+                <label data-i18n="con_drgholdimgkey"></label><br />
+                <select data-confele="holdimgkey" name="" id="" class="setmargin init change-select">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select>
+            </div>
+            <div class="setname" data-i18n="stnm_drgsw"></div>
+            <div class="setcontent">
+                <input class="init change-checkbox" data-confele="txt" type="checkbox"><label data-i18n="con_enabletxt"></label><br />
+                <input class="init change-checkbox" data-confele="lnk" type="checkbox"><label data-i18n="con_enablelnk"></label><br />
+                <input class="init change-checkbox" data-confele="img" type="checkbox"><label data-i18n="con_enableimg"></label>
+            </div>
+        </div>
+        <div id="set-drgui" class="set set-31" data-confobj="drg|ui">
+            <div class="setname" data-i18n="ui"></div>
+            <div class="setcontent" data-confobj="drg|ui"></div>
+        </div>
+        <div id="set-drgtxt" data-confobj="drg|tdrg" class="set set-32 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_tdrg"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+        </div>
+        <div id="set-drglnk" data-confobj="drg|ldrg" class="set set-33 confobj">
+            <div class="setname"  data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_ldrg"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+        </div>
+        <div id="set-drgimg" data-confobj="drg|idrg" class="set set-34 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent">
+                <ul class="con-item ul_idrg"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+        </div>
+
+        <div data-confobj="rges|actions" class="set set-40 confobj">
+            <div class="setname" data-i18n="stnm_action">xx</div>
+            <div class="setcontent" data-confobj="rges|actions">
+                <div style="min-height:100px;">
+                    <span data-i18n="rges0"></span>
+                    <ul class="con-item ul_rges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+                <div style="min-height:100px;">
+                    <span data-i18n="rges1"></span>
+                    <ul class="con-item ul_rges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+            <!-- <div class="setdes" data-i18n="des_item"></div> -->
+        </div>
+        <div data-confobj="wges|actions" class="set set-50 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="wges|actions">
+                <div style="min-height:100px;">
+                    <span data-i18n="wges0"></span>
+                    <ul class="con-item ul_wges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+                <div style="min-height:100px;">
+                    <span data-i18n="wges1"></span>
+                    <ul class="con-item ul_wges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+                <div style="min-height:100px;">
+                    <span data-i18n="wges2"></span>
+                    <ul class="con-item ul_wges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+                <div style="min-height:100px;">
+                    <span data-i18n="wges3"></span>
+                    <ul class="con-item ul_wges"></ul>
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+            <!-- <div class="setdes" data-i18n="des_item"></div> -->
+        </div>
+
+        <div data-confobj="pop|settings" class="set set-60 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent" data-confobj="pop|settings">
+                <span data-i18n="icon_type"></span><br />
+                <span class="init init_radio change change_radio" data-confele="type" style="display: inline-block;margin-left: 20px;">
+                    <input class="initid change change_radio" type="radio" name="poptype" value="back" data-confele="back"><label><span data-i18n="icon_back"></span><br /><span class="label_br" data-i18n="icon_back_des"></span></label><br />
+                    <input class="initid change change_radio" type="radio" name="poptype" value="front" data-confele="front" style="margin-top:10px;"><label><span data-i18n="icon_front"></span><br /><span class="label_br" data-i18n="icon_front_des"></span></label>
+                </span><br />
+                <input class="init change-checkbox" data-confele="last" type="checkbox"><label data-i18n="pop_last"></label><br />
+            </div>
+            <!-- <div class="setdes" data-i18n="des_item"></div> -->
+        </div>
+        <div data-confobj="pop|actions" class="set set-61 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="pop|actions">
+                <ul class="con-item ul_pop"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+            <!-- <div class="setdes" data-i18n="des_item"></div> -->
+        </div>
+        <div data-confobj="icon|settings" class="set set-70 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent" data-confobj="icon|settings">
+                <span data-i18n="icon_type"></span><br />
+                <span class="init init_radio change change_radio" data-confele="type" style="display: inline-block;margin-left: 20px;">
+                    <input class="initid change change_radio" type="radio" name="icontype" data-confele="back" value="back"><label><span data-i18n="icon_back"></span><br /><span class="label_br" data-i18n="icon_back_des"></span></label><br />
+                    <input class="initid change change_radio" type="radio" name="icontype" data-confele="front" value="front" style="margin-top:10px;"><label><span data-i18n="icon_front"></span><br /><span class="label_br" data-i18n="icon_front_des"></span></label>
+                </span><br />
+                <input class="init change-checkbox" data-confele="tip" type="checkbox"><label data-i18n="icon_showname"></label>
+            </div>
+        </div>
+        <div data-confobj="icon|actions" class="set set-71 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="icon|actions">
+                <ul class="con-item ul_icon"></ul>
+                <div style="clear:both;"></div>
+                <!-- <div class="setdes" data-i18n="des_item"></div> -->
+            </div>
+        </div>
+        <div data-confobj="ctm|settings" class="set set-80 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent" data-confobj="ctm|settings">
+                <span data-i18n="ctm_add"></span>
+                <div>
+                    <input class="init change-checkbox" data-confele="fnswitch" type="checkbox"><label data-i18n="ctm_fnswitch"></label><br />
+                    <input class="init change-checkbox" data-confele="disable" type="checkbox"><label data-i18n="ctm_disable"></label><br />
+                    <input class="init change-checkbox" data-confele="opt" type="checkbox"><label data-i18n="ctm_opt"></label><br />
+                </div>
+            </div>
+        </div>
+        <div data-confobj="ctm|actions" class="set set-81 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="ctm|actions">
+                <ul class="con-item ul_ctm"></ul>
+                <div style="clear:both;"></div>
+                <!-- <div class="setdes" data-i18n="des_item"></div> -->
+            </div>
+        </div>
+        <div class="set set-90 confobj" data-confobj="">
+            <div class="setcontent">
+                <div id="about_box">
+                    <div><img src="../icon.png"></div>
+                    <div id="about_title"></div>
+                    <!-- <div id="about_desa" data-i18n="ext_desa" style="display:none;">To be the best one on Chrome!</div> -->
+                    <div id="about_desb" data-i18n="ext_desb"></div>
+                    <div style="border-top:1px solid #ccc;">
+                        <table id="allver_table">
+                                <tbody>
+                                    <tr>
+                                        <td data-i18n="ext_ver" class="about_name"></td>
+                                        <td id="ext_ver" class="about_content" style="border-top: 1px solid #ccf;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td data-i18n="ext_site" class="about_name"></td>
+                                        <td id="ext_site" class="about_content"><a href="http://smartup.zimoapps.com" target="_blank">smartup.zimoapps.com</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td data-i18n="ext_email" class="about_name"></td>
+                                        <td id="ext_email" class="about_content"><a href="mailto:crexme@gmail.com?Subject=about smartup">crexme@gmail.com</a></td>
+                                    </tr>
+                                    <tr id="allver_title">
+                                        <td data-i18n="about_ver"></td>
+                                        <td data-i18n="about_url"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="allver_name">Chrome</td>
+                                        <td class="allver_url"><a href="https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn" target="_blank">https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="allver_name">Firefox</td>
+                                        <td class="allver_url"><a href="https://addons.mozilla.org/firefox/addon/smartup" target="_blank">https://addons.mozilla.org/firefox/addon/smartup</a></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #cccccc;">
+                                        <td class="allver_name">Beta version(Chrome)</td>
+                                        <td class="allver_url"><a href="https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb" target="_blank">https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb</a></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                    </div>                    
+                    <!-- <div style="text-align:left;/*border-top:1px solid #ccc;*/padding:10px 0;">
+                        <span data-i18n="ext_ver" class="about_name"></span><span id="ext_ver" class="about_content"></span><br />
+                        <span data-i18n="ext_site" class="about_name"></span><span id="ext_site" class="about_content"><a href="http://smartup.zimoapps.com" target="_blank">smartup.zimoapps.com</a></span><br />
+                        <span data-i18n="ext_email" class="about_name"></span><span id="ext_email" class="about_content"><a href="mailto:crexme@gmail.com?Subject=about smartup">crexme@gmail.com</a></span><br />
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="set set-91 confobj" data-confobj="">
+            <div class="setname" data-i18n="translate"></div>
+            <div class="setcontent">
+                Want this extension to show in your native language? If you are familiar with English, you can help us translate this extension into your native language. Please contact us by email: crexme@gmail.com .<br />
+                The <a target="_blank" href="https://translate.google.com/toolkit">Google translator toolkit</a> can help you complete your translation quickly. For more informations <a target="_blank" href="https://developer.chrome.com/extensions/i18n">https://developer.chrome.com/extensions/i18n</a><br />
+                <table class="tab_translate">
+                    <tbody>
+                        <tr class="tr_title">
+                            <td>Language</td><td>Translator</td><td>Language</td><td>Translator</td>
+                        </tr>
+                        <tr class="tr_a">
+                            <td>中文 (繁體)</td><td><a href="http://ilowkey.net/" target="_blank">KM Zeng</a></td>
+                            <td style="border-left:1px solid #ccf;">Русский</td><td><a href="https://ok.ru/kamyshnikov.andrey" target="_blank">Камышников Андрей</a></td>
+                        </tr>
+<!--                         <tr class="tr_b">
+                            <td> </td><td> </td>
+                            <td style="border-left:1px solid #ccf;"> </td><td> </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="set set-92 confobj" data-confobj="">
+            <div class="setname" data-i18n="thanks"></div>
+            <div class="setcontent">
+                <ul class="thanks_ul">
+                    <li>
+                        <div data-i18n="tks_bug"></div>
+                        <div class="thanks_name">Jeff Seiden, Bela Lubkin</div>
+                    </li>
+                </ul>
+                <ul class="thanks_ul">
+                    <li>
+                       <div data-i18n="tks_tl"></div>
+                        <div class="thanks_name"><a href="http://ilowkey.net/" target="_blank">KM Zeng</a>, <a href="https://ok.ru/kamyshnikov.andrey" target="_blank">Камышников Андрей</a></div> 
+                    </li>
+                </ul>
+                <ul class="thanks_ul">
+                    <li>
+                        <div data-i18n="tks_pjt"></div>
+                        <div class="thanks_name"><a target="_blank" href="https://github.com/dankogai/js-base64">js-base64</a></div>
+                        <div class="thanks_name"><a target="_blank" href="https://chrome.google.com/webstore/detail/pgphcomnlaojlmmcjmiddhdapjpbgeoc">Send from Gmail (by Google)</a></div>
+                        <div class="thanks_name"><a target="_blank" href="https://github.com/jeromeetienne/jquery-qrcode">jquery-qrcode</a></div>                    
+                    </li>
+                </ul>
+                
+
+            </div>
+        </div>
+        <div class="set set-93 confobj" data-confobj="">
+            <div class="setname" data-i18n="changelog"></div>
+            <div class="setcontent">
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</body>
+<script src="../js/s.js"></script>
+<script src="../js/options.js"></script>
+<script src="../js/actions.js"></script>
+</html>

@@ -1,0 +1,47 @@
+{
+	"manifest_version": 2,
+	"minimum_chrome_version": "22",
+	"name": "__MSG_ext_name__",
+	"short_name":"smartUp",
+	"version": "5.5.270.801",
+	"description": "__MSG_ext_des__",
+	"default_locale": "en",
+	"author":"zimo",
+	"icons": {
+		"16": "icon.png",
+		"48": "icon.png",
+		"128": "icon.png"
+	},
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": true
+	},
+	"content_scripts": [
+		{
+			"js": ["js/event.js"],
+			"matches": ["<all_urls>"],
+			"run_at": "document_start",
+			"all_frames":true,
+			"match_about_blank":true
+		}
+	],
+	"browser_action": {
+		"default_icon": {
+			"19": "icon.png",
+			"38": "icon.png"
+		},
+		"default_title": "smartUp",
+		"default_popup": "html/popup.html"
+	},
+	"options_page":"html/options.html",
+	"options_ui": {
+		"chrome_style": false,
+		"page": "html/options.html"
+	},
+	"web_accessible_resources": [
+		"image/*",
+		"icon.png"
+	],
+	"permissions": ["<all_urls>","notifications","storage","tts","contextMenus","tabs","downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture"],
+	"optional_permissions": ["browserSettings"]
+}

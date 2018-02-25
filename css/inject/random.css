@@ -1,0 +1,35 @@
+smartup.su_apps#su_apps_random span{
+	display: inline-block;
+}
+smartup.su_apps#su_apps_random .randombox{
+	width: 320px;
+	padding: 9px;
+	text-align: left;
+}
+smartup.su_apps#su_apps_random #su_random_print{
+    box-sizing: border-box;
+    margin: 8px 0;
+	height: 40px;
+    width: 100%;
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+smartup.su_apps#su_apps_random .su_random_text{
+	width: 50px;
+	margin: 3px 10px !important;
+}
+smartup.su_apps#su_apps_random .su_random_span{
+	width: 80px;
+	display: inline-block;
+}
+smartup.su_apps#su_apps_random .su_random_btn{
+	width: 100%;
+	box-sizing: border-box;
+	margin: 8px 0;
+}
+smartup.su_apps#su_apps_random .su_random_chkbox{
+	/*margin-left: 90px;*/
+	margin-right: 5px;
+}

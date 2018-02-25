@@ -1,0 +1,57 @@
+smartup.su_apps#su_apps_recentclosed .recentclosedbox{
+	width: 360px;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_recentclosed ul{
+	padding-bottom: 8px;
+	box-sizing: border-box;
+	text-align: left;
+	width: 100%;
+}
+smartup.su_apps#su_apps_recentclosed li{
+	border: 1px solid rgba(204, 204, 255, 0.6);
+	border-radius: 2px;
+	padding: 0 8px;
+	margin: 1px 0;
+	font-size: 14px;
+	box-sizing: border-box;
+	width: 100%;
+	height: 32px;
+	line-height: 32px;
+	font-weight: bold;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.7);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: pointer;
+	transition:all .4s ease-in-out;
+}
+smartup.su_apps#su_apps_recentclosed li img{
+	width: 16px;
+	margin-right: 5px;
+}
+smartup.su_apps#su_apps_recentclosed li:hover{
+	box-shadow: 0px 1px 3px #ccc;
+	background: #d0d9ff;
+	line-height: 30px;
+	border-color: rgba(86,119,252,.5) !important;
+}
+smartup.su_apps#su_apps_recentclosed li:hover .su_tablist_button_liclose{
+	opacity: 1;
+	margin-top: -30px;
+}
+smartup.su_apps#su_apps_recentclosed li span{
+	display: inline-block;
+	width: 372px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+smartup.su_apps#su_apps_recentclosed li:hover .li_0{
+	transition:all .4s ease-out;
+	margin-left: -372px;
+}
+smartup.su_apps#su_apps_recentclosed .su_recentclosed_win{
+	background-color: rgba(204, 204, 255, 0.4);
+}

@@ -1,0 +1,1361 @@
+{
+  "ext_des": {
+    "message": "Лучшее расширение для жестов. Особенности: жесты мышью, перетаскивание, супер перетаскивание, rocker жесты и жесты с колесиком мыши."
+  },
+  "ext_name":{
+    "message":"Жесты smartUp"
+  },
+  "ext_desb": {
+    "message": "SmartUp поможет вам использовать Chrome ловко и быстро, из особенностей: жесты мышью, перетаскивание, супер перетаскивание и так далее. С его помощью можно быстро выполнить наиболее распространенные операции, такие как закрыть вкладку, открыть новую, свернуть или развернуть окно. А еще можно запустить другое расширение (с изменениями)."
+  },
+  "ext_ver": {
+    "message": "Номер версии:"
+  },
+  "ext_site": {
+    "message": "Сайт:"
+  },
+  "ext_email": {
+    "message": "Обратная связь:"
+  },
+  "icon_tip":{
+    "message":"smartUp Gestures can't works perfectly in this tab!"
+  },
+  "opt_title": {
+    "message": "Настройки"
+  },
+  "menu_save": {
+    "message": "Сохранить настройки"
+  },
+  "menu_reset": {
+    "message": "Сбросить текущие"
+  },
+  "menu_autosave": {
+    "message": "Автосохранение"
+  },
+  "menu_popactions":{
+    "message":"Всплывающие действия:"
+  },
+  "menu_opts":{
+    "message":"Опции"
+  },
+  "menu_about":{
+    "message":"О smartUp"
+  },
+  "menuplus_opennew":{
+    "message":"На новую вкладку"
+  },
+  "menuplus_exit":{
+    "message":"Выйти из настроек"
+  },
+  "con_name": {
+    "message": "Название:"
+  },
+  "con_timeout": {
+    "message": "Задержка для отмены жеста:"
+  },
+  "con_timeout_nomenu":{
+    "message":"НЕ показывать контекстное меню"
+  },
+  "con_minlength": {
+    "message": "Минимальная длина рисуемой линии:"
+  },
+  "con_icon": {
+    "message": "Показать ИКОНКУ в адресной строке"
+  },
+  "con_autosave": {
+    "message": "Автосохранение настроек"
+  },
+  "con_notif": {
+    "message": "Показывать уведомление об обновлении"
+  },
+  "con_miniappnotif":{
+    "message": "Показывать уведомления мини приложений"
+  },
+  "con_linux": {
+    "message": "Исправлять баг контекстного меню Linux/Mac (двойной щелчок правой кнопкой для вызова контекстного меню)"
+  },
+  "con_mgesmode": {
+    "message": "Режим работы:"
+  },
+  "con_mgesholdkey": {
+    "message": "Держите, для времен. отключения жестов:"
+  },
+  "con_drgbox": {
+    "message": "Включить перетаскивание в текстовом поле"
+  },
+  "con_drgtobox": {
+    "message": "Откл. жесты при перетаскивании в текстовом поле"
+  },
+  "con_drgurl": {
+    "message": "Преобразовать в адрес, если будет текст"
+  },
+  "con_drgimg": {
+    "message": "Как картинку, если ссылка содержит картинку"
+  },
+  "con_drgholdkey": {
+    "message": "Удерживайте для временного отключения перетаскивания:"
+  },
+  "con_drgholdimgkey": {
+    "message": "Удерживайте для перетаскивания картинки вместо ссылки:"
+  },
+  "con_enabletxt": {
+    "message": "Перетаскивание текста"
+  },
+  "con_enablelnk": {
+    "message": "Перетаскивание ссылки"
+  },
+  "con_enableimg": {
+    "message": "Перетаскивание картинки"
+  },
+  "con_lang":{
+    "message":"Отображает язык:"
+  },
+  "con_export":{
+    "message":"Нажмите здесь для экспорта конфигурации"
+  },
+  "con_setbg":{
+    "message":"Настроить картинку"
+  },
+  "con_bgnote0":{
+    "message":"Это текущая фоновая картинка, её можно заменить"
+  },
+  "con_bgnote1":{
+    "message":"Эти изменения не будут синхронизированы!"
+  },
+  "con_theme":{
+    "message":"Тема для страницы настроек:"
+  },
+  "con_drgcursor":{
+    "message":"Изменить стиль мыши на сменяемый (некоторые из функции браузера не работают по умолчанию)."
+  },
+  "con_notename":{
+    "message":"Заметка для данного действия:"
+  },
+  "con_notechk":{
+    "message":"показать заметку на вкладке"
+  },
+  "con_autosync":{
+    "message":"Настройки автоматической синхронизации"
+  },
+  "con_esc":{
+    "message":"Нажимать [ESC] для отмены текущей операции"
+  },
+  "con_background":{
+    "message":"Позволить Chrome всегда работать в фоне, smartUp будет работать лучше (будет запрошено 'фоновое' разрешение)"
+  },
+  "con_draggable":{
+    "message":"Disable drag, when the dragged element was set as draggable[draggable=true]"
+  },
+  "stnm_per_pers": {
+    "message": "Управление разрешениями"
+  },
+  "stnm_settings": {
+    "message": "Настройки"
+  },
+  "stnm_function": {
+    "message": "Функции"
+  },
+  "stnm_opts": {
+    "message": "Настройки страницы опций"
+  },
+  "stnm_txtengine": {
+    "message": "Управление поисковиками текста"
+  },
+  "stnm_imgengine": {
+    "message": "Управление поисковиками картинок"
+  },
+  "stnm_script": {
+    "message": "Управление скриптами"
+  },
+  "stnm_linux": {
+    "message": "Настройки Linux/Mac"
+  },
+  "stnm_importconf": {
+    "message": "Импорт конфигурации"
+  },
+  "stnm_exportconf": {
+    "message": "Экспорт конфигурации"
+  },
+  "stnm_syncconf":{
+    "message": "Синхронизация конфигурации"
+  },
+  "stnm_resetconf": {
+    "message": "Сбросить все настройки"
+  },
+  "stnm_drgsw": {
+    "message": "Перетаскивание"
+  },
+  "stnm_resetapps":{
+    "message":"Сброс конфигурации всех мини приложений"
+  },
+  "stnm_action":{
+    "message":"Править действия"
+    },
+  "des_pers": {
+    "message": "Для более подробной информации посетите: https://developer.chrome.com/extensions/permission_warnings "
+  },
+  "des_pers1":{
+    "message":"Вы всегда можете удалить эти запрошенные разрешения  Настройки> Основные> Разрешения"
+  },
+  "des_lang":{
+    "message": "smartUp будет отображаться на английском или языке Chrome. "
+  },
+  "des_linux": {
+    "message": "Этот параметр действителен только для платформы, отличной от Windows. Нужно дважды щелкнуть правой кнопкой мыши, чтобы открыть контекстное меню."
+  },
+  "des_sync": {
+    "message": "Конфигурация будет синхронизироваться с браузером, если вы уже авторизовались в браузере и браузер поддерживает эту функцию."
+  },
+  "des_sync1":{
+    "message":"Если вы не можете подключить службу Google или конфигурация не может быть сохранена и всегда сбрасывается на последнюю, вы можете попробовать отменить эту опцию, можно экспортировать настройки, чтобы сохранить их."
+  },
+  "des_item": {
+    "message": "Щёлкните элемент для правки, нажмите \n'x' чтобы удалить, '+' для добавления нового элемента."
+  },
+  "des_fnswitch": {
+    "message": "В зависимости от индивидуальных потребностей, рекомендуем отключить неиспользуемые функции."
+  },
+  "des_resetapps":{
+    "message":"Если некоторые из мини приложений не работают, то попробуйте сбросить конфигурацию мини приложений. Эта операция поможет скинуть конфигурацию всех мини приложений и её нельзя отменить!"
+  },
+  "s_default": {
+    "message": "По умолчанию"
+  },
+  "s_current": {
+    "message": "Текущая"
+  },
+  "s_others": {
+    "message": "Другие"
+  },
+  "s_all": {
+    "message": "Все"
+  },
+  "s_head": {
+    "message": "Первая"
+  },
+  "s_last": {
+    "message": "Крайняя"
+  },
+  "s_left": {
+    "message": "Левее"
+  },
+  "s_right": {
+    "message": "Правее"
+  },
+  "s_lefts": {
+    "message": "Левые"
+  },
+  "s_rights": {
+    "message": "Правые"
+  },
+  "s_up": {
+    "message": "Вверх"
+  },
+  "s_down": {
+    "message": "Вниз"
+  },
+  "s_top": {
+    "message": "В начало"
+  },
+  "s_bottom": {
+    "message": "В конец"
+  },
+  "s_leftmost": {
+    "message": "В левую часть"
+  },
+  "s_rightmost": {
+    "message": "В правую часть"
+  },
+  "s_frame": {
+    "message": "Фрейм"
+  },
+  "s_on": {
+    "message": "Вкл"
+  },
+  "s_off": {
+    "message": "Выкл"
+  },
+  "s_yes": {
+    "message": "Да"
+  },
+  "s_no": {
+    "message": "Нет"
+  },
+  "s_new": {
+    "message": "Новая вкладка"
+  },
+  "s_back": {
+    "message": "Новая фоновая"
+  },
+  "s_win": {
+    "message": "Новое окно"
+  },
+  "s_winback": {
+    "message": "Новое фоновое"
+  },
+  "s_incog": {
+    "message": "Инкогнито"
+  },
+  "s_unpin": {
+    "message": "Открепить"
+  },
+  "s_pinned": {
+    "message": "Закрепить"
+  },
+  "s_normal": {
+    "message": "Обычное"
+  },
+  "s_popup": {
+    "message": "Всплывающее"
+  },
+  "s_panel": {
+    "message": "Панель"
+  },
+  "s_detached_panel": {
+    "message": "В отдельной панели"
+  },
+  "s_tabele_title":{
+    "message":"Заголовок"
+  },
+  "s_tabele_url":{
+    "message":"Адрес страницы"
+  },
+  "s_tabele_aslnk":{
+    "message":"Как ссылку HTML"
+  },
+  "s_cr_set":{
+    "message":"Настройки"
+  },
+  "s_cr_ext":{
+    "message":"Расширения"
+  },
+  "s_cr_history":{
+    "message":"История"
+  },
+  "s_cr_app":{
+    "message":"Приложения"
+  },
+  "s_cr_dl":{
+    "message":"Загрузки"
+  },
+  "s_cr_bookmark":{
+    "message":"Закладки"
+  },
+  "s_cr_flag":{
+    "message":"Флажки"
+  },
+  "s_unicode":{
+    "message":"Юникод"
+  },
+  "s_uri":{
+    "message":"Кодировать URI"
+  },
+  "s_uric":{
+    "message":"Компонент код. URI"
+  },
+  "s_none": {
+    "message": "Нет"
+  },
+  "s_ctrl": {
+    "message": "Ctrl"
+  },
+  "s_alt": {
+    "message": "Alt"
+  },
+  "s_shift": {
+    "message": "Shift"
+  },
+  "s_mousebutton1": {
+    "message": "Средняя кнопка"
+  },
+  "s_mousebutton2": {
+    "message": "Правая кнопка"
+  },
+  "s_o_follow": {
+    "message": "Под курсором"
+  },
+  "s_o_center": {
+    "message": "В центре"
+  },
+  "s_o_hover": {
+    "message": "Как ссылки"
+  },
+  "s_o_ui_bottom": {
+    "message": "В самом низу"
+  },
+  "s_in": {
+    "message": "Увеличить"
+  },
+  "s_out": {
+    "message": "Уменьшить"
+  },
+  "s_reset": {
+    "message": "Сбросить"
+  },
+  "s_audible":{
+    "message":"Аудио вкладки"
+  },
+  "n_notif":{
+    "message":"Показывать уведомления действий"
+  },
+  "n_tab":{
+    "message":"Целевая вкладка:"
+  },
+  "n_tab_single":{
+    "message":"Целевая вкладка:"
+  },
+  "n_tab_lrhl":{
+    "message":"Целевая вкладка:"
+  },
+  "n_close": {
+    "message": "Целевая вкладка:"
+  },
+  "n_reload_clear": {
+    "message": "Очистить кэш"
+  },
+  "n_close_sel": {
+    "message": "Выбранная:"
+  },
+  "n_close_keep":{
+    "message":"Оставлять окно, когда закрываете вкладку."
+  },
+  "n_closePin":{
+    "message":"Do not close the pinned tab."
+  },
+  "n_closeConfirm":{
+    "message":"Need to confirm, when closing multiple tabs."
+  },
+  "n_closetab":{
+    "message":"Закрыть вкладку после выполнения"
+  },
+  "n_optype": {
+    "message": "Тип открытия:"
+  },
+  "n_position": {
+    "message": "Положение:"
+  },
+  "n_position_lrhl":{
+    "message":"Положение:"
+  },
+  "n_new_position": {
+    "message": "Положение:"
+  },
+  "n_index":{
+    "message":"Положение:"
+  },
+  "n_index_new":{
+    "message":"Положение:"
+  },
+  "n_wintype": {
+    "message": "Тип окна:"
+  },
+  "n_winincog": {
+    "message": "Окно в инкогнито"
+  },
+  "n_win": {
+    "message": "Целевое окно:"
+  },
+  "n_effect": {
+    "message": "С эффектом листания"
+  },
+  "n_pin": {
+    "message": "Закрепить вкладку"
+  },
+  "n_content": {
+    "message": "Содержимое:"
+  },
+  "n_encoding":{
+    "message":"Кодирование:"
+  },
+  "n_target_np":{
+    "message":"Стиль открытия:"
+  },
+  "n_npkey_n":{
+    "message":"Ключевые слова:"
+  },
+  "n_npkey_p":{
+    "message":"Ключевые слова:"
+  },
+  "n_dlbar":{
+    "message":"Показать панель загрузки"
+  },
+  "n_crpages":{
+    "message":"Страница:"
+  },
+  "n_copytabele_content":{
+    "message":"Тип копирования:"
+  },
+  "n_script":{
+    "message":"Скрипт:"
+  },
+  "n_jq": {
+    "message": "Внедрить JQ"
+  },
+  "n_txtengine": {
+    "message": "Поисковик:"
+  },
+  "n_imgengine": {
+    "message": "Поисковик:"
+  },
+  "n_zoom":{
+    "message":"Тип масштаба:"
+  },
+  "n_scroll":{
+    "message":"Тип прокрутки:"
+  },
+  "n_num":{
+    "message":"Число:"
+  },
+  "n_closebox":{
+    "message":"Закрыть окно, после клика по элементу списка"
+  },
+  "n_snap":{
+    "message":"Направление:"
+  },
+  "n_url":{
+    "message":"Адрес:"
+  },
+  "n_dialog":{
+    "message":"Show dialog box"
+  },
+  "script": {
+    "message": "Скрипт"
+  },
+  "ag_none": {
+    "message": "Нет"
+  },
+  "ag_nav": {
+    "message": "Навигация"
+  },
+  "ag_scroll": {
+    "message": "Прокрутка"
+  },
+  "ag_tab": {
+    "message": "Вкладки"
+  },
+  "ag_window": {
+    "message": "Окна"
+  },
+  "ag_copy": {
+    "message": "Скопировать"
+  },
+  "ag_txt": {
+    "message": "Текст"
+  },
+  "ag_lnk": {
+    "message": "Ссылки"
+  },
+  "ag_img": {
+    "message": "Картинки"
+  },
+  "ag_others": {
+    "message": "Другие"
+  },
+  "ag_search": {
+    "message": "Поиск"
+  },
+  "ag_exp":{
+    "message":"Тестовые"
+  },
+  "ag_chrome":{
+    "message":"О Chrome"
+  },
+  "ag_apps":{
+    "message":"Мини приложения"
+  },
+  "ag_su":{
+    "message":"О smartUp"
+  },
+  "ag_dep":{
+    "message":"Нежелательные"
+  },
+  "none": {
+    "message": "Нет"
+  },
+  "back": {
+    "message": "Назад"
+  },
+  "forward": {
+    "message": "Вперед"
+  },
+  "stop": {
+    "message": "Остановить"
+  },
+  "scroll": {
+    "message": "Прокрутка"
+  },
+  "next": {
+    "message": "Следующая страница"
+  },
+  "previous": {
+    "message": "Предыдущая страница"
+  },
+  "pretab": {
+    "message": "На предыдущую вкладку"
+  },
+  "reload": {
+    "message": "Перезагрузить"
+  },
+  "close": {
+    "message": "Закрыть вкладку"
+  },
+  "newtab": {
+    "message": "Новая вкладка"
+  },
+  "reopen": {
+    "message": "Открыть закрытую вкладку"
+  },
+  "open": {
+    "message": "Открыть адрес"
+  },
+  "openclip": {
+    "message": "Открыть адрес в буфере"
+  },
+  "duplicate": {
+    "message": "Копировать вкладку"
+  },
+  "detach": {
+    "message": "Открепить вкладку"
+  },
+  "pin": {
+    "message": "Закрепить вкладку"
+  },
+  "switchtab": {
+    "message": "Переключить вкладку"
+  },
+  "move": {
+    "message": "Переместить вкладку"
+  },
+  "newwin": {
+    "message": "Новое окно"
+  },
+  "closewin": {
+    "message": "Закрыть окно"
+  },
+  "max": {
+    "message": "Раскрыть окно"
+  },
+  "min": {
+    "message": "Свернуть окно"
+  },
+  "full": {
+    "message": "В весь экран"
+  },
+  "copytabas": {
+    "message": "Скопировать с родным форматом "
+  },
+  "capture": {
+    "message": "Скриншот"
+  },
+  "viewsource": {
+    "message": "Посмотреть источник"
+  },
+  "optionspage": {
+    "message": "Настройки smartUp"
+  },
+  "copytxt": {
+    "message": "Скопировать текст"
+  },
+  "txtsearch": {
+    "message": "Найти текст"
+  },
+  "txtsearchclip":{
+    "message":"Search Texts from Clipboard"
+  },
+  "openlnk": {
+    "message": "Открыть ссылку"
+  },
+  "copylnkurl": {
+    "message": "Скопировать адрес ссылки"
+  },
+  "copylnktxt": {
+    "message": "Скопировать текст ссылки"
+  },
+  "copylnkaslnk": {
+    "message": "Скопировать ссылку"
+  },
+  "copylnkas": {
+    "message": "Скопировать ссылку как ..."
+  },
+  "openimg": {
+    "message": "Открыть картинку "
+  },
+  "saveimg": {
+    "message": "Сохранить картинку"
+  },
+  "saveimgas": {
+    "message": "Сохранить картинку как ..."
+  },
+  "copyimgurl": {
+    "message": "Скопировать адрес картинки"
+  },
+  "imgsearch": {
+    "message": "Поиск картинки"
+  },
+  "paste": {
+    "message": "Вставить текст"
+  },
+  "source": {
+    "message": "Код страницы"
+  },
+  "reloadext": {
+    "message": "Перезагрузить smartUp"
+  },
+  "restart": {
+    "message": "Перезагрузить Chrome"
+  },
+  "Exit": {
+    "message": "Выйти из Chrome"
+  },
+  "copytabele": {
+    "message": "Копировать данные вкладок"
+  },
+  "crpages":{
+    "message":"Страницы Chrome"
+  },
+  "dldir":{
+    "message":"Открыть папку загрузок"
+  },
+  "bookmark":{
+    "message":"Добавить закладку"
+  },
+  "bookmarklnk":{
+    "message":"Добавить закладку"
+  },
+  "zoom":{
+    "message":"Масштаб страницы"
+  },
+  "zoom_dep":{
+    "message":"Масштаб страницы"
+  },
+  "savepage":{
+    "message":"Сохранить страницу"
+  },
+  "tablist":{
+    "message":"Список вкладок"
+  },
+  "upperlevel":{
+    "message":"Go Upper Level"
+  },
+  "increment":{
+    "message":"Increment Number in URL"
+  },
+  "decrement":{
+    "message":"Decrement Number in URL"
+  },
+  "extdisable":{
+    "message":"Disable smartUp in current tab temporarily"
+  },
+  "general": {
+    "message": "Основное"
+  },
+  "recentbk":{
+    "message":"Недавние вкладки"
+  },
+  "recentht":{
+    "message":"Недавняя история"
+  },
+  "dllink":{
+    "message":"Save Link"
+  },
+  "savepdf":{
+    "message":"Save as PDF"
+  },
+  "copyimg":{
+    "message":"Copy Image"
+  },
+  "set_bk":{
+    "message":"Set Open Bookmarks in new Tabs"
+  },
+  "set_search":{
+    "message":"Set Open Search Results in new Tabs"
+  },
+  "readermode":{
+    "message":"Reader Mode"
+  },
+  "mges": {
+    "message": "Жесты мышью"
+  },
+  "rges": {
+    "message": "Rocker жесты"
+  },
+  "wges": {
+    "message": "Жесты с колёсиком"
+  },
+  "sdrg": {
+    "message": "Перетаскивание"
+  },
+  "drg": {
+    "message": "Супер перетаскивание"
+  },
+  "about": {
+    "message": "О smartUp"
+  },
+  "changelog":{
+    "message":"Список изменений"
+  },
+  "translate":{
+    "message":"Перевод"
+  },
+  "thanks":{
+    "message":"Благодарности"
+  },
+  "setting": {
+    "message": "Настройки"
+  },
+  "ui": {
+    "message": "Внешний вид"
+  },
+  "fnswitch": {
+    "message": "Функции"
+  },
+  "searchmgr": {
+    "message": "Поисковики"
+  },
+  "scriptmgr": {
+    "message": "Свои скрипты"
+  },
+  "linux": {
+    "message": "Настройки Linux/Mac"
+  },
+  "per":{
+    "message":"Разрешения"
+  },
+  "conf": {
+    "message": "Конфигурация"
+  },
+  "gesmgr": {
+    "message": "Действия"
+  },
+  "tdrg": {
+    "message": "Действия с текстом"
+  },
+  "ldrg": {
+    "message": "Действия с ссылкой"
+  },
+  "idrg": {
+    "message": "Действия с картинкой"
+  },
+  "tsdrg": {
+    "message": "Действия с текстом"
+  },
+  "lsdrg": {
+    "message": "Действия с ссылкой"
+  },
+  "isdrg": {
+    "message": "Действия с картинкой"
+  },
+  "ui_line_enable": {
+    "message": "Показывать рисуемую линию:"
+  },
+  "ui_direct_enable": {
+    "message": "Показывать советы для направления"
+  },
+  "ui_tip_enable": {
+    "message": "Показывать название действия:"
+  },
+  "ui_color": {
+    "message": "Цвет"
+  },
+  "ui_width": {
+    "message": "Размер"
+  },
+  "ui_opacity": {
+    "message": "Прозрачность"
+  },
+  "ui_bgcolor": {
+    "message": "Фоновый цвет"
+  },
+  "ui_style": {
+    "message": "Стиль"
+  },
+  "msg_saved": {
+    "message": "Настройки сохранены!"
+  },
+  "msg_reset2": {
+    "message": "Введено неверно, операция была отменена!"
+  },
+  "msg_reset": {
+    "message": "Заметка: Эта операция сбросить всю конфигурацию, и не сможет быть отменена! Введите 'ReSeT' для продолжения ..."
+  },
+  "msg_confimport": {
+    "message": "Ошибка в файле конфигурации! ! !"
+  },
+  "msg_importver": {
+    "message": "smartUp должен быть обновлён до последней версии перед импортом данной конфигурации."
+  },
+  "msg_dellast": {
+    "message": "Это ПОСЛЕДНЕЕ, нужно его оставить"
+  },
+  "msg_delinuse": {
+    "message": "Используется, нельзя удалять"
+  },
+  "msg_delpers": {
+    "message": "Разрешение было удалено"
+  },
+  "msg_delpers_fail": {
+    "message": "Это основное разрешение для smartUp, нельзя удалять."
+  },
+  "msg_dirnone": {
+    "message": "Пожалуйста, нарисуйте линию!"
+  },
+  "msg_dirrepeat": {
+    "message": "Направление повторяется, попробуйте снова!"
+  },
+  "msg_blank":{
+    "message":"Введите что-либо для продолжения!"
+  },
+  "msg_setbg":{
+    "message":"Что-то не так!!"
+  },
+  "msg_first":{
+    "message":"Благодарим вас за установку этого расширения.<br \/><li>smartUp бесплатен и я буду рад если Вы оцените его в пять звёзд.<li>Если устанавливаете впервые, то надо потренироваться. Попробуйте удерживать правую кнопку мыши, чтобы нарисовать вверх и вправо?! После установки, подождите минуту для синхронизации ваших данных настроек в фоне.<li>По некоторым причинам, какие-то действия не могут работать на этой странице настроек.(прокрутка,скрипт...).<li>Из-а ограничений в Chrome, smartUp не работает на некоторых вкладках.(новая вкладка, страница настроек...)<li>Это одни из немногих действий, вы добавите больше."
+  },
+  "test_mges": {
+    "message": "Нарисуйте линию здесь."
+  },
+  "test_tdrg": {
+    "message": "Это тестовый текст, выделите текст и потяните его, чтобы нарисовать линию, а затем выберите нужное действие."
+  },
+  "test_ldrg": {
+    "message": "<a href='###'> Это тестовая ссылка, перетащите ссылку и нарисуйте линию, а затем выберите нужное действие. </ A>"
+  },
+  "test_idrg": {
+    "message": "Перетащите тестовую картинку нарисовав линию и затем выберите нужное действие. <img src='../icon.png' />"
+  },
+  "tip_actionname": {
+    "message": "Настройки названия действия"
+  },
+  "btn_save": {
+    "message": "СОХРАНИТЬ"
+  },
+  "btn_cancel": {
+    "message": "ОТМЕНИТЬ"
+  },
+  "btn_done": {
+    "message": "ВЫЧИСЛИТЬ"
+  },
+  "btn_del":{
+    "message":"УДАЛИТЬ"
+  },
+  "btn_continue":{
+    "message":"ПРОДОЛЖИТЬ"
+  },
+  "btn_next":{
+    "message":"СЛЕДУЮЩЕЕ"
+  },
+  "btn_back":{
+    "message":"НАЗАД"
+  },
+  "btn_decode":{
+    "message":"РАСКОДИРОВАТЬ"
+  },
+  "btn_encode":{
+    "message":"ЗАКОДИРОВАТЬ"
+  },
+  "btn_play":{
+    "message":"ОЗВУЧИТЬ"
+  },
+  "btn_pause":{
+    "message":"ПАУЗА"
+  },
+  "btn_resume":{
+    "message":"ПРОДОЛЖИТЬ"
+  },
+  "btn_stop":{
+    "message":"СТОП"
+  },
+  "btn_resetapps":{
+    "message":"Сбросить конфигурацию мини приложений"
+  },
+  "btn_reset":{
+    "message":"RESET"
+  },
+  "init_openlnk_bg": {
+    "message": "Открыть ссылку в фоне"
+  },
+  "init_close_current": {
+    "message": "Закрыть текущую вкладку"
+  },
+  "init_search_bg": {
+    "message": "Найти текст в фоне"
+  },
+  "init_reload_current": {
+    "message": "Перезагрузить текущую вкладку"
+  },
+  "init_reload_clear": {
+    "message": "Перезагрузить текущую вкладку без кэша"
+  },
+  "init_switch_left": {
+    "message": "Переключиться на левую вкладку"
+  },
+  "init_switch_right": {
+    "message": "Переключиться на правую вкладку"
+  },
+  "init_openimg_bg": {
+    "message": "Открыть картинку в фоне"
+  },
+  "init_searchtxt_bg":{
+    "message": "Найти текст в фоне"
+  },
+  "init_searchimg_bg": {
+    "message": "Найти картинку в фоне"
+  },
+  "init_scroll_up":{
+    "message":"Прокрутить вверх"
+  },
+  "init_scroll_down":{
+    "message":"Прокрутить вниз"
+  },
+  "init_scroll_top":{
+    "message":"Прокрутить в начало"
+  },
+  "init_scroll_bottom":{
+    "message":"Прокрутить в конец"
+  },
+  "getper_title":{
+    "message":"Запрос Разрешения"
+  },
+  "getper_des":{
+    "message":"Для выполнения действия требуется больше разрешений:"
+  },
+  "getper_btn":{
+    "message":"Получить Разрешения"
+  },
+  "getper_after":{
+    "message":"Разрешение Получено! Пожалуйста повторите жест. Иногда необходимо перезапустить Chrome чтобы заработало.<br \/>Страница закроется через "
+  },
+  "getper_des1":{
+    "message":"Вы всегда можете отозвать разрешения через Настройки> Основное> Разрешения"
+  },
+  "getper_fail":{
+    "message":"Разрешение не получено! \nChrome необходимо обновить."
+  },
+  "wel_title":{
+    "message":"Приветствую"
+  },
+  "notif_title":{
+    "message":"Уведомления от smartUp:"
+  },
+  "notif_dlok":{
+    "message":"Download completed!"
+  },
+  "notif_dlerr":{
+    "message":"download error!"
+  },
+  "notif_title_update":{
+    "message":"Обновить уведомление"
+  },
+  "notif_title_appsave":{
+    "message":"Уведомление мини приложений:"
+  },
+  "notif_con_appsave":{
+    "message":"Изменения сохранены!"
+  },
+  "notif_con_bkdel":{
+    "message":"Закладка удалена!"
+  },
+  "notif_con_bkadd":{
+    "message":"Закладка добавлена!"
+  },
+  "notif_con_dlok":{
+    "message":"Загрузка завершена!"
+  },
+  "notif_btn_open":{
+    "message":"Открыть страницу настроек"
+  },
+  "notif_con_dnimgerr":{
+    "message":"Ошибка сохр. картинки!"
+  },
+  "notif_con_dnimg":{
+    "message":"Картинка загружена."
+  },
+  "lang_auto":{
+    "message":"Автоматически"
+  },
+  "lang_en":{
+    "message":"Английский (en)"
+  },
+  "title_newengine":{
+    "message":"Добавить новый движок"
+  },
+  "title_newaction":{
+    "message":"Добавить новое действие"
+  },
+  "title_newscript":{
+    "message":"Добавить новый скрипт"
+  },
+  "title_editaction":{
+    "message":"Править действие"
+  },
+  "title_editengine":{
+    "message":"Править движок"
+  },
+  "title_editscript":{
+    "message":"Править скрипт"
+  },
+  "title_editdirect":{
+    "message":"Править направление"
+  },
+  "tip_editdir":{
+    "message":"Править направления"
+  },
+  "tip_resetcur":{
+    "message":"Сбросить эти настройки"
+  },
+  "tip_addnew":{
+    "message":"Добавить новую"
+  },
+  "rss":{
+    "message":"RSS"
+  },
+  "random":{
+    "message":"Случайное число"
+  },
+  "extmgm":{
+    "message":"Управление расширениями"
+  },
+  "appslist":{
+    "message":"Список мини приложений"
+  },
+  "app_random_bound":{
+    "message":"Диапазон:"
+  },
+  "app_random_num":{
+    "message":"Количество:"
+  },
+  "app_random_norepeat":{
+    "message":"Не повторять числа"
+  },
+  "app_random_fill":{
+    "message":"Ставить 0 в числах до 10"
+  },
+  "app_extmgm_disableall":{
+    "message":"Отключить всё"
+  },
+  "recentclosed":{
+    "message":"Недавно закрытые"
+  },
+  "app_recentclosed_tabs":{
+    "message":"вкладки"
+  },
+  "synced":{
+    "message":"Синхронизировать вкладки"
+  },
+  "app_synced_switch":{
+    "message":"Переключить синх. устройства: "
+  },
+  "app_synced_nodevice":{
+    "message":"Нет синх. устройства"
+  },
+  "app_tip_opt":{
+    "message":"Опции"
+  },
+  "app_rss_menu":{
+    "message":"Меню"
+  },
+  "app_rss_new":{
+    "message":"Новая"
+  },
+  "app_rss_subplace":{
+    "message":"RSS2.0"
+  },
+  "app_recentbk_recentlength":{
+    "message":"Количество:"
+  },
+  "app_recentht_recentlength":{
+    "message":"Количество:"
+  },
+  "app_recentclosed_recentlength":{
+    "message":"Количество:"
+  },
+  "base64":{
+    "message":"Base64 код"
+  },
+  "mail":{
+    "message":"Поделиться через е-мейл"
+  },
+  "n_mail":{
+    "message":"Вид почты:"
+  },
+  "n_mail_domain":{
+    "message":"*Домен для Google приложений:"
+  },
+  "n_mail_prefix":{
+    "message":"Префикс для темы:"
+  },
+  "s_defaultmail":{
+    "message":"Почтовое приложение системы"
+  },
+  "s_gmail":{
+    "message":"Gmail"
+  },
+  "s_gmailapps":{
+    "message":"*Gmail с приложениями Google"
+  },
+  "qr":{
+    "message":"Генератор QR-кода"
+  },
+  "app_qr_url":{
+    "message":"Адрес вкладки"
+  },
+  "app_qr_title":{
+    "message":"Заголовок вкладки"
+  },
+  "app_qr_seltxt":{
+    "message":"Выбранный текст"
+  },
+  "app_qr_sellnk":{
+    "message":"Адрес выбранной ссылки"
+  },
+  "app_qr_customer":{
+    "message":"Свой текст"
+  },
+  "print":{
+    "message":"Печать"
+  },
+  "mute":{
+    "message":"Беззвучная"
+  },
+  "snap":{
+    "message":"Прикрепить окно"
+  },
+  "numc":{
+    "message":"Конвертер чисел"
+  },
+  "app_numc_from":{
+    "message":"От:"
+  },
+  "app_numc_to":{
+    "message":"До:"
+  },
+  "tts":{
+    "message":"Текст в речь"
+  },
+  "n_gender":{
+    "message":"Пол:"
+  },
+  "n_rate":{
+    "message":"Темп:"
+  },
+  "n_voicename":{
+    "message":"Движок:"
+  },
+  "n_pitch":{
+    "message":"Тембр:"
+  },
+  "n_volume":{
+    "message":"Громкость:"
+  },
+  "s_female":{
+    "message":"Женский"
+  },
+  "s_male":{
+    "message":"Мужской"
+  },
+  "speaker":{
+    "message":"Диктор текста"
+  },
+  "jslist":{
+    "message":"Список своих скриптов"
+  },
+  "ui_withdir":{
+    "message":"с подсказками направления названия действия"
+  },
+  "ui_note_enable":{
+    "message":"Показывать заметку о действии:"
+  },
+  "ui_allaction_enable":{
+    "message":"Показывать следующие возможные действия"
+  },
+  "theme_colorful":{
+    "message":"Цветная"
+  },
+  "theme_bg":{
+    "message":"Картинка в фоне"
+  },
+  "tks_bug":{
+    "message":"Они помогли с тестированием и переводом: "
+  },
+  "tks_tl":{
+    "message":"Они также помогали перевести расширение: "
+  },
+  "tks_pjt":{
+    "message":"Упоминаются или используются эти проекты: "
+  },
+  "rges0":{
+    "message":"ПРАВЫЙ щелчок с удержанием ЛЕВОЙ кнопки"
+  },
+  "rges1":{
+    "message":"ЛЕВЫЙ щелчок с удержанием ПРАВОЙ кнопки"
+  },
+  "wges0":{
+    "message":"Прокрутите ВВЕРХ, удерживая ЛЕВУЮ кнопку"
+  },
+  "wges1":{
+    "message":"Прокрутите ВНИЗ, удерживая ЛЕВУЮ кнопку"
+  },
+  "wges2":{
+    "message":"Прокрутите ВВЕРХ, удерживая ПРАВУЮ кнопку"
+  },
+  "wges3":{
+    "message":"Прокрутите ВНИЗ, удерживая ПРАВУЮ кнопку"
+  },
+  "pop":{
+    "message":"В меню иконки"
+  },
+  "icon":{
+    "message":"Действие иконки"
+  },
+  "ctm":{
+    "message":"В контекстном меню"
+  },
+  "action":{
+    "message":"Действия"
+  },
+  "ctm_add":{
+    "message":"Добавить следующие пункты в контекстное меню:"
+  },
+  "ctm_fnswitch":{
+    "message":"Меню переключения функций smartUp"
+  },
+  "ctm_disable":{
+    "message":"Временно отключить smartUp на текущей вкладке"
+  },
+  "ctm_opt":{
+    "message":"Настройки smartUp"
+  },
+  "icon_type":{
+    "message":"Выберите тип работы:"
+  },
+  "icon_back":{
+    "message":"В фоне"
+  },
+  "icon_back_des":{
+    "message":"Действие не может получить значение со страницы и будет работать на любой вкладке включая пустую вкладку."
+  },
+  "icon_front":{
+    "message":"На переднем плане"
+  },
+  "icon_front_des":{
+    "message":"Это действие получит данные со страницы (это для действий, которым требуется доступ данных из вкладки)."
+  },
+  "icon_showname":{
+    "message":"Показывать название действия на Иконке"
+  },
+  "pop_last":{
+    "message":"Сделать последнее действием по умолчанию"
+  },
+  "about_ver":{
+    "message":"ВЕРСИЯ"
+  },
+  "about_url":{
+    "message":"Адрес"
+  },
+  "review":{
+    "message":"Оценка и комментарий"
+  },
+  "perdes_browsersettings":{"message":"Because using mouse gestures on non-Windows platforms conflicts with right-click menus, ensuring a better operating experience, smartUp Gestures needs to request this permission to fix the bug (only Firefox). After getting permission, you need to restart the browser to make it works. For more information: https://developer.mozilla.org/Add-ons/WebExtensions/API/browserSettings. This page only show only one time, or set it again from: General>Linux/Mac Settings>Try to set context menu popup after mouseup."},
+  "opt_mouseup":{"message":"Try to set context menu popup after mouseup"},
+  "des_mouseup":{"message":"Fix the conflict between the mouse gesture and the context menu. Only Firefox 58+. Need request permission 'browserSettings'."}
+}

@@ -1,0 +1,141 @@
+smartup.su_apps li{
+	display: block;
+	float: left;
+}
+smartup.su_apps#su_apps_rss .rss_head{
+	position: sticky;
+	left: 0;
+	top: 0;
+	box-sizing: border-box;
+	width: 100%;
+	background: rgba(255,255,255,.9);
+	text-align: left;
+    padding: 8px;
+    padding-bottom: 0;
+}
+smartup.su_apps#su_apps_rss .rss_head img{
+	float: left;
+	border-radius: 100%;
+	border:1px solid #ccf;
+	padding: 2px;
+	height: 48px;
+}
+smartup.su_apps#su_apps_rss .rss_head a{
+	font-size: 22px;
+	padding: 0 10px;
+	margin: 0 auto;
+	line-height: 54px;
+	/*display: block;*/
+	text-decoration: none;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+smartup.su_apps#su_apps_rss .rss_head a:visited{
+	color: blue;
+}
+smartup.su_apps#su_apps_rss .rss_box{
+	width: 475px;
+	min-height: 240px;
+	text-align: left;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_rss .rss_box li{
+	box-sizing: border-box;
+	height: 32px;
+	line-height: 32px;
+	border: 1px solid #ccf;
+	border-radius: 2px;
+	padding: 0 8px;
+	margin: 2px 0;
+	list-style-type: decimal;
+	text-decoration: none;
+	/*margin: 1px 20px 0 0;*/
+	/*width: 450px;*/
+	/*width: -webkit-calc(100% - 8px);*/
+	width: 100%;
+	text-align: left;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	transition:all .4s ease-in-out;
+}
+smartup.su_apps#su_apps_rss li:hover{
+	text-decoration: none;
+	background: #FF6600;
+	color: #fff;
+	cursor: pointer;
+}
+smartup.su_apps#su_apps_rss .rss_sub{
+	position: absolute;
+	padding: 8px 0;
+	margin: 0;
+	text-align: left;
+    left: 0;
+    top: 32px;
+    width: 300px;
+    height: -webkit-calc(100% - 32px);
+    height: -moz-calc(100% - 32px);
+    height: calc(100% - 32px);
+    box-sizing: border-box;
+	overflow: hidden;
+	overflow-y: auto;
+	display: none;
+	opacity: 0;
+	background: #ffc;
+	box-shadow: 1px 2px 10px #FD6805;
+}
+smartup.su_apps#su_apps_rss .rss_sub input[type=text]{
+	width: 120px;
+}
+smartup.su_apps#su_apps_rss .rss_sub input[type=button]{
+	
+}
+smartup.su_apps#su_apps_rss .rss_sub .sub_items{
+	margin: 8px 0;
+	width: 100%;
+}
+smartup.su_apps#su_apps_rss .rss_sub .sub_items li{
+	width: 100%;
+	text-align: left;
+	height: 25px;
+	line-height: 25px;
+	padding: 3px 10px;
+	list-style-type: decimal;
+	text-decoration: none;
+	margin: 1px 20px 0 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	transition:all .4s ease-in-out;
+}
+
+smartup.su_apps#su_apps_rss .sub_item:hover .sub_itemdel{
+	margin-top: 2px;
+	opacity: .95;
+	z-index: 1;
+}
+smartup.su_apps#su_apps_rss .sub_itemdel{
+	opacity: 0;
+	background: rgba(0,0,0,.8);
+	transition:all .4s ease-in-out;
+
+	position: absolute;
+	float: right;
+	display: inline-block;
+	color: #fff;
+	border: 1px solid transparent;
+	border-radius: 100%;
+	width: 15px;
+	height: 15px;
+	padding: 2px;
+	line-height: 15px;
+	right: 5px;
+	text-align: center;
+	opacity: 0;
+	z-index: -1;
+	margin-top: -30px;
+}
+smartup.su_apps#su_apps_rss .sub_itemdel:hover{
+	background: red;
+}

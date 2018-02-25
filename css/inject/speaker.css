@@ -1,0 +1,22 @@
+smartup.su_apps#su_apps_speaker .su_speakerbox{
+	width: 360px;
+	height: auto;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_speaker input[type=radio]{
+	margin: 5px;
+}
+smartup.su_apps#su_apps_speaker button{
+	margin: 8px;
+}
+smartup.su_apps#su_apps_speaker .speaker_inputbox{
+	text-align: center;
+}
+smartup.su_apps#su_apps_speaker .speaker_typelist{
+	text-align: left;
+}
+smartup.su_apps#su_apps_speaker .speaker_inputarea{
+	width: 100%;
+	box-sizing: border-box;
+	height: 200px;
+}

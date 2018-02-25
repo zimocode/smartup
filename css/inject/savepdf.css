@@ -1,0 +1,76 @@
+smartup.su_apps#su_apps_savepdf span{
+	display: inline-block;
+}
+smartup.su_apps#su_apps_savepdf .savepdfbox{
+	width: 540px;
+	padding: 8px;
+	text-align: left;
+}
+smartup.su_apps#su_apps_savepdf .btnbox{
+	position: sticky;
+    left: 0;
+    /* bottom: 0; */
+    top: 0;
+    text-align: center;
+    background-color: rgba(255,255,255,.9);
+    padding: 8px;
+}
+smartup.su_apps#su_apps_savepdf .su_options_help{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #fff;
+	padding: 8px 16px;
+	width: -webkit-calc(100% - 16px);
+	width: -moz-calc(100% - 16px);
+	width: calc(100% - 16px);
+	margin: 8px;
+	margin-top: 32px;
+	box-sizing: border-box;
+	opacity: 0;
+	z-index: -1;
+	box-shadow: 0px 2px 4px #5677fc;
+}
+smartup.su_apps#su_apps_savepdf .su_options_help li{
+    margin: 8px 16px;
+    display: list-item;
+    width: 90%;
+}
+smartup.su_apps#su_apps_savepdf .savepdf_info{
+	position: absolute;
+    left: 0;
+    top: 8px;
+    border: 1px solid #ccf;
+    border-radius: 100%;
+    padding: 2px;
+    display: block;
+    height: 16px;
+    cursor: pointer;
+}
+smartup.su_apps#su_apps_savepdf #su_random_print{
+    box-sizing: border-box;
+    margin: 8px 0;
+	height: 40px;
+    width: 100%;
+	margin-bottom: 5px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+}
+smartup.su_apps#su_apps_savepdf .su_random_text{
+	width: 50px;
+	margin: 3px 10px !important;
+}
+smartup.su_apps#su_apps_savepdf .su_savepdf_span{
+	width: 320px;
+	display: inline-block;
+}
+smartup.su_apps#su_apps_savepdf .su_random_btn{
+	width: 100%;
+	box-sizing: border-box;
+	margin: 8px 0;
+}
+smartup.su_apps#su_apps_savepdf .su_random_chkbox{
+	/*margin-left: 90px;*/
+	margin-right: 5px;
+}

@@ -1,0 +1,48 @@
+smartup.su_apps#su_apps_qr .su_qrbox{
+	/*width: 480px;*/
+	/*height: 370px;*/
+	padding: 8px;
+}
+smartup.su_apps#su_apps_qr input[type=radio]{
+	margin: 5px;
+}
+smartup.su_apps#su_apps_qr button{
+	margin: 5px 10px;
+}
+smartup.su_apps#su_apps_qr .qr_outputbox,
+smartup.su_apps#su_apps_qr .qr_inputbox{
+	text-align: center;
+	width: 410px;
+}
+smartup.su_apps#su_apps_qr .qr_typelist{
+	text-align: left;
+}
+smartup.su_apps#su_apps_qr .qr_inputarea{
+	width: 360px;
+	height: 150px;
+}
+smartup.su_apps#su_apps_qr .qr_outputbox{
+	position: absolute;
+	left: -500px;
+	background-color: #fff;
+	transition:all .4s ease-in-out;
+	height: 320px;
+	top: 8px;
+	padding: 0;
+	padding-top: 24px;
+}
+smartup.su_apps#su_apps_qr .su_copyright{
+	font-size: 12px;
+	color: #777;
+	border-top: 1px solid #eee;
+	text-align: center;
+	padding-top: 5px;
+	margin-top: 10px;
+}
+smartup.su_apps#su_apps_qr .su_copyright a{
+	color: #777;
+	text-decoration: none;
+}
+smartup.su_apps#su_apps_qr .qr_output{
+	text-align: center;
+}
