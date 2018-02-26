@@ -919,7 +919,7 @@ var suo={
 				var menuLI=suo.domCreate2("li",{setName:["className"],setValue:["menuli"]},suo.getI18n(menuModel[menuModel.main[i]][j]),"",menuData);
 				if(i==0&&j==4&&suo.cons.os=="win"){
 					//continue;
-					//menuLI.style.cssText+="display:none;";
+					menuLI.style.cssText+="display:none;";
 				}
 				menuUL.appendChild(menuLI);
 			}
