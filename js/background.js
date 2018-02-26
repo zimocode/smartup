@@ -22,7 +22,7 @@ Array.prototype.containsAll=function(ele){
 }
 
 
-var devMode=false;
+var devMode=true;
 var	config,
 	defaultConf,
 	_SYNC,
@@ -1242,23 +1242,32 @@ var sub={
 		close:function(){
 			var ids=sub.getId(sub.getConfValue("selects","n_tab")),
 				selid=sub.getId(sub.getConfValue("selects","n_close_sel"))[0],
-				selvalue=sub.getConfValue("selects","n_close_sel");
+				selvalue=sub.getConfValue("selects","n_close_sel"),
+				_closeKeep=sub.getConfValue("checks","n_close_keep");
 			let value_closePin=sub.getConfValue("checks","n_closePin");
 			let funClose=function(){
-				if(ids.length>1&&sub.getConfValue("checks","n_closeConfirm")){
-					if(!confirm("You are try to close multiple tabs. Are you sure you want to continue?")){return;}
-				}
-				if(sub.curWin.tabs.length==1&&!sub.curWin.incognito&&sub.theConf.checks[0].value){
-					chrome.tabs.create({},function(){
+				let _funClose=function(){
+					if(sub.curWin.tabs.length==1&&!sub.curWin.incognito&&_closeKeep){
+						chrome.tabs.create({},function(){
+							chrome.tabs.remove(ids,function(){
+								(selvalue!="s_default")?chrome.tabs.update(selid,{active:true}):null;
+							});
+						})
+					}else{
 						chrome.tabs.remove(ids,function(){
-							selvalue!="s_default"?chrome.tabs.update(selid,{active:true}):null;
+							(selvalue!="s_default")?chrome.tabs.update(selid,{active:true}):null;
 						});
-					})
+					}					
+				}
+				if(ids.length>1&&sub.getConfValue("checks","n_closeConfirm")){
+					chrome.tabs.sendMessage(sub.curTab.id,{type:"set_confirm"},function(response){
+						if(response.message){
+							_funClose();
+						}
+					});
 				}else{
-					chrome.tabs.remove(ids,function(){
-						selvalue!="s_default"?chrome.tabs.update(selid,{active:true}):null;
-					});	
-				}				
+					_funClose();
+				}			
 			}
 			if(value_closePin){
 				let ids_pinned,i=0,ii=0;
@@ -3471,6 +3480,7 @@ else{
 
 if(!chrome.notifications){}
 else{
+	console.log("ssss")
 	chrome.notifications.onClicked.addListener(function(id){
 		localStorage.setItem("showlog","true");
 		chrome.tabs.create({url:"../html/options.html"});

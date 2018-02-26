@@ -4,7 +4,7 @@
 			"ver":"5.5.271.802",
 			"date":"2018.02.26",
 			"content":[
-				"fix bug: hide options for non-windows platfrom"
+				"fix bug: hide options for non-windows platfrom, action close tab dont work sometimes"
 			]
 		},
 		{
