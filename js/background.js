@@ -1247,7 +1247,8 @@ var sub={
 			let value_closePin=sub.getConfValue("checks","n_closePin");
 			let funClose=function(){
 				let _funClose=function(){
-					if(sub.curWin.tabs.length==1&&!sub.curWin.incognito&&_closeKeep){
+					if(sub.curWin.tabs.length==ids.length&&!sub.curWin.incognito&&_closeKeep){
+					//if(sub.curWin.tabs.length==1&&!sub.curWin.incognito&&_closeKeep){
 						chrome.tabs.create({},function(){
 							chrome.tabs.remove(ids,function(){
 								(selvalue!="s_default")?chrome.tabs.update(selid,{active:true}):null;
