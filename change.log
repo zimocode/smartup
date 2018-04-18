@@ -1,7 +1,15 @@
 {
 	"log": [
 		{
-			"ver":"5.5.271.802",
+			"ver":"6.0.514.816",
+			"date":"2018.04.18",
+			"content":[
+				"touch device support: touch gestures",
+				"more options of appearance"
+			]
+		},
+		{
+			"ver":"5.5.271.804",
 			"date":"2018.02.26",
 			"content":[
 				"fix bugs: hide options for non-windows platfrom, action close tab dont work sometimes"

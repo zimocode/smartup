@@ -174,6 +174,13 @@ let actions={
 actions.popactions=actions.mgesactions=actions.mges;
 actions.popactions_group=actions.mgesactions_group=actions.mges_group;
 
+actions.touch_group=actions.mges_group;
+
+
+actions.mgesactions=actions.mges;
+actions.touch=actions.mges;
+//actions.touchactions_group=actions.mgesactions_group=actions.mges_group;
+
 let actionOptions={
 	special:{
 		upperlevel:{

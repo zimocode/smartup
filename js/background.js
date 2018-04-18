@@ -52,7 +52,7 @@ var getDefault={
 	},
 	value:function(){
 		var	config={
-				version:44,
+				version:45,
 				plus:{},
 				apps:{
 					appslist:{
@@ -673,6 +673,86 @@ var getDefault={
 							checks:[{type:"n_pin",value:false}]
 						}
 					]
+				},
+				touch:{
+					settings:{
+						txttourl:true,
+						lnktoimg:false
+					},
+					ui:{
+						line:{
+							enable:false,
+							color:"#808080",
+							width:5,
+							opacity:50
+						},
+						direct:{
+							enable:false,
+							color:"#8e9bd5",
+							width:32,
+							opacity:80,
+							style:"center"
+						},
+						tip:{
+							enable:true,
+							color:"#ffffff",
+							bgcolor:"#5677fc",
+							width:18,
+							opacity:80,
+							style:"leftbottom",
+							withdir:false
+						},
+						note:{
+							enable:false,
+							color:"#f75620",
+							opacity:90,
+							width:12,
+							style:"hover"
+						},
+						allaction:{
+							enable:false,
+							color:"#ffffff",
+							bgcolor:"#576f71",
+							width:24,
+							opacity:70,
+							style:"ui_bottom"
+						}
+					},
+					actions:[
+						{
+							direct:"DL",
+							name:"newtab",
+							selects:[
+								{type:"n_optype",value:"n_new"},
+								{type:"n_position",value:"s_default"}
+							],
+							checks:[{type:"n_pin",value:false}]
+						},
+						{
+							direct:"DR",
+							name:"close",
+							mydes:{type:true,value:getDefault.i18n("init_close_current")},
+							selects:[
+								{type:"n_tab",value:"s_current"},
+								{type:"n_close_sel",value:"s_default"}
+							],
+							checks:[
+								{type:"n_close_keep",value:false}
+							]
+						},
+						{
+							direct:"DRL",
+							name:"reopen"
+						},
+						{
+							direct:"DRU",
+							name:"appslist"
+						},
+						{
+							direct:"RDLU",
+							name:"optionspage"
+						}
+					]
 				}
 			}	
 		switch(navigator.language.toLowerCase()){
@@ -683,8 +763,7 @@ var getDefault={
 				config.general.engine.txtengine.push(OBJ);
 				var imgobj={};
 				imgobj.name="\u767e\u5ea6";
-				imgobj.content="http://image.baidu.com/pcdutu?queryImageUrl=%s"
-				//imgobj.content="http://image.baidu.com/i?objurl=%s&rainbow=1&filename=&rt=0&rn=10&ftn=wantu&ct=1&stt=0&tn=shituresultpc";
+				imgobj.content="http://image.baidu.com/pcdutu?queryImageUrl=%s";
 				config.general.engine.imgengine.push(imgobj);
 				break;
 			case"ru":
@@ -2741,6 +2820,15 @@ var sub={
 			else if(config.version<44){
 				sub.setBackup("44");
 			}
+			else if(config.version<45){
+				sub.setBackup("45")
+			}
+		},
+		_45:function(){
+			config.touch={};
+			config.touch=defaultConf.touch;
+			config.version=45;
+			sub.saveConf(true);
 		},
 		_44:function(){
 			let _type=["mges","wges","rges","pop","icon","ctm"],i=0,ii=0;
@@ -3515,6 +3603,7 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 	//}
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
+	console.log(message)
 	sub.message=message;
 	if(message.type=="opt_getpers"){
 		console.log(message)

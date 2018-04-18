@@ -55,7 +55,7 @@ var ui={
 		{
 			confele:"style",
 			dom:"select",
-			select:["follow","center","hover","ui_bottom"]
+			select:["follow","center","top","ui_bottom","left","right","leftbottom","lefttop","righttop","hover"]
 		}
 	],
 	tip:[
@@ -92,7 +92,8 @@ var ui={
 		{
 			confele:"style",
 			dom:"select",
-			select:["follow","center","hover","ui_bottom"]
+			select:["follow","center","top","ui_bottom","left","right","leftbottom","lefttop","righttop","hover"]
+
 		},
 		{
 			confele:"withdir",
@@ -129,7 +130,7 @@ var ui={
 		{
 			confele:"style",
 			dom:"select",
-			select:["follow","center","hover","ui_bottom"]
+			select:["follow","center","top","ui_bottom","left","right","leftbottom","lefttop","righttop","hover"]
 		}
 	],
 	allaction:[
@@ -166,13 +167,13 @@ var ui={
 		{
 			confele:"style",
 			dom:"select",
-			select:["follow","center","hover","ui_bottom"]
+			select:["follow","center","top","ui_bottom","left","right","leftbottom","lefttop","righttop","hover"]
 		}
 	]
 }
 var menuModel={
-	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm"/*"wges","rges","sfn"*/],
-	main:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm",/*"sfn","apps",*/"about"],
+	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch"/*"wges","rges","sfn"*/],
+	main:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch",/*"sfn","apps",*/"about"],
 	general:["setting","fnswitch","searchmgr","scriptmgr","linux","per","conf"],
 	mges:["setting","ui","gesmgr"],
 	sdrg:["setting","tsdrg","lsdrg","isdrg"],
@@ -184,5 +185,6 @@ var menuModel={
 	ctm:["setting","action"],
 	sfn:["settings"],
 	apps:["settings"],
+	touch:["setting","ui","action"],
 	about:["about","translate","thanks",/*"help",*/"changelog"]
 }

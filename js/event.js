@@ -57,6 +57,9 @@ var sue={
 	},
 	initHandle:function(){
 		console.log(config.general.fnswitch.fnwges)
+		document.addEventListener("touchstart",this.handleEvent,false);
+		document.addEventListener("touchmove",this.handleEvent,false);
+		document.addEventListener("touchend",this.handleEvent,false);
 		if(config.general.fnswitch.fnmges||config.general.fnswitch.fnrges||config.general.fnswitch.fnwges){
 			console.log("initHandle")
 			document.addEventListener("mousedown",this.handleEvent,false);
@@ -94,6 +97,24 @@ var sue={
 	},
 	handleEvent:function(e){
 		switch(e.type){
+			case"touchstart":
+				if(e.touches.length!=1){
+					sue.drawing?sue.clearUI():null;
+					break;
+				}else{
+					sue.lineDrawReady_touch(e,"touch");
+				}
+				break;
+			case"touchmove":
+				if(sue.drawing&&e.touches.length==1){
+					sue.touchMove(e);
+				}else{
+					sue.clearUI();
+				}
+				break;
+			case"touchend":
+				sue.touchEnd(e);
+				break;
 			case"wheel":
 				if(!extDisable&&config.general.fnswitch.fnwges&&(e.buttons==1||e.buttons==2)){
 					sue.inWges=true;
@@ -297,14 +318,154 @@ var sue={
 		var reg=/^((http|https|ftp):\/\/)?(\w(\:\w)?@)?([0-9a-z_-]+\.)*?([a-z0-9-]+\.[a-z]{2,6}(\.[a-z]{2})?(\:[0-9]{2,6})?)((\/[^?#<>\/\\*":]*)+(\?[^#]*)?(#.*)?)?$/i; 
 		return reg.test(txt.trim());
 	},
+	lineDrawReady_touch:function(e,type){
+		e=e.targetTouches?e.targetTouches[0]:e;
+
+		sue._lastX=e.clientX;
+		sue._lastY=e.clientY;
+		sue._startX=e.clientX;
+		sue._startY=e.clientY;
+		sue._dirArray="";
+		sue.drawing=true;
+
+		sue.selEle={};
+		sue.selEle.txt=window.getSelection().toString();
+		sue.selEle.lnk=e.href||e.target.href;
+		sue.selEle.img=sue.selEle.img?sue.selEle.img:e.target.src;
+		sue.selEle.str=e.target.innerText;
+		sue.startEle=e.target;
+
+		//txt to url
+		if(config[type].settings.txttourl&&sue.regURL(sue.selEle.txt)){
+			sue.selEle.lnk=sue.selEle.txt;
+		}
+
+
+		sue.window=window;
+		sue.document=window.document.documentElement;
+		sue.drawType=["touch","actions"];
+		var _uiarray=["direct","tip","note","allaction"];
+		var _uiset=[];
+		for(var i=0;i<_uiarray.length;i++){
+			if(config[sue.drawType[0]].ui&&config[sue.drawType[0]].ui[_uiarray[i]].enable){
+				sue.UI(config[sue.drawType[0]].ui[_uiarray[i]].style);
+				//sue.UI(config.mges.ui[_uiarray[i]].style)
+			}
+		}
+	},
+	touchMove:function(e){
+		var x=e.targetTouches[0].clientX;
+		var y=e.targetTouches[0].clientY;
+		var dx=Math.abs(x-sue._lastX);
+		var dy=Math.abs(y-sue._lastY);
+		var dz=Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+		//console.log(dx+"/"+dy+"/"+dz)
+		if(dz<1){return}
+		sue.uiPos(e);
+
+		//return;
+		//console.log(sue.drawType[0])
+		//sue.ui_line(e)
+		(config[sue.drawType[0]].ui.line.enable||editMode)?sue.ui_line(e):null;
+		if(dx<config.general.settings.minlength
+			&&dy<config.general.settings.minlength){
+			return;
+		}
+
+		var dir;
+		dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");
+		//console.log(dir)   	
+
+
+
+		var lastDir=sue._dirArray.substr(sue._dirArray.length-1,1);
+		if(dir!=lastDir){
+			sue._dirArray+=dir;
+			//show direct
+			sue.drawType[0]!="sdrg"&&config[sue.drawType[0]].ui.direct.enable?sue.ui_direct(e):null;
+			//get tip
+			//sue.drawType[0]!="sdrg"&&(config[sue.drawType[0]].ui.tip.enable||config[sue.drawType[0]].ui.note.enable)?sue.sendDir(sue._dirArray,"gettip",e):null;
+
+			//get tip
+			(config[sue.drawType[0]].ui.tip.enable||config[sue.drawType[0]].ui.note.enable)?sue.sendDir(sue._dirArray,"gettip",e):null;
+		}
+		//timeout
+		if(config.general.settings.timeout){
+			if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
+			sue.timeout=window.setTimeout(function(){
+				//console.log("timeou")
+				sue.break=true;
+				sue.clearUI();
+				//sue.timeout_nomenu=true;
+			},config.general.settings.timeoutvalue)
+		}
+
+		sue._lastX=e.targetTouches[0].clientX;
+		sue._lastY=e.targetTouches[0].clientY;
+		//console.log(sue._dirArray)
+	},
+	touchEnd:function(e){
+		console.log(e);
+		console.log("fun_name:"+arguments.callee.name);
+		if(!sue._dirArray){return;}
+		if(sue.break){
+			sue.clearUI();
+			sue.break=false;
+			return;
+		}
+		sue.clearUI();
+		if(editMode){
+			editDirect=sue._dirArray;
+			var getele=function(ele){
+				if(ele.tagName.toLowerCase()=="smartup"&&ele.classList.contains("su_apps")){
+					return ele;
+				}else{
+					return getele(ele.parentNode);
+				}
+			}
+			var boxOBJ=getele(document.querySelector(".su_app_test"));
+			boxOBJ.querySelector(".testbox").innerText=sue._dirArray;
+		}else{
+			sue.sendDir(sue._dirArray,"action",e);
+		}	
+		sue.drawing=false;
+		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
+		sue._dirArray="";
+		//sue.sendDir(sue._dirArray,"action",e);
+
+		return;
+		console.log("stop")
+		if(sue.break){
+			sue.clearUI();
+			sue.break=false;
+			return;
+		}
+		sue.clearUI();
+		if(editMode){
+			editDirect=sue._dirArray;
+			var getele=function(ele){
+				if(ele.tagName.toLowerCase()=="smartup"&&ele.classList.contains("su_apps")){
+					return ele;
+				}else{
+					return getele(ele.parentNode);
+				}
+			}
+			var boxOBJ=getele(document.querySelector(".su_app_test"));
+			boxOBJ.querySelector(".testbox").innerText=sue._dirArray;
+		}else{
+			sue.sendDir(sue._dirArray,"action",e);
+		}
+		
+		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
+		e.preventDefault();
+		sue._dirArray="";
+		sue.drawing=false;
+	},
 	lineDrawReady:function(e,type){
 		console.log("lineDrawReady");
-
 		console.log(e.target)
-		console.log(e.target.getAttribute&&(e.target.getAttribute("draggable")=="true"))
 		//disable drag ,when draggable=true
 		if(config[type].settings.draggable&&e.target.getAttribute&&(e.target.getAttribute("draggable")=="true")){return;}
-		console.log("draggable")
 		sue._lastX=e.clientX;
 		sue._lastY=e.clientY;
 		sue._startX=e.clientX;
@@ -419,7 +580,6 @@ var sue={
 	},
 	lineDraw:function(e,type){
 		//console.log("lineDraw")
-		sue.uiPos(e)
 		var x=e.clientX;
 		var y=e.clientY;
 		var dx=Math.abs(x-sue._lastX);
@@ -427,6 +587,7 @@ var sue={
 		var dz=Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 
 		if(dz<1){return}
+		sue.uiPos(e)
 		sue.drawType[0]!="sdrg"&&(config[sue.drawType[0]].ui.line.enable||editMode)?sue.ui_line(e):null;
 		if(dx<config.general.settings.minlength
 			&&dy<config.general.settings.minlength){
@@ -487,20 +648,24 @@ var sue={
 		sue._lastY=e.clientY;
 	},
 	UI:function(style){
+		console.log(style)
 		var domui=sue.document.querySelector("div[data-suui=uibox][data-sustyle="+style+"]");
 		if(!domui){
 			domui=document.createElement("div");
 			domui.dataset.suui="uibox";
 			domui.dataset.sustyle=style;
 			domui.style.cssText+=
-				"position:fixed;"+
-				"z-index:"+parseInt((new Date())/1000);
-			if(style=="hover"){
-				domui.style.cssText+="right:-2px;bottom:0;text-align:right;"
+				"position:fixed;text-align:right;"
+				+"z-index:"+parseInt((new Date())/1000);
+			let objStyle={
+				"leftbottom":"left:0;bottom:0px;",
+				"lefttop":"left:0;top:0px;",
+				"righttop":"right:0;top:0px;",
+				"hover":"right:0px;bottom:0;",
+				"top":"top:0;",
+				"ui_bottom":"bottom:0"
 			}
-			if(style=="ui_bottom"){
-				domui.style.cssText+="bottom:-2px;text-align:center;"
-			}
+			domui.style.cssText+=objStyle[style];
 			sue.document.appendChild(domui)
 		}
 	},
@@ -527,6 +692,7 @@ var sue={
 			sue.document.appendChild(svgdiv);
 		}
 		//console.log(sue.svgtag)
+		e=e.targetTouches?e.targetTouches[0]:e;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
 		if(sue.svgtag){
@@ -697,9 +863,58 @@ var sue={
 		}
 	},
 	uiPos:function(e){
+		let domUIs=sue.document.querySelectorAll("div[data-suui=uibox]"),
+			i=0,domWidth,domHeight;
+		e=e.targetTouches?e.targetTouches[0]:e;
+		console.log(domUIs)
+		for(i=0;i<domUIs.length;i++){
+			if(["center","top","ui_bottom","left","right"].contains(domUIs[i].dataset.sustyle)){
+				domWidth=window.getComputedStyle(domUIs[i]).width;
+				domWidth=domWidth.substr(0,domWidth.length-2);
+				domWidth=(window.innerWidth-domWidth)/2;
+				domHeight=window.getComputedStyle(domUIs[i]).height;
+				domHeight=domHeight.substr(0,domHeight.length-2);
+				domHeight=(window.innerHeight-domHeight)/2;
+			}
+			switch(domUIs[i].dataset.sustyle){
+				case"follow":
+					domUIs[i].style.cssText+="left:"+(e.clientX+10)+"px;"
+						+"top:"+(e.clientY+30)+"px"
+					break;
+				case"center":
+					console.log("center")
+					domUIs[i].style.cssText+="left:"+domWidth+"px;"
+						+"top:"+domHeight+"px;";
+					break;
+				case"top":
+					domUIs[i].style.cssText+="left:"+domWidth+"px;"
+						+"top:0";
+					break;
+				case"ui_bottom":
+					domUIs[i].style.cssText+="left:"+domWidth+"px;"
+						+"bottom:-1px;";
+					break;
+				case"left":
+					domUIs[i].style.cssText+="left:0px;"
+						+"top:"+domHeight+"px;";
+					break;
+				case"right":
+					domUIs[i].style.cssText+="right:0px;"
+						+"top:"+domHeight+"px;";
+					break;
+			}
+		}
+
+		return;
+
 		var uibox_follow=sue.document.querySelector("div[data-suui=uibox][data-sustyle=follow]"),
 			uibox_center=sue.document.querySelector("div[data-suui=uibox][data-sustyle=center]"),
 			uibox_bottom=sue.document.querySelector("div[data-suui=uibox][data-sustyle=ui_bottom]");
+
+		var uibox_leftbottom=sue.document.querySelector("div[data-suui=uibox][data-sustyle=ui_leftbottom]");
+
+		e=e.targetTouches?e.targetTouches[0]:e;
+
 		uibox_follow?(uibox_follow.style.cssText+="left:"+(e.clientX+10)+"px;"+"top:"+(e.clientY+30)+"px"):null;
 		if(uibox_center){
 			var _width=window.getComputedStyle(uibox_center).width;
@@ -723,6 +938,17 @@ var sue={
 				"left:"+_width+"px;"/*+
 				"top:"+_height+"px;";*/
 		}
+		// if(uibox_leftbottom){
+		// 	var _width=window.getComputedStyle(uibox_bottom).width;
+		// 		_width=_width.substr(0,_width.length-2);
+		// 		_width=(window.innerWidth-_width)/2;
+		// 	var _height=window.getComputedStyle(uibox_bottom).height;
+		// 		_height=_height.substr(0,_height.length-2);
+		// 		_height=(window.innerHeight-_height)/2;
+		// 	uibox_bottom.style.cssText+=
+		// 		"left:"+_width+"px;"+
+		// 		"bottom:"+"1px; !important";
+		// }
 	},
 	clearUI:function(){
 		//return
@@ -732,7 +958,7 @@ var sue={
 		for(var i=0;i<doms.length;i++){
 			if(doms[i]){doms[i].remove()}
 		}
-		console.log(sue.drawing);
+		// console.log(sue.drawing);
 		sue.drawing=false;
 	},
 	stopMges:function(e){
@@ -765,6 +991,7 @@ var sue={
 	},
 	sendDir:function(dir,dirType,e){
 		//console.log(sue.drawType)
+		console.log(dirType)
 		var returnValue;
 		chrome.runtime.sendMessage({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
 			//console.log(response)
@@ -772,6 +999,7 @@ var sue={
   			sue.getedConf=returnValue;
   			switch(response.type){
   				case"tip":
+  					console.log(response)
   					sue.ui_tip(response,e);
   					sue.ui_note(response,e);
   					sue.ui_allaction(response,e);

@@ -41,7 +41,7 @@ var suo={
 			suo.init();
 			suo.initMenu();
 			suo.initI18n();
-			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm"];
+			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch"];
 			for(var i=0;i<itemArray.length;i++){
 				suo.initListItem(itemArray[i]);
 			}
@@ -49,6 +49,7 @@ var suo={
 			suo.initPer();
 			suo.initUI("mges");
 			suo.initUI("drg");
+			suo.initUI("touch");
 			suo.initValue();
 			suo.initEnd();
 		},100)
@@ -315,6 +316,7 @@ var suo={
 					suo.itemDel(e);
 				}
 				if(ele.classList.contains("box_btn_next")){
+					console.log("box_btn_next")
 					var ckdir=suo.checkEditDirect(e);
 					console.log(ckdir)
 					if(ckdir){
@@ -323,6 +325,7 @@ var suo={
 					}
 				}
 				if(ele.classList.contains("box_btn_diredit")){
+					console.log("box_btn_diredit")
 					var ckdir=suo.checkEditDirect(e);
 					if(ckdir){
 						suo.itemEdit(ckdir[0],ckdir[1],"edit",ckdir[2],suo.getDataset(suo.getAPPboxEle(e),"actiontype","value"));
@@ -830,6 +833,7 @@ var suo={
 		return "-webkit-transform:rotate(+"+myDeg[direct]+");";
 	},
 	initUi1:function(type){
+		console.log(type)
 		var dom=document.querySelector("#set-"+type+"ui .setcontent");
 			dom.innerHTML="";
 		var uitype=["line","direct","tip","note","allaction"]
@@ -886,7 +890,7 @@ var suo={
 			dom.appendChild(dommain);
 		}else if(obj.dom=="select"){
 			for(var i=0;i<obj.select.length;i++){
-				dommain.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[obj.select[i]]},suo.getI18n("s_o_"+obj.select[i])));
+				dommain.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[obj.select[i]]},suo.getI18n(/*"s_o_"+*/obj.select[i])));
 			}
 			dom.appendChild(domlabel);
 			dom.appendChild(dommain);
@@ -918,7 +922,7 @@ var suo={
 				var menuData={setName:["id0","id1"],setValue:[i,j]};
 				var menuLI=suo.domCreate2("li",{setName:["className"],setValue:["menuli"]},suo.getI18n(menuModel[menuModel.main[i]][j]),"",menuData);
 				if(i==0&&j==4&&suo.cons.os=="win"){
-					//continue;
+					continue;
 					menuLI.style.cssText+="display:none;";
 				}
 				menuUL.appendChild(menuLI);
@@ -976,7 +980,8 @@ var suo={
 			||(ele.dataset.id0=="3"&&ele.dataset.id1=="3")
 			||(ele.dataset.id0=="3"&&ele.dataset.id1=="4")
 			||(ele.dataset.id0=="6"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="8"&&ele.dataset.id1=="1")){
+			||(ele.dataset.id0=="8"&&ele.dataset.id1=="1")
+			||(ele.dataset.id0=="9"&&ele.dataset.id1=="2")){
 				if(ele.dataset.id0=="0"&&ele.dataset.id1=="3"){
 					suo.showBtnAdd(true,setDom.dataset.confobj+"|script");
 					return;
@@ -1383,7 +1388,8 @@ var suo={
 		var confOBJ,eleOBJ,actionType;
 		switch(type){
 			case"mges":
-				confOBJ=config["mges"].actions;
+			case"touch":
+				confOBJ=config[type].actions;
 				eleOBJ={setName:["className"],setValue:["item item_edit item_more item_"+type]};
 				actionType=type//+"actions";
 				break;
@@ -1480,8 +1486,6 @@ var suo={
 			var liDel=suo.domCreate2("span",{setName:["className"],setValue:["item_del"]},"x");
 			liOBJ.appendChild(liName);
 			liOBJ.appendChild(liDel);
-			//liOBJ.innerText=("txtengine imgengine script".indexOf(type)!=-1)?confOBJ[i].name:((confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name))
-
 			if("txtengine imgengine script pop ctm".indexOf(type)!=-1){
 				//console.log(confOBJ[i])
 			}else{
@@ -1510,7 +1514,7 @@ var suo={
 		}
 		var btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_save")];
 		var btnArrayDel=[suo.getI18n("btn_del"),suo.getI18n("btn_cancel"),suo.getI18n("btn_save")];
-		if(type=="edit"&&(["mges","tdrg","ldrg","idrg","pop","ctm","txtengine","imgengine","script"].contains(actiontype))){btnArray=btnArrayDel}
+		if(type=="edit"&&(["mges","tdrg","ldrg","idrg","pop","ctm","txtengine","imgengine","script","touch"].contains(actiontype))){btnArray=btnArrayDel}
 		var titleOBJ={
 			newaction:suo.getI18n("title_newaction"),
 			newengine:suo.getI18n("title_newengine"),
@@ -1548,7 +1552,7 @@ var suo={
 		var domContent=boxOBJ.querySelector(".box_content");
 		direct=direct?direct:(!confOBJ.direct?"":confOBJ.direct);
 		console.log(direct)
-		var actionArray=["mgesactions","tsdrgactions","lsdrgactions","isdrgactions","tdrgactions","ldrgactions","idrgactions","mges","tsdrg","lsdrg","isdrg","tdrg","ldrg","idrg"]
+		var actionArray=["mgesactions","tsdrgactions","lsdrgactions","isdrgactions","tdrgactions","ldrgactions","idrgactions","mges","tsdrg","lsdrg","isdrg","tdrg","ldrg","idrg","touch"]
 
 		if(["txtengine","imgengine","script"].contains(actionType)){
 			console.log("engines")
@@ -1644,7 +1648,7 @@ var suo={
 		var direct=direct?direct:confOBJ.direct;
 		var OBJ=suo.domCreate2("div",{setName:["className"],setValue:["box_direct"]},"","",{setName:["direct"],setValue:[direct]});
 		//edit icon
-		var actionArray=["mgesactions","tdrgactions","ldrgactions","idrgactions","mges","tdrg","idrg","ldrg"]
+		var actionArray=["mgesactions","tdrgactions","ldrgactions","idrgactions","mges","touch","tdrg","idrg","ldrg"]
 		if(actionArray.contains(actiontype)){
 			var editOBJ=suo.domCreate2("img",{setName:["className","title","src"],setValue:["box_diredit",suo.getI18n("tip_editdir"),"../image/edit.png"]});
 			OBJ.appendChild(editOBJ);			
@@ -1667,6 +1671,7 @@ var suo={
 	},
 	//confOBJ,actionType
 	itemAction:function(confOBJ,actionType){
+		console.log(actions);
 		console.log("actionType:"+actionType+";actionValue:"+confOBJ.name);
 		var valueOBJ={setName:["name","className"],setValue:[actionType,"box_select actionselect"]};
 		var domSelect=suo.domCreate2("select",valueOBJ,null,null,{setName:["actiontype"],setValue:[actionType]});//edom,eele,einner,ecss,edata,etxt
@@ -1944,6 +1949,7 @@ var suo={
 		},time*1000)
 	},
 	boxClose2:function(e,type){
+		console.log("boxClose2")
 		editMode=false;
 		var domBoxBG=document.querySelector(".box_bg");
 		var theEle=suo.getAPPboxEle(e);
@@ -2299,7 +2305,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-93.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-103.confobj>.setcontent");
 					domlog.innerHTML=""
 				for(var i=0;i<xhrLog.log.length;i++){
 					var dom=suo.domCreate2("details");
@@ -2476,7 +2482,7 @@ var suo={
 			suo.itemEdit(confobj,confid,"add",null,confArray[0]);
 			return;
 		}
-		var testdes=suo.getI18n("test_"+(confArray[0]=="mges"?"mges":confArray[1]));
+		var testdes=suo.getI18n("test_"+((confArray[0]=="mges"||confArray[0]=="touch")?"mges":confArray[1]));
 		var btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_done")];
 		var addOBJ=suo.initAPPbox(btnArray,[480,320],suo.getI18n("title_newaction"),"bg");
 			addOBJ.classList.add("su_app_test");
@@ -2494,13 +2500,14 @@ var suo={
 		suo.initPos(addOBJ);
 	},
 	directEdit:function(e){
+		console.log("directEdit")
 		var confobj=suo.getDataset(e,"confobj","value"); //e.target.dataset.confobj;
 		var confid=suo.getDataset(e,"confid","value"); //confOBJ.length;
 		var dataclose=suo.getDataset(e,"close","value");
 		suo.boxClose2(suo.getAPPboxEle(e));
 		editMode=true;
 		var confArray=confobj.split("|");
-		var testdes=suo.getI18n("test_"+(confArray[0]=="mges"?"mges":confArray[1]));
+		var testdes=suo.getI18n("test_"+((confArray[0]=="mges"||confArray[0]=="touch")?"mges":confArray[1]));
 		var btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_done")];
 		var addOBJ=suo.initAPPbox(btnArray,[480,320],suo.getI18n("title_editdirect"),"bg",suo.getDataset(e,"actiontype","value"));
 			addOBJ.classList.add("su_app_test");
@@ -2588,11 +2595,13 @@ var suo={
 			"top:"+(e.clientY-suo.cons.boxmove.posY)+"px;"
 	},
 	checkEditDirect:function(e){
+		console.log(arguments.callee.name);
 		var dom=suo.getAPPboxEle(e);
 		var confobj=dom.dataset.confobj,
 			confid=dom.dataset.confid;
 		var confOBJ=config;
 		var confArray=confobj.split("|");
+		console.log(editDirect)
 		if(!editDirect){
 			dom.querySelector(".testbox").innerHTML="<span style='font-weight:bold;font-size:16px;'>"+suo.getI18n("msg_dirnone")+"</span><br \/>"+suo.getI18n("test_"+confArray[1])
 			suo.showMsgBox(suo.getI18n("msg_dirnone"),"error","",10000);

@@ -182,10 +182,6 @@
             <div class="setname" data-i18n="stnm_resetconf"></div>
             <div class="setcontent">
                 <input type="button" id="conf_reset" data-i18n="stnm_resetconf"><br />
-<!--                 <div style="margin-top:10px;">
-                    <input type="button" id="conf_backup" data-i18n="stnm_backup">
-                    <div class="setdes" data-i18n="<des_backup">When smartUp was upgraded to a new version, the configuration of last version will be saved automatically sometimes. If something is wrong, you can reset to the saved configuration.</div>
-                </div> -->
             </div>
             <div class="setname" data-i18n="stnm_syncconf"></div>
             <div class="setcontent">
@@ -439,7 +435,32 @@
                 <!-- <div class="setdes" data-i18n="des_item"></div> -->
             </div>
         </div>
-        <div class="set set-90 confobj" data-confobj="">
+        <div data-confobj="touch|settings" class="set set-90 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <!-- <label data-i18n="con_touchholdkey"></label><br /> -->
+               <!--  <select name="" id="" class="init setmargin change-select" data-confele="holdkey">
+                    <option value="none" data-i18n="s_none">none</option>
+                    <option value="alt" data-i18n="s_alt">Alt</option>
+                    <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                    <option value="shift" data-i18n="s_shift">Shift</option>
+                </select><br /> -->
+                <input class="init change-checkbox" data-confele="txttourl" type="checkbox"><label data-i18n="con_drgurl"></label><br />
+                <input class="init change-checkbox" data-confele="lnktoimg" type="checkbox"><label data-i18n="con_drgimg"></label>
+            </div>
+        </div>
+        <div id="set-touchui" data-confobj="touch|ui" class="set set-91">
+            <div class="setname" data-i18n="ui"></div>
+            <div class="setcontent" data-confobj="touch|ui"></div>
+        </div>
+        <div data-confobj="touch|actions" class="set set-92 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="touch|actions">
+                <ul class="con-item ul_touch"></ul>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        <div class="set set-100 confobj" data-confobj="">
             <div class="setcontent">
                 <div id="about_box">
                     <div><img src="../icon.png"></div>
@@ -489,7 +510,7 @@
                 </div>
             </div>
         </div>
-        <div class="set set-91 confobj" data-confobj="">
+        <div class="set set-101 confobj" data-confobj="">
             <div class="setname" data-i18n="translate"></div>
             <div class="setcontent">
                 Want this extension to show in your native language? If you are familiar with English, you can help us translate this extension into your native language. Please contact us by email: crexme@gmail.com .<br />
@@ -511,7 +532,7 @@
                 </table>
             </div>
         </div>
-        <div class="set set-92 confobj" data-confobj="">
+        <div class="set set-102 confobj" data-confobj="">
             <div class="setname" data-i18n="thanks"></div>
             <div class="setcontent">
                 <ul class="thanks_ul">
@@ -538,7 +559,7 @@
 
             </div>
         </div>
-        <div class="set set-93 confobj" data-confobj="">
+        <div class="set set-103 confobj" data-confobj="">
             <div class="setname" data-i18n="changelog"></div>
             <div class="setcontent">
             </div>

@@ -1357,5 +1357,38 @@
   },
   "perdes_browsersettings":{"message":"由于非Windows平台上，鼠标右键菜单在按下鼠标按键按下后就出现，导致与使用右键操作的鼠标手势冲突，导致鼠标手势不可用。为消除该影响，smartUp手势需要请求额外的权限（‘browserSettings’）来改变右键菜单的弹出方式（仅Firefox）。本页面只出现一次，你也可以通过以下路径再次尝试开启：通用选项》Linux/MAC选项》尝试设置右键菜单延后出现。详情请参考：https://developer.mozilla.org/Add-ons/WebExtensions/API/browserSettings。"},
   "opt_mouseup":{"message":"尝试设置右键菜单延后出现"},
-  "des_mouseup":{"message":"该选项可以消除右键菜单与鼠标手势操作的冲突。需要请求'browserSettings'权限，仅适用于Firefox58+。"}
+  "des_mouseup":{"message":"该选项可以消除右键菜单与鼠标手势操作的冲突。需要请求'browserSettings'权限，仅适用于Firefox58+。"},
+  "touch":{
+    "message":"触屏手势"
+  },
+  "left":{
+    "message":"左边"
+  },
+  "right":{
+    "message":"右边"
+  },
+  "top":{
+    "message":"顶部"
+  },
+  "ui_bottom":{
+    "message":"底部"
+  },
+  "leftbottom":{
+    "message":"左下"
+  },
+  "lefttop":{
+    "message":"左上"
+  },
+  "righttop":{
+    "message":"右上"
+  },
+  "hover":{
+    "message":"右下"
+  },
+  "follow":{
+    "message":"跟随"
+  },
+  "center":{
+    "message":"居中"
+  }
 }
