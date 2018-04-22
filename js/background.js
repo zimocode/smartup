@@ -1505,7 +1505,14 @@ var sub={
 		},
 		switchtab:function(){
 			var id=sub.getId(sub.getConfValue("selects","n_tab_lrhl"))[0];
-			chrome.tabs.update(id,{active:true});
+			//fix contextmenu from switchtab by rges or wges
+			if((sub.message.type=="action_wges"||sub.message.type=="action_rges")&&sub.message.sendValue.buttons==2){
+				chrome.tabs.sendMessage(id,{type:"fix_switchtab",value:"contextmenu"},function(response){
+					chrome.tabs.update(id,{active:true});
+				});
+			}else{
+				chrome.tabs.update(id,{active:true});
+			}
 		},
 		move:function(){
 			var index=sub.getIndex(sub.getConfValue("selects","n_position_lrhl"))[0];
@@ -3590,17 +3597,15 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
 	sub.CTMclick(info,tab);
 })
 chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
-	//show icon
-	//if(config.general.settings.icon){
-		sub.setIcon("normal",tabId,changeInfo,tab);
-		if(changeInfo.status=="complete"){
-			chrome.tabs.sendMessage(tabId,{type:"status"},function(response){
-				if(!response){
-					sub.setIcon("warning",tabId,changeInfo,tab);
-				}
-			});
-		}	
-	//}
+	sub.setIcon("normal",tabId,changeInfo,tab);
+	if(changeInfo.status=="complete"){
+		chrome.tabs.sendMessage(tabId,{type:"status"},function(response){
+			if(!response){
+				sub.setIcon("warning",tabId,changeInfo,tab);
+			}
+		});
+	}
+
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
