@@ -249,6 +249,12 @@ var sue={
 					sue.timeout_nomenu=false;
 					e.preventDefault();
 				}
+				//fix switchtab by rges or wges
+				console.log(sue.cons.switchtab)
+				if(sue.cons.switchtab&&sue.cons.switchtab.contextmenu){
+					e.preventDefault();
+					sue.cons.switchtab.contextmenu=false;
+				}
 				
 				break;
 			case"mousemove":
@@ -1041,6 +1047,13 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	}
 	if(message.type=="setapptype"){
 		sue.appType[message.apptype]=true;
+	}
+	switch(message.type){
+		case"fix_switchtab"://fix contextmenu from switchtab by rges or wges
+			sue.cons.switchtab={};
+			sue.cons.switchtab.contextmenu=true;
+			sendResponse({type:message.type,message:true});
+			break;
 	}
 });
 chrome.runtime.sendMessage({type:"evt_getconf"},function(response){
