@@ -22,7 +22,7 @@ Array.prototype.containsAll=function(ele){
 }
 
 
-var devMode=false;
+var devMode=true;
 var	config,
 	defaultConf,
 	_SYNC,
@@ -3517,6 +3517,200 @@ var sub={
 			config.version=30;
 			sub.saveConf(true);
 		}
+	},
+	funOnMessage:function(message,sender,sendResponse){
+		sub.message=message;
+		let getConf=function(){
+			let drawType=message.drawType,
+				confType=config[drawType[0]][drawType[1]],
+				direct=message.direct,
+				theName="",
+				theConf="";
+			for(var i=0;i<confType.length;i++){
+				if(confType[i].direct==direct){
+					theName=confType[i].name;
+					theConf=confType[i];
+					break;
+				}
+				if(i==confType.length-1){
+					theConf={name:null/*,mydes:null*/}
+				}
+			}
+			return theConf;			
+		}
+		switch(message.type){
+			case"evt_getconf":
+			case"pop_getconf":
+			case"opt_getconf":
+				let _conf={
+					type:message.type,
+					defaultConf:defaultConf,
+					config:config,
+					devMode:devMode,
+					os:sub.cons.os
+				}
+				sendResponse(_conf);
+				break;
+			case"opt_getpers":
+				sub.checkPermission(message.value.thepers,message.value.theorgs,message.value.theFunction,message.value.msg);
+				break;
+			case"per_getconf":
+				sendResponse(sub.cons.permissions);
+				break;
+			case"apps_action":
+				sub.action.apps_action(message,sendResponse);
+				break;
+			case"apps_saveconf":
+				sub.action.apps_saveconf(message,sendResponse);
+				break;
+			case"apps_test":
+				let _fun=function(){
+					if(message.appjs){
+						chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].initUI();",runAt:"document_start"});
+						return;
+					}
+					if(message.apptype=="base64"){
+						chrome.tabs.executeScript({file:"js/base64.min.js",runAt:"document_start"},function(){})
+					}else if(message.apptype=="qr"){
+						chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/jquery.qrcode.min.js",runAt:"document_start"},function(){})
+					}
+
+					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
+					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){})			
+				}		
+				if(!message.value){
+					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
+					chrome.tabs.executeScript({file:"js/apps_basic.js",runAt:"document_start"},function(){_fun();})
+				}else{
+					_fun();
+				}
+				break;
+			case"getappconf":
+				sendResponse(sub.cons[message.apptype]);
+				break;
+			case"apps_getvalue":
+				sendResponse({type:message.apptype,config:config.apps[message.apptype],value:sub.cons[message.apptype]})
+				break;
+			case"action_np":
+				sub.action.next();
+				break;
+			case"reloadconf":
+				config=message.value;
+				loadConfig();
+				break;
+			case"saveConf":
+				config=message.value;
+				sub.saveConf();
+				break;
+			case"per_clear":
+				sub.cons.permissions={};
+				break;
+			case"getpers":
+				sub.initpers();
+				break;
+			case"scroll":
+				sendResponse({type:sub.cons.scroll.type,effect:sub.cons.scroll.effect});
+				break;
+			case"zoom":
+				sendResponse({value:sub.cons.zoom});
+				break;
+			case"action_pop":
+				let _index=message.index;
+					/*theConf=config.pop.actions[_index]*/; //message.popvalue;
+				sub.theConf=config.pop.actions[_index];
+				if(config.pop.settings.type=="front"){
+					chrome.tabs.query({active:true,currentWindow:true},function(tabs){
+						sub.curTab=tabs[0];
+						chrome.tabs.sendMessage(tabs[0].id,{type:"pop"},function(response){
+							if(response&&response.type=="action_pop"){
+								sub.message=response;
+								sub.extID=chrome.runtime.id?chrome.runtime.id:null;
+								sub.initCurrent(null,sub.theConf);
+								console.log(sub.message)
+							}
+						});
+					})
+				}else{
+					sub.initCurrent(sender,sub.theConf);
+				}
+				//set last as default
+				if(_index!==0&&config.pop.settings.last){
+					config.pop.actions[_index]=config.pop.actions[0];
+					config.pop.actions[0]=theConf;
+					sub.saveConf();
+				}
+				break;
+			case"action_rges":
+				let rgesType=message.sendValue.buttons==1?0:1;
+					/*theConf=config.rges.actions[rgesType]*/;
+				sub.theConf=config.rges.actions[rgesType];
+				sub.initCurrent(sender,sub.theConf);
+				break;
+			case"action_wges":
+				let _id;
+				if(message.sendValue.buttons==1){
+					if(message.sendValue.wheelDelta<0){_id=0;}else{_id=1}
+				}else if(message.sendValue.buttons==2){
+					if(message.sendValue.wheelDelta<0){_id=2;}else(_id=3)
+				}
+				sub.theConf=config.wges.actions[_id];
+				if(sub.theConf.name=="scroll"){//fix action scrollame});
+					window.setTimeout(function(){
+						sub.initCurrent(sender,sub.theConf);
+					},200)
+					return
+				}
+				sub.initCurrent(sender,sub.theConf)
+				break;
+			case"gettip":
+				sub.theConf=getConf();
+				let _sendConf={};
+					_sendConf.config=sub.theConf;
+					_sendConf.type="tip";
+					_sendConf.tip=sub.theConf.name?(sub.theConf.mydes&&sub.theConf.mydes.type&&sub.theConf.mydes.value?sub.theConf.mydes.value:sub.getI18n(sub.theConf.name)):null;
+					_sendConf.note=sub.theConf.note;
+					_sendConf.allaction=[];
+				//get all actions
+				if(config[sub.message.drawType[0]].ui.allaction.enable){
+					for(let i=0;i<confType.length;i++){
+						if(confType[i].direct.indexOf(direct)==0
+							&&confType[i].direct.length>direct.length){
+							let _action={
+								direct:confType[i].direct,
+								tip:(confType[i].mydes&&confType[i].mydes.type&&confType[i].mydes.value)?confType[i].mydes.value:sub.getI18n(confType[i].name)
+							}
+							_sendConf.allaction.push(_action);
+						}
+						if(i==confType.length-1&&_sendConf.allaction.length==0){
+							_sendConf.allaction=null;
+						}
+					}
+				}
+				sendResponse(_sendConf);
+				break;
+			case"action":
+				sub.theConf=getConf();
+				sub.theConf.type="action";
+				if(sub.theConf.name=="paste"){//for action paste
+					if(sub.cons.permissions.contains("clipboardWrite")) {
+						var clipOBJ=document.body.appendChild(document.createElement("textarea"));
+						clipOBJ.focus();
+						document.execCommand('paste', false, null);
+						var clipData=clipOBJ.value;
+						clipOBJ.remove();
+						sub.theConf.paste=clipData;
+						sub.theConf.typeAction="paste";
+						sendResponse(sub.theConf);
+				    }else {
+				    	sub.checkPermission(["clipboardWrite"]);
+				    }
+				}else{
+					sendResponse(sub.theConf);
+				}
+				sub.initCurrent(sender,sub.theConf);
+				break
+		}
 	}
 }
 
@@ -3607,16 +3801,19 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 	}
 
 })
+chrome.runtime.onMessageExternal.addListener(function(message,sender,sendResponse){
+	sub.funOnMessage(message,sender,sendResponse);
+})
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
+	sub.funOnMessage(message,sender,sendResponse);
+
+	return;
 	sub.message=message;
 	if(message.type=="opt_getpers"){
 		console.log(message)
 		sub.checkPermission(message.value.thepers,message.value.theorgs,message.value.theFunction,message.value.msg);
 		return;
-		var thepers=["background"];
-		var theorgs;
-		sub.checkPermission(thepers,theorgs,null);
 	}
 	if(message.type=="evt_getconf"||message.type=="pop_getconf"||message.type=="opt_getconf"){
 		var _conf={
@@ -3789,7 +3986,6 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 			theConf={name:null/*,mydes:null*/}
 		}
 	}
-	//console.log(theConf)
 	sub.theConf=theConf;
 
 

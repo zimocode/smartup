@@ -6,11 +6,14 @@ Array.prototype.contains=function (ele) {
 	}
 	return false;
 }
+console.log("event")
 var editMode,editDirect,browserType;
 var config={};
 let devMode,
 	extDisable=false,
-	appType={};
+	appType={},
+	extID="jialbkkmibnohldjdhbdckemnpdpngeb";
+	
 
 //check browser
 if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
@@ -23,6 +26,8 @@ if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
 if(browserType!="cr"){
 	chrome=browser;
 }
+
+extID=chrome.runtime.id;
 
 var sue={
 	cons:{
@@ -125,7 +130,7 @@ var sue={
 						wheelDelta:e.deltaY
 					}
 
-					chrome.runtime.sendMessage({type:"action_wges",sendValue:sendValue,selEle:sue.selEle},function(response){
+					chrome.runtime.sendMessage(extID,{type:"action_wges",sendValue:sendValue,selEle:sue.selEle},function(response){
 						// if(response.name=="scroll"){
 						// 	console.log("scroll")
 						// 	e.preventDefault();
@@ -194,7 +199,7 @@ var sue={
 					var sendValue={
 						buttons:e.buttons
 					}
-					chrome.runtime.sendMessage({type:"action_rges",sendValue:sendValue,selEle:sue.selEle},function(response){})
+					chrome.runtime.sendMessage(extID,{type:"action_rges",sendValue:sendValue,selEle:sue.selEle},function(response){})
 				}
 				break;
 			case"contextmenu":
@@ -999,7 +1004,7 @@ var sue={
 		//console.log(sue.drawType)
 		console.log(dirType)
 		var returnValue;
-		chrome.runtime.sendMessage({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
+		chrome.runtime.sendMessage(extID,{type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
 			//console.log(response)
   			returnValue=response;
   			sue.getedConf=returnValue;
@@ -1056,7 +1061,7 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 			break;
 	}
 });
-chrome.runtime.sendMessage({type:"evt_getconf"},function(response){
+chrome.runtime.sendMessage(extID,{type:"evt_getconf"},function(response){
 	if(response){
 		config=response.config;
 		devMode=response.devMode;
