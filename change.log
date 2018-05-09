@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.0.625.820",
+			"date":"2018.05.09",
+			"content":[
+				"fix bugs: switchtab popup contextmenu, touch gestures can't be closed."
+			]
+		},
+		{
 			"ver":"6.0.514.816",
 			"date":"2018.04.18",
 			"content":[

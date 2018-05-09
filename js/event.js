@@ -61,10 +61,11 @@ var sue={
 		}
 	},
 	initHandle:function(){
-		console.log(config.general.fnswitch.fnwges)
-		document.addEventListener("touchstart",this.handleEvent,false);
-		document.addEventListener("touchmove",this.handleEvent,false);
-		document.addEventListener("touchend",this.handleEvent,false);
+		if(config.general.fnswitch.fntouch){
+			document.addEventListener("touchstart",this.handleEvent,false);
+			document.addEventListener("touchmove",this.handleEvent,false);
+			document.addEventListener("touchend",this.handleEvent,false);
+		}
 		if(config.general.fnswitch.fnmges||config.general.fnswitch.fnrges||config.general.fnswitch.fnwges){
 			console.log("initHandle")
 			document.addEventListener("mousedown",this.handleEvent,false);
@@ -103,6 +104,7 @@ var sue={
 	handleEvent:function(e){
 		switch(e.type){
 			case"touchstart":
+				if(!config.general.fnswitch.fntouch){return;}
 				if(e.touches.length!=1){
 					sue.drawing?sue.clearUI():null;
 					break;
