@@ -1390,5 +1390,20 @@
   },
   "center":{
     "message":"居中"
+  },
+  "mergewin":{
+    "message":"合并所有窗口"
+  },
+  "n_winstate":{
+    "message":"窗口状态："
+  },
+  "s_minimized":{
+    "message":"最小化"
+  },
+  "s_maximized":{
+    "message":"最大化"
+  },
+  "s_fullscreen":{
+    "message":"全屏"
   }
 }

@@ -39,7 +39,8 @@ let actions={
 			{name:"closewin",selects:["n_win"]},
 			{name:"max"},
 			{name:"min"},
-			{name:"full"}
+			{name:"full"},
+			{name:"mergewin",selects:["n_winstate"]}//Maximize the window after merging,Window state
 		],
 		[//group txt
 			{name:"copytxt"},
@@ -207,6 +208,7 @@ let actionOptions={
 		n_win:["s_current","s_all","s_others"],
 		n_wintype:["s_normal","s_popup","s_panel","s_detached_panel"],
 		n_winincog:["s_no","s_yes"],
+		n_winstate:["s_normal","s_minimized","s_maximized","s_fullscreen"],
 
 		n_reload_clear:["s_no","s_yes"],
 		n_close_sel:["s_default","s_left","s_right","s_head","s_last"],

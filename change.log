@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.1.xxx.822",
+			"date":"2018.05.09",
+			"content":[
+				"new action: merge all windows"
+			]
+		},
+		{
 			"ver":"6.0.625.820",
 			"date":"2018.05.09",
 			"content":[

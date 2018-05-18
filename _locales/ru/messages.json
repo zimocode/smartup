@@ -1390,5 +1390,20 @@
   },
   "center":{
     "message":"CENTER"
+  },
+  "mergewin":{
+    "message":"Merge all Windows"
+  },
+  "n_winstate":{
+    "message":"Window State:"
+  },
+  "s_minimized":{
+    "message":"Minimized"
+  },
+  "s_maximized":{
+    "message":"Maximized"
+  },
+  "s_fullscreen":{
+    "message":"Fullscreen"
   }
 }

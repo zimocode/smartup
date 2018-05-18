@@ -1627,6 +1627,64 @@ var sub={
 			}
 			chrome.windows.update(sub.curWin.id,{state:t},function(window){})
 		},
+		mergewin:function(){
+			sub.cons.mergewin=sub.cons.mergewin||{lastwins:[]};
+			let i=0,ii=0,tabIds=[],win=[],_win=[],
+				winState=sub.getConfValue("selects","n_winstate").substr(2);
+			chrome.windows.getCurrent(function(window){
+				chrome.windows.getAll({populate:true,windowTypes:["normal"]},function(windows){
+					for(i=0;i<windows.length;i++){
+						if(windows[i].id===window.id){continue;}
+						_win=[];
+						for(ii=0;ii<windows[i].tabs.length;ii++){
+							console.log("sdf")
+							tabIds.push(windows[i].tabs[ii].id);
+							_win.push(windows[i].tabs[ii].id);
+						}
+						win.push(_win);
+					}
+					sub.cons.mergewin.lastwins=(win.length>0)?win:sub.cons.mergewin.lastwins;
+					if(tabIds.length>0&&windows.length>1){
+						chrome.tabs.move(tabIds,{windowId:window.id,index:-1},function(){
+							if(winState!="normal"){
+								chrome.windows.update(window.id,{state:winState})
+							}
+						});
+					}else if(sub.cons.mergewin.lastwins.length>0){
+						for(i=0;i<sub.cons.mergewin.lastwins.length;i++){
+							var _temp=i;
+							(function(_temp,winId){
+								chrome.windows.create({tabId:sub.cons.mergewin.lastwins[_temp][0]},function(window){
+									if(sub.cons.mergewin.lastwins[_temp].length>1){
+										sub.cons.mergewin.lastwins[_temp].splice(0,1);
+										chrome.tabs.move(sub.cons.mergewin.lastwins[_temp],{windowId:window.id,index:-1},function(){
+											if(_temp==sub.cons.mergewin.lastwins.length-1){
+												chrome.windows.update(winId,{focused:true})
+											}
+										})
+									}
+								})
+							})(i,window.id)
+						}
+					}
+				})
+			})
+			return;
+			chrome.windows.getLastFocused(function(window){
+				chrome.windows.getAll({populate:true,windowTypes:["normal"]},function(windows){
+					let i=0,ii=0,tabIds=[];
+					for(i=0;i<windows.length;i++){
+						console.log(windows[i].id);
+						if(windows[i].id===window.id){break;}
+						for(ii=0;ii<windows[i].tabs.length;ii++){
+							tabIds.push(windows[i].tabs[ii].id);
+						}
+					}
+					console.log(tabIds)
+					tabIds.length>0?chrome.tabs.move(tabIds,{windowId:window.id,index:-1}):null;
+				})
+			})
+		},
 		//txt
 		copytxt:function(){//chk
 			if(!sub.message.selEle.txt){return;}
