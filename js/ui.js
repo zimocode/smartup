@@ -173,7 +173,7 @@ var ui={
 }
 var menuModel={
 	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch"/*"wges","rges","sfn"*/],
-	main:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch",/*"sfn","apps",*/"about"],
+	main:["fn","general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch",/*"sfn","apps",*/"about"],
 	general:["setting","fnswitch","searchmgr","scriptmgr","linux","per","conf"],
 	mges:["setting","ui","gesmgr"],
 	sdrg:["setting","tsdrg","lsdrg","isdrg"],

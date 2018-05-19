@@ -1139,7 +1139,7 @@ var suo={
 	},
 
 	initValue:function(){
-		//return
+		return
 		suo.initId();
 		var doms=document.querySelectorAll(".init");
 		for(var i=0;i<doms.length;i++){
@@ -2190,11 +2190,16 @@ var suo={
 		}
 
 		suo.fixSizePos();
-		document.querySelector("#ext_ver").innerText=chrome.runtime.getManifest().version;
-		document.querySelector("#nav_txt").innerText=suo.getI18n("ext_name");
-		document.querySelector("#about_title").innerText=suo.getI18n("ext_name");
+		// document.querySelector("#ext_ver").innerText=chrome.runtime.getManifest().version;
+		// document.querySelector("#nav_txt").innerText=suo.getI18n("ext_name");
+		// document.querySelector("#about_title").innerText=suo.getI18n("ext_name");
 		document.title=suo.getI18n("opt_title")+" - "+suo.getI18n("ext_name");
+		
 		document.querySelector("#main").style.cssText+="opacity:1;transition:all .9s ease-in-out;display:block;";
+
+		document.querySelector("#abmain_name").innerText=suo.getI18n("ext_name");
+		document.querySelector("#abmain_des").innerText=suo.getI18n("ext_des");
+		document.querySelector("#abinfo_ver").innerText+=chrome.runtime.getManifest().version;
 
 
 		document.querySelector("#loadingbox").style.cssText+="opacity:0;"
@@ -2206,7 +2211,7 @@ var suo={
 		document.querySelector("#import_file").onchange=function(){
 			suo.confImport();
 		}
-		document.querySelector("#ext_email a").href+="&body=//Please, sending with these information: "+chrome.runtime.getManifest().version+" - "+navigator.appVersion+"//";
+		//document.querySelector("#ext_email a").href+="&body=//Please, sending with these information: "+chrome.runtime.getManifest().version+" - "+navigator.appVersion+"//";
 		if(!config.general.settings.theme||config.general.settings.theme=="colorful"){
 			document.querySelector("#setbg").style.cssText+="display:none;";
 		}
