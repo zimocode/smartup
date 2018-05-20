@@ -82,7 +82,11 @@
     <div id="loadingbox">Loading<img src="../image/loading.gif"></div>
     <div id="btn_add" title="_i18n" data-i18n="tip_addnew">+</div>
     <div id="main">
-        <div class="set set-00" data-confobj="general|settings" data-conf0="general" data-conf1="settings">
+        <div class="set set-00" data-confobj="general|fnswitch">
+            <div class="setname" data-i18n="stnm_function"></div>
+            <div class="setcontent"></div>
+        </div>
+        <div class="set set-10" data-confobj="general|settings" data-conf0="general" data-conf1="settings">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <input id="con-timeout" class="init change-checkbox" data-confele="timeout" type="checkbox"><label for="con-timeout" data-i18n="con_timeout"></label><br />
@@ -114,11 +118,11 @@
                 <a href="###" id="setbg", data-i18n="con_setbg"></a>
             </div>
         </div>
-        <div class="set set-01" data-confobj="general|fnswitch" data-conf0="general" data-conf1="fnswitch">
+        <!-- <div class="set set-11" data-confobj="general|fnswitch" data-conf0="general" data-conf1="fnswitch">
             <div class="setname" data-i18n="stnm_function"></div>
             <div class="setcontent"></div>
-        </div>
-        <div class="set set-02 confobj" data-confobj="general|engine" data-conf0="general" data-conf1="engine">
+        </div> -->
+        <div class="set set-11 confobj" data-confobj="general|engine" data-conf0="general" data-conf1="engine">
             <div class="setname" data-i18n="stnm_txtengine"></div>
             <div class="setcontent">
                 <ul class="con-item txtengine tengine ul_txtengine item-tengine confobj" data-confobj="general|engine|txtengine"></ul>
@@ -133,7 +137,7 @@
             </div>
             <div class="setdes" data-i18n="des_item"></div>
         </div>
-        <div class="set set-03" data-confobj="general|script" data-conf0="general" data-conf1="script">
+        <div class="set set-12" data-confobj="general|script" data-conf0="general" data-conf1="script">
             <div class="setname" data-i18n="stnm_script"></div>
             <div class="setcontent">
                 <ul class="con-item ul_script confobj" data-confobj="general|script|script"></ul>
@@ -141,7 +145,7 @@
             </div>
             <div class="setdes" data-i18n="des_item"></div>
         </div>
-        <div class="set set-04" data-confobj="general|linux" data-conf0="general" data-conf1="linux">
+        <div class="set set-13" data-confobj="general|linux" data-conf0="general" data-conf1="linux">
             <div class="setname" data-i18n="stnm_linux"></div>
             <div class="setcontent">
                 <input id="con-linux" class="init change-checkbox" data-confele="cancelmenu" type="checkbox"><label for="con-linux" data-i18n="con_linux"></label>
@@ -150,7 +154,7 @@
                 <div class="opt_des" data-i18n="des_mouseup"></div>
             </div>
         </div>
-        <div class="set set-05" data-confobj="" data-conf0="" data-conf1="">
+        <div class="set set-14" data-confobj="" data-conf0="" data-conf1="">
             <div class="setname" data-i18n="stnm_per_pers"></div>
             <div class="setcontent">
                 <ul class="con-item ul_pers confobj" data-confobj="per_pers"></ul>
@@ -163,7 +167,7 @@
             </div> -->
             <div class="setdes" data-i18n="des_pers"></div>
         </div>
-        <div id="set-conf" class="set set-06" data-confobj="general|sync">
+        <div id="set-conf" class="set set-15" data-confobj="general|sync">
             <div class="setname" data-i18n="stnm_importconf"></div>
             <div class="setcontent">
                 <input type="file" id="import_file"><br />
@@ -192,7 +196,7 @@
                 <div class="setdes" data-i18n="des_sync1"></div>
             </div>
         </div>
-        <div id="set-mgsmgr" class="set set-10" data-confobj="mges|settings">
+        <div id="set-mgsmgr" class="set set-20" data-confobj="mges|settings">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <label data-i18n="con_mgesmode"></label><br />
@@ -211,11 +215,11 @@
                 <input class="init change-checkbox" data-confele="lnktoimg" type="checkbox"><label data-i18n="con_drgimg"></label>
             </div>
         </div>
-        <div id="set-mgesui" class="set set-11" data-confobj="mges|ui">
+        <div id="set-mgesui" class="set set-21" data-confobj="mges|ui">
             <div class="setname" data-i18n="ui"></div>
             <div class="setcontent" data-confobj="mges|ui"></div>
         </div>
-        <div id="set-mgsmgr" class="set set-12 confobj" data-confobj="mges|actions">
+        <div id="set-mgsmgr" class="set set-22 confobj" data-confobj="mges|actions">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_mges"></ul>
@@ -223,7 +227,7 @@
                 <div class="setdes" data-i18n="des_item"></div>
             </div>
         </div>
-        <div class="set set-20" data-confobj="sdrg|settings" data-conf0="sdrg" data-conf1="settings">
+        <div class="set set-30" data-confobj="sdrg|settings" data-conf0="sdrg" data-conf1="settings">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <input class="init change-checkbox" data-confele="drgbox" type="checkbox"><label data-i18n="con_drgbox"></label><br />
@@ -254,25 +258,25 @@
                 <input class="init change-checkbox" data-confele="img" type="checkbox"><label data-i18n="con_enableimg"></label>
             </div>
         </div>
-        <div id="set-drgtxt" data-confobj="sdrg|tsdrg" class="set set-21">
+        <div id="set-drgtxt" data-confobj="sdrg|tsdrg" class="set set-31">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_tsdrg"></ul>
             </div>
         </div>
-        <div id="set-drgtxt" data-confobj="sdrg|lsdrg" class="set set-22">
+        <div id="set-drgtxt" data-confobj="sdrg|lsdrg" class="set set-32">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_lsdrg"></ul>
             </div>
         </div>
-        <div id="set-drgtxt" data-confobj="sdrg|isdrg" class="set set-23">
+        <div id="set-drgtxt" data-confobj="sdrg|isdrg" class="set set-33">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_isdrg"></ul>
             </div>
         </div>
-        <div class="set set-30" data-confobj="drg|settings" data-conf0="drg">
+        <div class="set set-40" data-confobj="drg|settings" data-conf0="drg">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <input class="init change-checkbox" data-confele="drgbox" type="checkbox"><label data-i18n="con_drgbox"></label><br />
@@ -304,11 +308,11 @@
                 <input class="init change-checkbox" data-confele="img" type="checkbox"><label data-i18n="con_enableimg"></label>
             </div>
         </div>
-        <div id="set-drgui" class="set set-31" data-confobj="drg|ui">
+        <div id="set-drgui" class="set set-41" data-confobj="drg|ui">
             <div class="setname" data-i18n="ui"></div>
             <div class="setcontent" data-confobj="drg|ui"></div>
         </div>
-        <div id="set-drgtxt" data-confobj="drg|tdrg" class="set set-32 confobj">
+        <div id="set-drgtxt" data-confobj="drg|tdrg" class="set set-42 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_tdrg"></ul>
@@ -316,7 +320,7 @@
                 <div class="setdes" data-i18n="des_item"></div>
             </div>
         </div>
-        <div id="set-drglnk" data-confobj="drg|ldrg" class="set set-33 confobj">
+        <div id="set-drglnk" data-confobj="drg|ldrg" class="set set-43 confobj">
             <div class="setname"  data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_ldrg"></ul>
@@ -324,7 +328,7 @@
                 <div class="setdes" data-i18n="des_item"></div>
             </div>
         </div>
-        <div id="set-drgimg" data-confobj="drg|idrg" class="set set-34 confobj">
+        <div id="set-drgimg" data-confobj="drg|idrg" class="set set-44 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent">
                 <ul class="con-item ul_idrg"></ul>
@@ -333,7 +337,7 @@
             </div>
         </div>
 
-        <div data-confobj="rges|actions" class="set set-40 confobj">
+        <div data-confobj="rges|actions" class="set set-50 confobj">
             <div class="setname" data-i18n="stnm_action">xx</div>
             <div class="setcontent" data-confobj="rges|actions">
                 <div style="min-height:100px;">
@@ -349,7 +353,7 @@
             </div>
             <!-- <div class="setdes" data-i18n="des_item"></div> -->
         </div>
-        <div data-confobj="wges|actions" class="set set-50 confobj">
+        <div data-confobj="wges|actions" class="set set-60 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent" data-confobj="wges|actions">
                 <div style="min-height:100px;">
@@ -376,7 +380,7 @@
             <!-- <div class="setdes" data-i18n="des_item"></div> -->
         </div>
 
-        <div data-confobj="pop|settings" class="set set-60 confobj">
+        <div data-confobj="pop|settings" class="set set-70 confobj">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent" data-confobj="pop|settings">
                 <span data-i18n="icon_type"></span><br />
@@ -388,7 +392,7 @@
             </div>
             <!-- <div class="setdes" data-i18n="des_item"></div> -->
         </div>
-        <div data-confobj="pop|actions" class="set set-61 confobj">
+        <div data-confobj="pop|actions" class="set set-71 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent" data-confobj="pop|actions">
                 <ul class="con-item ul_pop"></ul>
@@ -397,7 +401,7 @@
             </div>
             <!-- <div class="setdes" data-i18n="des_item"></div> -->
         </div>
-        <div data-confobj="icon|settings" class="set set-70 confobj">
+        <div data-confobj="icon|settings" class="set set-80 confobj">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent" data-confobj="icon|settings">
                 <span data-i18n="icon_type"></span><br />
@@ -408,7 +412,7 @@
                 <input class="init change-checkbox" data-confele="tip" type="checkbox"><label data-i18n="icon_showname"></label>
             </div>
         </div>
-        <div data-confobj="icon|actions" class="set set-71 confobj">
+        <div data-confobj="icon|actions" class="set set-81 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent" data-confobj="icon|actions">
                 <ul class="con-item ul_icon"></ul>
@@ -416,7 +420,7 @@
                 <!-- <div class="setdes" data-i18n="des_item"></div> -->
             </div>
         </div>
-        <div data-confobj="ctm|settings" class="set set-80 confobj">
+        <div data-confobj="ctm|settings" class="set set-90 confobj">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent" data-confobj="ctm|settings">
                 <span data-i18n="ctm_add"></span>
@@ -427,7 +431,7 @@
                 </div>
             </div>
         </div>
-        <div data-confobj="ctm|actions" class="set set-81 confobj">
+        <div data-confobj="ctm|actions" class="set set-91 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent" data-confobj="ctm|actions">
                 <ul class="con-item ul_ctm"></ul>
@@ -435,7 +439,7 @@
                 <!-- <div class="setdes" data-i18n="des_item"></div> -->
             </div>
         </div>
-        <div data-confobj="touch|settings" class="set set-90 confobj">
+        <div data-confobj="touch|settings" class="set set-100 confobj">
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <!-- <label data-i18n="con_touchholdkey"></label><br /> -->
@@ -449,18 +453,18 @@
                 <input class="init change-checkbox" data-confele="lnktoimg" type="checkbox"><label data-i18n="con_drgimg"></label>
             </div>
         </div>
-        <div id="set-touchui" data-confobj="touch|ui" class="set set-91">
+        <div id="set-touchui" data-confobj="touch|ui" class="set set-101">
             <div class="setname" data-i18n="ui"></div>
             <div class="setcontent" data-confobj="touch|ui"></div>
         </div>
-        <div data-confobj="touch|actions" class="set set-92 confobj">
+        <div data-confobj="touch|actions" class="set set-102 confobj">
             <div class="setname" data-i18n="stnm_action"></div>
             <div class="setcontent" data-confobj="touch|actions">
                 <ul class="con-item ul_touch"></ul>
                 <div style="clear:both;"></div>
             </div>
         </div>
-        <div class="set set-100 confobj" data-confobj="">
+        <div class="set set-110 confobj" data-confobj="">
             <div class="setname" data-i18n="about"></div>
             <div class="setcontent">
                 <div id="about_main">
@@ -474,9 +478,9 @@
                 <div id="about_info">
                     <div id="abinfo_ver">Ver </div>
                     <div id="abinfo_git">smartUp@GitHub: <a href="https://github.com/zimocode/smartup" target="_blank">zimocode/smartup</a></div>
-                    <div id="abinfo_fb"><span data-i18n="ext_issue">Issues:</span> <a href="" target="_blank">Issues@github</a> , <a href="mailto:crexme@gmail.com?Subject=about smartup">zimocode@gmail.com</a></div>
+                    <div id="abinfo_fb"><span data-i18n="ext_issue"></span> <a href="" target="_blank">Issues@github</a> , <a href="mailto:crexme@gmail.com?Subject=about smartup">zimocode@gmail.com</a></div>
                     <div id="abinfo_vers">
-                        <span data-i18n="ext_allver">All versions:</span> 
+                        <span data-i18n="ext_allver"></span> 
                         <a href="https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn" target="_blank">Chrome</a>,
                         <a href="https://addons.mozilla.org/firefox/addon/smartup" target="_blank">Firefox</a>,
                         <a href="https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb" target="_blank">Beta for Chrome</a>
@@ -528,7 +532,7 @@
                 </div> -->
             </div>
         </div>
-        <div class="set set-101 confobj" data-confobj="">
+        <div class="set set-111 confobj" data-confobj="">
             <div class="setname" data-i18n="translate"></div>
             <div class="setcontent">
                 Want this extension to show in your native language? If you are familiar with English, you can help us translate this extension into your native language. Please contact us by email: crexme@gmail.com .<br />
@@ -550,7 +554,7 @@
                 </table>
             </div>
         </div>
-        <div class="set set-102 confobj" data-confobj="">
+        <div class="set set-112 confobj" data-confobj="">
             <div class="setname" data-i18n="thanks"></div>
             <div class="setcontent">
                 <ul class="thanks_ul">
@@ -577,7 +581,7 @@
 
             </div>
         </div>
-        <div class="set set-103 confobj" data-confobj="">
+        <div class="set set-113 confobj" data-confobj="">
             <div class="setname" data-i18n="changelog"></div>
             <div class="setcontent">
             </div>

@@ -1405,5 +1405,11 @@
   },
   "s_fullscreen":{
     "message":"Fullscreen"
+  },
+  "ext_issue":{
+    "message":"Issues:"
+  },
+  "ext_allver":{
+    "message":"All versions:"
   }
 }

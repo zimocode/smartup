@@ -1405,5 +1405,11 @@
   },
   "s_fullscreen":{
     "message":"全屏"
+  },
+  "ext_issue":{
+    "message":"问题反馈："
+  },
+  "ext_allver":{
+    "message":"所有版本："
   }
 }

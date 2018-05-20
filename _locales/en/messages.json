@@ -153,7 +153,7 @@
     "message": "Settings"
   },
   "stnm_function": {
-    "message": "Features ON"
+    "message": "Features"
   },
   "stnm_opts": {
     "message": "Settings of Options Page"
@@ -807,7 +807,7 @@
     "message": "Appearance"
   },
   "fnswitch": {
-    "message": "Features ON"
+    "message": "Features"
   },
   "searchmgr": {
     "message": "Search Engines"
