@@ -1213,7 +1213,7 @@ var sub={
 		return theConf;
 	},
 	initCurrent:function(sender,theConf){
-		sender?sub.extID=sender.id:null;
+		//sender?sub.extID=sender.id:null;
 		chrome.windows.getCurrent({populate:true},function(window){
 			sub.curWin=window;
 			chrome.tabs.query({active:true,currentWindow:true},function(tabs){
@@ -3771,6 +3771,29 @@ var sub={
 		}
 	}
 }
+
+chrome.browserAction.onClicked.addListener(function(tab){
+	if(config.icon.settings.type=="back"){
+		//sub.extID=chrome.runtime.id?chrome.runtime.id:null;
+		var theConf=config.icon.actions[0];
+		sub.theConf=theConf;
+		sub.initCurrent(null,theConf);
+	}else{
+		chrome.tabs.query({active:true,currentWindow:true},function(tabs){
+			sub.curTab=tabs[0];
+			chrome.tabs.sendMessage(tabs[0].id,{type:"icon"},function(response){
+				if(response&&response.type=="action_icon"){
+					sub.message=response;
+					sub.extID=chrome.runtime.id?chrome.runtime.id:null;
+					var theConf=config.icon.actions[0];
+					sub.theConf=theConf;
+					sub.initCurrent(null,theConf);
+					console.log(sub.message)
+				}
+			});
+		})
+	}
+})
 
 if(!chrome.runtime.getPlatformInfo){}
 else{

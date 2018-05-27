@@ -1,11 +1,12 @@
 {
 	"log": [
 		{
-			"ver":"6.1.xxx.822",
-			"date":"2018.05.09",
+			"ver":"6.1.645.827",
+			"date":"2018.05.27",
 			"content":[
 				"new action: merge all windows",
-				"change part of interface: about, features on"
+				"change part of interface: about, features on",
+				"fix bug: icon actions cant work"
 			]
 		},
 		{
