@@ -974,14 +974,14 @@ var suo={
 			document.querySelector(".nav_btn_save").style.display="none";
 			document.querySelector("#resetcurrent").style.display="none";
 		}
-		if((ele.dataset.id0=="0"&&ele.dataset.id1=="3")
-			||(ele.dataset.id0=="1"&&ele.dataset.id1=="2")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="2")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="3")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="4")
-			||(ele.dataset.id0=="6"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="8"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="9"&&ele.dataset.id1=="2")){
+		if((ele.dataset.id0=="1"&&ele.dataset.id1=="3")
+			||(ele.dataset.id0=="2"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="3")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="4")
+			||(ele.dataset.id0=="7"&&ele.dataset.id1=="1")
+			||(ele.dataset.id0=="9"&&ele.dataset.id1=="1")
+			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")){
 				if(ele.dataset.id0=="0"&&ele.dataset.id1=="3"){
 					suo.showBtnAdd(true,setDom.dataset.confobj+"|script");
 					return;
