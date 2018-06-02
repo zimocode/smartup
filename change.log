@@ -1,6 +1,15 @@
 {
 	"log": [
 		{
+			"ver":"6.1.645.828",
+			"date":"2018.05.27",
+			"content":[
+				"new action: merge all windows",
+				"change part of interface: about, features on",
+				"fix bug: icon actions cant work, option- Set the last action as default one cant work"
+			]
+		},
+		{
 			"ver":"6.0.625.820",
 			"date":"2018.05.09",
 			"content":[

@@ -57,7 +57,7 @@ var suo={
 	init:function(){
 		console.log("begin");
 		suo.cons.menuPin=window.innerWidth>800?true:false;
-		suo.set.set_01();
+		suo.set.set_11();
 		suo.initHandle();
 	},
 	initHandle:function(){
@@ -921,7 +921,7 @@ var suo={
 			for(var j=0;j<menuModel[menuModel.main[i]].length;j++){
 				var menuData={setName:["id0","id1"],setValue:[i,j]};
 				var menuLI=suo.domCreate2("li",{setName:["className"],setValue:["menuli"]},suo.getI18n(menuModel[menuModel.main[i]][j]),"",menuData);
-				if(i==0&&j==4&&suo.cons.os=="win"){
+				if(i==1&&j==3&&suo.cons.os=="win"){
 					continue;
 					menuLI.style.cssText+="display:none;";
 				}
@@ -930,7 +930,7 @@ var suo={
 			menuDom.appendChild(menuP);
 			menuDom.appendChild(menuUL);
 			//init fnswitch menu
-			if(i>0&&i<menuModel.main.length-1/*&&config.general.fnswitch[menuModel.main[i]]*/){
+			if(i>1&&i<menuModel.main.length-1/*&&config.general.fnswitch[menuModel.main[i]]*/){
 				var domOBJ=document.querySelector("#m-"+menuModel.main[i]);
 				if(config.general.fnswitch["fn"+menuModel.main[i]]){
 					domOBJ.style.display="block";
@@ -974,14 +974,14 @@ var suo={
 			document.querySelector(".nav_btn_save").style.display="none";
 			document.querySelector("#resetcurrent").style.display="none";
 		}
-		if((ele.dataset.id0=="0"&&ele.dataset.id1=="3")
-			||(ele.dataset.id0=="1"&&ele.dataset.id1=="2")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="2")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="3")
-			||(ele.dataset.id0=="3"&&ele.dataset.id1=="4")
-			||(ele.dataset.id0=="6"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="8"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="9"&&ele.dataset.id1=="2")){
+		if((ele.dataset.id0=="1"&&ele.dataset.id1=="3")
+			||(ele.dataset.id0=="2"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="3")
+			||(ele.dataset.id0=="4"&&ele.dataset.id1=="4")
+			||(ele.dataset.id0=="7"&&ele.dataset.id1=="1")
+			||(ele.dataset.id0=="9"&&ele.dataset.id1=="1")
+			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")){
 				if(ele.dataset.id0=="0"&&ele.dataset.id1=="3"){
 					suo.showBtnAdd(true,setDom.dataset.confobj+"|script");
 					return;
@@ -1118,8 +1118,8 @@ var suo={
 		return dom;
 	},
 	set:{
-		set_01:function(){
-			var domOBJ=document.querySelector(".set-01>.setcontent");
+		set_11:function(){
+			var domOBJ=document.querySelector(".set-00>.setcontent");
 				domOBJ.innerHTML="";
 			for(var i=1;i<menuModel.fn.length;i++){
 				var check=suo.domCreate2("input",{setName:["type","className"],setValue:["checkbox","fnswitch change-checkbox change-fnswitch init"]},"","",{setName:["conf0","conf1","confele"],setValue:["normal","fnswitch","fn"+menuModel.fn[i]]});
@@ -1131,8 +1131,8 @@ var suo={
 			}
 			domOBJ.appendChild(suo.domCreate2("div",{setName:["className"],setValue:["setdes"]},suo.getI18n("des_fnswitch")));
 		},
-		set_00:function(){
-			var domSet=suo.domCreate2("div",{setName:["className"],setValue:["set set-00"]},"","",{setName:["conf0","conf1"],setValue:["general","settings"]});
+		set_10:function(){
+			var domSet=suo.domCreate2("div",{setName:["className"],setValue:["set set-10"]},"","",{setName:["conf0","conf1"],setValue:["general","settings"]});
 			var setname=suo.domCreate2("div",{setName:["className"],setValue:["setname"]},suo.getI18n("settings"));
 			var setcontent=suo.domCreate2("div");
 		}
@@ -1141,6 +1141,7 @@ var suo={
 	initValue:function(){
 		//return
 		suo.initId();
+		//return;
 		var doms=document.querySelectorAll(".init");
 		for(var i=0;i<doms.length;i++){
 			var confOBJ=suo.getConfOBJ(doms[i]);
@@ -1160,10 +1161,12 @@ var suo={
 				doms[i].nextSibling.setAttribute("for",doms[i].id);
 				//drg/sdrg|settings
 				if(["txt","lnk","img"].contains(doms[i].dataset.confele)){
+					console.log(confArray)
 					for(var ii=0;ii<3;ii++){
 						//break
 						if(doms[i].dataset.confele==["txt","lnk","img"][ii]){
-							var theDom=document.querySelector("[data-id0=\'"+(confArray[0]=="sdrg"?"2":"3")+"\'][data-id1=\'"+(confArray[0]=="sdrg"?ii+1:ii+2)+"\']");
+							var theDom=document.querySelector("[data-id0=\'"+(confArray[0]=="sdrg"?"3":"4")+"\'][data-id1=\'"+(confArray[0]=="sdrg"?ii+1:ii+2)+"\']");
+							console.log(theDom)
 							confOBJ[doms[i].dataset.confele]?theDom.style.display="block":theDom.style.display="none";
 							theDom.parentNode.style.height="auto";
 						}
@@ -2190,11 +2193,16 @@ var suo={
 		}
 
 		suo.fixSizePos();
-		document.querySelector("#ext_ver").innerText=chrome.runtime.getManifest().version;
-		document.querySelector("#nav_txt").innerText=suo.getI18n("ext_name");
-		document.querySelector("#about_title").innerText=suo.getI18n("ext_name");
+		// document.querySelector("#ext_ver").innerText=chrome.runtime.getManifest().version;
+		// document.querySelector("#nav_txt").innerText=suo.getI18n("ext_name");
+		// document.querySelector("#about_title").innerText=suo.getI18n("ext_name");
 		document.title=suo.getI18n("opt_title")+" - "+suo.getI18n("ext_name");
+		
 		document.querySelector("#main").style.cssText+="opacity:1;transition:all .9s ease-in-out;display:block;";
+
+		document.querySelector("#abmain_name").innerText=suo.getI18n("ext_name");
+		document.querySelector("#abmain_des").innerText=suo.getI18n("ext_des");
+		document.querySelector("#abinfo_ver").innerText+=chrome.runtime.getManifest().version;
 
 
 		document.querySelector("#loadingbox").style.cssText+="opacity:0;"
@@ -2206,7 +2214,7 @@ var suo={
 		document.querySelector("#import_file").onchange=function(){
 			suo.confImport();
 		}
-		document.querySelector("#ext_email a").href+="&body=//Please, sending with these information: "+chrome.runtime.getManifest().version+" - "+navigator.appVersion+"//";
+		//document.querySelector("#ext_email a").href+="&body=//Please, sending with these information: "+chrome.runtime.getManifest().version+" - "+navigator.appVersion+"//";
 		if(!config.general.settings.theme||config.general.settings.theme=="colorful"){
 			document.querySelector("#setbg").style.cssText+="display:none;";
 		}
@@ -2305,7 +2313,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-103.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-113.confobj>.setcontent");
 					domlog.innerHTML=""
 				for(var i=0;i<xhrLog.log.length;i++){
 					var dom=suo.domCreate2("details");

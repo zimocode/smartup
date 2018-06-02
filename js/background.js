@@ -950,7 +950,7 @@ var sub={
 					}
 				console.log(selObj)
 				sub.message={type:"action_ctm",selEle:selObj}
-				sub.initCurrent(null,theConf);
+				sub.initCurrent(null,sub.theConf);
 				break;
 			}
 		}
@@ -1210,10 +1210,10 @@ var sub={
 			}
 		}
 		sub.theConf=theConf;
-		return theConf;
+		return sub.theConf;
 	},
 	initCurrent:function(sender,theConf){
-		sender?sub.extID=sender.id:null;
+		//sender?sub.extID=sender.id:null;
 		chrome.windows.getCurrent({populate:true},function(window){
 			sub.curWin=window;
 			chrome.tabs.query({active:true,currentWindow:true},function(tabs){
@@ -1626,6 +1626,64 @@ var sub={
 				t=sub.cons.winstate;
 			}
 			chrome.windows.update(sub.curWin.id,{state:t},function(window){})
+		},
+		mergewin:function(){
+			sub.cons.mergewin=sub.cons.mergewin||{lastwins:[]};
+			let i=0,ii=0,tabIds=[],win=[],_win=[],
+				winState=sub.getConfValue("selects","n_winstate").substr(2);
+			chrome.windows.getCurrent(function(window){
+				chrome.windows.getAll({populate:true,windowTypes:["normal"]},function(windows){
+					for(i=0;i<windows.length;i++){
+						if(windows[i].id===window.id){continue;}
+						_win=[];
+						for(ii=0;ii<windows[i].tabs.length;ii++){
+							console.log("sdf")
+							tabIds.push(windows[i].tabs[ii].id);
+							_win.push(windows[i].tabs[ii].id);
+						}
+						win.push(_win);
+					}
+					sub.cons.mergewin.lastwins=(win.length>0)?win:sub.cons.mergewin.lastwins;
+					if(tabIds.length>0&&windows.length>1){
+						chrome.tabs.move(tabIds,{windowId:window.id,index:-1},function(){
+							if(winState!="normal"){
+								chrome.windows.update(window.id,{state:winState})
+							}
+						});
+					}else if(sub.cons.mergewin.lastwins.length>0){
+						for(i=0;i<sub.cons.mergewin.lastwins.length;i++){
+							var _temp=i;
+							(function(_temp,winId){
+								chrome.windows.create({tabId:sub.cons.mergewin.lastwins[_temp][0]},function(window){
+									if(sub.cons.mergewin.lastwins[_temp].length>1){
+										sub.cons.mergewin.lastwins[_temp].splice(0,1);
+										chrome.tabs.move(sub.cons.mergewin.lastwins[_temp],{windowId:window.id,index:-1},function(){
+											if(_temp==sub.cons.mergewin.lastwins.length-1){
+												chrome.windows.update(winId,{focused:true})
+											}
+										})
+									}
+								})
+							})(i,window.id)
+						}
+					}
+				})
+			})
+			return;
+			chrome.windows.getLastFocused(function(window){
+				chrome.windows.getAll({populate:true,windowTypes:["normal"]},function(windows){
+					let i=0,ii=0,tabIds=[];
+					for(i=0;i<windows.length;i++){
+						console.log(windows[i].id);
+						if(windows[i].id===window.id){break;}
+						for(ii=0;ii<windows[i].tabs.length;ii++){
+							tabIds.push(windows[i].tabs[ii].id);
+						}
+					}
+					console.log(tabIds)
+					tabIds.length>0?chrome.tabs.move(tabIds,{windowId:window.id,index:-1}):null;
+				})
+			})
 		},
 		//txt
 		copytxt:function(){//chk
@@ -3637,7 +3695,7 @@ var sub={
 				//set last as default
 				if(_index!==0&&config.pop.settings.last){
 					config.pop.actions[_index]=config.pop.actions[0];
-					config.pop.actions[0]=theConf;
+					config.pop.actions[0]=sub.theConf;
 					sub.saveConf();
 				}
 				break;
@@ -3713,6 +3771,29 @@ var sub={
 		}
 	}
 }
+
+chrome.browserAction.onClicked.addListener(function(tab){
+	if(config.icon.settings.type=="back"){
+		//sub.extID=chrome.runtime.id?chrome.runtime.id:null;
+		var theConf=config.icon.actions[0];
+		sub.theConf=theConf;
+		sub.initCurrent(null,sub.theConf);
+	}else{
+		chrome.tabs.query({active:true,currentWindow:true},function(tabs){
+			sub.curTab=tabs[0];
+			chrome.tabs.sendMessage(tabs[0].id,{type:"icon"},function(response){
+				if(response&&response.type=="action_icon"){
+					sub.message=response;
+					sub.extID=chrome.runtime.id?chrome.runtime.id:null;
+					var theConf=config.icon.actions[0];
+					sub.theConf=theConf;
+					sub.initCurrent(null,sub.theConf);
+					console.log(sub.message)
+				}
+			});
+		})
+	}
+})
 
 if(!chrome.runtime.getPlatformInfo){}
 else{
@@ -3807,235 +3888,6 @@ chrome.runtime.onMessageExternal.addListener(function(message,sender,sendRespons
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
 	sub.funOnMessage(message,sender,sendResponse);
-
-	return;
-	sub.message=message;
-	if(message.type=="opt_getpers"){
-		console.log(message)
-		sub.checkPermission(message.value.thepers,message.value.theorgs,message.value.theFunction,message.value.msg);
-		return;
-	}
-	if(message.type=="evt_getconf"||message.type=="pop_getconf"||message.type=="opt_getconf"){
-		var _conf={
-			type:message.type,
-			defaultConf:defaultConf,
-			config:config,
-			devMode:devMode,
-			os:sub.cons.os
-		}
-		sendResponse(_conf);
-		return;
-	}
-	if(message.type=="per_getconf"){
-		var _conf=sub.cons.permissions;
-		sendResponse(_conf);
-		return;
-	}
-	if(message.type=="apps_action"){
-		sub.action.apps_action(message,sendResponse);
-		return;
-	}
-	if(message.type=="apps_saveconf"){
-		sub.action.apps_saveconf(message,sendResponse);
-		return;
-	}
-	if(message.type=="apps_test"){
-		//console.log(message.apptype)
-		console.log("apps_test")
-		let _fun=function(){
-			if(message.appjs){
-				chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].initUI();",runAt:"document_start"});
-				return;
-			}
-			if(message.apptype=="base64"){
-				chrome.tabs.executeScript({file:"js/base64.min.js",runAt:"document_start"},function(){})
-			}else if(message.apptype=="qr"){
-				chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){})
-				chrome.tabs.executeScript({file:"js/jquery.qrcode.min.js",runAt:"document_start"},function(){})
-			}
-
-			chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-			chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){})			
-		}		
-		if(!message.value){
-			chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
-			chrome.tabs.executeScript({file:"js/apps_basic.js",runAt:"document_start"},function(){_fun();})
-		}else{
-			_fun();
-		}
-
-
-		return;
-	}
-	if(message.type=="getappconf"){
-		sendResponse(sub.cons[message.apptype]);
-		return;
-	}
-	if(message.type=="apps_getvalue"){
-		//sendResponse("")
-		sendResponse({type:message.apptype,config:config.apps[message.apptype],value:sub.cons[message.apptype]})
-		return
-	}
-	if(message.type=="action_np"){
-		console.log(message)
-		sub.action.next();
-		return;
-	}
-	if(message.type=="reloadconf"){
-		console.log("reloadconf");
-		config=message.value;
-		loadConfig();
-		return;
-	}
-	if(message.type=="saveConf"){
-		console.log("saveconf")
-		config=message.value;
-		sub.saveConf();
-		return;
-	}
-	if(message.type=="updateConfStatus"){
-		console.log("updateConfStatus")
-		return;
-	}
-	if(message.type=="per_clear"){
-		console.log("per_clear")
-		sub.cons.permissions={};
-		return;
-	}
-	if(message.type=="getpers"){
-		sub.initpers();
-		return;
-	}
-	if(message.type=="scroll"){
-		sendResponse({type:sub.cons.scroll.type,effect:sub.cons.scroll.effect});
-		return;
-	}
-	if(message.type=="zoom"){
-		sendResponse({value:sub.cons.zoom});
-		return;
-	}
-	if(message.type=="action_pop"){
-		var _index=message.index;
-		var theConf=config.pop.actions[_index]; //message.popvalue;
-			sub.theConf=theConf;
-		if(config.pop.settings.type=="front"){
-			chrome.tabs.query({active:true,currentWindow:true},function(tabs){
-				sub.curTab=tabs[0];
-				chrome.tabs.sendMessage(tabs[0].id,{type:"pop"},function(response){
-					if(response&&response.type=="action_pop"){
-						sub.message=response;
-						sub.extID=chrome.runtime.id?chrome.runtime.id:null;
-						sub.initCurrent(null,theConf);
-						console.log(sub.message)
-					}
-				});
-			})
-		}else{
-			sub.initCurrent(sender,theConf);
-		}
-		//set last as default
-		if(_index!==0&&config.pop.settings.last){
-			config.pop.actions[_index]=config.pop.actions[0];
-			config.pop.actions[0]=theConf;
-			sub.saveConf();
-		}
-		return;
-	}
-	if(message.type=="action_rges"){
-		console.log("action_rges");
-		var rgesType=message.sendValue.buttons==1?0:1;
-		var theConf=config.rges.actions[rgesType];
-		sub.theConf=theConf;
-		sub.initCurrent(sender,theConf);
-		return;
-	}
-	if(message.type=="action_wges"){
-		console.log("action_wges")
-		var _id;
-		if(message.sendValue.buttons==1){
-			if(message.sendValue.wheelDelta<0){_id=0;}else{_id=1}
-		}else if(message.sendValue.buttons==2){
-			if(message.sendValue.wheelDelta<0){_id=2;}else(_id=3)
-		}
-		var theConf=config.wges.actions[_id];
-		sub.theConf=theConf;
-		
-		if(sub.theConf.name=="scroll"){//fix action scroll
-			//sendResponse({name:sub.theConf.name});
-			window.setTimeout(function(){
-				sub.initCurrent(sender,theConf);
-			},200)
-			return
-		}
-		
-		sub.initCurrent(sender,theConf)
-		return;
-	}
-	var drawType=message.drawType;
-	var confType=config[drawType[0]][drawType[1]];
-	var direct=message.direct;
-	var theName="",
-		theConf="";
-	for(var i=0;i<confType.length;i++){
-		if(confType[i].direct==direct){
-			theName=confType[i].name;
-			theConf=confType[i];
-			break;
-		}
-		if(i==confType.length-1){
-			theConf={name:null/*,mydes:null*/}
-		}
-	}
-	sub.theConf=theConf;
-
-
-	if(message.type=="gettip"){
-		//return
-		//if(!sub.theConf.name){return;}
-		let _sendConf={};
-			_sendConf.config=sub.theConf;
-			_sendConf.type="tip";
-			_sendConf.tip=sub.theConf.name?(sub.theConf.mydes&&sub.theConf.mydes.type&&sub.theConf.mydes.value?sub.theConf.mydes.value:sub.getI18n(sub.theConf.name)):null;
-			_sendConf.note=sub.theConf.note;
-			_sendConf.allaction=[];
-
-		//get all actions
-		if(config[sub.message.drawType[0]].ui.allaction.enable/*&&theConf.direct*/){
-			for(let i=0;i<confType.length;i++){
-				if(confType[i].direct.indexOf(direct)==0
-					&&confType[i].direct.length>direct.length){
-					let _action={
-						direct:confType[i].direct,
-						tip:(confType[i].mydes&&confType[i].mydes.type&&confType[i].mydes.value)?confType[i].mydes.value:sub.getI18n(confType[i].name)
-					}
-					_sendConf.allaction.push(_action);
-				}
-				if(i==confType.length-1&&_sendConf.allaction.length==0){
-					_sendConf.allaction=null;
-				}
-			}
-		}
-		sendResponse(_sendConf);
-	}else if(message.type=="action"){
-		theConf.type="action";
-		if(theConf.name=="paste"){//for action paste
-			if(sub.cons.permissions.contains("clipboardWrite")) {
-				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
-				clipOBJ.focus();
-				document.execCommand('paste', false, null);
-				var clipData=clipOBJ.value;
-				clipOBJ.remove();
-				theConf.paste=clipData;
-				theConf.typeAction="paste";
-				sendResponse(theConf);
-		    }else {
-		    	sub.checkPermission(["clipboardWrite"]);
-		    }
-		}else{
-			sendResponse(theConf);
-		}
-		sub.initCurrent(sender,theConf);
-	}
 });
 loadConfig();
 //browsersettings

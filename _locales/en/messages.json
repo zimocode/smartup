@@ -153,7 +153,7 @@
     "message": "Settings"
   },
   "stnm_function": {
-    "message": "Features ON"
+    "message": "Features"
   },
   "stnm_opts": {
     "message": "Settings of Options Page"
@@ -807,7 +807,7 @@
     "message": "Appearance"
   },
   "fnswitch": {
-    "message": "Features ON"
+    "message": "Features"
   },
   "searchmgr": {
     "message": "Search Engines"
@@ -1418,5 +1418,26 @@
   },
   "center":{
     "message":"CENTER"
+  },
+  "mergewin":{
+    "message":"Merge all Windows"
+  },
+  "n_winstate":{
+    "message":"Window State:"
+  },
+  "s_minimized":{
+    "message":"Minimized"
+  },
+  "s_maximized":{
+    "message":"Maximized"
+  },
+  "s_fullscreen":{
+    "message":"Fullscreen"
+  },
+  "ext_issue":{
+    "message":"Issues:"
+  },
+  "ext_allver":{
+    "message":"All versions:"
   }
 }

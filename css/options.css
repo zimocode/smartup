@@ -1361,6 +1361,52 @@ select:hover{
 	margin: 2px 0;
 }
 
+#about_main{
+
+}
+#abmain_log{
+	display: block;
+	float: left;
+	height: 64px;
+}
+#abmain_title{
+	padding: 5px 70px;
+}
+#abmain_name{
+	font-size: 16px;
+}
+#abmain_des{
+	font-size: 12px;
+}
+
+#about_info{
+	padding: 10px
+}
+#about_info div{
+	background-size: contain;
+	background-repeat: no-repeat;
+	padding-left: 24px;
+	height: 16px;
+	line-height: 16px;
+	margin: 5px 0;
+}
+#abinfo_git{
+	background-image: url(../image/github.svg);
+}
+#abinfo_fb{
+	background-image: url(../image/issue.svg);
+}
+#abinfo_ver,#abinfo_vers{
+	background-image: url(../image/version.svg);
+}
+
+#about_des{
+	font-size: 12px;
+    line-height: 14px;
+    color: #444;
+    margin: 10px 0;
+}
+
 #about_box{
 	/*width:660px;*/
 	/*margin:0 auto;*/
