@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.1.742.830",
+			"date":"2018.06.05",
+			"content":[
+				"fix bug: export button disappear"
+			]
+		},
+		{
 			"ver":"6.1.645.828",
 			"date":"2018.05.27",
 			"content":[

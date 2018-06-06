@@ -992,7 +992,7 @@ var suo={
 			suo.showBtnAdd(false);
 			//document.querySelector("#btn_add").style.cssText+="display:none;"
 		}
-		if((ele.dataset.id0=="0"&&ele.dataset.id1=="6")){
+		if((ele.dataset.id0=="1"&&ele.dataset.id1=="5")){
 			suo.confExport();
 		}
 
