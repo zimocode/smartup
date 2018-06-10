@@ -3730,21 +3730,23 @@ var sub={
 					_sendConf.note=sub.theConf.note;
 					_sendConf.allaction=[];
 				//get all actions
+				let _confType=config[message.drawType[0]][message.drawType[1]];
 				if(config[sub.message.drawType[0]].ui.allaction.enable){
-					for(let i=0;i<confType.length;i++){
-						if(confType[i].direct.indexOf(direct)==0
-							&&confType[i].direct.length>direct.length){
+					for(let i=0;i<_confType.length;i++){
+						if(_confType[i].direct.indexOf(message.direct)==0
+							&&_confType[i].direct.length>message.direct.length){
 							let _action={
-								direct:confType[i].direct,
-								tip:(confType[i].mydes&&confType[i].mydes.type&&confType[i].mydes.value)?confType[i].mydes.value:sub.getI18n(confType[i].name)
+								direct:_confType[i].direct,
+								tip:(_confType[i].mydes&&_confType[i].mydes.type&&_confType[i].mydes.value)?_confType[i].mydes.value:sub.getI18n(_confType[i].name)
 							}
 							_sendConf.allaction.push(_action);
 						}
-						if(i==confType.length-1&&_sendConf.allaction.length==0){
+						if(i==_confType.length-1&&_sendConf.allaction.length==0){
 							_sendConf.allaction=null;
 						}
 					}
 				}
+				console.log(_sendConf)
 				sendResponse(_sendConf);
 				break;
 			case"action":
