@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22",
 	"name": "__MSG_ext_name__",
 	"short_name":"smartUp",
-	"version": "6.1.742.830",
+	"version": "6.1.747.831",
 	"description": "__MSG_ext_des__",
 	"default_locale": "en",
 	"author":"zimo",

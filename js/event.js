@@ -6,7 +6,6 @@ Array.prototype.contains=function (ele) {
 	}
 	return false;
 }
-console.log("event")
 var editMode,editDirect,browserType;
 var config={};
 let devMode,
@@ -1005,9 +1004,10 @@ var sue={
 	sendDir:function(dir,dirType,e){
 		//console.log(sue.drawType)
 		console.log(dirType)
+		console.log({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle})
 		var returnValue;
 		chrome.runtime.sendMessage(extID,{type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
-			//console.log(response)
+			console.log(response)
   			returnValue=response;
   			sue.getedConf=returnValue;
   			switch(response.type){

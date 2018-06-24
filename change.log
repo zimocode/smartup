@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.1.747.831",
+			"date":"2018.06.10",
+			"content":[
+				"fix bug: some options of appearance error"
+			]
+		},
+		{
 			"ver":"6.1.742.830",
 			"date":"2018.06.05",
 			"content":[
