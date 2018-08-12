@@ -1046,11 +1046,12 @@ var sub={
 				if(sub.curTab.index==0){
 					// theId=false;
 					// break;
-					for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
-						if(sub.curWin.tabs[i].index>sub.curTab.index){
-							theId.push(sub.curWin.tabs[i].id);
-						}
-					}
+					// for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
+					// 	if(sub.curWin.tabs[i].index>sub.curTab.index){
+					// 		theId.push(sub.curWin.tabs[i].id);
+					// 	}
+					// }
+					break;
 				}
 				for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
 					if(sub.curWin.tabs[i].index<sub.curTab.index){
@@ -1060,13 +1061,15 @@ var sub={
 				break;
 			case"s_rights":
 				if(sub.curTab.index==sub.curWin.tabs.length-1){
-					// theId=false;
-					// break;
-					for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
-						if(sub.curWin.tabs[i].index<sub.curTab.index){
-							theId.push(sub.curWin.tabs[i].id);
-						}
-					}
+					// if(fnName&&fnName=="close"){
+					// 	break;
+					// }
+					// for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
+					// 	if(sub.curWin.tabs[i].index<sub.curTab.index){
+					// 		theId.push(sub.curWin.tabs[i].id);
+					// 	}
+					// }
+					break;
 				}
 				for(var i=0;i<sub.curWin.tabs.length&&sub.curWin.tabs.length>1;i++){
 					if(sub.curWin.tabs[i].index>sub.curTab.index){
@@ -1319,7 +1322,7 @@ var sub={
 			// });
 		},
 		close:function(){
-			var ids=sub.getId(sub.getConfValue("selects","n_tab")),
+			var ids=sub.getId(sub.getConfValue("selects","n_tab"),arguments.callee.name),
 				selid=sub.getId(sub.getConfValue("selects","n_close_sel"))[0],
 				selvalue=sub.getConfValue("selects","n_close_sel"),
 				_closeKeep=sub.getConfValue("checks","n_close_keep");
@@ -1405,7 +1408,8 @@ var sub={
 				_pin=sub.getConfValue("checks","n_pin"),
 				_url="";
 			let _urlA=sub.curTab.url;
-			let _urlB=_urlA.split("/"),_urlC="";
+			let _urlB=_urlA.split("/"),
+				_urlC="";
 			if(_urlB.length>3){
 				_urlC=_urlB[_urlB.length-1];
 				console.log(_urlC)
@@ -1415,19 +1419,28 @@ var sub={
 
 			let setNum=function(txt){
 				console.log(txt)
-				let _array=txt.match(/(\d*)([a-z]*)/g);
-				let i=0,_num="";
-				console.log(_array);
+				let _array=txt.match(/(\d*)/g);
+				let i=0,
+					_num="",
+					_numNew,
+					_index;
 				for(i=_array.length-1;i>-1;i--){
 					if(!isNaN(parseInt(_array[i]))){
 						_num=_array[i];
 						break;
 					}
 				}
-				txt=_num?txt.replace(_num.toString(),(parseInt(_num)+1).toString()):txt;
-				//txt=txt.replace(_num.toString(),(parseInt(_num)+1).toString());
+				_numNew=parseInt(_num)+1;
+				if(_numNew.toString().length<_num.length){
+					_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+				}
+				_index=txt.lastIndexOf(_num);
+				if(_index!=-1){
+					txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
+				}
 				return txt;
 			}
+			console.log(setNum(_urlC))
 			_urlB[_urlB.length-1]=setNum(_urlC);
 			_url=_urlB.join("/");
 			_url=_url==_urlA?"":_url;
@@ -1439,7 +1452,8 @@ var sub={
 				_pin=sub.getConfValue("checks","n_pin"),
 				_url="";
 			let _urlA=sub.curTab.url;
-			let _urlB=_urlA.split("/"),_urlC="";
+			let _urlB=_urlA.split("/"),
+				_urlC="";
 			if(_urlB.length>3){
 				_urlC=_urlB[_urlB.length-1];
 				console.log(_urlC)
@@ -1449,15 +1463,25 @@ var sub={
 
 			let setNum=function(txt){
 				console.log(txt)
-				let _array=txt.match(/(\d*)([a-z]*)/g);
-				let i=0,_num="";
+				let _array=txt.match(/(\d*)/g);
+				let i=0,
+					_num="",
+					_numNew,
+					_index;
 				for(i=_array.length-1;i>-1;i--){
 					if(!isNaN(parseInt(_array[i]))){
 						_num=_array[i];
 						break;
 					}
 				}
-				txt=_num?txt.replace(_num.toString(),(parseInt(_num)-1)<0?"0":(parseInt(_num)-1).toString()):txt;
+				_numNew=parseInt(_num)-1;
+				if(_numNew.toString().length<_num.length){
+					_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+				}
+				_index=txt.lastIndexOf(_num);
+				if(_index!=-1){
+					txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
+				}
 				return txt;
 			}
 			_urlB[_urlB.length-1]=setNum(_urlC);

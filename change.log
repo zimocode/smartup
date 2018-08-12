@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.1.1102.832",
+			"date":"2018.08.12",
+			"content":[
+				"fix bug: option lefts/rights of target tab works error"
+			]
+		},
+		{
 			"ver":"6.1.747.831",
 			"date":"2018.06.10",
 			"content":[
