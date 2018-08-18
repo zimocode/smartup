@@ -449,6 +449,13 @@ var suo={
 					suo.bgChange(e);
 				}
 				if(e.target.classList.contains("change-checkbox")){
+					switch(e.target.dataset.confele){
+						case"fnctm"://when set disable contextmenu, remove all.
+							if(!e.target.checked&&chrome.contextMenus){
+								chrome.contextMenus.removeAll();
+							}
+							break;
+					}					
 					//fnswitch drg/sdrg
 					if(e.target.dataset.confele=="fndrg"){
 						var doms=document.querySelector("input[data-confele=fnsdrg]");

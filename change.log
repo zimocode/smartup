@@ -1,10 +1,10 @@
 {
 	"log": [
 		{
-			"ver":"6.1.1108.836",
+			"ver":"6.1.1108.837",
 			"date":"2018.08.18",
 			"content":[
-				"fix bug: issues@github: #2,#3,#14,#15"
+				"fix bug: issues@github: #2,#3,#13,#14,#15"
 			]
 		},
 		{
