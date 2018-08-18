@@ -1,10 +1,10 @@
 {
 	"log": [
 		{
-			"ver":"6.1.1104.833",
-			"date":"2018.08.14",
+			"ver":"6.1.1108.836",
+			"date":"2018.08.18",
 			"content":[
-				"fix bug: option lefts/rights of target tab works error,increment/decrement calculation error(issues@github: #2,#3)"
+				"fix bug: issues@github: #2,#3,#14,#15"
 			]
 		},
 		{
