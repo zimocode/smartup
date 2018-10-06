@@ -2725,7 +2725,13 @@ var sub={
 			}
 		if(!theURL){delete createProperties.url}
 		if(!(thePos||thePos===0)){delete createProperties.index}
-		chrome.tabs.create(createProperties);
+		chrome.tabs.query({
+			active: true,
+			currentWindow: true
+		}, function(tabs) {
+			createProperties["openerTabId"] = tabs[0].id
+			chrome.tabs.create(createProperties);
+		});
 
 		//(thePos||thePos===0)?chrome.tabs.create({url:theURL,active:theTarget=="s_back"?false:true,index:thePos,pinned:thePin}):chrome.tabs.create({url:theURL,active:theTarget=="s_back"?false:true,pinned:thePin})
 	},
