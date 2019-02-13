@@ -195,6 +195,7 @@ sue.apps={
 	},
 	initPos:function(dom){
 		let _fn=function(){
+			console.log(dom)
 			dom.querySelector(".su_main").style.cssText+="max-height:"+(window.innerHeight-100)+"px;";
 			document.body.appendChild(dom);
 			var _appname=dom.dataset.appname;

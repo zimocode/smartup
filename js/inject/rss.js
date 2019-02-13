@@ -49,7 +49,7 @@ sue.apps.rss={
 			sue.apps.rss.rss(dom,sue.apps.rss.config.feed[0]);
 			sue.apps.rss.menu(dom);
 		}else{
-			dom.querySelector(".rssbox").innerHTML="there is no sub.";
+			dom.querySelector(".rssbox").innerText="there is no sub.";
 			sue.apps.rss.showSub(dom)
 		}
 	},
@@ -124,9 +124,19 @@ sue.apps.rss={
 		domadd.value="";
 	},
 	rssSwitch:function(e,url){
-		var rssheaddom=sue.apps.getAPPboxEle(e).querySelector(".rss_head");
-		rssheaddom.innerHTML=""
-		sue.apps.getAPPboxEle(e).querySelector(".rss_box").innerHTML='<span style="color: #3698F9;">Loading </span><img style="display: inline-block;margin-bottom: -10px;" src="'+chrome.runtime.getURL("/image/loading.gif")+'" />';
+		var rssheaddom=sue.apps.getAPPboxEle(e).querySelector(".rss_head"),
+			rssboxdom=sue.apps.getAPPboxEle(e).querySelector(".rss_box")
+		rssheaddom.textContent="";
+		rssboxdom.textContent="";
+		//sue.apps.getAPPboxEle(e).querySelector(".rss_box").innerHTML='<span style="color: #3698F9;">Loading </span><img style="display: inline-block;margin-bottom: -10px;" src="'+chrome.runtime.getURL("/image/loading.gif")+'" />';
+		var _sw_span=sue.apps.domCreate("span");
+			_sw_span.innerText="Loading";
+			_sw_span.style.cssText+="color: #3698F9;";
+		var _sw_img=sue.apps.domCreate("img");
+			_sw_img.src=chrome.runtime.getURL("/image/loading.gif");
+			_sw_img.style.cssText+="display: inline-block;margin-bottom: -10px;";
+		_sw_span.appendChild(_sw_img);
+		rssboxdom.appendChild(_sw_span);
 		sue.apps.rss.showSub(e);
 		sue.apps.rss.rss(e.target,url);
 	},
@@ -142,7 +152,7 @@ sue.apps.rss={
 	},
 	menu:function(dom){
 		var domlist=sue.apps.getAPPboxEle(dom).querySelector(".sub_items");
-		domlist.innerHTML="";
+		domlist.textContent="";
 		chrome.storage.local.get(function(items){
 			var feed=sue.apps.rss.config.feed;
 			var feedtitle=items.localConfig.apps.rss.feedtitle;
@@ -175,7 +185,7 @@ sue.apps.rss={
 			        	var theResponse=xhr.responseXML
 			        }else{
 			        	var theResponse=sue.apps.domCreate("div",null,theResponse,"display:none;");
-			        	theResponse.innerHTML=xhr.response;
+			        	//theResponse.innerHTML=xhr.response;
 			        }
 			        console.log(theResponse)
 			        console.log(theResponse.querySelector("channel>link"))
@@ -211,16 +221,24 @@ sue.apps.rss={
 
 			        //rss head
 			        rssheaddom=sue.apps.getAPPboxEle(dom).querySelector(".su_main .rss_head");
-			        rssheaddom.innerHTML='<img src="'+rss_img+'" /><a href="'+rss_link+'" target="_blank">'+rss_title+'</a>'
 
-			        rssdom.innerHTML="";
+			        var _title_img=sue.apps.domCreate("img");
+			        	_title_img.src=rss_img;
+			        var _title_link=sue.apps.domCreate("a");
+			        	_title_link.href=rss_link;
+			        	_title_link.target="_blank";
+			        	_title_link.textContent=rss_title;
+			        rssheaddom.appendChild(_title_img);
+			        rssheaddom.appendChild(_title_link);
+
+			        rssdom.textContent="";
 			        for(var i=0;i<OBJ.length;i++){
 			        	var liobj=sue.apps.domCreate("li",{setName:["className"],setValue:["rss_item"]},null,null,{setName:["link"],setValue:[OBJ[i].link]},OBJ[i].title)
 			        	rssdom.appendChild(liobj);
 			        }
 
 	            } else {
-	                rssdom.innerHTML="Request was unsuccessful, you may try again later. " + xhr.responseText;
+	                rssdom.innerText="Request was unsuccessful, you may try again later. " + xhr.responseText;
 	            }
 	            sue.apps.initPos(dom);
 	        }
