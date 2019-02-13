@@ -124,14 +124,19 @@ sue.apps.rss={
 		domadd.value="";
 	},
 	rssSwitch:function(e,url){
-		var rssheaddom=sue.apps.getAPPboxEle(e).querySelector(".rss_head");
+		var rssheaddom=sue.apps.getAPPboxEle(e).querySelector(".rss_head"),
+			rssboxdom=sue.apps.getAPPboxEle(e).querySelector(".rss_box")
 		rssheaddom.textContent="";
+		rssboxdom.textContent="";
 		//sue.apps.getAPPboxEle(e).querySelector(".rss_box").innerHTML='<span style="color: #3698F9;">Loading </span><img style="display: inline-block;margin-bottom: -10px;" src="'+chrome.runtime.getURL("/image/loading.gif")+'" />';
 		var _sw_span=sue.apps.domCreate("span");
+			_sw_span.innerText="Loading";
 			_sw_span.style.cssText+="color: #3698F9;";
 		var _sw_img=sue.apps.domCreate("img");
 			_sw_img.src=chrome.runtime.getURL("/image/loading.gif");
 			_sw_img.style.cssText+="display: inline-block;margin-bottom: -10px;";
+		_sw_span.appendChild(_sw_img);
+		rssboxdom.appendChild(_sw_span);
 		sue.apps.rss.showSub(e);
 		sue.apps.rss.rss(e.target,url);
 	},
