@@ -2320,7 +2320,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-113.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-114.confobj>.setcontent");
 					domlog.innerHTML=""
 				for(var i=0;i<xhrLog.log.length;i++){
 					var dom=suo.domCreate2("details");
