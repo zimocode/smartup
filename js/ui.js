@@ -187,5 +187,5 @@ var menuModel={
 	sfn:["settings"],
 	apps:["settings"],
 	touch:["setting","ui","action"],
-	about:["about","translate","thanks","donate",/*"help",*/"changelog"]
+	about:["about","donatedev","moreext","translate","thanks",/*"help",*/"changelog"]
 }

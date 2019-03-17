@@ -52,7 +52,7 @@ var getDefault={
 	},
 	value:function(){
 		var	config={
-				version:45,
+				version:46,
 				plus:{},
 				apps:{
 					appslist:{
@@ -753,6 +753,11 @@ var getDefault={
 							name:"optionspage"
 						}
 					]
+				},
+				about:{
+					donatedev:{
+						ad:true
+					}
 				}
 			}	
 		switch(navigator.language.toLowerCase()){
@@ -2810,7 +2815,6 @@ var sub={
             	}
             }
 		}
-
 	},
 	upgrade:{
 		up:function(){

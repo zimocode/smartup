@@ -208,6 +208,13 @@ var suo={
 			case"click":
 				var ele=e.target;
 				switch(ele.id){
+					case"donate_btn_close":
+					case"donate_btn_hide":
+						suo.hideDonate(ele);
+						break;
+					case"donate_name":
+						suo.showDonate();
+						break;
 					case"ad171217_btn":
 						suo.ad171217();
 						break;
@@ -291,6 +298,9 @@ var suo={
 						suo.saveConf2();
 						window.setTimeout(function(){window.location.reload()},500);
 						break;
+				}
+				if(ele.classList.contains("donate_listli")){
+					suo.switchDonate(ele);
 				}
 				if(ele.classList.contains("menuplus_save")){
 					suo.saveConf2();
@@ -1002,8 +1012,6 @@ var suo={
 		if((ele.dataset.id0=="1"&&ele.dataset.id1=="5")){
 			suo.confExport();
 		}
-
-		
 	},
 	clickMenuDiv:function(e){
 		var ele=e.target||e;
@@ -1039,7 +1047,6 @@ var suo={
 				theMenuUL.style.cssText+="transition:all .4s ease-in-out;opacity:1;height:"+((theMenuUL.childNodes.length-t)*(30+2)+1)+"px;";
 			},10);
 		},400)
-		
 	},
 	createMoreSelect:function(type,value,confOBJ){
 		let i=0;
@@ -1144,7 +1151,6 @@ var suo={
 			var setcontent=suo.domCreate2("div");
 		}
 	},
-
 	initValue:function(){
 		//return
 		suo.initId();
@@ -1240,6 +1246,20 @@ var suo={
 		}
 		var confArray=getdata(ele).split("|");
 		var confOBJ=config;
+		console.log(confArray);
+		console.log(confOBJ);
+		//add ad support, config.about null
+		if(confArray[0]&&confArray[0]=="about"&&confArray[1]&&confArray[1]=="donatedev"){
+			if(!config.about){
+				config.about={};
+				config.about.donatedev={};
+				config.about.donatedev.ad=true;
+			}
+			if(!config.about.donatedev){
+				config.about.donatedev={};
+				config.about.donatedev.ad=true;
+			}
+		}
 		for(var i=0;i<confArray.length;i++){
 			confOBJ=confOBJ[confArray[i]];
 		}
@@ -1947,7 +1967,6 @@ var suo={
 			ele.style.cssText+="transition:none;"
 		},time*1000)
 	},
-
 	domHide:function(ele,time){
 		var time=time?time:0.4;
 		ele.style.cssText+="transition:all "+time+"s ease-in-out;";
@@ -2276,6 +2295,11 @@ var suo={
 				document.querySelector("[data-confele=cancelmenu]").disabled=true;
 			}
 		}):null
+
+		//init ads
+		if(!config.about||!config.about.donatedev||config.about.donatedev.ad){
+			document.querySelector("#donate_box").style.cssText+="display:block;";
+		}
 	},
 	first:function(){
 		var confid,btn,
@@ -2320,7 +2344,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-114.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-115.confobj>.setcontent");
 					domlog.innerHTML=""
 				for(var i=0;i<xhrLog.log.length;i++){
 					var dom=suo.domCreate2("details");
@@ -2749,6 +2773,108 @@ var suo={
 			//appbox.querySelector(".box_content img").src="../image/bg.jpg";
 			appbox.querySelector(".box_content #mybg").style.backgroundImage='url("../image/bg.jpg")';
 	    }
+	},
+	getPushMessage:function(){
+		let xhr = new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if (xhr.readyState == 4){
+				let items=JSON.parse(xhr.response);
+				if(items.ver){suo.setPushDom(items);}
+			}
+		}
+		//xhr.open('GET',"https://push.zimoapps.com/smartup/smartup.json"+"?"+new Date().getTime(), true);
+		xhr.open('GET',"../smartup.json"+"?"+new Date().getTime(), true);
+		xhr.send();
+	},
+	setPushDom:function(items){
+		let domMain=document.querySelector("#donate_main"),
+			domList=document.querySelector("#donate_list"),
+			domContent=document.querySelector("#donate_content");
+		let i=0,ii=0;
+		let id_i=0,id_ii=0;
+		domList.textContent="";
+		domContent.textContent="";
+		let itemOBJ;
+			//itemOBJ=items[navigator.language];
+			
+		let initDom=function(itemOBJ,type){
+			for(i=0;i<itemOBJ.length;i++){
+				console.log(itemOBJ[i]);
+				var _list=document.createElement("li");
+					_list.classList.add("donate_listli");
+					_list.setAttribute("id",id_i);
+					_list.innerText=itemOBJ[i].title;
+					_list.title=itemOBJ[i].title;
+				if(i==0&&id_i==0){_list.classList.add("donate_listcurrent");}
+				domList.appendChild(_list);
+				id_i++;
+			}
+			for(ii=0;ii<itemOBJ.length;ii++){
+				console.log(ii);
+				var _content=document.createElement("div");
+					_content.classList.add("donate_contentlist");
+					_content.setAttribute("id",id_ii);
+				if(ii==0&&id_ii==0){_content.classList.add("donate_contentcurrent")}
+				if(itemOBJ[ii].img){
+					var _img=document.createElement("img");
+						_img.src=itemOBJ[ii].img;
+					_content.appendChild(_img);
+				}
+				if(itemOBJ[ii].qrcode){
+					var _qrcode=document.createElement("div");
+					new QRCode(_qrcode,itemOBJ[ii].qrcode);
+					_content.appendChild(_qrcode);
+				}
+				if(itemOBJ[ii].link){
+					var _link=document.createElement("a");
+						_link.href=itemOBJ[ii].link;
+						_link.target="_blank";
+						_link.innerText=itemOBJ[ii].linktext;
+					_content.appendChild(_link);
+				}
+				if(itemOBJ[ii].des){
+					var _des=document.createElement("span");
+						_des.innerText=itemOBJ[ii].des;
+					_content.appendChild(_des);
+				}
+				domContent.appendChild(_content);
+				id_ii++;
+			}
+		}
+		itemOBJ=items["zh-CN"];
+		initDom(itemOBJ);
+		itemOBJ=items["all_local"];
+		initDom(itemOBJ);
+		document.querySelector("#donate_loading").style.cssText+="display:none;";
+		domMain.style.cssText+="display:block;";
+		document.querySelector("#donate_btn_close").style.cssText+="display:block;";
+		document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
+	},
+	switchDonate:function(ele){
+		console.log(ele);
+		console.log(ele.id);
+		document.querySelector(".donate_listcurrent").classList.remove("donate_listcurrent");
+		ele.classList.add("donate_listcurrent");
+
+		let donateContents=document.querySelectorAll(".donate_contentlist");
+		let contentLastCurrent=document.querySelector(".donate_contentcurrent");
+			contentLastCurrent.classList.remove("donate_contentcurrent");
+		let contentCurrent=document.querySelector(".donate_contentlist[id='"+ele.id+"']");
+			contentCurrent.classList.add("donate_contentcurrent");
+	},
+	showDonate:function(){
+		document.querySelector("#donate_main").style.cssText+="display:none;";
+		document.querySelector("#donate_loading").style.cssText+="display:block;";
+		suo.getPushMessage();
+	},
+	hideDonate:function(ele){
+		console.log(ele);
+		document.querySelector("#donate_btn_close").style.cssText+="display:none;";
+		document.querySelector("#donate_btn_hide").style.cssText+="display:none;";
+		document.querySelector("#donate_main").style.cssText+="display:none;";
+		if(ele.id=="donate_btn_close"){
+			document.querySelector("#donate_box").style.cssText+="display:none;";
+		}
 	}
 }
 chrome.runtime.sendMessage({type:"opt_getconf"},function(response){

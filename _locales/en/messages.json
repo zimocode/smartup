@@ -1439,5 +1439,20 @@
   },
   "ext_allver":{
     "message":"All versions:"
+  },
+  "donatedev":{
+    "message":"Support Developer"
+  },
+  "moreext":{
+    "message":"More Extensons"
+  },
+  "con_ad":{
+    "message":"Show advertisement"
+  },
+  "des_ad":{
+    "message":"Ads are only shown on the current settings page and will never appear on other pages. This extension has been constantly updated, need and thank you for your support."
+  },
+  "des_moreextlist":{
+    "message":"These extensions are developed by me. Welcome to install and use."
   }
 }

@@ -1411,5 +1411,20 @@
   },
   "ext_allver":{
     "message":"所有版本："
+  },
+  "donatedev":{
+    "message":"支持开发"
+  },
+  "moreext":{
+    "message":"扩展推荐"
+  },
+  "con_ad":{
+    "message":"展示广告"
+  },
+  "des_ad":{
+    "message":"广告仅在当前的设置页展现，绝不会在其它页面出现。本扩展一直在不断更新，需要并感谢你的支持。"
+  },
+  "des_moreextlist":{
+    "message":"这些扩展都是本人所开发，欢迎安装使用。"
   }
 }
