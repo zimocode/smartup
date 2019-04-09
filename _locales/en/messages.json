@@ -1450,9 +1450,15 @@
     "message":"Show advertisement"
   },
   "des_ad":{
-    "message":"Ads are only shown on the current settings page and will never appear on other pages. This extension has been constantly updated, need and thank you for your support."
+    "message":"Ads are only shown on the current settings page and will never appear on other pages. Thank you for your supporting."
   },
   "des_moreextlist":{
     "message":"These extensions are developed by me. Welcome to install and use."
+  },
+  "des_adlist0":{
+    "message":"These are advertisements, thank you for your support."
+  },
+  "des_adlist1":{
+    "message":"It can be turned on or off by the following path: About > Support Development."
   }
 }

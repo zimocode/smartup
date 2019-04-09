@@ -111,8 +111,7 @@ let actions={
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
 			{name:"extdisable"},
-			{name:"mute",selects:["n_mute"]},
-			{name:"aliqr1801"}
+			{name:"mute",selects:["n_mute"]}
 		],
 		[//ag_exp
 			{name:"recentclosed"},

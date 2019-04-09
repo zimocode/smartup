@@ -210,13 +210,10 @@ var suo={
 				switch(ele.id){
 					case"donate_btn_close":
 					case"donate_btn_hide":
-						suo.hideDonate(ele);
+						suo.donateBox.hideDonate(ele);
 						break;
 					case"donate_name":
-						suo.showDonate();
-						break;
-					case"ad171217_btn":
-						suo.ad171217();
+						suo.donateBox.showDonate();
 						break;
 					case"bgreset":
 						suo.bgReset(e);
@@ -300,7 +297,7 @@ var suo={
 						break;
 				}
 				if(ele.classList.contains("donate_listli")){
-					suo.switchDonate(ele);
+					suo.donateBox.switchDonate(ele);
 				}
 				if(ele.classList.contains("menuplus_save")){
 					suo.saveConf2();
@@ -503,7 +500,7 @@ var suo={
 					var arraydrg=["chk_"+confArray[0]+"_settings_txt","chk_"+confArray[0]+"_settings_lnk","chk_"+confArray[0]+"_settings_img"];
 					for(var i=0;i<arraydrg.length;i++){
 						if(arraydrg[i]==e.target.id){
-							var menuDom=document.querySelector("[data-id0=\'"+(confArray[0]=="sdrg"?"2":"3")+"\'][data-id1=\'"+(confArray[0]=="sdrg"?i+1:i+2)+"\']");
+							var menuDom=document.querySelector("[data-id0=\'"+(confArray[0]=="sdrg"?"3":"4")+"\'][data-id1=\'"+(confArray[0]=="sdrg"?i+1:i+2)+"\']");
 							if(e.target.checked){
 								menuDom.style.display="block";
 								menuDom.parentNode.style.height=Math.abs(menuDom.parentNode.style.height.substr(0,menuDom.parentNode.style.height.length-2))+30+"px";
@@ -2250,7 +2247,7 @@ var suo={
 		//show log
 		if(localStorage.getItem("showlog")=="true"){
 			suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-			suo.clickMenuLI(document.querySelector("li[data-id0='9'][data-id1='3']"));
+			suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
 			localStorage.removeItem("showlog");
 		}
 		//show about
@@ -2263,14 +2260,6 @@ var suo={
 		if(localStorage.getItem("first")==null){
 			suo.first();
 			localStorage.setItem("first",true);
-		}
-		//show ad171217
-		if(navigator.language.toLowerCase()=="zh-cn"){
-			document.querySelector("#ad171217_btn").style.cssText+="display:block;"
-		}
-		if(localStorage.getItem("ad171217")==null&&navigator.language.toLowerCase()=="zh-cn"){
-			suo.ad171217();
-			localStorage.setItem("ad171217",true)
 		}
 		//init webstore url
 		if(browserType=="cr"){
@@ -2298,7 +2287,7 @@ var suo={
 
 		//init ads
 		if(!config.about||!config.about.donatedev||config.about.donatedev.ad){
-			document.querySelector("#donate_box").style.cssText+="display:block;";
+			suo.donateBox.init();
 		}
 	},
 	first:function(){
@@ -2311,21 +2300,6 @@ var suo={
 		suo.initBoxBtn(dom,btn);
 		dom.style.cssText+="display:block;";
 		suo.initPos(dom);
-	},
-	ad171217:function(){
-		var dom=document.querySelector("smartup.su_apps").cloneNode(true),
-			domcontent=dom.querySelector(".box_content"),
-			btn=["","",""];
-		domcontent.id="box_ad171217";
-		domcontent.innerHTML="<img src='../image/ali171217.jpg'><ul><li>1、此页面仅在首次打开设置页时展示,且加载的仅为静态图片，无其它代码。</li><li>2、每天可扫码一次获得随机红包，线下消费后，本人也能获得一个红包。所有红包为支付宝提供。</li><li>3、本人一直坚持更新扩展，也需要你的支持。感谢！</li></ul>";
-
-		suo.initBoxBtn(dom,btn);
-		dom.querySelector(".box_main").removeChild(dom.querySelector(".box_submit"));
-		//domcontent.removeChild(dom.querySelector(".box_submit"));
-
-		dom.style.cssText+="display:block;";
-		window.setTimeout(function(){suo.initPos(dom);},10)
-		//suo.initPos(dom);
 	},
 	initBoxBtn:function(dom,btn){
 		var dombtn=dom.querySelectorAll(".box_submit input[type=button]");
@@ -2774,106 +2748,134 @@ var suo={
 			appbox.querySelector(".box_content #mybg").style.backgroundImage='url("../image/bg.jpg")';
 	    }
 	},
-	getPushMessage:function(){
-		let xhr = new XMLHttpRequest();
-		xhr.onreadystatechange=function(){
-			if (xhr.readyState == 4){
-				let items=JSON.parse(xhr.response);
-				if(items.ver){suo.setPushDom(items);}
+	donateBox:{
+		init:function(){
+			let xhr = new XMLHttpRequest();
+			let localType=navigator.language;
+			xhr.onreadystatechange=function(){
+				if (xhr.readyState == 4){
+					let items=JSON.parse(xhr.response);
+					if(items.options.on){
+						if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
+							suo.cons.xhrDonate=items;
+							document.querySelector("#donate_box").style.cssText+="display:block;";
+						}
+					}
+				}
 			}
-		}
-		//xhr.open('GET',"https://push.zimoapps.com/smartup/smartup.json"+"?"+new Date().getTime(), true);
-		xhr.open('GET',"../smartup.json"+"?"+new Date().getTime(), true);
-		xhr.send();
-	},
-	setPushDom:function(items){
-		let domMain=document.querySelector("#donate_main"),
-			domList=document.querySelector("#donate_list"),
-			domContent=document.querySelector("#donate_content");
-		let i=0,ii=0;
-		let id_i=0,id_ii=0;
-		domList.textContent="";
-		domContent.textContent="";
-		let itemOBJ;
-			//itemOBJ=items[navigator.language];
-			
-		let initDom=function(itemOBJ,type){
-			for(i=0;i<itemOBJ.length;i++){
-				console.log(itemOBJ[i]);
-				var _list=document.createElement("li");
-					_list.classList.add("donate_listli");
-					_list.setAttribute("id",id_i);
-					_list.innerText=itemOBJ[i].title;
-					_list.title=itemOBJ[i].title;
-				if(i==0&&id_i==0){_list.classList.add("donate_listcurrent");}
-				domList.appendChild(_list);
-				id_i++;
+			xhr.open('GET',"https://push.zimoapps.com/smartup/message.json"+"?"+new Date().getTime(), true);
+			//xhr.open('GET',"../message.json"+"?"+new Date().getTime(), true);
+			xhr.send();
+		},
+		show:function(){
+			document.querySelector("#donate_box").style.cssText+="display:block;";
+		},
+		checkPushMessage:function(){
+			let _items=suo.cons.xhrDonate;
+			let lang=navigator.language;
+			let i=0,itemArray=[];
+				itemLocal=_items[lang],
+				itemAllLocal=_items.all_local;
+				
+			if(_items.all_local_i18n&&_items.all_local_i18n[lang]){
+				for(i=0;i<_items.all_local_i18n[lang].length;i++){
+					for(var ii in _items.all_local_i18n[lang][i]){
+						console.log(ii);
+						console.log(_items.all_local_i18n[lang][i][ii]);
+						itemAllLocal[i][ii]=_items.all_local_i18n[lang][i][ii]
+					}			
+				}
 			}
-			for(ii=0;ii<itemOBJ.length;ii++){
-				console.log(ii);
-				var _content=document.createElement("div");
-					_content.classList.add("donate_contentlist");
-					_content.setAttribute("id",id_ii);
-				if(ii==0&&id_ii==0){_content.classList.add("donate_contentcurrent")}
-				if(itemOBJ[ii].img){
-					var _img=document.createElement("img");
-						_img.src=itemOBJ[ii].img;
-					_content.appendChild(_img);
+			if(itemLocal){itemArray.push(itemLocal)}
+			if(itemAllLocal){itemArray.push(itemAllLocal)}
+			suo.donateBox.setPushDom(itemArray)
+		},
+		setPushDom:function(items){
+			console.log(items)
+			let domMain=document.querySelector("#donate_main"),
+				domList=document.querySelector("#donate_list"),
+				domContent=document.querySelector("#donate_content");
+			domList.textContent="";
+			domContent.textContent="";
+			let i=0,ii=0,id_i=0,id_ii=0;
+			let initDom=function(itemOBJ){
+				let i=0,ii=0;
+				for(i=0;i<itemOBJ.length;i++){
+					console.log(itemOBJ[i]);
+					var _list=document.createElement("li");
+						_list.classList.add("donate_listli");
+						_list.setAttribute("id",id_i);
+						_list.innerText=itemOBJ[i].title;
+						_list.title=itemOBJ[i].title;
+					if(i==0&&id_i==0){_list.classList.add("donate_listcurrent");}
+					domList.appendChild(_list);
+					id_i++;
 				}
-				if(itemOBJ[ii].qrcode){
-					var _qrcode=document.createElement("div");
-					new QRCode(_qrcode,itemOBJ[ii].qrcode);
-					_content.appendChild(_qrcode);
+				for(ii=0;ii<itemOBJ.length;ii++){
+					console.log(ii);
+					var _content=document.createElement("div");
+						_content.classList.add("donate_contentlist");
+						_content.setAttribute("id",id_ii);
+					if(ii==0&&id_ii==0){_content.classList.add("donate_contentcurrent")}
+					if(itemOBJ[ii].img){
+						var _img=document.createElement("img");
+							_img.src=itemOBJ[ii].img;
+						_content.appendChild(_img);
+					}
+					if(itemOBJ[ii].qrcode){
+						var _qrcode=document.createElement("div");
+						new QRCode(_qrcode,itemOBJ[ii].qrcode);
+						_content.appendChild(_qrcode);
+					}
+					if(itemOBJ[ii].link){
+						var _link=document.createElement("a");
+							_link.href=itemOBJ[ii].link;
+							_link.target="_blank";
+							_link.innerText=itemOBJ[ii].linktext;
+						_content.appendChild(_link);
+					}
+					if(itemOBJ[ii].des){
+						var _des=document.createElement("span");
+							_des.innerText=itemOBJ[ii].des;
+						_content.appendChild(_des);
+					}
+					domContent.appendChild(_content);
+					id_ii++;
 				}
-				if(itemOBJ[ii].link){
-					var _link=document.createElement("a");
-						_link.href=itemOBJ[ii].link;
-						_link.target="_blank";
-						_link.innerText=itemOBJ[ii].linktext;
-					_content.appendChild(_link);
-				}
-				if(itemOBJ[ii].des){
-					var _des=document.createElement("span");
-						_des.innerText=itemOBJ[ii].des;
-					_content.appendChild(_des);
-				}
-				domContent.appendChild(_content);
-				id_ii++;
 			}
-		}
-		itemOBJ=items["zh-CN"];
-		initDom(itemOBJ);
-		itemOBJ=items["all_local"];
-		initDom(itemOBJ);
-		document.querySelector("#donate_loading").style.cssText+="display:none;";
-		domMain.style.cssText+="display:block;";
-		document.querySelector("#donate_btn_close").style.cssText+="display:block;";
-		document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
-	},
-	switchDonate:function(ele){
-		console.log(ele);
-		console.log(ele.id);
-		document.querySelector(".donate_listcurrent").classList.remove("donate_listcurrent");
-		ele.classList.add("donate_listcurrent");
+			for(i=0;i<items.length;i++){
+				initDom(items[i]);
+			}
+			document.querySelector("#donate_loading").style.cssText+="display:none;";
+			domMain.style.cssText+="display:block;";
+			document.querySelector("#donate_btn_close").style.cssText+="display:block;";
+			document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
+		},
+		switchDonate:function(ele){
+			console.log(ele);
+			console.log(ele.id);
+			document.querySelector(".donate_listcurrent").classList.remove("donate_listcurrent");
+			ele.classList.add("donate_listcurrent");
 
-		let donateContents=document.querySelectorAll(".donate_contentlist");
-		let contentLastCurrent=document.querySelector(".donate_contentcurrent");
-			contentLastCurrent.classList.remove("donate_contentcurrent");
-		let contentCurrent=document.querySelector(".donate_contentlist[id='"+ele.id+"']");
-			contentCurrent.classList.add("donate_contentcurrent");
-	},
-	showDonate:function(){
-		document.querySelector("#donate_main").style.cssText+="display:none;";
-		document.querySelector("#donate_loading").style.cssText+="display:block;";
-		suo.getPushMessage();
-	},
-	hideDonate:function(ele){
-		console.log(ele);
-		document.querySelector("#donate_btn_close").style.cssText+="display:none;";
-		document.querySelector("#donate_btn_hide").style.cssText+="display:none;";
-		document.querySelector("#donate_main").style.cssText+="display:none;";
-		if(ele.id=="donate_btn_close"){
-			document.querySelector("#donate_box").style.cssText+="display:none;";
+			let donateContents=document.querySelectorAll(".donate_contentlist");
+			let contentLastCurrent=document.querySelector(".donate_contentcurrent");
+				contentLastCurrent.classList.remove("donate_contentcurrent");
+			let contentCurrent=document.querySelector(".donate_contentlist[id='"+ele.id+"']");
+				contentCurrent.classList.add("donate_contentcurrent");
+		},
+		showDonate:function(){
+			document.querySelector("#donate_main").style.cssText+="display:none;";
+			document.querySelector("#donate_loading").style.cssText+="display:block;";
+			suo.donateBox.checkPushMessage();
+		},
+		hideDonate:function(ele){
+			console.log(ele);
+			document.querySelector("#donate_btn_close").style.cssText+="display:none;";
+			document.querySelector("#donate_btn_hide").style.cssText+="display:none;";
+			document.querySelector("#donate_main").style.cssText+="display:none;";
+			if(ele.id=="donate_btn_close"){
+				document.querySelector("#donate_box").style.cssText+="display:none;";
+			}
 		}
 	}
 }

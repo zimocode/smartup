@@ -1413,15 +1413,8 @@ var sub={
 				_pin=sub.getConfValue("checks","n_pin"),
 				_url="";
 			let _urlA=sub.curTab.url;
-			let _urlB=_urlA.split("/"),
-				_urlC="";
-			if(_urlB.length>3){
-				_urlC=_urlB[_urlB.length-1];
-				console.log(_urlC)
-			}else{
-				return;
-			}
-
+			let _urlB=_urlA.split("/");
+			let i=0,_urlC="";
 			let setNum=function(txt){
 				console.log(txt)
 				let _array=txt.match(/(\d*)/g);
@@ -1430,26 +1423,37 @@ var sub={
 					_numNew,
 					_index;
 				for(i=_array.length-1;i>-1;i--){
+					console.log(_array);
 					if(!isNaN(parseInt(_array[i]))){
 						_num=_array[i];
 						break;
 					}
 				}
-				_numNew=parseInt(_num)+1;
-				if(_numNew.toString().length<_num.length){
-					_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+				if(_num==""){
+					return false;
+				}else{
+					_numNew=parseInt(_num)+1;
+					if(_numNew.toString().length<_num.length){
+						_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+					}
+					_index=txt.lastIndexOf(_num);
+					if(_index!=-1){
+						txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
+					}
+					return txt;
 				}
-				_index=txt.lastIndexOf(_num);
-				if(_index!=-1){
-					txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
-				}
-				return txt;
 			}
-			console.log(setNum(_urlC))
-			_urlB[_urlB.length-1]=setNum(_urlC);
-			_url=_urlB.join("/");
-			_url=_url==_urlA?"":_url;
-			sub.open(_url,_optype,_index,_pin);
+
+			for(i=_urlB.length-1;i>2;i--){
+				_urlC=_urlB[i];
+				console.log(setNum(_urlC));
+				if(setNum(_urlC)){
+					_urlB[i]=setNum(_urlC);
+					_url=_urlB.join("/");
+					_url=_url==_urlA?"":_url;
+					sub.open(_url,_optype,_index,_pin);
+				}
+			}
 		},
 		decrement:function(){
 			let _optype=sub.getConfValue("selects","n_optype"),
@@ -1457,15 +1461,8 @@ var sub={
 				_pin=sub.getConfValue("checks","n_pin"),
 				_url="";
 			let _urlA=sub.curTab.url;
-			let _urlB=_urlA.split("/"),
-				_urlC="";
-			if(_urlB.length>3){
-				_urlC=_urlB[_urlB.length-1];
-				console.log(_urlC)
-			}else{
-				return;
-			}
-
+			let _urlB=_urlA.split("/");
+			let i=0,_urlC="";
 			let setNum=function(txt){
 				console.log(txt)
 				let _array=txt.match(/(\d*)/g);
@@ -1479,20 +1476,30 @@ var sub={
 						break;
 					}
 				}
-				_numNew=parseInt(_num)-1;
-				if(_numNew.toString().length<_num.length){
-					_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+				if(_num==""){
+					return false;
+				}else{
+					_numNew=parseInt(_num)-1;
+					if(_numNew.toString().length<_num.length){
+						_numNew="0".repeat(_num.length-_numNew.toString().length)+_numNew;
+					}
+					_index=txt.lastIndexOf(_num);
+					if(_index!=-1){
+						txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
+					}
+					return txt;
 				}
-				_index=txt.lastIndexOf(_num);
-				if(_index!=-1){
-					txt=txt.substr(0,_index)+_numNew.toString()+txt.substr(_index+_num.length)
-				}
-				return txt;
 			}
-			_urlB[_urlB.length-1]=setNum(_urlC);
-			_url=_urlB.join("/");
-			_url=_url==_urlA?"":_url;
-			sub.open(_url,_optype,_index,_pin);
+			for(i=_urlB.length-1;i>2;i--){
+				_urlC=_urlB[i];
+				console.log(setNum(_urlC));
+				if(setNum(_urlC)){
+					_urlB[i]=setNum(_urlC);
+					_url=_urlB.join("/");
+					_url=_url==_urlA?"":_url;
+					sub.open(_url,_optype,_index,_pin);
+				}
+			}
 		},
 		extdisable:function(){
 			chrome.tabs.query({active:true,currentWindow:true},function(tabs){
@@ -2432,9 +2439,6 @@ var sub={
 			sub.initAppconf(_appname);
 			var _obj={}
 			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist"];
-			if(navigator.language.toLowerCase()=="zh-cn"){
-				_obj.apps.push("aliqr1801");
-			}
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -2462,14 +2466,6 @@ var sub={
 			// chrome.tabs.saveAsPDF({});
 			// return
 			let _appname="savepdf";
-			sub.insertTest(_appname);
-		},
-		aliqr1801:function(){
-			var _appname="aliqr1801";
-			sub.initAppconf(_appname);
-			var _obj={};
-				// _obj.sync=[];
-			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
 		},
 		numc:function(){

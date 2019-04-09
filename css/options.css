@@ -1775,6 +1775,7 @@ summary:hover{
 	text-align: left;
 	color: #000;
 	padding-top: 5px;
+	margin: auto;
 }
 #donate_box .donate_contentlist a{
 	display: block;

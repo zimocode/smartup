@@ -1,9 +1,9 @@
 //The diffrent betwen browsers, from line 455
 //chrome
-"permissions": [ "<all_urls>","notifications","storage","tts","contextMenus","tabs"],
+"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts"],
 "optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","browserSettings"],
 "incognito":"split"
 
 //firefox
-"permissions": ["<all_urls>","notifications","storage","tts","contextMenus","tabs","downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"],
+"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts","downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"],
 "optional_permissions": ["browserSettings"]

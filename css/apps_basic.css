@@ -11,7 +11,7 @@ smartup.su_apps li{
 	transition:all .2s ease-in-out;
 }
 smartup.su_apps div{
-	/*display: block;*/
+	box-sizing: content-box;
 }
 smartup.su_apps ul,
 smartup.su_apps li{
