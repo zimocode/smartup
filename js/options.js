@@ -2780,8 +2780,6 @@ var suo={
 			if(_items.all_local_i18n&&_items.all_local_i18n[lang]){
 				for(i=0;i<_items.all_local_i18n[lang].length;i++){
 					for(var ii in _items.all_local_i18n[lang][i]){
-						console.log(ii);
-						console.log(_items.all_local_i18n[lang][i][ii]);
 						itemAllLocal[i][ii]=_items.all_local_i18n[lang][i][ii]
 					}			
 				}
