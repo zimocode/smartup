@@ -18,7 +18,7 @@
     "message": "Feedback:"
   },
   "icon_tip":{
-    "message":"smartUp Gestures can't works perfectly in this tab!"
+    "message":"smartUp Gestures can't work perfectly in this tab!"
   },
   "opt_title": {
     "message": "Settings"
@@ -1439,5 +1439,26 @@
   },
   "ext_allver":{
     "message":"All versions:"
+  },
+  "donatedev":{
+    "message":"Support Developer"
+  },
+  "moreext":{
+    "message":"More Extensons"
+  },
+  "con_ad":{
+    "message":"Show advertisement"
+  },
+  "des_ad":{
+    "message":"Ads are only shown on the current settings page and will never appear on other pages. Thank you for your supporting."
+  },
+  "des_moreextlist":{
+    "message":"These extensions are developed by me. Welcome to install and use."
+  },
+  "des_adlist0":{
+    "message":"These are advertisements, thank you for your support."
+  },
+  "des_adlist1":{
+    "message":"It can be turned on or off by the following path: About > Support Development."
   }
 }

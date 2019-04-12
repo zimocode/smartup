@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"6.2.505.848",
+			"date":"2019.04.10",
+			"content":[
+				"new option: about>Support Developer>Show advertisement",
+				"fix bugs: button for general>custom scripts disappear, issues@github: #40,#37 and others."
+			]
+		},	
+		{
 			"ver":"6.1.1108.837",
 			"date":"2018.08.18",
 			"content":[

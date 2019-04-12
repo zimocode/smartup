@@ -15,19 +15,27 @@
         <textarea id="output"></textarea>
         <button id="paste">Paste</button>        
     </div>
+    <div id="donate_box">
+        <div id="donate_title"><div id="donate_name" data-i18n="donatedev">支持开发</div><div id="donate_btn_hide">></div><div id="donate_btn_close">x</div></div>
+        <div id="donate_main">
+            <ul id="donate_list">
+            </ul>
+            <div id="donate_content">
+            </div>
+            <div id="donate_bottom">
+                <div data-i18n="des_adlist0"></div>
+                <div data-i18n="des_adlist1"></div>
+            </div>
+        </div>
+        <div id="donate_loading" style="display: none;">Loading ...</div>
+    </div>
 
-    <div id="ad171217_btn">扫码领红包</div>
+
     <div id="msgbox"></div>
     <div id="welcomebox">
         <div id="welcome">
             <div id="wel_title" data-i18n="wel_title"></div>
-            <div id="wel_con1"></div>
-            <!-- <ul>
-                <li data-i18n="wel_li1"></li>
-                <li data-i18n="wel_li2"></li>
-                <li data-i18n="wel_li3"></li>
-                <li data-i18n="wel_li4"></li>
-            </ul>   -->           
+            <div id="wel_con1"></div>        
         </div>
     </div>
     <smartup class="su_apps" style="display:none;">
@@ -490,49 +498,23 @@
                     <span>smartUp Gestures does not track you or insert ads into webpages. </span><br />
                     <span>smartUp Gestures is licensed under the <a href="../LICENSE" target="_blank">Apache License 2.0</a> .</span>
                 </div>
-                <!-- <div id="about_box">
-                    <div><img src="../icon.png"></div>
-                    <div id="about_title"></div>
-                    <div id="about_desb" data-i18n="ext_desb"></div>
-                    <div style="border-top:1px solid #ccc;">
-                        <table id="allver_table">
-                                <tbody>
-                                    <tr>
-                                        <td data-i18n="ext_ver" class="about_name"></td>
-                                        <td id="ext_ver" class="about_content" style="border-top: 1px solid #ccf;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td data-i18n="ext_site" class="about_name"></td>
-                                        <td id="ext_site" class="about_content"><a href="http://smartup.zimoapps.com" target="_blank">smartup.zimoapps.com</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td data-i18n="ext_email" class="about_name"></td>
-                                        <td id="ext_email" class="about_content"><a href="mailto:crexme@gmail.com?Subject=about smartup">crexme@gmail.com</a></td>
-                                    </tr>
-                                    <tr id="allver_title">
-                                        <td data-i18n="about_ver"></td>
-                                        <td data-i18n="about_url"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="allver_name">Chrome</td>
-                                        <td class="allver_url"><a href="https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn" target="_blank">https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="allver_name">Firefox</td>
-                                        <td class="allver_url"><a href="https://addons.mozilla.org/firefox/addon/smartup" target="_blank">https://addons.mozilla.org/firefox/addon/smartup</a></td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #cccccc;">
-                                        <td class="allver_name">Beta version(Chrome)</td>
-                                        <td class="allver_url"><a href="https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb" target="_blank">https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb</a></td>
-                                    </tr>
-                
-                                </tbody>
-                            </table>
-                    </div>
-                </div> -->
             </div>
         </div>
-        <div class="set set-111 confobj" data-confobj="">
+        <div class="set set-111 confobj" data-confobj="about|donatedev">
+            <div class="setname" data-i18n="donate"></div>
+            <div class="setcontent">
+                <input class="init change-checkbox" data-confele="ad" type="checkbox"><label data-i18n="con_ad"></label><br />
+                <div class="setdes" data-i18n="des_ad" style="padding-top:0;"></div>
+            </div>
+        </div>
+        <div class="set set-112 confobj" data-confobj="">
+            <div class="setname" data-i18n="moreext"></div>
+            <div class="setcontent">
+                <div id="con_moreextlist"></div>
+                <div class="setdes" data-i18n="des_moreextlist"></div>
+            </div>
+        </div>
+        <div class="set set-113 confobj" data-confobj="">
             <div class="setname" data-i18n="translate"></div>
             <div class="setcontent">
                 Want this extension to show in your native language? If you are familiar with English, you can help us translate this extension into your native language. Please contact us by email: crexme@gmail.com .<br />
@@ -554,7 +536,7 @@
                 </table>
             </div>
         </div>
-        <div class="set set-112 confobj" data-confobj="">
+        <div class="set set-114 confobj" data-confobj="">
             <div class="setname" data-i18n="thanks"></div>
             <div class="setcontent">
                 <ul class="thanks_ul">
@@ -577,11 +559,9 @@
                         <div class="thanks_name"><a target="_blank" href="https://github.com/jeromeetienne/jquery-qrcode">jquery-qrcode</a></div>                    
                     </li>
                 </ul>
-                
-
             </div>
         </div>
-        <div class="set set-113 confobj" data-confobj="">
+        <div class="set set-115 confobj" data-confobj="">
             <div class="setname" data-i18n="changelog"></div>
             <div class="setcontent">
             </div>
@@ -592,4 +572,5 @@
 <script src="../js/s.js"></script>
 <script src="../js/options.js"></script>
 <script src="../js/actions.js"></script>
+<script src="../js/qrcodejs.js"></script>
 </html>

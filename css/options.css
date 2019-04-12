@@ -1693,3 +1693,137 @@ summary:hover{
 	font-size: 12px;
 	color: #777;
 }
+
+#donate_box{
+	position: fixed;
+	right: 0;
+	top: 67px;
+	width: auto;
+	height: auto;
+	z-index: 10000;
+	opacity: .98;
+	font-size: 14px;
+	padding: 6px;
+	background-color: #2b2b34;
+	color: #fff;
+	font-weight: bold;	
+    border: 1px solid rgba(255,255,255,.5);
+    border-right: none;
+    border-radius: 2px;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    display: none;
+}
+#donate_box ul{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+}
+#donate_box ul li{
+	padding: 2px;
+	margin: 2px;
+}
+#donate_title{
+	
+}
+#donate_name{
+	cursor: pointer;
+	display: inline-block;
+}
+#donate_box .donate_listli{
+	cursor: pointer;
+	max-width: 64px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 12px;
+	font-weight: normal;
+}
+#donate_box .donate_listcurrent{
+	border: 1px solid #fff;
+	background-color: #fff;
+	color: #000;
+	margin: -1px 0;
+	border-radius: 2px 2px 0 0;
+}
+#donate_main{
+	margin-top: 5px;
+	display: none;
+}
+#donate_box #donate_content{
+	padding: 8px;
+	background-color: #fff;
+}
+#donate_box .donate_contentlist{
+	display: none;
+	text-align: center;	
+}
+#donate_box .donate_contentcurrent{
+	display: block;
+}
+#donate_box .donate_contentlist img{
+	display: block;
+	width: 192px;
+	margin: 0 auto;
+}
+#donate_box .donate_contentlist span{
+	display: block;
+	font-size: 10px;
+	font-weight: normal;
+	width: 200px;
+	text-align: left;
+	color: #000;
+	padding-top: 5px;
+	margin: auto;
+}
+#donate_box .donate_contentlist a{
+	display: block;
+	font-size: 16px;
+	text-decoration: underline;
+	color: blue;
+	font-weight: bold;
+}
+#donate_box .donate_contentlist a:visited{
+	text-decoration: underline;
+	color: blue;
+}
+#donate_box #donate_bottom{
+	font-size: 10px;
+	font-weight: normal;
+	color: #aaa;
+}
+#donate_box #donate_btn_close{
+	display: none;
+	color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	padding: 1px 5px;
+	border-radius: 100%;
+	cursor: pointer;
+	transition:all .4s ease-in-out;
+}
+#donate_box #donate_btn_hide{
+	display: none;
+	color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	top: 5px;
+	right: 36px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	padding: 1px 5px;
+	border-radius: 100%;
+	cursor: pointer;
+	transition:all .4s ease-in-out;
+}
+#donate_box #donate_btn_close:hover,
+#donate_box #donate_btn_hide:hover{
+	background: red;
+	border: 1px solid transparent;
+	color: #fff;
+}
+#donate_box #donate_btn_close:active,
+#donate_box #donate_btn_hide:active{
+	background: blue;
+}
