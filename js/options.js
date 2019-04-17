@@ -879,7 +879,7 @@ var suo={
 			var _rangebox=suo.domCreate2("span",{setName:["className"],setValue:["uirangebox"]});
 				//_rangebox.innerText=conf[obj.confele];
 
-			console.log(obj)
+			//console.log(obj)
 			var box_unit=suo.domCreate2("span",{setName:["className"],setValue:["box_unit"]});
 			var _unit="";
 			switch(obj.confele){
@@ -1171,12 +1171,12 @@ var suo={
 				doms[i].nextSibling.setAttribute("for",doms[i].id);
 				//drg/sdrg|settings
 				if(["txt","lnk","img"].contains(doms[i].dataset.confele)){
-					console.log(confArray)
+					//console.log(confArray)
 					for(var ii=0;ii<3;ii++){
 						//break
 						if(doms[i].dataset.confele==["txt","lnk","img"][ii]){
 							var theDom=document.querySelector("[data-id0=\'"+(confArray[0]=="sdrg"?"3":"4")+"\'][data-id1=\'"+(confArray[0]=="sdrg"?ii+1:ii+2)+"\']");
-							console.log(theDom)
+							//console.log(theDom)
 							confOBJ[doms[i].dataset.confele]?theDom.style.display="block":theDom.style.display="none";
 							theDom.parentNode.style.height="auto";
 						}
@@ -1202,7 +1202,7 @@ var suo={
 				var domRadios=doms[i].querySelectorAll("input[type=radio]");
 				//document.querySelector("#chk_pop_settings_front").checked="s"
 				for(var ii=0;ii<domRadios.length;ii++){
-					console.log(domRadios[ii].value+"/"+value)
+					//console.log(domRadios[ii].value+"/"+value)
 					if(domRadios[ii].value==value){
 						console.log(domRadios[ii])
 						domRadios[ii].checked="true";
@@ -1243,8 +1243,8 @@ var suo={
 		}
 		var confArray=getdata(ele).split("|");
 		var confOBJ=config;
-		console.log(confArray);
-		console.log(confOBJ);
+		//console.log(confArray);
+		//console.log(confOBJ);
 		//add ad support, config.about null
 		if(confArray[0]&&confArray[0]=="about"&&confArray[1]&&confArray[1]=="donatedev"){
 			if(!config.about){
@@ -1409,7 +1409,7 @@ var suo={
 		}
 	},
 	initListItem:function(type){
-		console.log(type)
+		//console.log(type)
 		domOBJ=document.querySelector(".ul_"+type);
 		domOBJ.innerHTML="";
 		var confOBJ,eleOBJ,actionType;
@@ -1505,7 +1505,7 @@ var suo={
 			}
 			return;
 		}
-		console.log(confOBJ)
+		//console.log(confOBJ)
 		for(var i=0;i<confOBJ.length;i++){
 			var liOBJ=suo.domCreate2("li",eleOBJ,"","",{setName:["confid","actiontype"],setValue:[i,actionType?actionType:type]});
 				liOBJ.draggable=true;
@@ -2753,18 +2753,20 @@ var suo={
 			chrome.runtime.sendMessage({type:"getDonateData"},function(response){
 				console.log(response)
 				if(response.value){
-					suo.cons.xhrDonate=response.value;		
+					suo.cons.xhrDonate=response.value;
+					suo.donateBox.show();
 				}else{
 					let xhr = new XMLHttpRequest(),
-						localType=navigator.language,
+						localType="zh-CN",//navigator.language,
 						_url="https://push.zimoapps.com/smartup/message.json";
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
 							let items=JSON.parse(xhr.response);
+							console.log("initxhr")
 							if(items.options.on){
 								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
 									suo.cons.xhrDonate=items;
-									document.querySelector("#donate_box").style.cssText+="display:block;";
+									suo.donateBox.show();
 									chrome.runtime.sendMessage({type:"setDonateData",value:items});
 								}
 							}
@@ -2780,7 +2782,7 @@ var suo={
 		},
 		checkPushMessage:function(){
 			let _items=suo.cons.xhrDonate;
-			let lang=navigator.language;
+			let lang="zh-CN";//navigator.language;
 			let i=0,itemArray=[];
 				itemLocal=_items[lang],
 				itemAllLocal=_items.all_local;
