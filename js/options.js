@@ -2750,22 +2750,30 @@ var suo={
 	},
 	donateBox:{
 		init:function(){
-			let xhr = new XMLHttpRequest();
-			let localType=navigator.language;
-			xhr.onreadystatechange=function(){
-				if (xhr.readyState == 4){
-					let items=JSON.parse(xhr.response);
-					if(items.options.on){
-						if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
-							suo.cons.xhrDonate=items;
-							document.querySelector("#donate_box").style.cssText+="display:block;";
+			chrome.runtime.sendMessage({type:"getDonateData"},function(response){
+				console.log(response)
+				if(response.value){
+					suo.cons.xhrDonate=response.value;		
+				}else{
+					let xhr = new XMLHttpRequest(),
+						localType=navigator.language,
+						_url="https://push.zimoapps.com/smartup/message.json";
+					xhr.onreadystatechange=function(){
+						if (xhr.readyState == 4){
+							let items=JSON.parse(xhr.response);
+							if(items.options.on){
+								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
+									suo.cons.xhrDonate=items;
+									document.querySelector("#donate_box").style.cssText+="display:block;";
+									chrome.runtime.sendMessage({type:"setDonateData",value:items});
+								}
+							}
 						}
 					}
+					xhr.open('GET',_url+"?"+new Date().getTime(), true);
+					xhr.send();
 				}
-			}
-			xhr.open('GET',"https://push.zimoapps.com/smartup/message.json"+"?"+new Date().getTime(), true);
-			//xhr.open('GET',"../message.json"+"?"+new Date().getTime(), true);
-			xhr.send();
+			})
 		},
 		show:function(){
 			document.querySelector("#donate_box").style.cssText+="display:block;";

@@ -3794,6 +3794,12 @@ var sub={
 				}
 				sub.initCurrent(sender,sub.theConf);
 				break
+			case"getDonateData":
+				sendResponse({type:"donateData",value:sub.cons.donateData})
+				break;
+			case"setDonateData":
+				sub.cons.donateData=message.value;
+				break;
 		}
 	}
 }
