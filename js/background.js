@@ -3601,6 +3601,9 @@ var sub={
 		}
 	},
 	funOnMessage:function(message,sender,sendResponse){
+		console.log(message);
+		console.log(sender);
+		console.log(sendResponse);
 		sub.message=message;
 		let getConf=function(){
 			let drawType=message.drawType,
@@ -3800,6 +3803,60 @@ var sub={
 			case"setDonateData":
 				sub.cons.donateData=message.value;
 				break;
+			case"appsAction":
+				sub.apps[message.app][message.action](message,sender,sendResponse);
+				//sub.appsAction(message,sendResponse);
+				break;
+		}
+	},
+	appsAction:function(message,sendResponse){
+		sub.apps[message.app][message.action];
+	},
+	apps:{
+		rss:{
+			getMessage:function(message,sender,sendResponse){
+				console.log(message);
+				sendResponse("data")
+				url=message.url;//"https://www.cnet.com/rss/news/";
+				fetch(url)
+					.then(response => response.text())
+					.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+					.then(xmlData=>{
+						let data={};
+						let replace_cdata=function(str){
+							let newstr;
+							newstr=str.indexOf("<![CDATA[")==0?str.replace("<![CDATA[",""):str;
+							newstr=newstr.indexOf("]]>")==newstr.length-3?newstr.replace("]]>",""):newstr;
+							return newstr;
+						}
+						data.title=replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").innerHTML:"noname");
+						data={
+							title:replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").innerHTML:"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?xmlData.querySelector("channel>image>link").innerHTML:""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?xmlData.querySelector("channel>image>url").innerHTML:chrome.runtime.getURL("/image/rss.png"))
+						}
+
+						let items=xmlData.querySelectorAll("item");
+						console.log(items);
+						data.items=[];
+						for(var i=0;i<items.length;i++){
+							var _nodes=items[i].childNodes;
+						    var _object={};
+							for(var ii=0;ii<_nodes.length;ii++){
+								if(_nodes[ii].tagName){
+									_object[_nodes[ii].tagName.toLowerCase()]=replace_cdata(_nodes[ii].textContent);
+								}
+							}
+							data.items.push(_object);
+						}
+						return data;
+					})
+					.then(data=>{
+						console.log(data);
+						chrome.tabs.sendMessage(sender.tab.id,{type:"rssData",value:data,feedURL:message.url});
+					})
+					.catch(err=>console.log(err))
+			}
 		}
 	}
 }
@@ -3918,7 +3975,6 @@ chrome.runtime.onMessageExternal.addListener(function(message,sender,sendRespons
 	sub.funOnMessage(message,sender,sendResponse);
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
-	console.log(message)
 	sub.funOnMessage(message,sender,sendResponse);
 });
 loadConfig();

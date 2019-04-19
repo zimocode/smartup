@@ -7,6 +7,8 @@ sue.apps.rss={
 			_time=parseInt((new Date().getTime())/1000);
 		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+_time,{setName:["appname"],setValue:[_appname]});
 
+		sue.apps.rss.dom=dom;
+
 		dom.innerHTML=
 			'<div class="su_head" style=""><span class="su_title">'+sue.apps.i18n(_appname)+'</span><div class="su_btn_close">x</div>'
 			+'</div>'
@@ -165,6 +167,11 @@ sue.apps.rss={
 		})
 	},
 	rss:function(dom,url){
+		console.log("ss")
+		chrome.runtime.sendMessage({type:"appsAction",app:"rss",action:"getMessage",url:url},function(data){
+			console.log(data);
+		})
+		return false;
         xhr=new XMLHttpRequest();
         xhr.open("GET",url,"false");
         xhr.onreadystatechange=function(){
@@ -251,6 +258,42 @@ sue.apps.rss={
 		if(sue.apps.rss.config.n_closebox){
 			sue.apps.boxClose(e)
 		}
+	},
+
+	setList(message,sender,sendResponse){
+		let data=message.value,
+			feedURL=message.feedURL;
+		//update rsstitle;
+		chrome.storage.local.get(function(items){
+			for(var i=0;i<sue.apps.rss.config.feed.length;i++){
+				if(sue.apps.rss.config.feed[i]==feedURL){
+					items.localConfig.apps.rss.feedtitle[i]=data.title;
+					break;
+				}
+			}
+			chrome.storage.local.set(items);
+			sue.apps.rss.menu(sue.apps.rss.dom)
+		})
+
+		//rss head
+		let rssheaddom=sue.apps.getAPPboxEle(sue.apps.rss.dom).querySelector(".su_main .rss_head");
+		rssheaddom.textContent="";
+
+		var _title_img=sue.apps.domCreate("img");
+			_title_img.src=data.img;
+		var _title_link=sue.apps.domCreate("a");
+			_title_link.href=data.link;
+			_title_link.target="_blank";
+			_title_link.textContent=data.title;
+		rssheaddom.appendChild(_title_img);
+		rssheaddom.appendChild(_title_link);
+
+		let rssdom=sue.apps.rss.dom.querySelector(".rss_box");
+		rssdom.textContent="";
+		for(var i=0;i<data.items.length;i++){
+			var liobj=sue.apps.domCreate("li",{setName:["className"],setValue:["rss_item"]},null,null,{setName:["link"],setValue:[data.items[i].link]},data.items[i].title)
+			rssdom.appendChild(liobj);
+		}
 	}
 }
 chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"rss"},function(response){
@@ -275,4 +318,12 @@ chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"rss"},function(respons
 		sue.apps.rss.initUI();
 	})
 })
+chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
+	console.log(message)
+	switch(message.type){
+		case"rssData":
+			sue.apps.rss.setList(message,sender,sendResponse);
+			break;
+	}
+});
 
