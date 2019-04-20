@@ -2,6 +2,38 @@ console.log("tablist")
 sue.apps.tablist={
 	cons:{},
 	initUI:function(){
+		let appInfo={
+			appName:"tablist",
+			headTitle:"tablist",
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+			],
+			options:[
+				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}
+			]
+		}
+		sue.apps.init();
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["tablistbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+		var domUL=sue.apps.domCreate("ul");
+		for(var i=0;i<this.list.length;i++){
+			var inner="<img src='"+this.list[i].favIconUrl+"'>"+this.list[i].title+"<span class='su_tablist_button_liclose'>x</span>"
+			var list_li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_tablist_li"]},inner,"",{setName:["id"],setValue:[i]},"");
+			if(sue.apps.tablist.list[i].id==sue.apps.tablist.curtab.id){
+				list_li.classList.add("su_tablist_cur");
+			}
+			list_li.addEventListener("click",this,false);
+			domUL.appendChild(list_li);
+		}
+		dom.querySelector(".tablistbox").appendChild(domUL);
+
+
+		return false;
 		sue.apps.init();
 		var _appname="tablist",
 			_time=parseInt((new Date().getTime())/1000);

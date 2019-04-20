@@ -2,6 +2,69 @@ console.log("rss")
 sue.apps.rss={
 	cons:{},
 	initUI:function(){
+		let appInfo={
+			appName:"rss",
+			headTitle:"rss",
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/menu.svg",title:"app_rss_menu",className:"menu_item menu_item_rss"},
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+			],
+			options:[
+				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
+				{type:"select",label:"n_optype",name:"n_position",value:["s_default","s_left","s_right","s_head","s_last"]},
+				{type:"checkbox",label:"n_pin",name:"n_pin",checked:true},
+				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}
+			]
+		}
+
+		sue.apps.init();
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps.rss.dom=dom;
+		sue.apps.initPos(dom);
+
+		//rss head
+		let _rssHead=sue.apps.domCreate("div",{setName:["className"],setValue:["rss_head"]});
+		let _rssTitle=sue.apps.domCreate("span",{setName:["className"],setValue:["su_rss_rsshead"]});
+		_rssHead.appendChild(_rssTitle);
+		dom.querySelector(".su_main").appendChild(_rssHead);
+		//rss box
+		let _rssBox=sue.apps.domCreate("div",{setName:["className"],setValue:["rss_box"]});
+		let _rssSpan=sue.apps.domCreate("div",null,null,"color: #3698F9;");
+		let _rssImg=sue.apps.domCreate("img",null,null,"display: inline-block;margin-bottom: -10px;");
+			_rssImg.src=chrome.runtime.getURL("/image/loading.gif");
+		_rssBox.appendChild(_rssSpan);
+		_rssBox.appendChild(_rssImg);
+		dom.querySelector(".su_main").appendChild(_rssBox);
+		//sub box
+		let _rssSub=sue.apps.domCreate("div",{setName:["className"],setValue:["rss_sub"]});
+		let _subBox=sue.apps.domCreate("div",{setName:["className"],setValue:["sub_box"]});
+		let _subText=sue.apps.domCreate("input",{setName:["className"],setValue:["sub_text"]});
+			_subText.type="text";
+			_subText.placeholder=sue.apps.i18n("app_rss_subplace");
+		let _subBtn=sue.apps.domCreate("input",{setName:["className"],setValue:["sub_add"]});
+			_subBtn.type="button";
+			_subBtn.value=sue.apps.i18n("app_rss_new");
+		_subBox.appendChild(_subText);
+		_subBox.appendChild(_subBtn);
+		let _subItem=sue.apps.domCreate("ul",{setName:["className"],setValue:["sub_items"]});
+		_rssSub.appendChild(_subBox);
+		_rssSub.appendChild(_subItem);
+		dom.appendChild(_rssSub);
+
+
+		if(sue.apps.rss.config.feed&&sue.apps.rss.config.feed.length>0){
+			sue.apps.rss.rss(dom,sue.apps.rss.config.feed[0]);
+			//sue.apps.rss.menu(dom);
+		}else{
+			dom.querySelector(".rssbox").innerText="there is no sub.";
+			sue.apps.rss.showSub(dom)
+		}
+
+		dom.addEventListener("click",sue.apps.rss.handleEvent,false);
+
+		return false;
 		sue.apps.init();
 		var _appname="rss",
 			_time=parseInt((new Date().getTime())/1000);
@@ -49,7 +112,7 @@ sue.apps.rss={
 
 		if(sue.apps.rss.config.feed&&sue.apps.rss.config.feed.length>0){
 			sue.apps.rss.rss(dom,sue.apps.rss.config.feed[0]);
-			sue.apps.rss.menu(dom);
+			//sue.apps.rss.menu(dom);
 		}else{
 			dom.querySelector(".rssbox").innerText="there is no sub.";
 			sue.apps.rss.showSub(dom)
@@ -260,7 +323,7 @@ sue.apps.rss={
 		}
 	},
 
-	setList(message,sender,sendResponse){
+	listSet:function(message,sender,sendResponse){
 		let data=message.value,
 			feedURL=message.feedURL;
 		//update rsstitle;
@@ -276,17 +339,17 @@ sue.apps.rss={
 		})
 
 		//rss head
-		let rssheaddom=sue.apps.getAPPboxEle(sue.apps.rss.dom).querySelector(".su_main .rss_head");
+		let rssheaddom=sue.apps.rss.dom.querySelector(".su_main .rss_head");
 		rssheaddom.textContent="";
 
-		var _title_img=sue.apps.domCreate("img");
-			_title_img.src=data.img;
-		var _title_link=sue.apps.domCreate("a");
-			_title_link.href=data.link;
-			_title_link.target="_blank";
-			_title_link.textContent=data.title;
-		rssheaddom.appendChild(_title_img);
-		rssheaddom.appendChild(_title_link);
+		let _titleImg=sue.apps.domCreate("img");
+			_titleImg.src=data.img;
+		let _titleLink=sue.apps.domCreate("a");
+			_titleLink.href=data.link;
+			_titleLink.target="_blank";
+			_titleLink.textContent=data.title;
+		rssheaddom.appendChild(_titleImg);
+		rssheaddom.appendChild(_titleLink);
 
 		let rssdom=sue.apps.rss.dom.querySelector(".rss_box");
 		rssdom.textContent="";
@@ -322,7 +385,7 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
 	switch(message.type){
 		case"rssData":
-			sue.apps.rss.setList(message,sender,sendResponse);
+			sue.apps.rss.listSet(message,sender,sendResponse);
 			break;
 	}
 });
