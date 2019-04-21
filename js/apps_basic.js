@@ -72,10 +72,13 @@ sue.apps={
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
 				if(boxInfo.options[i].type=="checkbox"){
+					var _time=parseInt((new Date().getTime())/1000);
 					var _check=sue.apps.domCreate("input");
+						_check.id=boxInfo.options[i].name+"_"+_time;
 						_check.type="checkbox";
 						_check.name=boxInfo.options[i].name;
 					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labeldes"]},sue.apps.i18n(boxInfo.options[i].name));
+						_label.htmlFor=boxInfo.options[i].name+"_"+_time;
 					domOptions.appendChild(_check);
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));

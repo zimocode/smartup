@@ -3817,7 +3817,7 @@ var sub={
 			getMessage:function(message,sender,sendResponse){
 				console.log(message);
 				sendResponse("data")
-				url=message.url;//"https://www.cnet.com/rss/news/";
+				url=message.value;
 				fetch(url)
 					.then(response => response.text())
 					.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
@@ -3829,11 +3829,10 @@ var sub={
 							newstr=newstr.indexOf("]]>")==newstr.length-3?newstr.replace("]]>",""):newstr;
 							return newstr;
 						}
-						data.title=replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").innerHTML:"noname");
 						data={
-							title:replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").innerHTML:"noname"),
-							link:replace_cdata(xmlData.querySelector("channel>image>link")?xmlData.querySelector("channel>image>link").innerHTML:""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?xmlData.querySelector("channel>image>url").innerHTML:chrome.runtime.getURL("/image/rss.png"))
+							title:replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").textContent:"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?xmlData.querySelector("channel>image>link").textContent:""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?xmlData.querySelector("channel>image>url").textContent:chrome.runtime.getURL("/image/rss.png"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
@@ -3856,6 +3855,13 @@ var sub={
 						chrome.tabs.sendMessage(sender.tab.id,{type:"rssData",value:data,feedURL:message.url});
 					})
 					.catch(err=>console.log(err))
+			},
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
 			}
 		}
 	}

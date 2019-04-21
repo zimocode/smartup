@@ -2757,7 +2757,7 @@ var suo={
 					suo.donateBox.show();
 				}else{
 					let xhr = new XMLHttpRequest(),
-						localType="zh-CN",//navigator.language,
+						localType=navigator.language,
 						_url="https://push.zimoapps.com/smartup/message.json";
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
@@ -2782,7 +2782,7 @@ var suo={
 		},
 		checkPushMessage:function(){
 			let _items=suo.cons.xhrDonate;
-			let lang="zh-CN";//navigator.language;
+			let lang=navigator.language;
 			let i=0,itemArray=[];
 				itemLocal=_items[lang],
 				itemAllLocal=_items.all_local;
