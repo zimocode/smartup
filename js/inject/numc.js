@@ -4,33 +4,48 @@ appType[appName]=true;
 sue.apps[appName]={
 	cons:{},
 	initUI:function(){
+		let appInfo={
+			appName:"numc",
+			headTitle:"numc",
+			headCloseBtn:true
+		}
 		sue.apps.init();
-		var _appname="numc";
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("numc")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="numcbox">'
-					+'<span class="su_numc_span">'+sue.apps.i18n("app_numc_from")+'<select class="su_numc_intype"></select>'+'</span><br />'
-					+'<input class="su_numc_input" type="text"><br />'
-					+'<span class="su_numc_span">'+sue.apps.i18n("app_numc_to")+'<select class="su_numc_outtype"></select>'+'</span><br />'
-					+'<input class="su_numc_output" type="text"><br />'
-					+'<button class="su_numc_btn">'+sue.apps.i18n("btn_done")+'</button>'
-				+'</div>'
-			+'</div>';
-		dom.querySelector(".su_numc_btn").addEventListener("click",sue.apps[appName].handleEvent,false);
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
 		sue.apps.initPos(dom);
 
-		var selectIn=dom.querySelector("select.su_numc_intype");
-		var selectOut=dom.querySelector("select.su_numc_outtype");
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["numcbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _spanFrom=sue.apps.domCreate("span",{setName:["className"],setValue:["su_numc_span"]},null,null,null,sue.apps.i18n("app_numc_from")),
+			_selectFrom=sue.apps.domCreate("select",{setName:["className"],setValue:["su_numc_intype"]}),
+			_brFrom=sue.apps.domCreate("br"),
+			_textInput=sue.apps.domCreate("input",{setName:["className"],setValue:["su_numc_input"]}),
+			_spanTo=sue.apps.domCreate("span",{setName:["className"],setValue:["su_numc_span"]},null,null,null,sue.apps.i18n("app_numc_to")),
+			_selectTo=sue.apps.domCreate("select",{setName:["className"],setValue:["su_numc_outtype"]}),
+			_brTo=sue.apps.domCreate("br"),
+			_textOutput=sue.apps.domCreate("input",{setName:["className"],setValue:["su_numc_output"]}),
+			_btn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_numc_btn"]},null,null,null,sue.apps.i18n("btn_done"));
+		_textInput.type="text";
+		_textOutput.type="text";
+
 		for(var i=2;i<33;i++){
-			var theOption=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},i.toString());
-			selectIn.appendChild(theOption);
+			var _optionFrom=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},i.toString()),
+				_optionTo=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},i.toString());
+			_selectFrom.appendChild(_optionFrom);
+			_selectTo.appendChild(_optionTo);
 		}
-		selectOut.innerHTML=selectIn.innerHTML;
+
+		theAppBox.appendChild(_spanFrom);
+		theAppBox.appendChild(_selectFrom);
+		theAppBox.appendChild(_brFrom);
+		theAppBox.appendChild(_textInput);
+		theAppBox.appendChild(_spanTo);
+		theAppBox.appendChild(_selectTo);
+		theAppBox.appendChild(_brTo);
+		theAppBox.appendChild(_textOutput);
+		theAppBox.appendChild(_btn);
 
 		chrome.storage.local.get(function(items){
 			var data;
@@ -48,10 +63,12 @@ sue.apps[appName]={
 				data=items.localConfig.apps[appName];
 			}
 			
-			dom.querySelector(".su_numc_input").value=data.input;
-			dom.querySelector(".su_numc_intype").value=data.from;
-			dom.querySelector(".su_numc_outtype").value=data.to;
-		})		
+			_textInput.value=data.input;
+			_selectFrom.value=data.from;
+			_selectTo.value=data.to;
+		})
+
+		_btn.addEventListener("click",sue.apps[appName].handleEvent,false);
 	},
 	handleEvent:function(e){
 		switch(e.type){

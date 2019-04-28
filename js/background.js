@@ -3863,6 +3863,19 @@ var sub={
 					_Pin=config.apps[message.app].n_pin;
 				sub.open(_URL,_Target,_Index,_Pin);
 			}
+		},
+		tablist:{
+			tabClose:function(message){
+				message.value?chrome.tabs.remove(Number(message.value)):null;			
+			},
+			tabSwitch:function(message){
+				message.value?chrome.tabs.update(Number(message.value),{active:true}):null;
+			}
+		},
+		jslist:{
+			jsRun:function(message){
+				chrome.tabs.executeScript({code:config.general.script.script[message.value].content,runAt:"document_start"})
+			}
 		}
 	}
 }

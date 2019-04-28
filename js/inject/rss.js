@@ -187,11 +187,6 @@ sue.apps.rss={
 		if(sue.apps.rss.config.n_closebox){
 			sue.apps.boxClose(e)
 		}
-		return;
-		chrome.runtime.sendMessage({type:"apps_action",apptype:"rss",link:e.target.dataset.link},function(response){})
-		if(sue.apps.rss.config.n_closebox){
-			sue.apps.boxClose(e)
-		}
 	},
 	itemList:function(message,sender,sendResponse){
 		let data=message.value,
@@ -262,4 +257,3 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 			break;
 	}
 });
-
