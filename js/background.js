@@ -1158,7 +1158,7 @@ var sub={
 	insertTest:function(appname){
 		//console.log("appname")
 		//chrome.tabs.sendMessage(curTab.id,{type:"apptype",apptype:appname},function(response){});
-		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){})',runAt:"document_start"});	
+		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){console.log(response)})',runAt:"document_start"});	
 	},
 	checkPermission:function(thepers,theorgs,theFunction,msg){
 		console.log(thepers+"/"+theorgs+"/"+theFunction+"/"+msg)
@@ -3662,7 +3662,7 @@ var sub={
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){})			
+					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){});
 				}		
 				if(!message.value){
 					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
@@ -3670,6 +3670,7 @@ var sub={
 				}else{
 					_fun();
 				}
+				sendResponse({value:true});
 				break;
 			case"getappconf":
 				sendResponse(sub.cons[message.apptype]);
@@ -3810,7 +3811,7 @@ var sub={
 		}
 	},
 	appsAction:function(message,sendResponse){
-		sub.apps[message.app][message.action];
+		sub.apps[message.app][message.action](message,sendResponse);
 	},
 	apps:{
 		rss:{
@@ -3875,6 +3876,11 @@ var sub={
 		jslist:{
 			jsRun:function(message){
 				chrome.tabs.executeScript({code:config.general.script.script[message.value].content,runAt:"document_start"})
+			}
+		},
+		appslist:{
+			openApp:function(message){
+				sub.action[message.value]();
 			}
 		}
 	}
