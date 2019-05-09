@@ -83,6 +83,20 @@ sue.apps={
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
+				if(boxInfo.options[i].type=="range"){
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},sue.apps.i18n(boxInfo.options[i].name));
+					var _domRange=sue.apps.domCreate("input");
+						_domRange.name=boxInfo.options[i].name;
+						_domRange.type="range";
+						_domRange.min=boxInfo.options[i].min;
+						_domRange.max=boxInfo.options[i].max;
+					var _domSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["options_rangebox"]});
+
+					domOptions.appendChild(_label);
+					domOptions.appendChild(_domRange);
+					domOptions.appendChild(_domSpan);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
 			}
 			domBox.appendChild(domOptions);
 			//button box

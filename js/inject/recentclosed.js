@@ -4,33 +4,31 @@ sue.apps.recentclosed={
 		recentclosed:null
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"recentclosed",
+			headTitle:"recentclosed",
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+			],
+			options:[
+				{type:"range",label:"app_recentbk_recentlength",name:"n_num",min:5,max:25},
+				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}
+			]
+		}
 		sue.apps.init();
-		var _appname="recentclosed",
-			_time=parseInt((new Date().getTime())/1000);
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+_time,{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("recentclosed")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="recentclosedbox"></div>'
-			+'</div>'
-			+'<div class="su_menu">'
-				+'<img class="menu_item menu_item_opt" src="'+chrome.runtime.getURL("/image/options.png")+'" /><br />'
-			+'</div>'
-			+'<div class="su_options">'
-				+'<label class="options_labelname">'+sue.apps.i18n("app_recentbk_recentlength")+'</label>'+'<input name="n_num" min="5" max="25" type="range"><span class="options_rangebox"></span><br />'
-				+'<input id="n_closebox_'+_time+'" name="n_closebox" type="checkbox"><label for="n_closebox_'+_time+'" class="options_labeldes">'+sue.apps.i18n("n_closebox")+'</label><br />'
-				+'<div class="options_btnbox">'
-					+'<input class="options_btn_cancel" type="button" value="'+sue.apps.i18n("btn_cancel")+'">'
-					+'<input class="options_btn_save" type="button" value="'+sue.apps.i18n("btn_save")+'">'
-				+'</div>'
-			+'</div>';
-		var domUL=sue.apps.domCreate("ul");
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
+		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["recentclosedbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		var _ul=sue.apps.domCreate("ul");
 		for(var i=0;i<this.tabs.length;i++){
 			var rctype=!this.tabs[i].window?this.tabs[i].tab:this.tabs[i].window;
-			var list_li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentclosed_li"]},(!this.tabs[i].window?this.tabs[i].tab.title:this.tabs[i].window.tabs.length+" "+sue.apps.i18n("app_recentclosed_tabs")),"",{setName:["id"],setValue:[rctype.sessionId]},"");
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentclosed_li"]},(!this.tabs[i].window?this.tabs[i].tab.title:this.tabs[i].window.tabs.length+" "+sue.apps.i18n("app_recentclosed_tabs")),"",{setName:["id"],setValue:[rctype.sessionId]},"");
 			var rc_title;
 
 			if(rctype.tabs){
@@ -38,27 +36,23 @@ sue.apps.recentclosed={
 				for(var ii=0;ii<rctype.tabs.length;ii++){
 					rc_title+=" | "+rctype.tabs[ii].title;
 				}
-				list_li.classList.add("su_recentclosed_win");
-				list_li.innerHTML=rc_title;
+				_li.classList.add("su_recentclosed_win");
+				_li.innerHTML=rc_title;
 			}
 			
-			domUL.appendChild(list_li);
-			list_li.removeEventListener("click",this,false);
-			list_li.addEventListener("click",this,false);
+			_ul.appendChild(_li);
+			_li.removeEventListener("click",this,false);
+			_li.addEventListener("click",this,false);
 		}
-		dom.querySelector(".recentclosedbox").appendChild(domUL);
-
-		//sue.apps.initOpt(dom);
-		//sue.apps.initZoom(dom);
-		sue.apps.initPos(dom);
+		theAppBox.appendChild(_ul);
 	},
 	handleEvent:function(e){
 		switch(e.type){
 			case"click":
 				if(e.target.classList.contains("su_recentclosed_li")){
-					chrome.runtime.sendMessage({type:"apps_action",apptype:"recentclosed",id:e.target.dataset.id},function(response){})
+					chrome.runtime.sendMessage({type:"appsAction",app:"recentclosed",action:"openItem",value:e.target.dataset.id});
 					if(sue.apps.recentclosed.config.n_closebox){
-						sue.apps.boxClose(e)
+						sue.apps.boxClose(e);
 					}
 				}
 				break;
@@ -67,7 +61,6 @@ sue.apps.recentclosed={
 }
 chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"recentclosed"},function(response){
 	sue.apps.recentclosed.config=response.config;
-	//sue.apps.recentclosed.zoom=response.value.zoom;
 	sue.apps.recentclosed.tabs=response.value.tabs;
 	sue.apps.recentclosed.initUI()
 })

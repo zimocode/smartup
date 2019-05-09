@@ -3882,6 +3882,29 @@ var sub={
 			openApp:function(message){
 				sub.action[message.value]();
 			}
+		},
+		recentbk:{
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			}
+		},
+		recentht:{
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			}
+		},
+		recentclosed:{
+			openItem:function(message){
+				chrome.sessions.restore(message.value);
+			}
 		}
 	}
 }

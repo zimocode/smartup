@@ -12,7 +12,7 @@ sue.apps.rss={
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
-				{type:"select",label:"n_optype",name:"n_position",value:["s_default","s_left","s_right","s_head","s_last"]},
+				{type:"select",label:"n_position",name:"n_position",value:["s_default","s_left","s_right","s_head","s_last"]},
 				{type:"checkbox",label:"n_pin",name:"n_pin",checked:true},
 				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}
 			]
