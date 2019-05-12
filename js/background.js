@@ -1452,6 +1452,7 @@ var sub={
 					_url=_urlB.join("/");
 					_url=_url==_urlA?"":_url;
 					sub.open(_url,_optype,_index,_pin);
+					break;
 				}
 			}
 		},
@@ -1498,6 +1499,7 @@ var sub={
 					_url=_urlB.join("/");
 					_url=_url==_urlA?"":_url;
 					sub.open(_url,_optype,_index,_pin);
+					break;
 				}
 			}
 		},
