@@ -25,7 +25,7 @@ var per={
 		for(var i=0;per.orgs&&i<per.orgs.length;i++){
 			strs=strs+" "+per.orgs[i];
 		}
-		document.querySelector("#perlist").innerHTML=strs;
+		document.querySelector("#perlist").textContent=strs;
 		document.querySelector("#per_msg").innerText=config.msg?config.msg:"";
 
 		var i18nOBJ=document.querySelectorAll("[data-i18n]");
@@ -35,7 +35,7 @@ var per={
 			if(i18nOBJ[i].tagName.toLowerCase()=="input"&&i18nOBJ[i].type=="button"){
 				i18nOBJ[i].value=trans;
 			}else{
-				i18nOBJ[i].innerHTML=trans;
+				i18nOBJ[i].textContent=trans;
 			}
 		}
 		window.addEventListener("click",this,false);
@@ -63,7 +63,7 @@ var per={
 							window.setInterval(cut,1000);
 							function cut(){
 								if(count){
-									document.querySelector("#perlistbox").innerHTML=per.getI18n("getper_after")+" "+count+" s.";
+									document.querySelector("#perlistbox").textContent=per.getI18n("getper_after")+" "+count+" s.";
 									count-=1;
 								}else{
 									window.close();

@@ -1,6 +1,15 @@
 {
 	"log": [
 		{
+			"ver":"6.2.505.864",
+			"date":"2019.05.12",
+			"content":[
+				"code review for AMO",
+				"fix CORB",
+				"fix bugs: #47,"
+			]
+		},
+		{
 			"ver":"6.2.505.848",
 			"date":"2019.04.10",
 			"content":[

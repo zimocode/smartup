@@ -25,7 +25,7 @@ sue.apps.appslist={
 		let _ul=sue.apps.domCreate("ul");
 		let _conf=sue.apps.appslist.apps;
 		for(var i=0;i<_conf.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_appslist_li"]},sue.apps.i18n(_conf[i]),null,{setName:["id"],setValue:[_conf[i]]});
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_appslist_li"]},null,null,{setName:["id"],setValue:[_conf[i]]},sue.apps.i18n(_conf[i]));
 			_ul.appendChild(_li);
 		}
 		theAppBox.appendChild(_ul);

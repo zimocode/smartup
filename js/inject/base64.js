@@ -4,32 +4,49 @@ sue.apps.base64={
 		boxmove:{}
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"base64",
+			headTitle:"base64",
+			headCloseBtn:true
+		}
 		sue.apps.init();
-		var _appname="base64";
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("base64")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="base64box">'
-					+'<div class="base_str">'
-						+'<textarea class="base_areastr">'+'dGVzdA=='+'</textarea><br />'
-						+'<button class="base_btn_encode">'+sue.apps.i18n("btn_encode")+'</button><button class="base_btn_decode">'+sue.apps.i18n("btn_decode")+'</button>'
-					+'</div>'
-					+'<div class="base_code">'
-						+'<textarea class="base_areacode"></textarea><br />'
-						+'<button class="base_btn_back">'+sue.apps.i18n("btn_back")+'</button>'
-					+'</div>'
-					+'<div class="su_copyright">Based on <a href="https://github.com/dankogai/js-base64" target="_blank">js-base64@Github</a></div>'
-				+'</div>'
-			+'</div>';
-		var domUL=sue.apps.domCreate("ul");
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
+		sue.apps.initPos(dom);
 
-        dom.querySelector(".base_btn_encode").addEventListener("click",this,false);
-        dom.querySelector(".base_btn_decode").addEventListener("click",this,false);
-        dom.querySelector(".base_btn_back").addEventListener("click",this,false);
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["base64box"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _str=sue.apps.domCreate("div",{setName:["className"],setValue:["base_str"]}),
+			_textStr=sue.apps.domCreate("textarea",{setName:["className"],setValue:["base_areastr"]},null,null,null,"dGVzdA=="),
+			_brStr=sue.apps.domCreate("br"),
+			_btnEncode=sue.apps.domCreate("button",{setName:["className"],setValue:["base_btn_encode"]},null,null,null,sue.apps.i18n("btn_encode")),
+			_btnDecode=sue.apps.domCreate("button",{setName:["className"],setValue:["base_btn_decode"]},null,null,null,sue.apps.i18n("btn_decode"));
+		let _code=sue.apps.domCreate("div",{setName:["className"],setValue:["base_code"]}),
+			_textCode=sue.apps.domCreate("textarea",{setName:["className"],setValue:["base_areacode"]}),
+			_brCode=sue.apps.domCreate("br"),
+			_btnBack=sue.apps.domCreate("button",{setName:["className"],setValue:["base_btn_back"]},null,null,null,sue.apps.i18n("btn_back"));
+		let _copyright=sue.apps.domCreate("div",{setName:["className"],setValue:["su_copyright"]},null,null,null,"Based on "),
+			_link=sue.apps.domCreate("a",null,null,null,null,"js-base64@Github");
+		_link.href="https://github.com/dankogai/js-base64";
+		_link.target="_blank";
+
+		_str.appendChild(_textStr);
+		_str.appendChild(_brStr);
+		_str.appendChild(_btnEncode);
+		_str.appendChild(_btnDecode);
+		_code.appendChild(_textCode);
+		_code.appendChild(_brCode);
+		_code.appendChild(_btnBack);
+		_copyright.appendChild(_link);
+		theAppBox.appendChild(_str);
+		theAppBox.appendChild(_code);
+		theAppBox.appendChild(_copyright);
+
+        _btnEncode.addEventListener("click",this,false);
+        _btnDecode.addEventListener("click",this,false);
+        _btnBack.addEventListener("click",this,false);
 		sue.apps.initPos(dom);
 	},
 	handleEvent:function(e){
@@ -61,7 +78,3 @@ sue.apps.base64={
 	}
 }
 sue.apps.base64.initUI();
-// chrome.runtime.sendMessage({type:"apps_getvalue",typevalue:"appslist"},function(response){
-// 	sue.apps.base64.cons.zoom=response.value.zoom;
-// 	sue.apps.base64.initUI();
-// })

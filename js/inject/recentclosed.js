@@ -37,7 +37,7 @@ sue.apps.recentclosed={
 					rc_title+=" | "+rctype.tabs[ii].title;
 				}
 				_li.classList.add("su_recentclosed_win");
-				_li.innerHTML=rc_title;
+				_li.textContent=rc_title;
 			}
 			
 			_ul.appendChild(_li);

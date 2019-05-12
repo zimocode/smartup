@@ -3905,6 +3905,45 @@ var sub={
 			openItem:function(message){
 				chrome.sessions.restore(message.value);
 			}
+		},
+		synced:{
+			openItem:function(message){
+				chrome.sessions.restore(message.value);
+			}
+		},
+		speaker:{
+			speak:function(message){
+					switch(message.value.type){
+						case"play":
+							if(!message.value.txt){return;}
+							var _conf=config.apps[message.app];
+							var _text=message.value.txt;
+							var _voice={};
+							chrome.tts.getVoices(function(voices){
+								for(var i=0;i<voices.length;i++){
+									if(voices.voiceName==_conf.voicename){
+										if(voices[i].gender){_voice.gender=_conf.n_gender.substr(2);}
+										_voice.voiceName=voices[i].n_voicename;
+										_voice.rate=_conf.n_rate;
+										_voice.pitch=_conf.n_pitch;
+										_voice.volume=_conf.n_volume;
+										break;
+									}
+								}
+								chrome.tts.speak(_text,_voice);
+							})
+							break;
+						case"pause":
+							chrome.tts.pause()
+							break;
+						case"resume":
+							chrome.tts.resume()
+							break;
+						case"stop":
+							chrome.tts.stop()
+							break;
+					}
+			}
 		}
 	}
 }

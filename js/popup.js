@@ -78,7 +78,7 @@ var sup={
 			}else if(i18nOBJ[i].title=="_i18n"){
 				i18nOBJ[i].title=trans;
 			}else{
-				i18nOBJ[i].innerHTML=trans;
+				i18nOBJ[i].textContent=trans;
 			}
 		}
 	},

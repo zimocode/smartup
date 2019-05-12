@@ -90,11 +90,23 @@ sue.apps={
 						_domRange.type="range";
 						_domRange.min=boxInfo.options[i].min;
 						_domRange.max=boxInfo.options[i].max;
+						_domRange.step=boxInfo.options[i].step||1;
 					var _domSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["options_rangebox"]});
 
 					domOptions.appendChild(_label);
 					domOptions.appendChild(_domRange);
 					domOptions.appendChild(_domSpan);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
+				if(boxInfo.options[i].type=="radio"){
+					var _time=parseInt((new Date().getTime())/1000);
+					var _domRadio=sue.apps.domCreate("input");
+						_domRadio.name=boxInfo.options[i].name;
+						_domRadio.type="radio";
+						_domRadio.id=boxInfo.options[i].name+"_"+_time;
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},sue.apps.i18n(boxInfo.options[i].name));
+					domOptions.appendChild(_domRadio);
+					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
 			}
@@ -220,7 +232,7 @@ sue.apps={
 				dom[eele.setName[i]]=eele.setValue[i];
 			}
 		}
-		if(einner){dom.innerHTML=einner}
+		if(einner){}
 		if(ecss){
 			dom.style.cssText+=ecss;
 		}
