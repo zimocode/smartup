@@ -26,7 +26,7 @@ sue.apps.jslist={
 		let _ul=sue.apps.domCreate("ul");
 		let theobj=sue.apps.jslist.js; 
 		for(var i=0;i<theobj.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_jslist_li"]},theobj[i],null,{setName:["id"],setValue:[i]});
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_jslist_li"]},null,null,{setName:["id"],setValue:[i]},theobj[i]);
 			_ul.appendChild(_li);
 		}
 		theAppBox.appendChild(_ul);

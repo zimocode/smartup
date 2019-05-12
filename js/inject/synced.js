@@ -32,7 +32,7 @@ sue.apps.synced={
 		theAppBox.appendChild(_box);
 
 		for(var i=0;i<sue.apps.synced.sync.length&&sue.apps.synced.sync.length>0;i++){
-			_selectDevice.appendChild(sue.apps.domCreate("option",null,sue.apps.synced.sync[i].deviceName));
+			_selectDevice.appendChild(sue.apps.domCreate("option",null,null,null,null,sue.apps.synced.sync[i].deviceName));
 		}
 
 		if(sue.apps.synced.sync.length<1){
@@ -46,7 +46,7 @@ sue.apps.synced={
 		for(var i=0;sue.apps.synced.sync.length>0&&i<sue.apps.synced.sync[0].sessions.length;i++){
 			var theobj=sue.apps.synced.sync[0].sessions[i].window.tabs;
 			for(var ii=0;ii<theobj.length;ii++){
-				var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_synced_li"]},theobj[ii].title,null,{setName:["id"],setValue:[theobj[ii].sessionId]});
+				var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_synced_li"]},null,null,{setName:["id"],setValue:[theobj[ii].sessionId]},theobj[ii].title);
 				_ul.appendChild(_li);
 				_li.removeEventListener("click",this,false);
 				_li.addEventListener("click",this,false);
@@ -77,7 +77,7 @@ sue.apps.synced={
 		for(var i=0;i<sue.apps.synced.sync[sessionId].sessions.length;i++){
 			var theobj=sue.apps.synced.sync[sessionId].sessions[i].window.tabs;
 			for(var ii=0;ii<theobj.length;ii++){
-				var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_synced_li"]},theobj[ii].title,null,{setName:["id"],setValue:[theobj[ii].sessionId]});
+				var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_synced_li"]},null,null,{setName:["id"],setValue:[theobj[ii].sessionId]},theobj[ii].title);
 				domUL.appendChild(domli);
 				domli.removeEventListener("click",this,false);
 				domli.addEventListener("click",this,false);

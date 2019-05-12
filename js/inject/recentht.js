@@ -28,7 +28,8 @@ sue.apps.recentht={
 
 		var _ul=sue.apps.domCreate("ul");
 		for(var i=0;i<this.ht.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentht_li"]},"<span class='li_0'>"+this.ht[i].title+"</span><span class='li_1'>"+this.ht[i].url+"</span>","",{setName:["id"],setValue:[i]},"");
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentht_li"]},null,null,{setName:["id"],setValue:[i]},this.ht[i].title);
+			_li.title=this.ht[i].url;
 			_ul.appendChild(_li);
 			_li.removeEventListener("click",this,false);
 			_li.addEventListener("click",this,false);

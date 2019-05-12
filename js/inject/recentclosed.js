@@ -28,7 +28,7 @@ sue.apps.recentclosed={
 		var _ul=sue.apps.domCreate("ul");
 		for(var i=0;i<this.tabs.length;i++){
 			var rctype=!this.tabs[i].window?this.tabs[i].tab:this.tabs[i].window;
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentclosed_li"]},(!this.tabs[i].window?this.tabs[i].tab.title:this.tabs[i].window.tabs.length+" "+sue.apps.i18n("app_recentclosed_tabs")),"",{setName:["id"],setValue:[rctype.sessionId]},"");
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentclosed_li"]},null,null,{setName:["id"],setValue:[rctype.sessionId]},(!this.tabs[i].window?this.tabs[i].tab.title:this.tabs[i].window.tabs.length+" "+sue.apps.i18n("app_recentclosed_tabs")));
 			var rc_title;
 
 			if(rctype.tabs){

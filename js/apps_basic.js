@@ -59,7 +59,7 @@ sue.apps={
 			domOptions=sue.apps.domCreate("div",{setName:["className"],setValue:["su_options"]});
 			for(var i=0;i<boxInfo.options.length;i++){
 				if(boxInfo.options[i].type=="select"){
-					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},sue.apps.i18n(boxInfo.options[i].name));
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
 					var _domSelect=sue.apps.domCreate("select");
 						_domSelect.name=boxInfo.options[i].name;
 					for(var ii=0;ii<boxInfo.options[i].value.length;ii++){
@@ -77,14 +77,14 @@ sue.apps={
 						_check.id=boxInfo.options[i].name+"_"+_time;
 						_check.type="checkbox";
 						_check.name=boxInfo.options[i].name;
-					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labeldes"]},sue.apps.i18n(boxInfo.options[i].name));
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labeldes"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
 						_label.htmlFor=boxInfo.options[i].name+"_"+_time;
 					domOptions.appendChild(_check);
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
 				if(boxInfo.options[i].type=="range"){
-					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},sue.apps.i18n(boxInfo.options[i].name));
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
 					var _domRange=sue.apps.domCreate("input");
 						_domRange.name=boxInfo.options[i].name;
 						_domRange.type="range";
@@ -104,7 +104,7 @@ sue.apps={
 						_domRadio.name=boxInfo.options[i].name;
 						_domRadio.type="radio";
 						_domRadio.id=boxInfo.options[i].name+"_"+_time;
-					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},sue.apps.i18n(boxInfo.options[i].name));
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
 					domOptions.appendChild(_domRadio);
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));

@@ -31,8 +31,8 @@ sue.apps[appName]={
 		_textOutput.type="text";
 
 		for(var i=2;i<33;i++){
-			var _optionFrom=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},i.toString()),
-				_optionTo=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},i.toString());
+			var _optionFrom=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},null,null,null,i.toString()),
+				_optionTo=sue.apps.domCreate("option",{setName:["value"],setValue:[i.toString()]},null,null,null,i.toString());
 			_selectFrom.appendChild(_optionFrom);
 			_selectTo.appendChild(_optionTo);
 		}

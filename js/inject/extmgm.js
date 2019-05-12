@@ -7,13 +7,7 @@ sue.apps.extmgm={
 		let appInfo={
 			appName:"extmgm",
 			headTitle:"extmgm",
-			headCloseBtn:true,
-			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
-			],
-			options:[
-				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}
-			]
+			headCloseBtn:true
 		}
 		sue.apps.init();
 		var dom=sue.apps.initBox(appInfo);
@@ -53,43 +47,23 @@ sue.apps.extmgm={
 	},
 	itemList:function(){
 		let dom=sue.apps.extmgm.dom.querySelector(".su_extmgm ul");
-		var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disableall"]},sue.apps.i18n("app_extmgm_disableall"));
+		var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disableall"]},null,null,null,sue.apps.i18n("app_extmgm_disableall"));
 			dom.appendChild(_li);
 			_li.addEventListener("click",this,false);
 		for(var i=0;i<sue.apps.extmgm.exts.ext_enabled.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_enabled"]},sue.apps.extmgm.exts.ext_enabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_enabled[i].id]});
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_enabled"]},null,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_enabled[i].id]},sue.apps.extmgm.exts.ext_enabled[i].name);
 			_li.addEventListener("click",this,false);
 			_li.addEventListener("mouseover",this,false);
 			_li.addEventListener("mouseout",this,false);
 			dom.appendChild(_li);
 		}
 		for(var i=0;i<sue.apps.extmgm.exts.ext_disabled.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disabled"]},sue.apps.extmgm.exts.ext_disabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_disabled[i].id]});
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disabled"]},null,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_disabled[i].id]},sue.apps.extmgm.exts.ext_disabled[i].name);
 			_li.addEventListener("click",this,false);
 			_li.addEventListener("mouseover",this,false);
 			_li.addEventListener("mouseout",this,false);
 			dom.appendChild(_li);
 		}	
-	},
-	list:function(dom){
-		var dom=dom.querySelector(".su_extmgm");
-		var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disableall"]},sue.apps.i18n("app_extmgm_disableall"));
-			dom.appendChild(domli);
-			domli.addEventListener("click",this,false);
-		for(var i=0;i<sue.apps.extmgm.exts.ext_enabled.length;i++){
-			var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_enabled"]},sue.apps.extmgm.exts.ext_enabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_enabled[i].id]});
-			domli.addEventListener("click",this,false);
-			domli.addEventListener("mouseover",this,false);
-			domli.addEventListener("mouseout",this,false);
-			dom.appendChild(domli);
-		}
-		for(var i=0;i<sue.apps.extmgm.exts.ext_disabled.length;i++){
-			var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disabled"]},sue.apps.extmgm.exts.ext_disabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_disabled[i].id]});
-			domli.addEventListener("click",this,false);
-			domli.addEventListener("mouseover",this,false);
-			domli.addEventListener("mouseout",this,false);
-			dom.appendChild(domli);
-		}
 	},
 	action:function(e){
 		var typeAction;

@@ -28,6 +28,10 @@ smartup.su_apps#su_apps_tablist li{
 	text-overflow: ellipsis;
 	cursor: pointer;
 	transition:all .4s ease-in-out;
+	background-repeat: no-repeat;
+	background-position: 6px 6px;
+    background-size: 16px;
+    text-indent: 22px;
 }
 smartup.su_apps#su_apps_tablist li img{
 	width: 16px;
@@ -36,7 +40,7 @@ smartup.su_apps#su_apps_tablist li img{
 }
 smartup.su_apps#su_apps_tablist li:hover{
 	box-shadow: 0px 1px 3px #ccc;
-	background: #d0d9ff;
+	background-color: #d0d9ff;
 	border-color: rgba(86,119,252,.5) !important;
 	overflow: hidden;
 	white-space: nowrap;
@@ -44,7 +48,8 @@ smartup.su_apps#su_apps_tablist li:hover{
 }
 smartup.su_apps#su_apps_tablist li:hover .su_tablist_button_liclose{
 	opacity: 1;
-	margin-top: 2px;
+	margin-top: 5px;
+	margin-right: -10px;
 }
 smartup.su_apps#su_apps_tablist .su_tablist_button_liclose{
 	position: absolute;
@@ -59,6 +64,7 @@ smartup.su_apps#su_apps_tablist .su_tablist_button_liclose{
 	color: rgb(255, 255, 255);
 	transition: all 0.4s ease-in-out;
 	margin-top: 10px;
+	text-indent: 0;
 }
 smartup.su_apps#su_apps_tablist .su_tablist_button_liclose:hover{
 	background: red;
@@ -66,5 +72,5 @@ smartup.su_apps#su_apps_tablist .su_tablist_button_liclose:hover{
 	color: #fff;
 }
 smartup.su_apps#su_apps_tablist .su_tablist_cur{
-	background: rgba(208, 217, 255, 0.5);
+	background-color: rgba(208, 217, 255, 0.5);
 }

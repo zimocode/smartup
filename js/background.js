@@ -3819,7 +3819,6 @@ var sub={
 		rss:{
 			getMessage:function(message,sender,sendResponse){
 				console.log(message);
-				sendResponse("data")
 				url=message.value;
 				fetch(url)
 					.then(response => response.text())
@@ -3855,7 +3854,7 @@ var sub={
 					})
 					.then(data=>{
 						console.log(data);
-						chrome.tabs.sendMessage(sender.tab.id,{type:"rssData",value:data,feedURL:message.url});
+						chrome.tabs.sendMessage(sender.tab.id,{type:"rssData",value:data,feedURL:url});
 					})
 					.catch(err=>console.log(err))
 			},

@@ -28,10 +28,11 @@ sue.apps.recentbk={
 
 		var _ul=sue.apps.domCreate("ul");
 		for(var i=0;i<this.bk.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentbk_li"]},"<span class='li_0'>"+this.bk[i].title+"</span><span class='li_1' title='"+this.bk[i].title+"''>"+this.bk[i].url+"</span>","",{setName:["id"],setValue:[i]},"");
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_recentbk_li"]},null,null,{setName:["id"],setValue:[i]},this.bk[i].title);
+			_li.title=this.bk[i].url;
 			_ul.appendChild(_li);
-			_li.querySelector(".li_1").removeEventListener("click",this,false);
-			_li.querySelector(".li_1").addEventListener("click",this,false);
+			_li.removeEventListener("click",this,false);
+			_li.addEventListener("click",this,false);
 		}
 		theAppBox.appendChild(_ul);
 	},

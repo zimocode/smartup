@@ -24,12 +24,20 @@ sue.apps.tablist={
 		var domUL=sue.apps.domCreate("ul");
 		for(var i=0;i<this.list.length;i++){
 			var inner="<img src='"+this.list[i].favIconUrl+"'>"+this.list[i].title+"<span class='su_tablist_button_liclose'>x</span>"
-			var list_li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_tablist_li"]},inner,"",{setName:["id"],setValue:[i]},"");
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_tablist_li"]},null,null,{setName:["id"],setValue:[i]},this.list[i].title),
+				_img=sue.apps.domCreate("img"),
+				_span=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tablist_button_liclose"]},null,null,null,"x");
+			_li.style.cssText+="background-image:url("+this.list[i].favIconUrl+");";
+			//_li.style.backgroundImage=this.list[i].favIconUrl;
+			_img.src=this.list[i].favIconUrl;
+			//_li.appendChild(_img);
+			_li.appendChild(_span);
+
 			if(sue.apps.tablist.list[i].id==sue.apps.tablist.curtab.id){
-				list_li.classList.add("su_tablist_cur");
+				_li.classList.add("su_tablist_cur");
 			}
-			list_li.addEventListener("click",this,false);
-			domUL.appendChild(list_li);
+			_li.addEventListener("click",this,false);
+			domUL.appendChild(_li);
 		}
 		theAppBox.appendChild(domUL);
 	},

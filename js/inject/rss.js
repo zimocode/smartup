@@ -169,6 +169,7 @@ sue.apps.rss={
 		chrome.storage.local.get(function(items){
 			var feed=sue.apps.rss.config.feed;
 			var feedtitle=items.localConfig.apps.rss.feedtitle;
+			console.log(feedtitle)
 			for(var i=0;i<feed.length;i++){
 				var domli=sue.apps.domCreate("li",{setName:["className","title"],setValue:["sub_item",feed[i]]},null,null,{setName:["url","id"],setValue:[feed[i],i]},feedtitle[i]?feedtitle[i]:feed[i]);
 				var domdel=sue.apps.domCreate("span",{setName:["className"],setValue:["sub_itemdel"]},null,null,null,"x");
@@ -178,8 +179,8 @@ sue.apps.rss={
 		})
 	},
 	rss:function(dom,url){
-		chrome.runtime.sendMessage({type:"appsAction",app:"rss",action:"getMessage",value:url},function(data){
-			console.log(data);
+		chrome.runtime.sendMessage({type:"appsAction",app:"rss",action:"getMessage",value:url},function(s){
+			console.log(s);
 		})
 	},
 	itemOpen:function(e){
@@ -189,6 +190,7 @@ sue.apps.rss={
 		}
 	},
 	itemList:function(message,sender,sendResponse){
+		console.log(message)
 		let data=message.value,
 			feedURL=message.feedURL;
 		//update rsstitle;
@@ -196,12 +198,12 @@ sue.apps.rss={
 			for(var i=0;i<sue.apps.rss.config.feed.length;i++){
 				if(sue.apps.rss.config.feed[i]==feedURL){
 					items.localConfig.apps.rss.feedtitle[i]=data.title;
-					break;
+					//break;
 				}
 			}
 			chrome.storage.local.set(items);
-			//sue.apps.rss.menu(sue.apps.rss.dom)
 		})
+		sue.apps.rss.menu(sue.apps.rss.dom);
 
 		//rss head
 		let rssheaddom=sue.apps.rss.dom.querySelector(".su_main .rss_head");
