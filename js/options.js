@@ -756,7 +756,7 @@ var suo={
 			for(var ii=0;ii<ui[uitype[i]].length;ii++){
 				var _conf=config[type].ui[uitype[i]];
 				dompart.appendChild(suo.domUi(ui[uitype[i]][ii],_conf));
-				dompart.appendChild(suo.domCreate2("br"));
+				//dompart.appendChild(suo.domCreate2("br"));
 			}
 			dom.appendChild(dompart)
 		}
