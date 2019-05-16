@@ -854,7 +854,7 @@ var appConfmodel={
 	appslist:{n_closebox:true},
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
-	jslist:{n_closebox:true,n_jq:false}
+	jslist:{n_closebox:true}
 }
 
 var sub={
@@ -2079,16 +2079,8 @@ var sub={
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		script:function(){
-			var _script=sub.getConfValue("selects","n_script"),
-				_jq=sub.getConfValue("checks","n_jq");
-			if(_jq){
-				chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){
-					chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-				})
-			}else{
-				//inject();
-				chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-			}
+			var _script=sub.getConfValue("selects","n_script");
+			chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
 		},
 		source:function(){
 			var theTarget=sub.getConfValue("selects","n_optype"),
@@ -2595,15 +2587,7 @@ var sub={
 					chrome.tabs.saveAsPDF(message.value);
 					break;
 				case"jslist":
-					var	_jq=config.apps.jslist.n_jq;
-					if(_jq){
-						chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){
-							chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-						})
-					}else{
-						//inject();
-						chrome.tabs.executeScript({code:config.general.script.script[message.id].content,runAt:"document_start"},function(){})
-					}
+					chrome.tabs.executeScript({code:config.general.script.script[message.id].content,runAt:"document_start"},function(){})
 					break;
 				case"speaker":
 					switch(message.value.type){
@@ -3657,10 +3641,9 @@ var sub={
 						return;
 					}
 					if(message.apptype=="base64"){
-						chrome.tabs.executeScript({file:"js/base64.min.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="qr"){
-						chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){})
-						chrome.tabs.executeScript({file:"js/jquery.qrcode.min.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});

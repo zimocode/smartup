@@ -4,6 +4,86 @@ sue.apps.savepdf={
 		boxmove:{}
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"savepdf",
+			headTitle:"savepdf",
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/info.svg",title:"",className:"menu_item menu_item_help"}
+			]
+		}
+		sue.apps.init();
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
+		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["savepdfbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _btnBox=sue.apps.domCreate("div",{setName:["className"],setValue:["btnbox"]}),
+			_btn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_savepdf_btn"]},null,null,null,"Generate PDF");
+		_btnBox.appendChild(_btn);
+		theAppBox.appendChild(_btnBox);
+
+		let _spanOri=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"orientation")),
+			_selectOri=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_orientation"]});
+		let _optionOri_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"portrait")),
+			_optionOri_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"landscape"))
+		_selectOri.appendChild(_optionOri_0);
+		_selectOri.appendChild(_optionOri_1);
+		theAppBox.appendChild(_spanOri);
+		theAppBox.appendChild(_selectOri);
+		theAppBox.appendChild(sue.apps.domCreate("br"));
+
+		let _spanPap=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"paperSizeUnit")),
+			_selectPap=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_orientation"]});
+		let _optionPap_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"inches")),
+			_optionPap_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"millimeters"))
+		_selectPap.appendChild(_optionPap_0);
+		_selectPap.appendChild(_optionPap_1);
+		theAppBox.appendChild(_spanPap);
+		theAppBox.appendChild(_selectPap);
+		theAppBox.appendChild(sue.apps.domCreate("br"));
+
+		let _arrayCheck=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
+		for(var i=0;i<_arrayCheck.length;i++){
+			var _check=sue.apps.domCreate("input",{setName:["className","id","type","checked"],setValue:["pdfele su_savepdf_text","savepdf_"+_arrayCheck[i],"checkbox","true"]});
+			var	_label=sue.apps.domCreate("label",{setName:["className","for"],setValue:["su_savepdf_label","savepdf_"+_arrayCheck[i]]},null,null,null,sue.apps.i18n("savepdf_"+_arrayCheck[i]));
+
+			console.log("s")
+			theAppBox.appendChild(_check);
+			theAppBox.appendChild(_label);
+			theAppBox.appendChild(sue.apps.domCreate("br"));
+		}
+
+			// _textEle=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
+			// for(i=0;i<_textEle.length;i++){
+			// 	console.log(pdfData[_textEle[i]])
+			// 	_text+='</br><input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="checkbox"'+(pdfData[_textEle[i]]?" checked":"")+'>'+'<label for="savepdf_'+_textEle[i]+'" class="su_savepdf_label">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</label>'
+			// }
+
+			// _text+="</br>";
+
+			// _textEle=["footerCenter","footerLeft","footerRight","headerCenter","headerLeft","headerRight"];
+			// for(i=0;i<_textEle.length;i++){
+			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_string")+'" value="'+pdfData[_textEle[i]]+'" data-type="string">'
+			// }
+
+			// _textEle=["marginBottom","marginLeft","marginRight","marginTop","paperHeight","paperWidth","scaling"];
+			// for(i=0;i<_textEle.length;i++){
+			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_number")+'" value="'+pdfData[_textEle[i]]+'" data-type="number">'
+			// }
+
+			// dom.querySelector(".su_main .savepdfbox").innerHTML=_text;
+			// let domSelects=dom.querySelectorAll("select");
+			// for(i=0;i<domSelects.length;i++){
+			// 	domSelects[i].selectedIndex=pdfData[domSelects[i].name.substr(8)];
+			// }
+
+
+		return;
 		sue.apps.init();
 		var _appname="savepdf";
 		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
@@ -90,33 +170,6 @@ sue.apps.savepdf={
 				data=items.localConfig.apps.savepdf;
 			}
 			sue.apps.savepdf.initValue(data);
-			// let _text="",i=0,_textEle=[];
-			// _text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+"orientation")+'</span>'+'<select class="pdfele" name="savepdf_'+'orientation'+'"><option value="0">'+sue.apps.i18n("savepdf_"+"portrait")+'</option><option value="1">'+sue.apps.i18n("savepdf_"+"landscape")+'</option></select>'+'</br><span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+"paperSizeUnit")+'</span>'+'<select class="pdfele" name="savepdf_'+'paperSizeUnit'+'"><option value="0">'+sue.apps.i18n("savepdf_"+"inches")+'</option><option value="1">'+sue.apps.i18n("savepdf_"+"millimeters")+'</option></select>';
-
-			// _textEle=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	console.log(pdfData[_textEle[i]])
-			// 	_text+='</br><input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="checkbox"'+(pdfData[_textEle[i]]?" checked":"")+'>'+'<label for="savepdf_'+_textEle[i]+'" class="su_savepdf_label">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</label>'
-			// }
-
-			// _text+="</br>";
-
-			// _textEle=["footerCenter","footerLeft","footerRight","headerCenter","headerLeft","headerRight"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_string")+'" value="'+pdfData[_textEle[i]]+'" data-type="string">'
-			// }
-
-			// _textEle=["marginBottom","marginLeft","marginRight","marginTop","paperHeight","paperWidth","scaling"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_number")+'" value="'+pdfData[_textEle[i]]+'" data-type="number">'
-			// }
-			
-
-			// dom.querySelector(".su_main .savepdfbox").innerHTML=_text;
-			// let domSelects=dom.querySelectorAll("select");
-			// for(i=0;i<domSelects.length;i++){
-			// 	domSelects[i].selectedIndex=pdfData[domSelects[i].name.substr(8)];
-			// }
 			dom.addEventListener("click",sue.apps.savepdf.handleEvent,false);
 			sue.apps.initPos(dom);
 		})

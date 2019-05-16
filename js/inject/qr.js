@@ -82,8 +82,8 @@ sue.apps.qr={
 		_inputBox.appendChild(_btn);
 
 		let _copyright=sue.apps.domCreate("div",{setName:["className"],setValue:["su_copyright"]},null,null,null,"Based on "),
-			_link=sue.apps.domCreate("a",null,null,null,null,"jquery-qrcode@Github");
-		_link.href="https://github.com/jeromeetienne/jquery-qrcode";
+			_link=sue.apps.domCreate("a",null,null,null,null,"qrcodejs@Github");
+		_link.href="https://github.com/davidshimjs/qrcodejs";
 		_link.target="_blank";
 		_copyright.appendChild(_link);
 		_inputBox.appendChild(_copyright);
@@ -145,7 +145,8 @@ sue.apps.qr={
 				if(e.target.classList.contains("qr_btn_done")){
 					sue.apps.qr.showPanel(e);
 					sue.apps.getAPPboxEle(e).querySelector(".qr_output").textContent="";
-					jQuery('.qr_output').qrcode(toUtf8(objinput.value));
+					//jQuery('.qr_output').qrcode(toUtf8(objinput.value));
+					new QRCode(sue.apps.getAPPboxEle(e).querySelector(".qr_output"),objinput.value);
 				}else if(e.target.classList.contains("qr_btn_back")){
 					sue.apps.qr.showPanel(e);
 				}

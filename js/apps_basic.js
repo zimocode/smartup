@@ -229,7 +229,14 @@ sue.apps={
 		var dom=document.createElement(edom);
 		if(eele){
 			for (var i = 0;i<eele.setName.length; i++) {
-				dom[eele.setName[i]]=eele.setValue[i];
+				if(eele.setName[i]=="for"){
+				//if(["for","checked"].contains(eele.setName[i])){
+					dom.setAttribute(eele.setName[i],eele.setValue[i]);
+				}else if(eele.setName[i]=="checked"){
+					eele.setValue[i]?dom.setAttribute(eele.setName[i],"checked"):null;
+				}else{
+					dom[eele.setName[i]]=eele.setValue[i];
+				}
 			}
 		}
 		if(einner){}

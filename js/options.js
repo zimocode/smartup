@@ -2549,6 +2549,8 @@ var suo={
 					let xhr = new XMLHttpRequest(),
 						localType=navigator.language,
 						_url="https://push.zimoapps.com/smartup/message.json";
+					// localType="zh-CN";
+					// _url="../message.json";
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
 							let items=JSON.parse(xhr.response);
