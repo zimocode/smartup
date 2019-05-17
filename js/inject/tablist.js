@@ -54,7 +54,7 @@ sue.apps.tablist={
 				}
 				if(e.target.classList.contains("su_tablist_li")||(e.target.parentNode.classList.contains("su_tablist_li")&&!e.target.classList.contains("su_tablist_button_liclose"))){
 					var theDom=e.target.classList.contains("su_tablist_li")?e.target:e.target.parentNode;
-					chrome.runtime.sendMessage({type:"apps_action",apptype:"tablist",id:sue.apps.tablist.list[theDom.dataset.id].id,type_action:"list_switch"},function(response){})
+					chrome.runtime.sendMessage({type:"appsAction",app:"tablist",action:"tabSwitch",value:sue.apps.tablist.list[theDom.dataset.id].id})
 					if(sue.apps.tablist.config.n_closebox){
 						sue.apps.boxClose(e);
 					}

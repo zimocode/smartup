@@ -73,7 +73,7 @@ sue.apps.extmgm={
 			typeAction=e.target.classList.contains("su_extmgm_enabled")?"disable":"enable";
 		} 
 		var objul=e.target.parentNode;
-		chrome.runtime.sendMessage({type:"apps_action",apptype:"extmgm",type_action:typeAction,id:e.target.dataset.id},function(response){
+		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"action",value:{actionType:typeAction,id:e.target.dataset.id}},function(response){
 			if(response.actionDone){
 				if(typeAction=="disable"){
 					e.target.className="su_extmgm_li su_extmgm_disabled";

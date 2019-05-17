@@ -3,6 +3,26 @@ sue.apps.savepdf={
 	cons:{
 		boxmove:{}
 	},
+	defaultConf:{
+		footerCenter:"",
+		footerLeft:"&PT",
+		footerRight:"&D",
+		headerCenter:"",
+		headerLeft:"&T",
+		headerRight:"&U",
+		marginBottom:0.5,
+		marginLeft:0.5,
+		marginRight:0.5,
+		marginTop:0.5,
+		orientation:0,
+		paperHeight:11.0,
+		paperSizeUnit:0,
+		paperWidth:8.5,
+		scaling:1,
+		showBackgroundColors:false,
+		showBackgroundImages:false,
+		shrinkToFit:true
+	},
 	initUI:function(){
 		let appInfo={
 			appName:"savepdf",
@@ -22,142 +42,20 @@ sue.apps.savepdf={
 		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["savepdfbox"]});
 		dom.querySelector(".su_main").appendChild(theAppBox);
 
-		let _btnBox=sue.apps.domCreate("div",{setName:["className"],setValue:["btnbox"]}),
-			_btn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_savepdf_btn"]},null,null,null,"Generate PDF");
-		_btnBox.appendChild(_btn);
-		theAppBox.appendChild(_btnBox);
+		let _optBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_options"]}),
+			_optDes=sue.apps.domCreate("div",null,null,null,null,sue.apps.i18n("savepdf_resetDes")),
+			_optBtnBox=sue.apps.domCreate("div",{setName:["className"],setValue:["options_btnbox"]}),
+			_optBtn=sue.apps.domCreate("button",{setName:["className"],setValue:["options_btn_reset"]},null,null,null,sue.apps.i18n("btn_reset"));
+		_optBtnBox.appendChild(_optBtn);
+		_optBox.appendChild(_optDes);
+		_optBox.appendChild(_optBtnBox);
+		dom.appendChild(_optBox);
 
-		let _spanOri=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"orientation")),
-			_selectOri=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_orientation"]});
-		let _optionOri_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"portrait")),
-			_optionOri_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"landscape"))
-		_selectOri.appendChild(_optionOri_0);
-		_selectOri.appendChild(_optionOri_1);
-		theAppBox.appendChild(_spanOri);
-		theAppBox.appendChild(_selectOri);
-		theAppBox.appendChild(sue.apps.domCreate("br"));
+		let _infoBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_options_help"]}),
+			_info=sue.apps.domCreate("div",null,null,null,null,sue.apps.i18n("savepdf_info"));
+		_infoBox.appendChild(_info);
+		dom.appendChild(_infoBox);
 
-		let _spanPap=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"paperSizeUnit")),
-			_selectPap=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_orientation"]});
-		let _optionPap_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"inches")),
-			_optionPap_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"millimeters"))
-		_selectPap.appendChild(_optionPap_0);
-		_selectPap.appendChild(_optionPap_1);
-		theAppBox.appendChild(_spanPap);
-		theAppBox.appendChild(_selectPap);
-		theAppBox.appendChild(sue.apps.domCreate("br"));
-
-		let _arrayCheck=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
-		for(var i=0;i<_arrayCheck.length;i++){
-			var _check=sue.apps.domCreate("input",{setName:["className","id","type","checked"],setValue:["pdfele su_savepdf_text","savepdf_"+_arrayCheck[i],"checkbox","true"]});
-			var	_label=sue.apps.domCreate("label",{setName:["className","for"],setValue:["su_savepdf_label","savepdf_"+_arrayCheck[i]]},null,null,null,sue.apps.i18n("savepdf_"+_arrayCheck[i]));
-
-			console.log("s")
-			theAppBox.appendChild(_check);
-			theAppBox.appendChild(_label);
-			theAppBox.appendChild(sue.apps.domCreate("br"));
-		}
-
-			// _textEle=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	console.log(pdfData[_textEle[i]])
-			// 	_text+='</br><input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="checkbox"'+(pdfData[_textEle[i]]?" checked":"")+'>'+'<label for="savepdf_'+_textEle[i]+'" class="su_savepdf_label">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</label>'
-			// }
-
-			// _text+="</br>";
-
-			// _textEle=["footerCenter","footerLeft","footerRight","headerCenter","headerLeft","headerRight"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_string")+'" value="'+pdfData[_textEle[i]]+'" data-type="string">'
-			// }
-
-			// _textEle=["marginBottom","marginLeft","marginRight","marginTop","paperHeight","paperWidth","scaling"];
-			// for(i=0;i<_textEle.length;i++){
-			// 	_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_number")+'" value="'+pdfData[_textEle[i]]+'" data-type="number">'
-			// }
-
-			// dom.querySelector(".su_main .savepdfbox").innerHTML=_text;
-			// let domSelects=dom.querySelectorAll("select");
-			// for(i=0;i<domSelects.length;i++){
-			// 	domSelects[i].selectedIndex=pdfData[domSelects[i].name.substr(8)];
-			// }
-
-
-		return;
-		sue.apps.init();
-		var _appname="savepdf";
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("savepdf")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="savepdfbox"></div>'
-			+'</div>'
-			+'<div class="su_menu">'
-				+'<img class="menu_item menu_item_opt" src="'+chrome.runtime.getURL("/image/options.png")+'" /><br />'
-				+'<img class="menu_item menu_item_help" src="'+chrome.runtime.getURL("/image/info.svg")+'" /><br />'
-			+'</div>'
-			+'<div class="su_options">'
-				+'<div>'+'There are many options, if the PDF does not generate, you may try to reset all the options by click the button below.'+'</div>'
-				+'<div class="options_btnbox">'
-					+'<input class="options_btn_reset" type="button" value="'+sue.apps.i18n("btn_reset")+'">'
-				+'</div>'
-			+'</div>'
-			+'<div class="su_options_help">'
-				+'<div>'+sue.apps.i18n("savepdf_info")+'</div>'
-			+'</div>';
-		sue.apps.savepdf.defaultConf={
-			footerCenter:"",
-			footerLeft:"&PT",
-			footerRight:"&D",
-			headerCenter:"",
-			headerLeft:"&T",
-			headerRight:"&U",
-			marginBottom:0.5,
-			marginLeft:0.5,
-			marginRight:0.5,
-			marginTop:0.5,
-			orientation:0,
-			paperHeight:11.0,
-			paperSizeUnit:0,
-			paperWidth:8.5,
-			scaling:1,
-			showBackgroundColors:false,
-			showBackgroundImages:false,
-			shrinkToFit:true
-		}
-		sue.apps.savepdf.initValue=function(pdfData){
-			dom.querySelector(".su_main .savepdfbox").innerHTML="";
-			let _text="",i=0,_textEle=[];
-			_text+='<div class="btnbox"><button class="su_savepdf_btn">Generate PDF</button></div>'
-			_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+"orientation")+'</span>'+'<select class="pdfele" name="savepdf_'+'orientation'+'"><option value="0">'+sue.apps.i18n("savepdf_"+"portrait")+'</option><option value="1">'+sue.apps.i18n("savepdf_"+"landscape")+'</option></select>'+'</br><span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+"paperSizeUnit")+'</span>'+'<select class="pdfele" name="savepdf_'+'paperSizeUnit'+'"><option value="0">'+sue.apps.i18n("savepdf_"+"inches")+'</option><option value="1">'+sue.apps.i18n("savepdf_"+"millimeters")+'</option></select>';
-
-			_textEle=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
-			for(i=0;i<_textEle.length;i++){
-				console.log(pdfData[_textEle[i]])
-				_text+='</br><input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="checkbox"'+(pdfData[_textEle[i]]?" checked":"")+'>'+'<label for="savepdf_'+_textEle[i]+'" class="su_savepdf_label">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</label>'
-			}
-
-			_text+="</br>";
-
-			_textEle=["footerCenter","footerLeft","footerRight","headerCenter","headerLeft","headerRight"];
-			for(i=0;i<_textEle.length;i++){
-				_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_string")+'" value="'+pdfData[_textEle[i]]+'" data-type="string">'
-			}
-
-			_textEle=["marginBottom","marginLeft","marginRight","marginTop","paperHeight","paperWidth","scaling"];
-			for(i=0;i<_textEle.length;i++){
-				_text+='<span class="su_savepdf_span">'+sue.apps.i18n("savepdf_"+_textEle[i])+'</span>'+'<input id="savepdf_'+_textEle[i]+'" class="pdfele su_savepdf_text" type="text" placeholder="'+sue.apps.i18n("place_number")+'" value="'+pdfData[_textEle[i]]+'" data-type="number">'
-			}
-
-			dom.querySelector(".su_main .savepdfbox").innerHTML=_text;
-			let domSelects=dom.querySelectorAll("select");
-			for(i=0;i<domSelects.length;i++){
-				domSelects[i].selectedIndex=pdfData[domSelects[i].name.substr(8)];
-			}
-		}
 		chrome.storage.local.get(function(items){
 			var data;
 			!items.localConfig?(items.localConfig={},items.localConfig.apps={}):null;
@@ -169,10 +67,69 @@ sue.apps.savepdf={
 			}else{
 				data=items.localConfig.apps.savepdf;
 			}
-			sue.apps.savepdf.initValue(data);
+			//sue.apps.savepdf.initValue(data);
+			sue.apps.savepdf.initOptions(data);
 			dom.addEventListener("click",sue.apps.savepdf.handleEvent,false);
 			sue.apps.initPos(dom);
 		})
+	},
+	initOptions:function(pdfConf){
+		let theAppBox=sue.apps.savepdf.dom.querySelector(".savepdfbox");
+		theAppBox.textContent="";
+
+		let _btnBox=sue.apps.domCreate("div",{setName:["className"],setValue:["btnbox"]}),
+			_btn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_savepdf_btn"]},null,null,null,"Generate PDF");
+		_btnBox.appendChild(_btn);
+		theAppBox.appendChild(_btnBox);
+
+		let _spanOri=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"orientation")),
+			_selectOri=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_orientation"]});
+		let _optionOri_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"portrait")),
+			_optionOri_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"landscape"))
+		_selectOri.appendChild(_optionOri_0);
+		_selectOri.appendChild(_optionOri_1);
+		_selectOri.selectedIndex=pdfConf.orientation;
+		theAppBox.appendChild(_spanOri);
+		theAppBox.appendChild(_selectOri);
+		theAppBox.appendChild(sue.apps.domCreate("br"));
+
+		let _spanPap=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+"paperSizeUnit")),
+			_selectPap=sue.apps.domCreate("select",{setName:["className","name"],setValue:["pdfele","savepdf_paperSizeUnit"]});
+		let _optionPap_0=sue.apps.domCreate("option",{setName:["value"],setValue:["0"]},null,null,null,sue.apps.i18n("savepdf_"+"inches")),
+			_optionPap_1=sue.apps.domCreate("option",{setName:["value"],setValue:["1"]},null,null,null,sue.apps.i18n("savepdf_"+"millimeters"))
+		_selectPap.appendChild(_optionPap_0);
+		_selectPap.appendChild(_optionPap_1);
+		_selectPap.selectedIndex=pdfConf.paperSizeUnit;
+		theAppBox.appendChild(_spanPap);
+		theAppBox.appendChild(_selectPap);
+		theAppBox.appendChild(sue.apps.domCreate("br"));
+
+		let _arrayCheck=["showBackgroundColors","showBackgroundImages","shrinkToFit"];
+		for(var i=0;i<_arrayCheck.length;i++){
+			var _check=sue.apps.domCreate("input",{setName:["className","id","type","checked"],setValue:["pdfele su_savepdf_text","savepdf_"+_arrayCheck[i],"checkbox",(pdfConf[_arrayCheck[i]]?" checked":"")]});
+			var	_label=sue.apps.domCreate("label",{setName:["className","for"],setValue:["su_savepdf_label","savepdf_"+_arrayCheck[i]]},null,null,null,sue.apps.i18n("savepdf_"+_arrayCheck[i]));
+			theAppBox.appendChild(_check);
+			theAppBox.appendChild(_label);
+			theAppBox.appendChild(sue.apps.domCreate("br"));
+		}
+
+		let _arrayText=["footerCenter","footerLeft","footerRight","headerCenter","headerLeft","headerRight"];
+		for(var i=0;i<_arrayText.length;i++){
+			var _spanText=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+_arrayText[i]));
+			var _text=sue.apps.domCreate("input",{setName:["className","id","type","placeholder","value"],setValue:["pdfele su_savepdf_text","savepdf_"+_arrayText[i],"text",sue.apps.i18n("place_string"),pdfConf[_arrayText[i]]]},null,null,{setName:["type"],setValue:["string"]});
+			theAppBox.appendChild(_spanText);
+			theAppBox.appendChild(_text);
+			theAppBox.appendChild(sue.apps.domCreate("br"));
+		}
+
+		let _arrayText_Num=["marginBottom","marginLeft","marginRight","marginTop","paperHeight","paperWidth","scaling"];
+		for(var i=0;i<_arrayText_Num.length;i++){
+			var _spanText=sue.apps.domCreate("span",{setName:["className"],setValue:["su_savepdf_span"]},null,null,null,sue.apps.i18n("savepdf_"+_arrayText_Num[i]));
+			var _text=sue.apps.domCreate("input",{setName:["className","id","type","placeholder","value"],setValue:["pdfele su_savepdf_text","savepdf_"+_arrayText_Num[i],"text",sue.apps.i18n("place_number"),pdfConf[_arrayText_Num[i]]/**/]},null,null,{setName:["type"],setValue:["number"]});
+			theAppBox.appendChild(_spanText);
+			theAppBox.appendChild(_text);
+			theAppBox.appendChild(sue.apps.domCreate("br"));
+		}
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -197,7 +154,7 @@ sue.apps.savepdf={
 		}
 	},
 	reset:function(e){
-		sue.apps.savepdf.initValue(sue.apps.savepdf.defaultConf);
+		sue.apps.savepdf.initOptions(sue.apps.savepdf.defaultConf);
 		sue.apps.showOpt(e)
 	},
 	pdf:function(e){
@@ -216,15 +173,13 @@ sue.apps.savepdf={
 				}
 			}
 		}
-		console.log(pdfData);
 		chrome.storage.local.get(function(items){
 			items.localConfig.apps.savepdf={};
 			items.localConfig.apps.savepdf=pdfData;
 			chrome.storage.local.set(items);
 		})
 		sue.apps.boxClose(e);
-		chrome.runtime.sendMessage({type:"apps_action",apptype:"savepdf",value:pdfData},function(response){
-		})
+		chrome.runtime.sendMessage({type:"appsAction",app:"savepdf",action:"savePDF",value:pdfData});
 	},
 	randnum:function(e){
 		var domsavepdf=sue.apps.getAPPboxEle(e);

@@ -2432,7 +2432,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","savepdf"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -2523,116 +2523,6 @@ var sub={
 			config.apps[message.apptype]=message.config;
 			sub.saveConf();
 			(!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
-		},
-		apps_action:function(message,sendResponse){
-			//console.log(message)	
-			switch(message.apptype){
-				case"rss":
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_optype;
-						theIndex=sub.getIndex(appsconf.n_position,"new")[0],
-						//theIndex=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
-						thePin=appsconf.n_pin;//=="s_unpin"?false:true;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-				case"recentbk":
-				case"recentht":
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_optype,
-						theIndex=sub.getIndex(appsconf.n_position,"new")[0],
-						thePin=appsconf.n_pin;//=="s_unpin"?false:true;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_target;
-						theIndex=sub.targetTab2.index2(appsconf.n_index_new,"n_index_new")[0],
-						thePin=appsconf.n_pin=="s_unpin"?false:true,
-						theClose=false;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-				case"tablist":
-					if(message.type_action=="list_switch"){
-						message.id?chrome.tabs.update(Number(message.id),{active:true}):null;
-					}else{
-						message.id?chrome.tabs.remove(Number(message.id)):null;
-					}
-					break;
-				case"extmgm":
-					switch(message.type_action){
-						case"enable":
-						case"disable":
-							chrome.management.setEnabled(message.id,message.type_action=="enable"?true:false,function(){})
-							sendResponse({type:"apps_action",actionDone:true});
-							break;
-						case"disableall":
-							for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
-								console.log(sub.cons.extmgm.ext_enabled[i].id)
-								chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
-							}
-							sendResponse({type:"apps_action",actionDone:true});
-							break;
-					}
-					break;
-				case"recentclosed":
-				case"synced":
-					chrome.sessions.restore(message.id);
-					break;
-				case"appslist":
-					sub.action[message.id](true);
-					break;
-				case"savepdf":
-					chrome.tabs.saveAsPDF(message.value);
-					break;
-				case"jslist":
-					chrome.tabs.executeScript({code:config.general.script.script[message.id].content,runAt:"document_start"},function(){})
-					break;
-				case"speaker":
-					switch(message.value.type){
-						case"play":
-							if(!message.value.txt){return;}
-							var _conf=config.apps[message.apptype];
-							var _text=message.value.txt;
-							var _voice={};
-							chrome.tts.getVoices(function(voices){
-								for(var i=0;i<voices.length;i++){
-									if(voices.voiceName==_conf.voicename){
-										if(voices[i].gender){_voice.gender=_conf.n_gender.substr(2);}
-										_voice.voiceName=voices[i].n_voicename;
-										_voice.rate=_conf.n_rate;
-										_voice.pitch=_conf.n_pitch;
-										_voice.volume=_conf.n_volume;
-										break;
-									}
-								}
-								chrome.tts.speak(_text,_voice);
-							})
-
-							return;
-							var _conf=config.apps[message.apptype];
-							var text=message.value.txt,
-								voicename=_conf.n_voicename,
-								gender=_conf.n_gender.substr(2),
-								rate=_conf.n_rate,
-								pitch=_conf.n_pitch,
-								volume=_conf.n_volume;
-							console.log(text+voicename+gender+rate);
-							chrome.tts.speak(text,{voiceName:voicename,gender:gender,rate:rate,pitch:pitch,volume:volume})
-							break;
-						case"pause":
-							chrome.tts.pause()
-							break;
-						case"resume":
-							chrome.tts.resume()
-							break;
-						case"stop":
-							chrome.tts.stop()
-							break;
-					}
-					break;
-			}
 		}
 	},
 	open:function(url,target,position,pin,flag){
@@ -3628,9 +3518,6 @@ var sub={
 			case"per_getconf":
 				sendResponse(sub.cons.permissions);
 				break;
-			case"apps_action":
-				sub.action.apps_action(message,sendResponse);
-				break;
 			case"apps_saveconf":
 				sub.action.apps_saveconf(message,sendResponse);
 				break;
@@ -3927,6 +3814,28 @@ var sub={
 							chrome.tts.stop()
 							break;
 					}
+			}
+		},
+		savepdf:{
+			savePDF:function(message){
+				console.log("s")
+				chrome.tabs.saveAsPDF(message.value);
+			}
+		},
+		extmgm:{
+			action:function(message,sender,sendResponse){
+				switch(message.value.actionType){
+					case"enable":
+					case"disable":
+						chrome.management.setEnabled(message.value.id,message.value.actionType=="enable"?true:false,function(){});
+						break;
+					case"disableall":
+						for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
+							chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
+						}
+						break;
+				}
+				sendResponse({type:"extmgm",actionDone:true});
 			}
 		}
 	}

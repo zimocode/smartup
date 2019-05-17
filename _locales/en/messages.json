@@ -1355,7 +1355,7 @@
   "review":{
     "message":"Review"
   },
-
+  "savepdf_resetDes":{"message":"There are many options, if the PDF does not generated, you may try to reset all the options by click the button below."},
   "savepdf_footerCenter":{"message":"The text for the page's center footer"},
   "savepdf_footerLeft":{"message":"The text for the page's left footer"},
   "savepdf_footerRight":{"message":"The text for the page's right footer"},
@@ -1379,7 +1379,7 @@
   "savepdf_inches":{"message":"inches"},
   "savepdf_millimeters":{"message":"millimeters"},
   "savepdf_info":{
-    "message":"For setting headers and footers, you can include certain special characters in the strings you supply. These will be replaced in the rendered output as follows:<ul><li>\"&P\": the page number, like \"2\"</li><li>\"&PT\": the page number and the total number of pages, like \"2 of 3\"</li><li>\"&D\": the current date/time</li><li>\"&T\": the page title</li><li>\"&U\": the page URL</li></ul></br>For more information: <a href='https:\/\/developer.mozilla.org/Add-ons/WebExtensions/API/tabs/PageSettings' target='_blank'>tabs.PageSettings - Mozilla | MDN</a>"
+    "message":"For setting headers and footers, you can include certain special characters in the strings you supply. These will be replaced in the rendered output as follows:\n\"&P\": the page number, like \"2\"\n\"&PT\": the page number and the total number of pages, like \"2 of 3\"\n\"&D\": the current date/time\n\"&T\": the page title\n\"&U\": the page URL\nFor more information: https:\/\/developer.mozilla.org/Add-ons/WebExtensions/API/tabs/PageSettings"
   },
   "place_string":{"message":"Enter Strings"},
   "place_number":{"message":"Enter Number"},
