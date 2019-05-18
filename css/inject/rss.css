@@ -40,6 +40,9 @@ smartup.su_apps#su_apps_rss .rss_box{
 	text-align: left;
 	padding: 8px;
 }
+smartup.su_apps#su_apps_rss .rss_box ul{
+	width: 475px;
+}
 smartup.su_apps#su_apps_rss .rss_box li{
 	box-sizing: border-box;
 	height: 32px;

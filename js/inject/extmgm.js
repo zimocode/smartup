@@ -4,22 +4,23 @@ sue.apps.extmgm={
 		boxmove:{}
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"extmgm",
+			headTitle:"extmgm",
+			headCloseBtn:true
+		}
 		sue.apps.init();
-		var _appname="extmgm";
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("extmgm")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="su_extmgm"></div>'
-			+'</div>';
-		var domUL=sue.apps.domCreate("ul");
-		//dom.querySelector(".su_content").style.cssText+="max-height:"+(window.innerHeight-150)+"px;";
-
-        sue.apps.extmgm.list(dom);
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
 		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_extmgm"]});
+		var _UL=sue.apps.domCreate("ul");
+		theAppBox.appendChild(_UL);
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		sue.apps.extmgm.itemList();
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -44,25 +45,25 @@ sue.apps.extmgm={
 				break;
 		}
 	},
-	list:function(dom){
-		var dom=dom.querySelector(".su_extmgm");
-		var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disableall"]},sue.apps.i18n("app_extmgm_disableall"));
-			dom.appendChild(domli);
-			domli.addEventListener("click",this,false);
+	itemList:function(){
+		let dom=sue.apps.extmgm.dom.querySelector(".su_extmgm ul");
+		var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disableall"]},null,null,null,sue.apps.i18n("app_extmgm_disableall"));
+			dom.appendChild(_li);
+			_li.addEventListener("click",this,false);
 		for(var i=0;i<sue.apps.extmgm.exts.ext_enabled.length;i++){
-			var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_enabled"]},sue.apps.extmgm.exts.ext_enabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_enabled[i].id]});
-			domli.addEventListener("click",this,false);
-			domli.addEventListener("mouseover",this,false);
-			domli.addEventListener("mouseout",this,false);
-			dom.appendChild(domli);
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_enabled"]},null,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_enabled[i].id]},sue.apps.extmgm.exts.ext_enabled[i].name);
+			_li.addEventListener("click",this,false);
+			_li.addEventListener("mouseover",this,false);
+			_li.addEventListener("mouseout",this,false);
+			dom.appendChild(_li);
 		}
 		for(var i=0;i<sue.apps.extmgm.exts.ext_disabled.length;i++){
-			var domli=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disabled"]},sue.apps.extmgm.exts.ext_disabled[i].name,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_disabled[i].id]});
-			domli.addEventListener("click",this,false);
-			domli.addEventListener("mouseover",this,false);
-			domli.addEventListener("mouseout",this,false);
-			dom.appendChild(domli);
-		}
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_li su_extmgm_disabled"]},null,null,{setName:["id"],setValue:[sue.apps.extmgm.exts.ext_disabled[i].id]},sue.apps.extmgm.exts.ext_disabled[i].name);
+			_li.addEventListener("click",this,false);
+			_li.addEventListener("mouseover",this,false);
+			_li.addEventListener("mouseout",this,false);
+			dom.appendChild(_li);
+		}	
 	},
 	action:function(e){
 		var typeAction;
@@ -72,7 +73,7 @@ sue.apps.extmgm={
 			typeAction=e.target.classList.contains("su_extmgm_enabled")?"disable":"enable";
 		} 
 		var objul=e.target.parentNode;
-		chrome.runtime.sendMessage({type:"apps_action",apptype:"extmgm",type_action:typeAction,id:e.target.dataset.id},function(response){
+		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"action",value:{actionType:typeAction,id:e.target.dataset.id}},function(response){
 			if(response.actionDone){
 				if(typeAction=="disable"){
 					e.target.className="su_extmgm_li su_extmgm_disabled";

@@ -2,52 +2,48 @@ console.log("speaker")
 sue.apps.speaker={
 	cons:{},
 	initUI:function(){
-		sue.apps.init();
-		var _appname="speaker",
-			_time=parseInt((new Date().getTime())/1000);
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+_time,{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("speaker")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="su_speakerbox">'
-					+'<div class="speaker_inputbox">'
-						+'<textarea class="speaker_inputarea">'+sue.apps.speaker.seltxt+'</textarea><br />'
-						+'<button class="speaker_btn_play">'+sue.apps.i18n("btn_play")+'</button>'
-						+'<button class="speaker_btn_pause" style="display:none;">'+sue.apps.i18n("btn_pause")+'</button>'
-						+'<button class="speaker_btn_stop">'+sue.apps.i18n("btn_stop")+'</button>'
-					+'</div>'
-				+'</div>'
-			+'</div>'
-			+'<div class="su_options">'
-				+'<label class="options_labelname">'+sue.apps.i18n("n_voicename")+'</label><select name="n_voicename"><option value="s_unpin">'+sue.apps.i18n("s_unpin")+'</option><option value="s_pinned">'+sue.apps.i18n("s_pinned")+'</option></select><br />'
-				+'<label class="options_labelname">'+sue.apps.i18n("n_gender")+'</label><select name="n_gender"><option value="s_female">'+sue.apps.i18n("s_female")+'</option><option value="s_male">'+sue.apps.i18n("s_male")+'</option></select><br />'
-				+'<label class="options_labelname">'+sue.apps.i18n("n_rate")+'</label><input name="n_rate" min=".1" max="10" step=".1" type="range"><span class="options_rangebox"></span><br />'
-				+'<label class="options_labelname">'+sue.apps.i18n("n_pitch")+'</label><input name="n_pitch" min=".1" max="2" step=".1" type="range"><span class="options_rangebox"></span><br />'
-				+'<label class="options_labelname">'+sue.apps.i18n("n_volume")+'</label><input name="n_volume" min=".1" max="1" step=".1" type="range"><span class="options_rangebox"></span><br />'
-				+'<div class="options_btnbox">'
-					+'<input class="options_btn_cancel" type="button" value="'+sue.apps.i18n("btn_cancel")+'">'
-					+'<input class="options_btn_save" type="button" value="'+sue.apps.i18n("btn_save")+'">'
-				+'</div>'
-			+'</div>'
-			+'<div class="su_menu">'
-				+'<img class="menu_item menu_item_opt" src="'+chrome.runtime.getURL("/image/options.png")+'" title="'+sue.apps.i18n("app_tip_opt")+'" /><br />'
-			+'</div>';
-		var voicedom=dom.querySelector("select[name=n_voicename]");
-		var _options;
-		for(var i=0;i<sue.apps.speaker.voicename.length;i++){
-			_options+='<option value="'+sue.apps.speaker.voicename[i]+'">'+sue.apps.speaker.voicename[i]+'</option>';
+		let appInfo={
+			appName:"speaker",
+			headTitle:"speaker",
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+			],
+			options:[
+				{type:"select",label:"n_voicename",name:"n_voicename",value:[]},
+				{type:"select",label:"n_gender",name:"n_gender",value:["s_female","s_male"]},
+				{type:"range",label:"n_rate",name:"n_rate",min:0.1,max:2,step:0.1},
+				{type:"range",label:"n_pitch",name:"n_pitch",min:0.1,max:1,step:0.1},
+				{type:"range",label:"n_volume",name:"n_volume",min:0.1,max:1,step:0.1}
+			]
 		}
-		voicedom.innerHTML=_options;
-
-        dom.querySelector(".speaker_btn_pause").addEventListener("click",this,false);
-        dom.querySelector(".speaker_btn_play").addEventListener("click",this,false);
-        dom.querySelector(".speaker_btn_stop").addEventListener("click",this,false);
-        //sue.apps.initOpt(dom);
-		//sue.apps.initZoom(dom);
+		for(var i=0;i<sue.apps.speaker.voicename.length;i++){
+			appInfo.options[0].value.push(sue.apps.speaker.voicename[i]);
+		}
+		sue.apps.init();
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
 		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_speakerbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _inputbox=sue.apps.domCreate("div",{setName:["className"],setValue:["speaker_inputbox"]}),
+			_textarea=sue.apps.domCreate("textarea",{setName:["className"],setValue:["speaker_inputarea"]}),
+			_br=sue.apps.domCreate("br"),
+			_btnPlay=sue.apps.domCreate("button",{setName:["className"],setValue:["speaker_btn_play"]},null,null,null,sue.apps.i18n("btn_play")),
+			_btnPause=sue.apps.domCreate("button",{setName:["className"],setValue:["speaker_btn_pause"]},null,"display:none;",null,sue.apps.i18n("btn_pause")),
+			_btnStop=sue.apps.domCreate("button",{setName:["className"],setValue:["speaker_btn_stop"]},null,null,null,sue.apps.i18n("btn_stop"));
+		_inputbox.appendChild(_textarea);
+		_inputbox.appendChild(_br);
+		_inputbox.appendChild(_btnPlay);
+		_inputbox.appendChild(_btnPause);
+		_inputbox.appendChild(_btnStop);
+		theAppBox.appendChild(_inputbox);
+        _btnPause.addEventListener("click",this,false);
+        _btnPlay.addEventListener("click",this,false);
+        _btnStop.addEventListener("click",this,false);
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -72,13 +68,11 @@ sue.apps.speaker={
 		}
 	},
 	speaker:function(e){
-		chrome.runtime.sendMessage({type:"apps_action",apptype:"speaker",value:{type:e.target.className.substr(12),txt:sue.apps.getAPPboxEle(e).querySelector("textarea").value}},function(response){})
+		chrome.runtime.sendMessage({type:"appsAction",app:"speaker",action:"speak",value:{type:e.target.className.substr(12),txt:sue.apps.getAPPboxEle(e).querySelector("textarea").value}})
 	}
 }
 chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"speaker"},function(response){
-	console.log(response)
 	sue.apps.speaker.config=response.config;
-	//sue.apps.speaker.zoom=response.value.zoom;
 	sue.apps.speaker.voicename=response.value.voicename;
 	sue.apps.speaker.seltxt=response.value.seltxt;
 	sue.apps.speaker.initUI();

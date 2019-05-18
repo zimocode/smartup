@@ -854,7 +854,7 @@ var appConfmodel={
 	appslist:{n_closebox:true},
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
-	jslist:{n_closebox:true,n_jq:false}
+	jslist:{n_closebox:true}
 }
 
 var sub={
@@ -1158,7 +1158,7 @@ var sub={
 	insertTest:function(appname){
 		//console.log("appname")
 		//chrome.tabs.sendMessage(curTab.id,{type:"apptype",apptype:appname},function(response){});
-		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){})',runAt:"document_start"});	
+		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){console.log(response)})',runAt:"document_start"});	
 	},
 	checkPermission:function(thepers,theorgs,theFunction,msg){
 		console.log(thepers+"/"+theorgs+"/"+theFunction+"/"+msg)
@@ -1452,6 +1452,7 @@ var sub={
 					_url=_urlB.join("/");
 					_url=_url==_urlA?"":_url;
 					sub.open(_url,_optype,_index,_pin);
+					break;
 				}
 			}
 		},
@@ -1498,6 +1499,7 @@ var sub={
 					_url=_urlB.join("/");
 					_url=_url==_urlA?"":_url;
 					sub.open(_url,_optype,_index,_pin);
+					break;
 				}
 			}
 		},
@@ -2077,16 +2079,8 @@ var sub={
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		script:function(){
-			var _script=sub.getConfValue("selects","n_script"),
-				_jq=sub.getConfValue("checks","n_jq");
-			if(_jq){
-				chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){
-					chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-				})
-			}else{
-				//inject();
-				chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-			}
+			var _script=sub.getConfValue("selects","n_script");
+			chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
 		},
 		source:function(){
 			var theTarget=sub.getConfValue("selects","n_optype"),
@@ -2529,124 +2523,6 @@ var sub={
 			config.apps[message.apptype]=message.config;
 			sub.saveConf();
 			(!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
-		},
-		apps_action:function(message,sendResponse){
-			//console.log(message)	
-			switch(message.apptype){
-				case"rss":
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_optype;
-						theIndex=sub.getIndex(appsconf.n_position,"new")[0],
-						//theIndex=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
-						thePin=appsconf.n_pin;//=="s_unpin"?false:true;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-				case"recentbk":
-				case"recentht":
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_optype,
-						theIndex=sub.getIndex(appsconf.n_position,"new")[0],
-						thePin=appsconf.n_pin;//=="s_unpin"?false:true;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-					var appsconf=config.apps[message.apptype];
-					var theURL=message.link,
-						theTarget=appsconf.n_target;
-						theIndex=sub.targetTab2.index2(appsconf.n_index_new,"n_index_new")[0],
-						thePin=appsconf.n_pin=="s_unpin"?false:true,
-						theClose=false;
-					sub.open(theURL,theTarget,theIndex,thePin);
-					break;
-				case"tablist":
-					if(message.type_action=="list_switch"){
-						message.id?chrome.tabs.update(Number(message.id),{active:true}):null;
-					}else{
-						message.id?chrome.tabs.remove(Number(message.id)):null;
-					}
-					break;
-				case"extmgm":
-					switch(message.type_action){
-						case"enable":
-						case"disable":
-							chrome.management.setEnabled(message.id,message.type_action=="enable"?true:false,function(){})
-							sendResponse({type:"apps_action",actionDone:true});
-							break;
-						case"disableall":
-							for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
-								console.log(sub.cons.extmgm.ext_enabled[i].id)
-								chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
-							}
-							sendResponse({type:"apps_action",actionDone:true});
-							break;
-					}
-					break;
-				case"recentclosed":
-				case"synced":
-					chrome.sessions.restore(message.id);
-					break;
-				case"appslist":
-					sub.action[message.id](true);
-					break;
-				case"savepdf":
-					chrome.tabs.saveAsPDF(message.value);
-					break;
-				case"jslist":
-					var	_jq=config.apps.jslist.n_jq;
-					if(_jq){
-						chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){
-							chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
-						})
-					}else{
-						//inject();
-						chrome.tabs.executeScript({code:config.general.script.script[message.id].content,runAt:"document_start"},function(){})
-					}
-					break;
-				case"speaker":
-					switch(message.value.type){
-						case"play":
-							if(!message.value.txt){return;}
-							var _conf=config.apps[message.apptype];
-							var _text=message.value.txt;
-							var _voice={};
-							chrome.tts.getVoices(function(voices){
-								for(var i=0;i<voices.length;i++){
-									if(voices.voiceName==_conf.voicename){
-										if(voices[i].gender){_voice.gender=_conf.n_gender.substr(2);}
-										_voice.voiceName=voices[i].n_voicename;
-										_voice.rate=_conf.n_rate;
-										_voice.pitch=_conf.n_pitch;
-										_voice.volume=_conf.n_volume;
-										break;
-									}
-								}
-								chrome.tts.speak(_text,_voice);
-							})
-
-							return;
-							var _conf=config.apps[message.apptype];
-							var text=message.value.txt,
-								voicename=_conf.n_voicename,
-								gender=_conf.n_gender.substr(2),
-								rate=_conf.n_rate,
-								pitch=_conf.n_pitch,
-								volume=_conf.n_volume;
-							console.log(text+voicename+gender+rate);
-							chrome.tts.speak(text,{voiceName:voicename,gender:gender,rate:rate,pitch:pitch,volume:volume})
-							break;
-						case"pause":
-							chrome.tts.pause()
-							break;
-						case"resume":
-							chrome.tts.resume()
-							break;
-						case"stop":
-							chrome.tts.stop()
-							break;
-					}
-					break;
-			}
 		}
 	},
 	open:function(url,target,position,pin,flag){
@@ -3601,6 +3477,9 @@ var sub={
 		}
 	},
 	funOnMessage:function(message,sender,sendResponse){
+		console.log(message);
+		console.log(sender);
+		console.log(sendResponse);
 		sub.message=message;
 		let getConf=function(){
 			let drawType=message.drawType,
@@ -3639,9 +3518,6 @@ var sub={
 			case"per_getconf":
 				sendResponse(sub.cons.permissions);
 				break;
-			case"apps_action":
-				sub.action.apps_action(message,sendResponse);
-				break;
 			case"apps_saveconf":
 				sub.action.apps_saveconf(message,sendResponse);
 				break;
@@ -3652,14 +3528,13 @@ var sub={
 						return;
 					}
 					if(message.apptype=="base64"){
-						chrome.tabs.executeScript({file:"js/base64.min.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="qr"){
-						chrome.tabs.executeScript({file:"js/jquery.min.js",runAt:"document_start"},function(){})
-						chrome.tabs.executeScript({file:"js/jquery.qrcode.min.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){})			
+					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){});
 				}		
 				if(!message.value){
 					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
@@ -3667,6 +3542,7 @@ var sub={
 				}else{
 					_fun();
 				}
+				sendResponse({value:true});
 				break;
 			case"getappconf":
 				sendResponse(sub.cons[message.apptype]);
@@ -3794,6 +3670,173 @@ var sub={
 				}
 				sub.initCurrent(sender,sub.theConf);
 				break
+			case"getDonateData":
+				sendResponse({type:"donateData",value:sub.cons.donateData})
+				break;
+			case"setDonateData":
+				sub.cons.donateData=message.value;
+				break;
+			case"appsAction":
+				sub.apps[message.app][message.action](message,sender,sendResponse);
+				//sub.appsAction(message,sendResponse);
+				break;
+		}
+	},
+	appsAction:function(message,sendResponse){
+		sub.apps[message.app][message.action](message,sendResponse);
+	},
+	apps:{
+		rss:{
+			getMessage:function(message,sender,sendResponse){
+				console.log(message);
+				url=message.value;
+				fetch(url)
+					.then(response => response.text())
+					.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+					.then(xmlData=>{
+						let data={};
+						let replace_cdata=function(str){
+							let newstr;
+							newstr=str.indexOf("<![CDATA[")==0?str.replace("<![CDATA[",""):str;
+							newstr=newstr.indexOf("]]>")==newstr.length-3?newstr.replace("]]>",""):newstr;
+							return newstr;
+						}
+						data={
+							title:replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").textContent:"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?xmlData.querySelector("channel>image>link").textContent:""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?xmlData.querySelector("channel>image>url").textContent:chrome.runtime.getURL("/image/rss.png"))
+						}
+
+						let items=xmlData.querySelectorAll("item");
+						console.log(items);
+						data.items=[];
+						for(var i=0;i<items.length;i++){
+							var _nodes=items[i].childNodes;
+						    var _object={};
+							for(var ii=0;ii<_nodes.length;ii++){
+								if(_nodes[ii].tagName){
+									_object[_nodes[ii].tagName.toLowerCase()]=replace_cdata(_nodes[ii].textContent);
+								}
+							}
+							data.items.push(_object);
+						}
+						return data;
+					})
+					.then(data=>{
+						console.log(data);
+						chrome.tabs.sendMessage(sender.tab.id,{type:"rssData",value:data,feedURL:url});
+					})
+					.catch(err=>console.log(err))
+			},
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			}
+		},
+		tablist:{
+			tabClose:function(message){
+				message.value?chrome.tabs.remove(Number(message.value)):null;			
+			},
+			tabSwitch:function(message){
+				message.value?chrome.tabs.update(Number(message.value),{active:true}):null;
+			}
+		},
+		jslist:{
+			jsRun:function(message){
+				chrome.tabs.executeScript({code:config.general.script.script[message.value].content,runAt:"document_start"})
+			}
+		},
+		appslist:{
+			openApp:function(message){
+				sub.action[message.value]();
+			}
+		},
+		recentbk:{
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			}
+		},
+		recentht:{
+			openItem:function(message){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			}
+		},
+		recentclosed:{
+			openItem:function(message){
+				chrome.sessions.restore(message.value);
+			}
+		},
+		synced:{
+			openItem:function(message){
+				chrome.sessions.restore(message.value);
+			}
+		},
+		speaker:{
+			speak:function(message){
+					switch(message.value.type){
+						case"play":
+							if(!message.value.txt){return;}
+							var _conf=config.apps[message.app];
+							var _text=message.value.txt;
+							var _voice={};
+							chrome.tts.getVoices(function(voices){
+								for(var i=0;i<voices.length;i++){
+									if(voices.voiceName==_conf.voicename){
+										if(voices[i].gender){_voice.gender=_conf.n_gender.substr(2);}
+										_voice.voiceName=voices[i].n_voicename;
+										_voice.rate=_conf.n_rate;
+										_voice.pitch=_conf.n_pitch;
+										_voice.volume=_conf.n_volume;
+										break;
+									}
+								}
+								chrome.tts.speak(_text,_voice);
+							})
+							break;
+						case"pause":
+							chrome.tts.pause()
+							break;
+						case"resume":
+							chrome.tts.resume()
+							break;
+						case"stop":
+							chrome.tts.stop()
+							break;
+					}
+			}
+		},
+		savepdf:{
+			savePDF:function(message){
+				console.log("s")
+				chrome.tabs.saveAsPDF(message.value);
+			}
+		},
+		extmgm:{
+			action:function(message,sender,sendResponse){
+				switch(message.value.actionType){
+					case"enable":
+					case"disable":
+						chrome.management.setEnabled(message.value.id,message.value.actionType=="enable"?true:false,function(){});
+						break;
+					case"disableall":
+						for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
+							chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
+						}
+						break;
+				}
+				sendResponse({type:"extmgm",actionDone:true});
+			}
 		}
 	}
 }
@@ -3912,7 +3955,6 @@ chrome.runtime.onMessageExternal.addListener(function(message,sender,sendRespons
 	sub.funOnMessage(message,sender,sendResponse);
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
-	console.log(message)
 	sub.funOnMessage(message,sender,sendResponse);
 });
 loadConfig();

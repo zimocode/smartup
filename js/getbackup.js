@@ -12,7 +12,7 @@ let getBackup={
 		}
 	},
 	set:function(){
-		document.querySelector("#url").innerHTML="";
+		document.querySelector("#url").textContent="";
 		document.querySelector("#msgbox").innerText="";
 		let dbname="backup",
 			id=parseInt(document.querySelector("#text_ver").value);

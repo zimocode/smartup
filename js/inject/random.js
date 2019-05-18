@@ -4,19 +4,50 @@ sue.apps.random={
 		boxmove:{}
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"random",
+			headTitle:"random",
+			headCloseBtn:true
+		}
 		sue.apps.init();
-		var _appname="random";
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+parseInt((new Date().getTime())/1000),{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("random")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-			+'</div>';
-		var domUL=sue.apps.domCreate("ul");
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
+		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["randombox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _node={
+			printText:sue.apps.domCreate("input",{setName:["id"],setValue:["su_random_print"]}),
+			brPrint:sue.apps.domCreate("br"),
+			boundSpan:sue.apps.domCreate("span",{setName:["className"],setValue:["su_random_span"]},null,null,null,sue.apps.i18n("app_random_bound")),
+			minText:sue.apps.domCreate("input",{setName:["id","className"],setValue:["min","su_random_text"]}),
+			dashSpan:sue.apps.domCreate("span",null,null,null,null,"~"),
+			maxText:sue.apps.domCreate("input",{setName:["id","className"],setValue:["max","su_random_text"]}),
+			brBound:sue.apps.domCreate("br"),
+			numSpan:sue.apps.domCreate("span",{setName:["className"],setValue:["su_random_span"]},null,null,null,sue.apps.i18n("app_random_num")),
+			numText:sue.apps.domCreate("input",{setName:["id","className"],setValue:["num","su_random_text"]}),
+			brNum:sue.apps.domCreate("br"),
+			norepeatCheck:sue.apps.domCreate("input",{setName:["id","className"],setValue:["su_random_norepeat","su_random_chkbox"]}),
+			norepeatLabel:sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_random_norepeat")),
+			brNorepeat:sue.apps.domCreate("br"),
+			fillCheck:sue.apps.domCreate("input",{setName:["id","className"],setValue:["su_random_add","su_random_chkbox"]}),
+			fillLabel:sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_random_fill")),
+			brFill:sue.apps.domCreate("br"),
+			btn:sue.apps.domCreate("button",{setName:["className"],setValue:["su_random_btn"]},null,null,null,sue.apps.i18n("btn_done"))
+		}
+		_node.printText.type=_node.minText.type=_node.maxText.type=_node.numText.type="text";
+		_node.norepeatCheck.type="checkbox";
+		_node.fillCheck.type="checkbox";
+		_node.norepeatLabel.htmlFor="su_random_norepeat";
+		_node.fillLabel.htmlFor="su_random_add";
+		for(var i in _node){
+			theAppBox.appendChild(_node[i]);
+		}
+
 		chrome.storage.local.get(function(items){
-			var randData;
+			let randData;
 			!items.localConfig?(items.localConfig={},items.localConfig.apps={}):null;
 			!items.localConfig.apps?items.localConfig.apps={}:null;
 			if(!items.localConfig.apps.random){
@@ -33,27 +64,13 @@ sue.apps.random={
 				randData=items.localConfig.apps.random;
 			}
 			
-			var min=randData.min,
-				max=randData.max,
-				num=randData.num,
-				norepeat=randData.norepeat,
-				add=randData.add;
-				console.log(norepeat)
-			dom.querySelector(".su_main").innerHTML=
-				'<div class="randombox">'
-					+'<input id="su_random_print" type="text"><br />'
-					+'<span class="su_random_span">'+sue.apps.i18n("app_random_bound")+'</span>'
-					+'<input id="min" class="su_random_text" type="text" value="'+min+'"><span>~</span><input id="max" class="su_random_text" type="text" value="'+max+'"><br />'
-					+'<span class="su_random_span">'+sue.apps.i18n("app_random_num")+'</span><input id="num" class="su_random_text" type="text" value="'+num+'"><br />'
-					+'<input class="su_random_chkbox" id="su_random_norepeat" type="checkbox" '+(norepeat?'checked="true"':'')+'><label for="su_random_norepeat">'+sue.apps.i18n("app_random_norepeat")+'</label><br />'
-					+'<input class="su_random_chkbox" id="su_random_add" type="checkbox" '+(add?'checked="true"':'')+'><label for="su_random_add">'+sue.apps.i18n("app_random_fill")+'</label><br />'
-					+'<button class="su_random_btn">'+sue.apps.i18n("btn_done")+'</button>'
-				+'</div>'
-			dom.querySelector(".su_random_btn").addEventListener("click",sue.apps.random.handleEvent,false);
-			//sue.apps.initZoom(dom);
-			sue.apps.initPos(dom);
+			_node.minText.value=randData.min;
+			_node.maxText.value=randData.max;
+			_node.numText.value=randData.num;
+			_node.norepeatCheck.checked=randData.norepeat;
+			_node.fillCheck.checked=randData.add;
+			_node.btn.addEventListener("click",sue.apps.random.handleEvent,false);
 		})
-		//sue.apps.initOpt(dom);
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -124,7 +141,3 @@ sue.apps.random={
 	}
 }
 sue.apps.random.initUI();
-// chrome.runtime.sendMessage({type:"apps_getvalue",typevalue:"extmgm"},function(response){
-// 	sue.apps.random.cons.zoom=response.value.zoom;
-// 	sue.apps.random.initUI();
-// })

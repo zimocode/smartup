@@ -23,6 +23,109 @@ sue.apps={
 		window.addEventListener("mousemove",this.handleEvent,false);
 		window.addEventListener("change",this.handleEvent,false);
 	},
+	initBox:function(boxInfo){
+		//{headTitle:"title",headCloseBtn:true,menu:[{src:"/image/options.png",title:"app_tip_opt"}],options:[{type:"select",label:"label",name:"name",value:["value1","value2"]},{type:"checkbox",label:"label",name:"name",checked:true}]}
+		let domBox,domHead,domMain,domMenu,domOptions;
+		domBox=sue.apps.domCreate("smartup",{setName:["className"],setValue:["su_apps"]},null,"z-index:"+(parseInt((new Date().getTime())/1000)),{setName:["appname"],setValue:[boxInfo.appName]});
+		//head
+		domHead=sue.apps.domCreate("div",{setName:["className"],setValue:["su_head"]});
+		if(boxInfo.headTitle){
+			let _domHeadTtitle=sue.apps.domCreate("span",{setName:["className"],setValue:["su_title"]},null,null,null,sue.apps.i18n(boxInfo.headTitle));
+			domHead.appendChild(_domHeadTtitle);
+		}
+		if(boxInfo.headCloseBtn){
+			let _domHeadCloseBtn=sue.apps.domCreate("div",{setName:["className"],setValue:["su_btn_close"]},null,null,null,"x");
+			domHead.appendChild(_domHeadCloseBtn);
+		}
+		domBox.appendChild(domHead);
+		//main
+		domMain=sue.apps.domCreate("div",{setName:["className"],setValue:["su_main"]});
+		domBox.appendChild(domMain);
+		//menu
+		if(boxInfo.menu){
+			domMenu=sue.apps.domCreate("div",{setName:["className"],setValue:["su_menu"]});
+			for(var i=0;i<boxInfo.menu.length;i++){
+				var _domMenuImg=sue.apps.domCreate("img",{setName:["className"],setValue:[boxInfo.menu[i].className]});
+					_domMenuImg.src=chrome.runtime.getURL(boxInfo.menu[i].src);
+					_domMenuImg.title=sue.apps.i18n(boxInfo.menu[i].title);
+				var _domBr=sue.apps.domCreate("br");
+				domMenu.appendChild(_domMenuImg);
+				domMenu.appendChild(_domBr);
+			}
+			domBox.appendChild(domMenu);
+		}
+		//options
+		if(boxInfo.options){
+			domOptions=sue.apps.domCreate("div",{setName:["className"],setValue:["su_options"]});
+			for(var i=0;i<boxInfo.options.length;i++){
+				if(boxInfo.options[i].type=="select"){
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					var _domSelect=sue.apps.domCreate("select");
+						_domSelect.name=boxInfo.options[i].name;
+					for(var ii=0;ii<boxInfo.options[i].value.length;ii++){
+						var _domOption=sue.apps.domCreate("option",null,null,null,null,sue.apps.i18n(boxInfo.options[i].value[ii]));
+						_domOption.value=boxInfo.options[i].value[ii];
+						_domSelect.appendChild(_domOption);
+					}
+					domOptions.appendChild(_label);
+					domOptions.appendChild(_domSelect);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
+				if(boxInfo.options[i].type=="checkbox"){
+					var _time=parseInt((new Date().getTime())/1000);
+					var _check=sue.apps.domCreate("input");
+						_check.id=boxInfo.options[i].name+"_"+_time;
+						_check.type="checkbox";
+						_check.name=boxInfo.options[i].name;
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labeldes"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+						_label.htmlFor=boxInfo.options[i].name+"_"+_time;
+					domOptions.appendChild(_check);
+					domOptions.appendChild(_label);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
+				if(boxInfo.options[i].type=="range"){
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					var _domRange=sue.apps.domCreate("input");
+						_domRange.name=boxInfo.options[i].name;
+						_domRange.type="range";
+						_domRange.min=boxInfo.options[i].min;
+						_domRange.max=boxInfo.options[i].max;
+						_domRange.step=boxInfo.options[i].step||1;
+					var _domSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["options_rangebox"]});
+
+					domOptions.appendChild(_label);
+					domOptions.appendChild(_domRange);
+					domOptions.appendChild(_domSpan);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
+				if(boxInfo.options[i].type=="radio"){
+					var _time=parseInt((new Date().getTime())/1000);
+					var _domRadio=sue.apps.domCreate("input");
+						_domRadio.name=boxInfo.options[i].name;
+						_domRadio.type="radio";
+						_domRadio.id=boxInfo.options[i].name+"_"+_time;
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					domOptions.appendChild(_domRadio);
+					domOptions.appendChild(_label);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
+			}
+			domBox.appendChild(domOptions);
+			//button box
+			let _btnBox=sue.apps.domCreate("div",{setName:["className"],setValue:["options_btnbox"]});
+			let _btnCancel=sue.apps.domCreate("input",{setName:["className"],setValue:["options_btn_cancel"]});
+				_btnCancel.type="button";
+				_btnCancel.value=sue.apps.i18n("btn_cancel");
+			let _btnSave=sue.apps.domCreate("input",{setName:["className"],setValue:["options_btn_save"]});
+				_btnSave.type="button";
+				_btnSave.value=sue.apps.i18n("btn_save");
+			_btnBox.appendChild(_btnCancel);
+			_btnBox.appendChild(_btnSave);
+			domOptions.appendChild(_btnBox);
+		}
+		return domBox;
+		//sue.apps.initPos(domBox);
+	},
 	handleEvent:function(e){
 		switch(e.type){
 			case"click":
@@ -126,10 +229,17 @@ sue.apps={
 		var dom=document.createElement(edom);
 		if(eele){
 			for (var i = 0;i<eele.setName.length; i++) {
-				dom[eele.setName[i]]=eele.setValue[i];
+				if(eele.setName[i]=="for"){
+				//if(["for","checked"].contains(eele.setName[i])){
+					dom.setAttribute(eele.setName[i],eele.setValue[i]);
+				}else if(eele.setName[i]=="checked"){
+					eele.setValue[i]?dom.setAttribute(eele.setName[i],"checked"):null;
+				}else{
+					dom[eele.setName[i]]=eele.setValue[i];
+				}
 			}
 		}
-		if(einner){dom.innerHTML=einner}
+		if(einner){}
 		if(ecss){
 			dom.style.cssText+=ecss;
 		}

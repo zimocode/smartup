@@ -4,52 +4,117 @@ sue.apps.qr={
 		boxmove:{}
 	},
 	initUI:function(){
+		let appInfo={
+			appName:"qr",
+			headTitle:"qr",
+			headCloseBtn:true
+		}
 		sue.apps.init();
-		var _appname="qr",
-			_time=parseInt((new Date().getTime())/1000);
-		var dom=sue.apps.domCreate("smartup",{setName:["className","id"],setValue:["su_apps","su_apps_"+_appname]},null,"z-index:"+_time,{setName:["appname"],setValue:[_appname]});
-		dom.innerHTML=
-			'<div class="su_head" style="">'
-				+'<span class="su_title">'+sue.apps.i18n("qr")+'</span>'
-				+'<div class="su_btn_close">x</div>'
-			+'</div>'
-			+'<div class="su_main">'
-				+'<div class="su_qrbox">'
-					+'<div class="qr_inputbox">'
-						+'<div class="qr_typelist"><input class="qr_type_url" id="qr_type_url_'+_time+'" name="qr_type_'+_time+'" type="radio"><label for="qr_type_url_'+_time+'">'+sue.apps.i18n("app_qr_url")+'</label></div>'
-						+'<div class="qr_typelist"><input class="qr_type_seltxt" id="qr_type_seltxt_'+_time+'" name="qr_type_'+_time+'" type="radio"><label for="qr_type_seltxt_'+_time+'">'+sue.apps.i18n("app_qr_seltxt")+'</label></div>'
-						+'<div class="qr_typelist"><input class="qr_type_sellnk" id="qr_type_sellnk_'+_time+'" name="qr_type_'+_time+'" type="radio"><label for="qr_type_sellnk_'+_time+'">'+sue.apps.i18n("app_qr_sellnk")+'</label></div>'
-						+'<div class="qr_typelist"><input class="qr_type_title" id="qr_type_title_'+_time+'" name="qr_type_'+_time+'" type="radio"><label for="qr_type_title_'+_time+'">'+sue.apps.i18n("app_qr_title")+'</label></div>'
-						+'<div class="qr_typelist"><input class="qr_type_customer" id="qr_type_customer_'+_time+'" name="qr_type_'+_time+'" type="radio"><label for="qr_type_customer_'+_time+'">'+sue.apps.i18n("app_qr_customer")+'</label></div>'
-						+'<textarea class="qr_inputarea" disabled="disabled">'+location.href+'</textarea><br />'
-						+'<button class="qr_btn_done">'+sue.apps.i18n("btn_done")+'</button>'
-						+'<div class="su_copyright">Based on <a href="https://github.com/jeromeetienne/jquery-qrcode" target="_blank">jquery-qrcode@Github</a></div>'
-					+'</div>'
-					+'<div class="qr_outputbox">'
-						+'<div class="qr_output"></div>'
-						+'<button class="qr_btn_back">'+sue.apps.i18n("btn_back")+'</button>'
-					+'</div>'
-				+'</div>'
-			+'</div>';
-        if(sue.apps.qr.drawtype&&(sue.apps.qr.drawtype[0]=="drg"||sue.apps.qr.drawtype[0]=="sdrg")&&sue.apps.qr.seltxt){
-        	dom.querySelector(".qr_type_seltxt").checked=true;
-        	dom.querySelector(".qr_inputarea").innerText=sue.apps.qr.seltxt;
-		}else if(sue.apps.qr.sellnk){
-			dom.querySelector(".qr_type_sellnk").checked=true;
-        	dom.querySelector(".qr_inputarea").innerText=sue.apps.qr.sellnk;
-		}else{
-        	dom.querySelector(".qr_type_url").checked=true;
-        	dom.querySelector(".qr_inputarea").innerText=location.href;
-        }
-
-        dom.querySelector(".qr_btn_done").addEventListener("click",this,false);
-        dom.querySelector(".qr_btn_back").addEventListener("click",this,false);
-        dom.querySelector(".qr_type_customer").addEventListener("change",this,false);
-        dom.querySelector(".qr_type_title").addEventListener("change",this,false);
-        dom.querySelector(".qr_type_url").addEventListener("change",this,false);
-        dom.querySelector(".qr_type_seltxt").addEventListener("change",this,false);
-        dom.querySelector(".qr_type_sellnk").addEventListener("change",this,false);
+		var dom=sue.apps.initBox(appInfo);
+			dom.id="su_apps_"+appInfo.appName;
+		sue.apps[appInfo.appName].dom=dom;
 		sue.apps.initPos(dom);
+
+		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_qrbox"]});
+		dom.querySelector(".su_main").appendChild(theAppBox);
+
+		let _time=parseInt((new Date().getTime())/1000);
+		let _inputBox=sue.apps.domCreate("div",{setName:["className"],setValue:["qr_inputbox"]}),
+			_eleBox=sue.apps.domCreate("div",null,null,"text-align:left;",null,null);
+
+		let _url=sue.apps.domCreate("input",{setName:["className","id"],setValue:["qr_type_url","qr_type_url_"+_time]}),
+			_labelUrl=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_qr_url")),
+			_brUrl=sue.apps.domCreate("br");
+		_url.name="qr_type_"+_time;
+		_url.type="radio";
+		_labelUrl.htmlFor="qr_type_url_"+_time;
+		_eleBox.appendChild(_url);
+		_eleBox.appendChild(_labelUrl);
+		_eleBox.appendChild(_brUrl);
+
+		let _seltxt=sue.apps.domCreate("input",{setName:["className","id"],setValue:["qr_type_seltxt","qr_type_seltxt_"+_time]}),
+			_labelSeltxt=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_qr_seltxt")),
+			_brSeltxt=sue.apps.domCreate("br");
+		_seltxt.name="qr_type_"+_time;
+		_seltxt.type="radio";
+		_labelSeltxt.htmlFor="qr_type_seltxt_"+_time;
+		_eleBox.appendChild(_seltxt);
+		_eleBox.appendChild(_labelSeltxt);
+		_eleBox.appendChild(_brSeltxt);
+
+		let _sellnk=sue.apps.domCreate("input",{setName:["className","id"],setValue:["qr_type_sellnk","qr_type_sellnk_"+_time]}),
+			_labelSellnk=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_qr_sellnk")),
+			_brSellnk=sue.apps.domCreate("br");
+		_sellnk.name="qr_type_"+_time;
+		_sellnk.type="radio";
+		_labelSellnk.htmlFor="qr_type_sellnk_"+_time;
+		_eleBox.appendChild(_sellnk);
+		_eleBox.appendChild(_labelSellnk);
+		_eleBox.appendChild(_brSellnk);
+
+		let _title=sue.apps.domCreate("input",{setName:["className","id"],setValue:["qr_type_title","qr_type_title_"+_time]}),
+			_labelTitle=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_qr_title")),
+			_brTitle=sue.apps.domCreate("br");
+		_title.name="qr_type_"+_time;
+		_title.type="radio";
+		_labelTitle.htmlFor="qr_type_title_"+_time;
+		_eleBox.appendChild(_title);
+		_eleBox.appendChild(_labelTitle);
+		_eleBox.appendChild(_brTitle);
+
+		let _customer=sue.apps.domCreate("input",{setName:["className","id"],setValue:["qr_type_customer","qr_type_customer_"+_time]}),
+			_labelCustomer=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("app_qr_customer")),
+			_brCustomer=sue.apps.domCreate("br");
+		_customer.name="qr_type_"+_time;
+		_customer.type="radio";
+		_labelCustomer.htmlFor="qr_type_customer_"+_time;
+		_eleBox.appendChild(_customer);
+		_eleBox.appendChild(_labelCustomer);
+		_eleBox.appendChild(_brCustomer);
+
+		_inputBox.appendChild(_eleBox);
+
+		let _textarea=sue.apps.domCreate("textarea",{setName:["className"],setValue:["qr_inputarea"]});
+		_textarea.disabled="disabled";
+		_inputBox.appendChild(_textarea);
+
+		let _btn=sue.apps.domCreate("button",{setName:["className"],setValue:["qr_btn_done"]},null,null,null,sue.apps.i18n("btn_done"));
+		_inputBox.appendChild(_btn);
+
+		let _copyright=sue.apps.domCreate("div",{setName:["className"],setValue:["su_copyright"]},null,null,null,"Based on "),
+			_link=sue.apps.domCreate("a",null,null,null,null,"qrcodejs@Github");
+		_link.href="https://github.com/davidshimjs/qrcodejs";
+		_link.target="_blank";
+		_copyright.appendChild(_link);
+		_inputBox.appendChild(_copyright);
+
+		theAppBox.appendChild(_inputBox);
+
+		let _outputBox=sue.apps.domCreate("div",{setName:["className"],setValue:["qr_outputbox"]}),
+			_outputDiv=sue.apps.domCreate("div",{setName:["className"],setValue:["qr_output"]}),
+			_btnBack=sue.apps.domCreate("button",{setName:["className"],setValue:["qr_btn_back"]},null,null,null,sue.apps.i18n("btn_back"));
+		_outputBox.appendChild(_outputDiv);
+		_outputBox.appendChild(_btnBack);
+		theAppBox.appendChild(_outputBox);
+
+		if(sue.apps.qr.drawtype&&(sue.apps.qr.drawtype[0]=="drg"||sue.apps.qr.drawtype[0]=="sdrg")&&sue.apps.qr.seltxt){
+			_seltxt.checked=true;
+			_textarea.innerText=sue.apps.qr.seltxt;
+		}else if(sue.apps.qr.sellnk){
+			_sellnk.checked=true;
+			_textarea.innerText=sue.apps.qr.sellnk;
+		}else{
+			_url.checked=true;
+			_textarea.innerText=location.href;
+		}
+
+		_btn.addEventListener("click",this,false);
+		_btnBack.addEventListener("click",this,false);
+		_customer.addEventListener("change",this,false);
+		_title.addEventListener("change",this,false);
+		_url.addEventListener("change",this,false);
+		_seltxt.addEventListener("change",this,false);
+		_sellnk.addEventListener("change",this,false);
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -79,8 +144,9 @@ sue.apps.qr={
 				if(!objinput.value){return;}
 				if(e.target.classList.contains("qr_btn_done")){
 					sue.apps.qr.showPanel(e);
-					sue.apps.getAPPboxEle(e).querySelector(".qr_output").innerHTML="";
-					jQuery('.qr_output').qrcode(toUtf8(objinput.value));
+					sue.apps.getAPPboxEle(e).querySelector(".qr_output").textContent="";
+					//jQuery('.qr_output').qrcode(toUtf8(objinput.value));
+					new QRCode(sue.apps.getAPPboxEle(e).querySelector(".qr_output"),objinput.value);
 				}else if(e.target.classList.contains("qr_btn_back")){
 					sue.apps.qr.showPanel(e);
 				}
