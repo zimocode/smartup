@@ -1,13 +1,13 @@
 {
 	"log": [
 		{
-			"ver":"6.2.505.865",
-			"date":"2019.05.12",
+			"ver":"6.3.635.870",
+			"date":"2019.05.18",
 			"content":[
 				"code review for AMO",
 				"fix CORB",
 				"delete theme support",
-				"fix bugs:  issues@github: #47,"
+				"fix bugs: issues@github: #47,"
 			]
 		},
 		{

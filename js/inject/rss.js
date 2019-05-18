@@ -2,6 +2,7 @@ console.log("rss")
 sue.apps.rss={
 	cons:{},
 	initUI:function(){
+		sue.apps.rss.indexID=parseInt((new Date().getTime())/1000);
 		let appInfo={
 			appName:"rss",
 			headTitle:"rss",
