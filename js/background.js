@@ -3702,20 +3702,19 @@ var sub={
 							return newstr;
 						}
 						data={
-							title:replace_cdata(xmlData.querySelector("channel>title")?xmlData.querySelector("channel>title").textContent:"noname"),
-							link:replace_cdata(xmlData.querySelector("channel>image>link")?xmlData.querySelector("channel>image>link").textContent:""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?xmlData.querySelector("channel>image>url").textContent:chrome.runtime.getURL("/image/rss.png"))
+							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent):"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent):""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent):chrome.runtime.getURL("/image/rss.png"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
-						console.log(items);
 						data.items=[];
 						for(var i=0;i<items.length;i++){
 							var _nodes=items[i].childNodes;
 						    var _object={};
 							for(var ii=0;ii<_nodes.length;ii++){
 								if(_nodes[ii].tagName){
-									_object[_nodes[ii].tagName.toLowerCase()]=replace_cdata(_nodes[ii].textContent);
+									_object[_nodes[ii].tagName.toLowerCase()]=DOMPurify.sanitize(replace_cdata(_nodes[ii].textContent));
 								}
 							}
 							data.items.push(_object);
@@ -3903,7 +3902,7 @@ else{
 					var xhr = new XMLHttpRequest();
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
-							var items=JSON.parse(xhr.response);
+							var items=JSON.parse(DOMPurify.sanitize(xhr.response));
 							for(var i=0;i<items.log[0].content.length;i++){
 								notif.items.push({title:i+1+". ",message:items.log[0].content[i]});
 							}

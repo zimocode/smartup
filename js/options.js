@@ -2549,11 +2549,11 @@ var suo={
 					let xhr = new XMLHttpRequest(),
 						localType=navigator.language,
 						_url="https://push.zimoapps.com/smartup/message.json";
-					// localType="zh-CN";
+					//localType="zh-CN";
 					// _url="../message.json";
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
-							let items=JSON.parse(xhr.response);
+							let items=JSON.parse(DOMPurify.sanitize(xhr.response));
 							console.log("initxhr")
 							if(items.options.on){
 								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
@@ -2575,10 +2575,10 @@ var suo={
 		checkPushMessage:function(){
 			let _items=suo.cons.xhrDonate;
 			let lang=navigator.language;
+			//lang="zh-CN";
 			let i=0,itemArray=[];
 				itemLocal=_items[lang],
 				itemAllLocal=_items.all_local;
-				
 			if(_items.all_local_i18n&&_items.all_local_i18n[lang]){
 				for(i=0;i<_items.all_local_i18n[lang].length;i++){
 					for(var ii in _items.all_local_i18n[lang][i]){
