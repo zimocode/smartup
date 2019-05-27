@@ -2318,6 +2318,11 @@ var sub={
 		},
 
 		//mini apps
+
+		lottery:function(){
+			var _appname="lottery";
+			sub.insertTest(_appname);
+		},
 		speaker:function(){
 			var theFunction=function(){
 				var _appname="speaker";
@@ -2432,7 +2437,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -3835,6 +3840,40 @@ var sub={
 						break;
 				}
 				sendResponse({type:"extmgm",actionDone:true});
+			}
+		},
+		lottery:{
+			init:function(message,sender,sendResponse){
+				var _urlTermList="http://www.lottery.gov.cn/api/get_typeBytermList.jspx?_ltype=4",
+					_urlData="http://www.lottery.gov.cn/api/lottery_kj_detail.jspx?_ltype=4&_term=";
+				fetch(_urlTermList)
+					.then(response => response.text())
+					.then(text => JSON.parse(DOMPurify.sanitize(text)))
+					.then(arrayData => arrayData[0])
+					.then(tremData =>{
+						console.log(tremData);
+						fetch(_urlData+tremData.ctrem)
+							.then(response => response.text())
+							.then(text => JSON.parse(DOMPurify.sanitize(text)))
+							.then(arrayData => arrayData[0])
+							.then(lottoryData =>{
+								console.log(lottoryData);
+								console.log({tremList:tremData.tremList,lottoryData:lottoryData.codeNumber});
+								chrome.tabs.sendMessage(sender.tab.id,{type:"lotteryInit",value:{tremList:tremData.tremList,lottoryData:lottoryData.codeNumber}});
+							})
+							.catch(err=>console.log(err))
+					})
+					.catch(err=>console.log(err))
+			},
+			getData:function(message,sender,sendResponse){
+				fetch("http://www.lottery.gov.cn/api/lottery_kj_detail.jspx?_ltype=4&_term="+message.value)
+					.then(response => response.text())
+					.then(text => JSON.parse(DOMPurify.sanitize(text)))
+					.then(arrayData => arrayData[0])
+					.then(lottoryData =>{
+						chrome.tabs.sendMessage(sender.tab.id,{type:"lotteryData",value:lottoryData.codeNumber});
+					})
+					.catch(err=>console.log(err))
 			}
 		}
 	}
