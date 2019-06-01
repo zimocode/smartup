@@ -16,43 +16,80 @@ sue.apps.lottery={
 		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["lottery_box"]});
 		dom.querySelector(".su_main").appendChild(theAppBox);
 
-		chrome.runtime.sendMessage({type:"appsAction",app:"lottery",action:"init"},function(s){
-			console.log(s);
-		})
+		let _typeLabel=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("lottery_type")),
+			_typeSelect=sue.apps.domCreate("select",{setName:["className"],setValue:["lottery_type"]}),
+			_br0=sue.apps.domCreate("br");
+			_termLable=sue.apps.domCreate("label",null,null,null,null,sue.apps.i18n("lottery_term")),
+			_termSelect=sue.apps.domCreate("select",{setName:["className"],setValue:["lottery_term"]}),
+			_br1=sue.apps.domCreate("br");
+			_data=sue.apps.domCreate("div",{setName:["className"],setValue:["lottery_data"]});
+		let typeArray=["lottery_dlt","lottery_pls","lottery_ssq","lottery_sd"];
+		for(var i=0;i<typeArray.length;i++){
+			_typeSelect.appendChild(sue.apps.domCreate("option",{setName:["value"],setValue:[typeArray[i]]},null,null,null,sue.apps.i18n(typeArray[i])));
+		}
+		let _dom=sue.apps.lottery.dom.querySelector(".lottery_box");
+			_dom.textContent="";
+		_dom.appendChild(_typeLabel);
+		_dom.appendChild(_typeSelect);
+		_dom.appendChild(_br0);
+		_dom.appendChild(_termLable);
+		_dom.appendChild(_termSelect);
+		_dom.appendChild(_br1);
+		_dom.appendChild(_data);
+		chrome.runtime.sendMessage({type:"appsAction",app:"lottery",action:"getTerm",value:{type:typeArray[0],term:null}});
+		sue.apps.lottery.loading();
 
-		// let _ul=sue.apps.domCreate("ul");
-		// let _conf=sue.apps.appslist.apps;
-		// for(var i=0;i<_conf.length;i++){
-		// 	var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_appslist_li"]},null,null,{setName:["id"],setValue:[_conf[i]]},sue.apps.i18n(_conf[i]));
-		// 	_ul.appendChild(_li);
-		// }
-		// theAppBox.appendChild(_ul);
-		// dom.style.cssText+="border-color:#e91e63;";
-		// dom.querySelector(".su_head").style.cssText+="background-color:#e91e63;";
-		// dom.addEventListener("click",this.handleEvent,false);
+		dom.addEventListener("change",this.handleEvent,false);
 	},
 	handleEvent:function(e){
 		switch(e.type){
 			case"change":
-				chrome.runtime.sendMessage({type:"appsAction",app:"lottery",action:"getData",value:"19057"})
+				chrome.runtime.sendMessage({type:"appsAction",app:"lottery",action:(e.target.classList.contains("lottery_type")?"getTerm":"getData"),value:{type:sue.apps.lottery.dom.querySelector(".lottery_type").value,term:sue.apps.lottery.dom.querySelector(".lottery_term").value}});
+				sue.apps.lottery.loading();
 				break;
 		}
 	},
-	initData:function(message){
-		console.log(message.value);
-	},
 	data:function(message){
+		console.log(message);
+		let _box=sue.apps.lottery.dom.querySelector(".lottery_data");
+		_box.textContent="";
+		for(var i=0;i<message.value.length;i++){
+			_box.appendChild(sue.apps.domCreate("span",null,null,null,null,message.value[i]));
+		}
+		let _spans=_box.querySelectorAll("span");
+		switch(message.lotteryType){
+			case"lottery_dlt":
+				_spans[5].style.cssText+="background-color:#35a7d9;";
+				_spans[6].style.cssText+="background-color:#35a7d9;";
+				break
+			case"lottery_ssq":
+				_spans[6].style.cssText+="background-color:#35a7d9;";
+				break;	
+		}
+	},
+	term:function(message){
 		console.log(message.value);
+		let _box=sue.apps.lottery.dom.querySelector(".lottery_term");
+		_box.textContent="";
+		for(var i=0;i<message.value.length;i++){
+			_box.appendChild(sue.apps.domCreate("option",{setName:["value"],setValue:[message.value[i]]},null,null,null,message.value[i]));
+		}
+		chrome.runtime.sendMessage({type:"appsAction",app:"lottery",action:"getData",value:{type:sue.apps.lottery.dom.querySelector(".lottery_type").value,term:sue.apps.lottery.dom.querySelector(".lottery_term").value}});
+	},
+	loading:function(){
+		let _box=sue.apps.lottery.dom.querySelector(".lottery_data");
+		_box.textContent="";
+		_box.appendChild(sue.apps.domCreate("img",{setName:["src"],setValue:[chrome.runtime.getURL("/image/loading.gif")]}));
 	}
 }
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
 	switch(message.type){
-		case"lotteryInit":
-			sue.apps.lottery.initData(message);
-			break;
-		case"lotteryData":
+		case"data":
 			sue.apps.lottery.data(message);
+			break;
+		case"term":
+			sue.apps.lottery.term(message);
 			break;
 	}
 });
