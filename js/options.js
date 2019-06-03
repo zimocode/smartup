@@ -1476,7 +1476,7 @@ var suo={
 			domContent.appendChild(suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_text","text",!confOBJ.name?"":confOBJ.name]}));
 			domContent.appendChild(suo.domCreate2("br"));
 			//url/script
-			domContent.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["box-label"]},null,null,nullsuo.getI18n("n_content")));
+			domContent.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["box-label"]},null,null,null,suo.getI18n("n_content")));
 			domContent.appendChild(suo.domCreate2("textarea",{setName:["className","type","value"],setValue:["box-textarea","textarea",!confOBJ.content?"":confOBJ.content]},"","width:330px;height:160px;margin-top:10px;"));
 			var domDes=boxOBJ.querySelector(".box_des");
 				domDes.style.cssText+="display:block;";
