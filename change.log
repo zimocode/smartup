@@ -4,7 +4,8 @@
 			"ver":"6.3.737.877",
 			"date":"2019.06.01",
 			"content":[
-				"new mini-apps: lottery"
+				"new mini-apps: lottery",
+				"fix bug: issues@github: #52"
 			]
 		},
 		{
