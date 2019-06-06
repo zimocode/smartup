@@ -93,6 +93,7 @@ let actions={
 			{name:"speaker"},
 			{name:"jslist"},
 			{name:"savepdf"},
+			{name:"lottery"},
 			{name:"appslist"}
 			/*{name:"gmail"},
 			{name:"ary"},

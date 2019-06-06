@@ -1460,5 +1460,26 @@
   },
   "des_adlist1":{
     "message":"It can be turned on or off by the following path: About > Support Development."
+  },
+  "lottery":{
+    "message":"Lottery Data"
+  },
+  "lottery_type":{
+    "message":"Lottery type:"
+  },
+  "lottery_term":{
+    "message":"Lottery term:"
+  },
+  "lottery_dlt":{
+    "message":"Da Le Tou"
+  },
+  "lottery_pls":{
+    "message":"Pai Lie San"
+  },
+  "lottery_ssq":{
+    "message":"Shuang Se Qiu"
+  },
+  "lottery_sd":{
+    "message":"Fucai 3D"
   }
 }

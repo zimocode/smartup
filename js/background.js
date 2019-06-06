@@ -2318,6 +2318,11 @@ var sub={
 		},
 
 		//mini apps
+
+		lottery:function(){
+			var _appname="lottery";
+			sub.insertTest(_appname);
+		},
 		speaker:function(){
 			var theFunction=function(){
 				var _appname="speaker";
@@ -2432,7 +2437,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -3835,6 +3840,151 @@ var sub={
 						break;
 				}
 				sendResponse({type:"extmgm",actionDone:true});
+			}
+		},
+		lottery:{
+			getData:function(message,sender,sendResponse){
+				let urlOBJ={
+					"lottery_dlt":"http://www.lottery.gov.cn/api/lottery_kj_detail.jspx?_ltype=4&_term="+message.value.term,
+					"lottery_pls":"http://www.lottery.gov.cn/api/lottery_kj_detail.jspx?_ltype=5&_term="+message.value.term
+				}
+				switch(message.value.type){
+					case"lottery_dlt":
+					case"lottery_pls":
+						fetch(urlOBJ[message.value.type])
+							.then(response => response.text())
+							.then(text => JSON.parse(DOMPurify.sanitize(text)))
+							.then(arrayData => arrayData[0])
+							.then(lottoryData =>{
+								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:lottoryData.codeNumber,lotteryType:message.value.type});
+							})
+							.catch(err=>console.log(err))
+						break;
+					case"lottery_ssq":
+						var formData = new FormData();
+							formData.append("lottery_type", "tb");
+							formData.append("r", 1522867870);
+							formData.append("no", message.value.term);
+						var _options={
+							method:"POST",
+							body:formData
+						}
+						fetch("http://east.swlc.net.cn/LotteryNew/AnnouncementDetail.aspx",_options)
+							.then(response => response.text())
+							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
+							.then(htmlData=>{
+								console.log(htmlData);
+								var _options=htmlData.querySelectorAll("td");
+								var data=[];
+								for(var i=5;i<12;i++){
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+								}
+								return data;
+							})
+							.then(data=>{
+								console.log(data);
+								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data,lotteryType:message.value.type});
+							})
+						break;
+					case"lottery_sd":
+						var formData = new FormData();
+							formData.append("lottery_type", "3d");
+							formData.append("r", 1522867870);
+							formData.append("no", message.value.term);
+						var _options={
+							method:"POST",
+							body:formData
+						}
+						fetch("http://east.swlc.net.cn/LotteryNew/AnnouncementDetail.aspx",_options)
+							.then(response => response.text())
+							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
+							.then(htmlData=>{
+								console.log(htmlData);
+								var _options=htmlData.querySelectorAll("td");
+								var data=[];
+								for(var i=5;i<8;i++){
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+								}
+								return data;
+							})
+							.then(data=>{
+								console.log(data);
+								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data,lotteryType:message.value.type});
+							})
+						break;
+				}
+			},
+			getTerm:function(message,sender,sendResponse){
+				let urlOBJ={
+					"lottery_dlt":"http://www.lottery.gov.cn/api/get_typeBytermList.jspx?_ltype=4",
+					"lottery_pls":"http://www.lottery.gov.cn/api/get_typeBytermList.jspx?_ltype=5",
+					"lottery_ssq":"http://www.cwl.gov.cn/cwl_admin/kjxx/findIssue"
+				}
+				switch(message.value.type){
+					case"lottery_dlt":
+					case"lottery_pls":
+						fetch(urlOBJ[message.value.type])
+							.then(response => response.text())
+							.then(text => JSON.parse(DOMPurify.sanitize(text)))
+							.then(arrayData => arrayData[0])
+							.then(termData =>{
+								console.log(termData);
+								chrome.tabs.sendMessage(sender.tab.id,{type:"term",value:termData.tremList});
+							})
+						break
+					case"lottery_ssq":
+						var formData = new FormData();
+							formData.append("lottery_type", "tb");
+							formData.append("r", 1522867870);
+							formData.append("no", "2019062");
+						var _options={
+							method:"POST",
+							body:formData
+						}
+						fetch("http://east.swlc.net.cn/LotteryNew/AnnouncementDetail.aspx",_options)
+							.then(response => response.text())
+							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
+							.then(htmlData=>{
+								console.log(htmlData);
+								var _options=htmlData.querySelectorAll("#no option");
+								console.log(_options)
+								var data=[];
+								for(var i=0;i<_options.length;i++){
+									data.push(DOMPurify.sanitize(_options[i].value));
+								}
+								return data;
+							})
+							.then(data=>{
+								chrome.tabs.sendMessage(sender.tab.id,{type:"term",value:data});
+							})
+						break;
+					case"lottery_sd":
+						var formData = new FormData();
+							formData.append("lottery_type", "3d");
+							formData.append("r", 1522867870);
+							formData.append("no", "2019144");
+						var _options={
+							method:"POST",
+							body:formData
+						}
+						fetch("http://east.swlc.net.cn/LotteryNew/AnnouncementDetail.aspx",_options)
+							.then(response => response.text())
+							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
+							.then(htmlData=>{
+								console.log(htmlData);
+								var _options=htmlData.querySelectorAll("#no option");
+								console.log(_options)
+								var data=[];
+								for(var i=0;i<_options.length;i++){
+									data.push(DOMPurify.sanitize(_options[i].value));
+								}
+								return data;
+							})
+							.then(data=>{
+								chrome.tabs.sendMessage(sender.tab.id,{type:"term",value:data});
+							})
+						break;
+				}
 			}
 		}
 	}
