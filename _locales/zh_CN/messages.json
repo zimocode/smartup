@@ -1450,5 +1450,8 @@
   },
   "lottery_sd":{
     "message":"福彩3D"
+  },
+  "pxmovie":{
+    "message":"破晓电影最近更新"
   }
 }

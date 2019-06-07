@@ -1481,5 +1481,8 @@
   },
   "lottery_sd":{
     "message":"Fucai 3D"
+  },
+  "pxmovie":{
+    "message":"Poxiao Movie recent update"
   }
 }

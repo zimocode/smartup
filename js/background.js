@@ -2319,6 +2319,10 @@ var sub={
 
 		//mini apps
 
+		pxmovie:function(){
+			var _appname="pxmovie";
+			sub.insertTest(_appname);
+		},
 		lottery:function(){
 			var _appname="lottery";
 			sub.insertTest(_appname);
@@ -3985,6 +3989,80 @@ var sub={
 							})
 						break;
 				}
+			}
+		},
+		pxmovie:{
+			getList:function(message,sender,sendResponse){
+				fetch("https://www.poxiao.com/")
+					.then(response=>response.blob())
+					.then(blob=>{
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							var htmlData = reader.result;
+							htmlData=(new window.DOMParser()).parseFromString(htmlData,"text/html");
+							console.log(htmlData);
+							var data=[];
+							var _doms=htmlData.querySelectorAll(".container .content ul")[0].querySelectorAll("li");
+							for(var i=0;i<_doms.length;i++){
+								var _data=[];
+								for(var ii=0;ii<_doms[i].childNodes.length;ii++){
+									_data.push(DOMPurify.sanitize(_doms[i].childNodes[ii].textContent));
+								}
+								_data.push("https://www.poxiao.com"+_doms[i].childNodes[2].getAttribute("href"))
+								data.push(_data);
+							}
+							console.log(data)
+							chrome.tabs.sendMessage(sender.tab.id,{type:"list",value:data});
+						}
+						reader.readAsText(blob, 'GBK') 
+					})
+			},
+			getData:function(message,sender,sendResponse){
+				fetch(message.value)
+					.then(response=>response.blob())
+					.then(blob=>{
+						let reader = new FileReader();
+						reader.onload = function(e) {
+							let htmlData = reader.result;
+							htmlData=(new window.DOMParser()).parseFromString(htmlData,"text/html");
+							console.log(htmlData);
+							let data={
+								info:[],
+								dl:[],
+								des:"",
+								name:""
+							};
+							let domInfos=htmlData.querySelector(".container .detail_intro tbody").querySelectorAll("tr");
+							for(var i=0;i<domInfos.length;i++){
+								var _doms=domInfos[i].querySelectorAll("td"),
+									_data=[];
+								for(var ii=0;ii<_doms.length;ii++){
+									if(_doms[ii].childNodes.length>1){
+										for(var iii=0;iii<_doms[ii].childNodes.length;iii++){
+											_data.push(DOMPurify.sanitize(_doms[ii].childNodes[iii].textContent));
+										}
+									}else{
+										_data.push(DOMPurify.sanitize(_doms[ii].textContent));
+									}
+								}
+								data.info.push(_data);
+							}
+
+							let domDls=htmlData.querySelector(".container #ziy .resourcesmain tbody").querySelectorAll("tr");
+							for(var i=0;i<domDls.length-1;i++){
+								var _data=[];
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td ").textContent));
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td input").value.substr(6)));
+								data.dl.push(_data)
+							}
+
+							data.des=DOMPurify.sanitize(htmlData.querySelectorAll(".filmcontents p")[1].textContent);
+							data.name=DOMPurify.sanitize(htmlData.querySelector(".container #film h1").childNodes[0].textContent);
+
+							chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data});
+						}
+						reader.readAsText(blob, 'GBK') 
+					})
 			}
 		}
 	}
