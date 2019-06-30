@@ -1,10 +1,11 @@
 {
 	"log": [
 		{
-			"ver":"6.3.744.880",
-			"date":"2019.06.07",
+			"ver":"6.3.770.881",
+			"date":"2019.06.30",
 			"content":[
-				"new mini-apps: pxmovie"
+				"new mini-apps: pxmovie",
+				"fix bugs"
 			]
 		},
 		{

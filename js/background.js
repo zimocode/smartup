@@ -3839,6 +3839,9 @@ var sub={
 						break;
 					case"disableall":
 						for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
+							if(sub.cons.extmgm.ext_enabled[i].id==chrome.runtime.id){
+								continue;
+							}
 							chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
 						}
 						break;

@@ -166,8 +166,9 @@ sue.apps.rss={
 	menu:function(dom){
 		console.log("subitem")
 		var domlist=sue.apps.getAPPboxEle(dom).querySelector(".sub_items");
-		domlist.textContent="";
+		//domlist.textContent="";
 		chrome.storage.local.get(function(items){
+			domlist.textContent="";
 			var feed=sue.apps.rss.config.feed;
 			var feedtitle=items.localConfig.apps.rss.feedtitle;
 			console.log(feedtitle)
