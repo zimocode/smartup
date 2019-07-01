@@ -2318,7 +2318,10 @@ var sub={
 		},
 
 		//mini apps
-
+		convertcase:function(){
+			var _appname="convertcase";
+			sub.insertTest(_appname);
+		},
 		pxmovie:function(){
 			var _appname="pxmovie";
 			sub.insertTest(_appname);
@@ -2441,7 +2444,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);

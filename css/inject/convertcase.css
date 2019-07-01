@@ -1,0 +1,12 @@
+smartup.su_apps#su_apps_convertcase .su_convertcase_box{
+	text-align: center;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_convertcase textarea{
+	width: 240px;
+	height: 60px;
+}
+smartup.su_apps#su_apps_convertcase button{
+	display: inline-block;
+	margin: 8px;
+}

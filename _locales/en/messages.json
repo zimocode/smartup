@@ -1484,5 +1484,14 @@
   },
   "pxmovie":{
     "message":"Poxiao Movie recent update"
+  },
+  "convertcase":{
+    "message":"Convert Case"
+  },
+  "btn_upper":{
+    "message":"UPPER CASE"
+  },
+  "btn_lower":{
+    "message":"LOWER CASE"
   }
 }

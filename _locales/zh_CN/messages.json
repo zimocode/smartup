@@ -1453,5 +1453,14 @@
   },
   "pxmovie":{
     "message":"破晓电影最近更新"
+  },
+  "convertcase":{
+    "message":"大小写字母转换"
+  },
+  "btn_upper":{
+    "message":"大写"
+  },
+  "btn_lower":{
+    "message":"小写"
   }
 }

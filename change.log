@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.3.770.882",
+			"date":"2019.07.01",
+			"content":[
+				"new mini-apps: convert case"
+			]
+		},
+		{
 			"ver":"6.3.770.881",
 			"date":"2019.06.30",
 			"content":[
