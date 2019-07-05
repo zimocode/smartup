@@ -1493,5 +1493,14 @@
   },
   "btn_lower":{
     "message":"LOWER CASE"
+  },
+  "btn_start":{
+    "message":"START"
+  },
+  "autoreload":{
+    "message":"Auto Reload"
+  },
+  "autoreload_interval":{
+    "message":"Reload intervals in seconds:"
   }
 }

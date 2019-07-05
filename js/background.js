@@ -2318,6 +2318,10 @@ var sub={
 		},
 
 		//mini apps
+		autoreload:function(){
+			var _appname="autoreload";
+			sub.insertTest(_appname);
+		},
 		convertcase:function(){
 			var _appname="convertcase";
 			sub.insertTest(_appname);
@@ -2444,7 +2448,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -3698,6 +3702,19 @@ var sub={
 		sub.apps[message.app][message.action](message,sendResponse);
 	},
 	apps:{
+		autoreload:{
+			reload:function(message,sender,sendResponse){
+				if(message.value.type=="start"){
+					if(!sub.cons.autoreload){sub.cons.autoreload={}}
+					window.clearInterval(sub.cons.autoreload[sender.tab.id]);
+					sub.cons.autoreload[sender.tab.id]=window.setInterval(function(){
+						chrome.tabs.reload(sender.tab.id);
+					},message.value.interval*1000)
+				}else{
+					window.clearInterval(sub.cons.autoreload[sender.tab.id]);
+				}
+			}
+		},
 		rss:{
 			getMessage:function(message,sender,sendResponse){
 				console.log(message);
@@ -4182,7 +4199,9 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 			}
 		});
 	}
-
+})
+chrome.tabs.onRemoved.addListener(function(tabId){
+	(sub.cons.autoreload&&sub.cons.autoreload[tabId])?window.clearInterval(sub.cons.autoreload[tabId]):null;
 })
 chrome.runtime.onMessageExternal.addListener(function(message,sender,sendResponse){
 	sub.funOnMessage(message,sender,sendResponse);

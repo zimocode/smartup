@@ -1,0 +1,41 @@
+smartup.su_apps#su_apps_autoreload .su_autoreload_box{
+	width: 320px;
+	padding: 8px;
+	text-align: center;
+}
+smartup.su_apps#su_apps_autoreload .su_autoreload_box::after{
+	content: "";
+	clear: both;
+}
+smartup.su_apps#su_apps_autoreload input[type=number]{
+	height: 20px;
+	width: 80px;
+	padding: 0;
+	margin: 4px 0 6px 0;
+}
+smartup.su_apps#su_apps_autoreload #divleft{
+	float: left;
+	padding-right: 8px;
+	border-right: 1px solid #cccccc54;
+	margin-bottom: 8px;
+}
+smartup.su_apps#su_apps_autoreload #btnbox{
+	margin: 8px 0;
+}
+smartup.su_apps#su_apps_autoreload #countdownbox{
+    border: 1px solid red;
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    float: right;
+    line-height: 64px;
+	position: absolute;
+    top: 32px;
+    right: 16px;
+}
+smartup.su_apps#su_apps_autoreload #desbox{
+	clear: both;
+	text-align: left;
+	font-size: 12px;
+	color: #777;
+}

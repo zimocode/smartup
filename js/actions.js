@@ -94,6 +94,8 @@ let actions={
 			{name:"jslist"},
 			{name:"savepdf"},
 			{name:"lottery"},
+			{name:"convertcase"},
+			{name:"autoreload"},
 			{name:"appslist"}
 			/*{name:"gmail"},
 			{name:"ary"},
