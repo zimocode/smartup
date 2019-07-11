@@ -3705,11 +3705,29 @@ var sub={
 		autoreload:{
 			reload:function(message,sender,sendResponse){
 				if(message.value.type=="start"){
-					if(!sub.cons.autoreload){sub.cons.autoreload={}}
-					window.clearInterval(sub.cons.autoreload[sender.tab.id]);
-					sub.cons.autoreload[sender.tab.id]=window.setInterval(function(){
+					if(!sub.cons.autoreload){
+						sub.cons.autoreload={};
+						sub.cons.autoreload[sender.tab.id]={};
+					}
+					window.clearInterval(sub.cons.autoreload[sender.tab.id].timer);
+
+					sub.cons.autoreload[sender.tab.id].interval=message.value.interval;
+					sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
+						sub.cons.autoreload[sender.tab.id].interval--;
+						chrome.browserAction.setBadgeText({text:sub.cons.autoreload[sender.tab.id].interval.toString(),tabId:sender.tab.id});
+					},1000)
+					sub.cons.autoreload[sender.tab.id].timer=window.setInterval(function(){
 						chrome.tabs.reload(sender.tab.id);
+						sub.cons.autoreload[sender.tab.id].interval=message.value.interval;
+						sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
+							sub.cons.autoreload[sender.tab.id].interval--;
+							chrome.browserAction.setBadgeText({text:sub.cons.autoreload[sender.tab.id].interval.toString(),tabId:sender.tab.id});
+						},1000)
+						//sub.cons.autoreload[sender.tab.id].interval=message.value.interval;
 					},message.value.interval*1000)
+
+
+
 				}else{
 					window.clearInterval(sub.cons.autoreload[sender.tab.id]);
 				}
@@ -4201,7 +4219,11 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 	}
 })
 chrome.tabs.onRemoved.addListener(function(tabId){
-	(sub.cons.autoreload&&sub.cons.autoreload[tabId])?window.clearInterval(sub.cons.autoreload[tabId]):null;
+	if(sub.cons.autoreload&&sub.cons.autoreload[tabId]){
+		window.clearInterval(sub.cons.autoreload[tabId].timer);
+		window.clearInterval(sub.cons.autoreload[tabId].countDown);
+	}
+	//(sub.cons.autoreload&&sub.cons.autoreload[tabId])?window.clearInterval(sub.cons.autoreload[tabId]):null;
 })
 chrome.runtime.onMessageExternal.addListener(function(message,sender,sendResponse){
 	sub.funOnMessage(message,sender,sendResponse);

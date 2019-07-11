@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22",
 	"name": "smartUp Gestures(Beta)",
 	"short_name":"smartUp",
-	"version": "6.3.744.882",
+	"version": "6.3.744.883",
 	"description": "__MSG_ext_des__",
 	"default_locale": "en",
 	"author":"zimo",
@@ -43,5 +43,5 @@
 	],
 	"incognito": "split",
 	"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts"],
-	"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","browserSettings"]
+	"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"]
 }
