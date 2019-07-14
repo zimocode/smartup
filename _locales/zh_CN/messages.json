@@ -1462,5 +1462,20 @@
   },
   "btn_lower":{
     "message":"小写"
+  },
+  "btn_start":{
+    "message":"开始"
+  },
+  "autoreload":{
+    "message":"自动刷新"
+  },
+  "autoreload_interval":{
+    "message":"刷新间隔时间（秒）:"
+  },
+  "autoreload_cache":{
+    "message":"忽略本地缓存"
+  },
+  "autoreload_icon":{
+    "message":"在扩展图标上显示刷新倒计时"
   }
 }

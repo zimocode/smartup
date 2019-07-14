@@ -1502,5 +1502,11 @@
   },
   "autoreload_interval":{
     "message":"Reload intervals in seconds:"
+  },
+  "autoreload_cache":{
+    "message":"Bypass cache"
+  },
+  "autoreload_icon":{
+    "message":"Show countdown on icon"
   }
 }

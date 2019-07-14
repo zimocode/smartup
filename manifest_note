@@ -2,7 +2,7 @@
 //chrome
 "incognito": "split",
 "permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts"],
-"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","browserSettings"]
+"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"]
 
 //firefox
 "permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts","downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"],

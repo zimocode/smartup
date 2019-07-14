@@ -1,10 +1,10 @@
 {
 	"log": [
 		{
-			"ver":"6.3.770.882",
-			"date":"2019.07.01",
+			"ver":"6.3.873.886",
+			"date":"2019.07.14",
 			"content":[
-				"new mini-apps: convert case"
+				"new mini-apps: convert case, auto reload."
 			]
 		},
 		{

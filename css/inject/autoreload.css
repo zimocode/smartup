@@ -1,5 +1,5 @@
 smartup.su_apps#su_apps_autoreload .su_autoreload_box{
-	width: 320px;
+	width: 360px;
 	padding: 8px;
 	text-align: center;
 }
@@ -13,27 +13,34 @@ smartup.su_apps#su_apps_autoreload input[type=number]{
 	padding: 0;
 	margin: 4px 0 6px 0;
 }
-smartup.su_apps#su_apps_autoreload #divleft{
-	float: left;
+smartup.su_apps#su_apps_autoreload #su_autoreload_divleft{
+	/*float: left;*/
+	margin-right: 85px;
 	padding-right: 8px;
 	border-right: 1px solid #cccccc54;
 	margin-bottom: 8px;
 }
-smartup.su_apps#su_apps_autoreload #btnbox{
+smartup.su_apps#su_apps_autoreload #su_autoreload_interval{
+	padding-left: 8px;
+}
+smartup.su_apps#su_apps_autoreload #su_autoreload_btnbox{
 	margin: 8px 0;
 }
-smartup.su_apps#su_apps_autoreload #countdownbox{
-    border: 1px solid red;
+smartup.su_apps#su_apps_autoreload #su_autoreload_countdownbox{
+    /*border: 1px solid red;*/
     height: 64px;
     width: 64px;
     border-radius: 50%;
-    float: right;
+    /*float: right;*/
     line-height: 64px;
 	position: absolute;
     top: 32px;
     right: 16px;
+    background-color: #597afc;
+    color: #fff;
+    font-weight: bold;
 }
-smartup.su_apps#su_apps_autoreload #desbox{
+smartup.su_apps#su_apps_autoreload #su_autoreload_desbox{
 	clear: both;
 	text-align: left;
 	font-size: 12px;
