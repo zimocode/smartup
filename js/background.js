@@ -1763,9 +1763,17 @@ var sub={
 					break;
 			}
 			var _engine=config.general.engine.txtengine[theEngine].content;
-			theURL=_engine.replace(/%s/g,enTxt);
-
-			sub.open(theURL,theTarget,theIndex,thePin);
+			if (_engine.match(/%hostname/g)) {
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					var activeTab = tabs[0];
+					theURL=_engine.replace(/%hostname/g, new URL(activeTab.url).hostname);					
+					theURL=theURL.replace(/%s/g,enTxt)
+					sub.open(theURL,theTarget,theIndex,thePin);
+				 });
+			} else {
+				theURL=_engine.replace(/%s/g,enTxt)
+				sub.open(theURL,theTarget,theIndex,thePin);
+			}
 		},
 		txtsearchclip:function(){
 			console.log("txtsearchclip")

@@ -1483,7 +1483,8 @@ var suo={
 			if(actionType=="script"){
 				domDes.querySelector("ul").appendChild(suo.domCreate2("li","",null,null,null,"content: type or paste any code which you want."));
 			}else{
-				domDes.querySelector("ul").appendChild(suo.domCreate2("li","",null,null,null,"content: use %s to instead of keywords/image url. you may find some search engines from: chrome://settings/searchEngines."));
+				domDes.querySelector("ul").appendChild(suo.domCreate2("li","",null,null,null,"content: use %s to instead of keywords/image url.\nuse %hostname to replaced by current tab's url hostname."));
+				domDes.querySelector("ul").appendChild(suo.domCreate2("li","",null,null,null,"You may find some search engines from: chrome://settings/searchEngines."));
 			}
 		//}else if(["mges","tsdrg","lsdrg","isdrg","tdrg","ldrg","idrg"].contains(actionType)){
 		}else if(actionArray.contains(actionType)){
