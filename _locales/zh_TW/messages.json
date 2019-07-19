@@ -317,6 +317,9 @@
   "s_tabele_url":{
     "message":"分頁網址"
   },
+  "s_tabele_title_and_url":{
+    "message":"分頁標題與網址"
+  },
   "s_tabele_aslnk":{
     "message":"當作連結"
   },

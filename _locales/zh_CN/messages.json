@@ -317,6 +317,9 @@
   "s_tabele_url":{
     "message":"标签页的网址"
   },
+  "s_tabele_title_and_url":{
+    "message":"标签页的标题和地址"
+  },
   "s_tabele_aslnk":{
     "message":"作为链接"
   },

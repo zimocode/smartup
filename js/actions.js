@@ -215,7 +215,7 @@ let actionOptions={
 		n_pin:["s_unpin","s_pinned"],
 		n_effect:["s_on","s_off"],
 		n_jq:["s_yes","s_no"],
-		n_copytabele_content:["s_tabele_title","s_tabele_url","s_tabele_aslnk"],
+		n_copytabele_content:["s_tabele_title","s_tabele_url","s_tabele_aslnk","s_tabele_title_and_url"],
 		n_crpages:["s_cr_set","s_cr_ext","s_cr_history","s_cr_app","s_cr_bookmark","s_cr_dl","s_cr_flag"],
 		n_dlbar:["s_yes","s_no"],
 		n_encoding:["s_none","s_unicode","s_uri","s_uric"],

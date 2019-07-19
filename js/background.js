@@ -1614,6 +1614,9 @@ var sub={
 						case"s_tabele_aslnk":
 							clipOBJ.value='<a href="'+cptarget.url+'">'+cptarget.title+'<\/a>';
 							break;
+						case"s_tabele_title_and_url":
+							clipOBJ.value=cptarget.title+' '+cptarget.url;
+							break;
 					}	
 					clipOBJ.select();
 					document.execCommand('copy', false, null);

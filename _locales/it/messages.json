@@ -320,6 +320,9 @@
   "s_tabele_url":{
     "message":"URL della scheda"
   },
+  "s_tabele_title_and_url":{
+    "message":"Titolo e URL della scheda"
+  },
   "s_tabele_aslnk":{
     "message":"Come link"
   },
