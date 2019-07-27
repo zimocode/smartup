@@ -2320,7 +2320,6 @@ var sub={
 		//mini apps
 		autoreload:function(){
 			var _appname="autoreload";
-			sub.initAppconf(_appname);
 			sub.insertTest(_appname);
 		},
 		convertcase:function(){

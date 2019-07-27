@@ -2390,6 +2390,13 @@ var suo={
 		}
 		var testdes=suo.getI18n("test_"+((confArray[0]=="mges"||confArray[0]=="touch")?"mges":confArray[1]));
 		var btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_done")];
+		let testDom=suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes);
+		if(confArray[1]=="ldrg"){
+			testDom.textContent="";
+			testDom.appendChild(suo.domCreate2("a",{setName:["href"],setValue:["###"]},null,null,null,suo.getI18n("test_ldrg")));
+		}else if(confArray[1]=="idrg"){
+			testDom.appendChild(suo.domCreate2("img",{setName:["src"],setValue:["../icon.png"]}));
+		}
 		var addOBJ=suo.initAPPbox(btnArray,[480,320],suo.getI18n("title_newaction"),"bg");
 			addOBJ.classList.add("su_app_test");
 			addOBJ.dataset.confobj=confobj;
@@ -2397,7 +2404,7 @@ var suo={
 			addOBJ.dataset.close="resetdirect";
 			addOBJ.dataset.actiontype=actionType;
 			addOBJ.querySelectorAll("input[type=button]")[1].className="box_btn box_btn_next";
-			addOBJ.querySelector(".box_content").appendChild(suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes));
+			addOBJ.querySelector(".box_content").appendChild(testDom);
 		//when adding drag text, set the test text can be drag.
 		if(confArray[1]=="tdrg"){
 			addOBJ.style.cssText+="-webkit-user-select:text;-moz-user-select:text;user-select:text;";

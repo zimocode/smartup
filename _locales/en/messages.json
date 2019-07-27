@@ -918,10 +918,10 @@
     "message": "This is a bunch of test text, select the text and drag to draw the line, and then select the action you need."
   },
   "test_ldrg": {
-    "message": "<a href='###'> This is a test link, drag the link and draw lines, and select action you need. </ A>"
+    "message": "This is a test link, drag the link and draw lines, and select action you need."
   },
   "test_idrg": {
-    "message": "This is a test image, drag the image and draw the line, and then select the action you need: <img src='../icon.png' />"
+    "message": "This is a test image, drag the image and draw the line, and then select the action you need: "
   },
   "tip_actionname": {
     "message": "Customization action name"
