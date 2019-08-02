@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22",
 	"name": "__MSG_ext_name__",
 	"short_name":"smartUp",
-	"version": "6.3.744.881",
+	"version": "6.4.887.1001",
 	"description": "__MSG_ext_des__",
 	"default_locale": "en",
 	"author":"zimo",
@@ -43,5 +43,5 @@
 	],
 	"incognito": "split",
 	"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts"],
-	"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","browserSettings"]
+	"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"]
 }

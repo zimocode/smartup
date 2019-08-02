@@ -915,10 +915,10 @@
     "message": "这是一段测试文本，选中文本并拖曳画线，然后选择你所需要的操作即可。"
   },
   "test_ldrg": {
-    "message": "<a href='###'>这是一个测试链接，拖动此链接并画线，然后选择你所需要的操作。</ a>"
+    "message": "这是一个测试链接，拖动此链接并画线，然后选择你所需要的操作。"
   },
   "test_idrg": {
-    "message": "这是测试用图片，拖动改图片并画线，然后选择所需操作： <img src='../icon.png' />"
+    "message": "这是测试用图片，拖动改图片并画线，然后选择所需操作："
   },
   "tip_actionname": {
     "message": "使用自定义操作名称"
@@ -1453,5 +1453,29 @@
   },
   "pxmovie":{
     "message":"破晓电影最近更新"
+  },
+  "convertcase":{
+    "message":"大小写字母转换"
+  },
+  "btn_upper":{
+    "message":"大写"
+  },
+  "btn_lower":{
+    "message":"小写"
+  },
+  "btn_start":{
+    "message":"开始"
+  },
+  "autoreload":{
+    "message":"自动刷新"
+  },
+  "autoreload_interval":{
+    "message":"刷新间隔时间（秒）:"
+  },
+  "autoreload_cache":{
+    "message":"忽略本地缓存"
+  },
+  "autoreload_icon":{
+    "message":"在扩展图标上显示刷新倒计时"
   }
 }

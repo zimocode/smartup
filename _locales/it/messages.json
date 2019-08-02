@@ -918,10 +918,10 @@
     "message": "Questo è un testo d'esempio. Selezionare il testo e trascinare per tratteggiare la linea, e selezionare l'azione richiesta."
   },
   "test_ldrg": {
-    "message": "<a href='###'> Questo è un link d'esempio, trascinare il link e tratteggiare linee, e selezionare l'azione richiesta.</A>"
+    "message": "Questo è un link d'esempio, trascinare il link e tratteggiare linee, e selezionare l'azione richiesta."
   },
   "test_idrg": {
-    "message": "Questa è un'immagine d'esempio. Trascinare l'immagine e tratteggiare la linea, e selezionare l'azione richiesta: <img src='../icon.png' />"
+    "message": "Questa è un'immagine d'esempio. Trascinare l'immagine e tratteggiare la linea, e selezionare l'azione richiesta:"
   },
   "tip_actionname": {
     "message": "Nome azione personalizzata"

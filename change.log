@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"6.4.887.1001",
+			"date":"2019.07.27",
+			"content":[
+				"new mini-apps: convert case, auto reload.",
+				"fix bugs: Can't add super drag for links and images"
+			]
+		},
+		{
 			"ver":"6.3.770.881",
 			"date":"2019.06.30",
 			"content":[

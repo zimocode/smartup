@@ -68,7 +68,7 @@ sue.apps.pxmovie={
 		let _data=dom.querySelector(".data"),
 			_loading=dom.querySelector(".loading"),
 			_name=sue.domCreate("div",{setName:["className"],setValue:["name"]},null,null,null,value.name),
-			_back=sue.apps.domCreate("button",{setName:["className"],setValue:["back"]},null,"display: inline-block;",null,sue.apps.i18n("back"));
+			_back=sue.apps.domCreate("button",{setName:["className"],setValue:["back"]},null,"display: inline-block;",null,sue.apps.i18n("btn_back"));
 			_info=sue.apps.domCreate("div",{setName:["className"],setValue:["info"]});
 		_data.textContent="";
 		_data.appendChild(_name);

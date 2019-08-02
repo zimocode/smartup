@@ -28,7 +28,8 @@ smartup.su_apps a{
 }
 
 
-smartup.su_apps input[type=text]{
+smartup.su_apps input[type=text],
+smartup.su_apps input[type=number]{
 	border: 1px solid #d0d9ff;
 	height: 26px;
 	border-radius: 3px;

@@ -2318,7 +2318,14 @@ var sub={
 		},
 
 		//mini apps
-
+		autoreload:function(){
+			var _appname="autoreload";
+			sub.insertTest(_appname);
+		},
+		convertcase:function(){
+			var _appname="convertcase";
+			sub.insertTest(_appname);
+		},
 		pxmovie:function(){
 			var _appname="pxmovie";
 			sub.insertTest(_appname);
@@ -2441,7 +2448,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -3695,6 +3702,51 @@ var sub={
 		sub.apps[message.app][message.action](message,sendResponse);
 	},
 	apps:{
+		autoreload:{
+			reload:function(message,sender,sendResponse){
+				if(message.value.type=="start"){
+					if(!sub.cons.autoreload){
+						sub.cons.autoreload={};
+						sub.cons.autoreload[sender.tab.id]={};
+					}else if(!sub.cons.autoreload[sender.tab.id]){
+						sub.cons.autoreload[sender.tab.id]={};
+					}
+					this.clear(message,sender,sendResponse);
+					sub.cons.autoreload[sender.tab.id].timeRemain=message.value.interval;
+					sub.cons.autoreload[sender.tab.id].iconCountdown=message.value.iconCountdown;
+					sub.cons.autoreload[sender.tab.id].bypassCache=message.value.bypassCache;
+					
+					if(sub.cons.autoreload[sender.tab.id].iconCountdown){
+						chrome.browserAction.setBadgeText({text:sub.cons.autoreload[sender.tab.id].timeRemain.toString(),tabId:sender.tab.id});
+						sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
+							sub.cons.autoreload[sender.tab.id].timeRemain--;
+							chrome.browserAction.setBadgeText({text:sub.cons.autoreload[sender.tab.id].timeRemain.toString(),tabId:sender.tab.id});
+						},1000);
+					}else{
+						sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
+							sub.cons.autoreload[sender.tab.id].timeRemain--;
+						},1000)	
+					}
+					sub.cons.autoreload[sender.tab.id].timer=window.setInterval(function(){
+						chrome.tabs.reload(sender.tab.id,{bypassCache:sub.cons.autoreload[sender.tab.id].bypassCache});
+						sub.cons.autoreload[sender.tab.id].timeRemain=message.value.interval+1;
+					},message.value.interval*1000)
+				}else{
+					this.clear(message,sender,sendResponse);
+				}
+			},
+			clear:function(message,sender,sendResponse){
+				if(sub.cons.autoreload&&sub.cons.autoreload[sender.tab.id]){
+					window.clearInterval(sub.cons.autoreload[sender.tab.id].timer);
+					window.clearInterval(sub.cons.autoreload[sender.tab.id].countDown);
+					sub.cons.autoreload[sender.tab.id].timeRemain=0;
+				}
+				chrome.browserAction.setBadgeText({text:"",tabId:sender.tab.id});
+			},
+			getConf:function(message,sender,sendResponse){
+				sendResponse({config:config.apps[message.app],value:sub.cons[message.app],tabId:sender.tab.id});
+			}
+		},
 		rss:{
 			getMessage:function(message,sender,sendResponse){
 				console.log(message);
@@ -4179,7 +4231,13 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 			}
 		});
 	}
-
+})
+chrome.tabs.onRemoved.addListener(function(tabId){
+	if(sub.cons.autoreload&&sub.cons.autoreload[tabId]){
+		window.clearInterval(sub.cons.autoreload[tabId].timer);
+		window.clearInterval(sub.cons.autoreload[tabId].countDown);
+	}
+	//(sub.cons.autoreload&&sub.cons.autoreload[tabId])?window.clearInterval(sub.cons.autoreload[tabId]):null;
 })
 chrome.runtime.onMessageExternal.addListener(function(message,sender,sendResponse){
 	sub.funOnMessage(message,sender,sendResponse);
