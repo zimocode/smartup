@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.4.1103.1003",
+			"date":"2019.08.13",
+			"content":[
+				"fix bugs: error in Trusted Types API environment."
+			]
+		},
+		{
 			"ver":"6.4.887.1001",
 			"date":"2019.07.27",
 			"content":[

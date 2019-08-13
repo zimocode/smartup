@@ -3755,6 +3755,7 @@ var sub={
 					.then(response => response.text())
 					.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
 					.then(xmlData=>{
+						sub.testdata=xmlData
 						let data={};
 						let replace_cdata=function(str){
 							let newstr;
@@ -3763,9 +3764,9 @@ var sub={
 							return newstr;
 						}
 						data={
-							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent):"noname"),
-							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent):""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent):chrome.runtime.getURL("/image/rss.png"))
+							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent).toString():"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent).toString():""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.png"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
@@ -3775,7 +3776,7 @@ var sub={
 						    var _object={};
 							for(var ii=0;ii<_nodes.length;ii++){
 								if(_nodes[ii].tagName){
-									_object[_nodes[ii].tagName.toLowerCase()]=DOMPurify.sanitize(replace_cdata(_nodes[ii].textContent));
+									_object[_nodes[ii].tagName.toLowerCase()]=DOMPurify.sanitize(replace_cdata(_nodes[ii].textContent)).toString();
 								}
 							}
 							data.items.push(_object);
@@ -3932,16 +3933,14 @@ var sub={
 							.then(response => response.text())
 							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
 							.then(htmlData=>{
-								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("td");
 								var data=[];
 								for(var i=5;i<12;i++){
-									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent).toString());
 								}
 								return data;
 							})
 							.then(data=>{
-								console.log(data);
 								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data,lotteryType:message.value.type});
 							})
 						break;
@@ -3960,9 +3959,10 @@ var sub={
 							.then(htmlData=>{
 								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("td");
+								console.log(_options)
 								var data=[];
 								for(var i=5;i<8;i++){
-									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent).toString());
 								}
 								return data;
 							})
@@ -4009,7 +4009,7 @@ var sub={
 								console.log(_options)
 								var data=[];
 								for(var i=0;i<_options.length;i++){
-									data.push(DOMPurify.sanitize(_options[i].value));
+									data.push(DOMPurify.sanitize(_options[i].value).toString());
 								}
 								return data;
 							})
@@ -4021,7 +4021,7 @@ var sub={
 						var formData = new FormData();
 							formData.append("lottery_type", "3d");
 							formData.append("r", 1522867870);
-							formData.append("no", "2019144");
+							formData.append("no", "2019217");
 						var _options={
 							method:"POST",
 							body:formData
@@ -4030,13 +4030,13 @@ var sub={
 							.then(response => response.text())
 							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
 							.then(htmlData=>{
-								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("#no option");
 								console.log(_options)
 								var data=[];
 								for(var i=0;i<_options.length;i++){
-									data.push(DOMPurify.sanitize(_options[i].value));
+									data.push(DOMPurify.sanitize(_options[i].value).toString());
 								}
+								console.log(data)
 								return data;
 							})
 							.then(data=>{
@@ -4061,7 +4061,7 @@ var sub={
 							for(var i=0;i<_doms.length;i++){
 								var _data=[];
 								for(var ii=0;ii<_doms[i].childNodes.length;ii++){
-									_data.push(DOMPurify.sanitize(_doms[i].childNodes[ii].textContent));
+									_data.push(DOMPurify.sanitize(_doms[i].childNodes[ii].textContent).toString());
 								}
 								_data.push("https://www.poxiao.com"+_doms[i].childNodes[2].getAttribute("href"))
 								data.push(_data);
@@ -4094,10 +4094,10 @@ var sub={
 								for(var ii=0;ii<_doms.length;ii++){
 									if(_doms[ii].childNodes.length>1){
 										for(var iii=0;iii<_doms[ii].childNodes.length;iii++){
-											_data.push(DOMPurify.sanitize(_doms[ii].childNodes[iii].textContent));
+											_data.push(DOMPurify.sanitize(_doms[ii].childNodes[iii].textContent).toString());
 										}
 									}else{
-										_data.push(DOMPurify.sanitize(_doms[ii].textContent));
+										_data.push(DOMPurify.sanitize(_doms[ii].textContent).toString());
 									}
 								}
 								data.info.push(_data);
@@ -4106,13 +4106,13 @@ var sub={
 							let domDls=htmlData.querySelector(".container #ziy .resourcesmain tbody").querySelectorAll("tr");
 							for(var i=0;i<domDls.length-1;i++){
 								var _data=[];
-								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td ").textContent));
-								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td input").value.substr(6)));
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td ").textContent).toString());
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td input").value.substr(6)).toString());
 								data.dl.push(_data)
 							}
 
-							data.des=DOMPurify.sanitize(htmlData.querySelectorAll(".filmcontents p")[1].textContent);
-							data.name=DOMPurify.sanitize(htmlData.querySelector(".container #film h1").childNodes[0].textContent);
+							data.des=DOMPurify.sanitize(htmlData.querySelectorAll(".filmcontents p")[1].textContent).toString();
+							data.name=DOMPurify.sanitize(htmlData.querySelector(".container #film h1").childNodes[0].textContent).toString();
 
 							chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data});
 						}

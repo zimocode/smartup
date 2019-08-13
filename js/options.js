@@ -2561,7 +2561,7 @@ var suo={
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
 							let items=JSON.parse(DOMPurify.sanitize(xhr.response));
-							console.log("initxhr")
+							console.log(items)
 							if(items.options.on){
 								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
 									suo.cons.xhrDonate=items;
