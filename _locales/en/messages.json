@@ -1508,5 +1508,17 @@
   },
   "autoreload_icon":{
     "message":"Show countdown on icon"
+  },
+  "homepage":{
+    "message":"Home Page"
+  },
+  "n_homepage_icon":{
+    "message":"Show icon within item"
+  },
+  "n_homepage_bg":{
+    "message":"Show background image with Bing"
+  },
+  "n_homepage_resize":{
+    "message":"Resize window to display background image better"
   }
 }

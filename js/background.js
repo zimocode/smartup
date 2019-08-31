@@ -854,7 +854,8 @@ var appConfmodel={
 	appslist:{n_closebox:true},
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
-	jslist:{n_closebox:true}
+	jslist:{n_closebox:true},
+	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]}
 }
 
 var sub={
@@ -2318,6 +2319,19 @@ var sub={
 		},
 
 		//mini apps
+		homepage:function(){
+			var theFunction=function(){
+				var _appname="homepage";
+				sub.initAppconf(_appname);
+				chrome.topSites.get(function(sites){
+					sub.cons[_appname]=sites;
+					sub.insertTest(_appname);
+				});
+			}
+			var thepers=["topSites"];
+			var theorgs;
+			sub.checkPermission(thepers,theorgs,theFunction);		
+		},
 		autoreload:function(){
 			var _appname="autoreload";
 			sub.insertTest(_appname);
@@ -2448,7 +2462,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
@@ -4117,6 +4131,100 @@ var sub={
 							chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data});
 						}
 						reader.readAsText(blob, 'GBK') 
+					})
+			}
+		},
+		homepage:{
+			openItem:function(message,sender,sendResponse){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			},
+			DBAction:function(method/*get or put*/,data,sender){
+				//console.log("data");
+				let request = indexedDB.open("su", 1),
+					db;
+				let setData=function(db){
+					let put=function(db){
+						console.log(method);
+						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
+						let addDB=dbobj.put({
+							url:data.imageURL,
+							base64:data.base64,
+							copyrightString:data.copyrightString,
+							copyrightURL:data.copyrightURL,
+							id:0
+						});
+					}
+					let get=function(db){
+						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
+						let dbget=dbobj.get(0);
+						dbget.onsuccess=function(e){
+							if(!e.target.result){return;}
+							let data={
+								imageURL:e.target.result.base64,
+								copyrightString:e.target.result.copyrightString,
+								copyrightURL:e.target.result.copyrightURL
+							}
+							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+						}
+					}
+					let setImage=function(data){
+						let dom=document.querySelector("homeimage"),
+							domCopyright=document.querySelector("#copyright");
+						dom.style.cssText+="background-image:url("+data.imageURL+");";
+						domCopyright.href=data.copyrightURL;
+						domCopyright.innerText=data.copyrightString;
+						dom.style.cssText+="opacity:1;";
+					}
+					method=="get"?get(db):put(db);
+				}
+				request.onupgradeneeded = function(e){
+					db=e.target.result;
+					var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
+					objectStore.transaction.oncomplete =function(event){
+						setData(db);
+					};
+				};
+				request.onsuccess=function(e){
+					//console.log("onsuccess");
+					db=e.target.result;
+					setData(db)
+				}
+			},
+			getImageURL:function(message,sender,sendResponse){
+				sub.apps.homepage.DBAction("get",null,sender);
+				fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
+					.then(response => response.text())
+					.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
+					.then(xmlData=>{
+						console.log(xmlData)
+						let data={
+							imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
+							copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
+							copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
+						};
+						console.log(data)
+						if(localStorage.getItem("homepageURL")!=data.imageURL){
+							localStorage.setItem("homepageURL",data.imageURL);
+							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+							sub.apps.homepage.getImage(message,sender,sendResponse,data);
+						}
+					})
+			},
+			getImage:function(message,sender,sendResponse,data){
+				fetch(data.imageURL)
+					.then(response=>response.blob())
+					.then(blob=>{
+						let reader = new FileReader();
+						reader.readAsDataURL(blob); 
+						reader.onloadend = function(){
+							console.log(reader.result)
+							data.base64=reader.result;
+							sub.apps.homepage.DBAction("put",data);
+						}
 					})
 			}
 		}
