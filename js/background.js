@@ -2319,6 +2319,10 @@ var sub={
 		},
 
 		//mini apps
+		tbkjx:function(){
+			var _appname="tbkjx";
+			sub.insertTest(_appname);
+		},
 		homepage:function(){
 			var theFunction=function(){
 				var _appname="homepage";
@@ -2464,6 +2468,7 @@ var sub={
 			var _obj={}
 			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
+			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
 		},
@@ -4226,6 +4231,22 @@ var sub={
 							sub.apps.homepage.DBAction("put",data);
 						}
 					})
+			}
+		},
+		tbkjx:{
+			getData:function(message,sender,sendResponse){
+				console.log("tbkjx.getdata");
+				let _url="https://quan.zimoapps.com/push/tbkjx.json";
+				let _date=new Date();
+				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
+				fetch(_url)
+					.then(response=>response.json())
+					.then(json=>{
+						chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+					})
+			},
+			itemOpen:function(message,sender,sendResponse){
+				sub.open(message.value);
 			}
 		}
 	}

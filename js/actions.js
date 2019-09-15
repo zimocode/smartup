@@ -97,6 +97,7 @@ let actions={
 			{name:"convertcase"},
 			{name:"autoreload"},
 			{name:"homepage"},
+			{name:"tbkjx"},
 			{name:"appslist"}
 			/*{name:"gmail"},
 			{name:"ary"},

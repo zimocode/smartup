@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"6.5.1226.1010",
+			"date":"2019.09.15",
+			"content":[
+				"new mini-apps: homepage,tbkjx.",
+				"fix bug: open about error form icon."
+			]
+		},
+		{
 			"ver":"6.4.1103.1003",
 			"date":"2019.08.13",
 			"content":[

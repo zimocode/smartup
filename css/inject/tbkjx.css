@@ -1,0 +1,121 @@
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_box{
+	width: 600px;
+	height: 420px;
+	padding: 8px;
+	height: 440px;
+	padding: 0;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxcontent{
+	float: left;
+	position: fixed;
+	/*border-right: 1px solid #ccf;*/
+	padding: 8px;
+	padding-right: 20px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxlist{
+	width: 224px;
+	height: 100%;
+	float: right;
+	background-color: #f7f3f3;
+}
+
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listhead{
+	position: fixed;
+width: 208px;
+    background-color: #f7f3f3;
+padding: 2px 8px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch{
+
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch input{
+	display: inline-block;
+	width: 90px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch button{
+	min-width: 10px;
+	width: 60px;
+	height: 24px;
+	line-height: 24px;
+	display: inline-block;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_headspan{
+    font-size: 10px;
+    color: #333;
+}
+
+
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_img{
+	height: 360px;
+	width: 360px;
+	display: block;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_name{
+	width: 360px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 16px;
+	color: #333;
+	padding: 4px 2px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_btnbox{
+    width: 360px;
+    margin: 0;
+	background-color: red;
+	color: #fff;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_btnbox:hover{
+	background-color: #fff;
+	color: red;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_spanprice{
+
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_price{
+	/*padding: 10px;*/
+	width: 100%;
+	text-align: center;
+	padding-bottom: 8px;
+	font-size: 24px;
+	padding-left: 8px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_buy{
+	padding-left: 8px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing{
+	padding-top: 72px
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing ul{
+	/*background-color: #ccf*/
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li{
+	width: 224px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+	box-sizing: border-box;
+	border: 1px solid rgba(204, 204, 255, 0.6);
+	border-radius: 2px;
+	padding: 0 8px;
+	margin: 1px 0;
+	font-size: 12px;
+	height: 32px;
+	line-height: 32px;
+	/*font-weight: bold;*/
+	cursor: pointer;
+	transition:all .1s ease-in-out;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li:hover{
+	border: 1px solid #ccc;
+	background-color: #fff;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listcurrent{
+	border-left: none !important;
+	font-weight: bold;
+	color: #151543;
+	/*margin-left: -16px !important;*/
+	background-color: #fff;
+	z-index: 100;
+}
