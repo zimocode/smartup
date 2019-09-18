@@ -1492,5 +1492,8 @@
   },
   "tbkjx":{
     "message":"领券购物"
+  },
+  "app_tbkjx_num":{
+    "message":"显示商品的数量"
   }
 }

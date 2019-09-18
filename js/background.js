@@ -855,7 +855,8 @@ var appConfmodel={
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
-	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]}
+	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]},
+	tbkjx:{n_num:50}
 }
 
 var sub={
@@ -2321,6 +2322,7 @@ var sub={
 		//mini apps
 		tbkjx:function(){
 			var _appname="tbkjx";
+			sub.initAppconf(_appname);
 			sub.insertTest(_appname);
 		},
 		homepage:function(){
@@ -4236,7 +4238,8 @@ var sub={
 		tbkjx:{
 			getData:function(message,sender,sendResponse){
 				console.log("tbkjx.getdata");
-				let _url="https://quan.zimoapps.com/push/tbkjx.json";
+				let _url="tbkjx.json";
+				//let _url="https://quan.zimoapps.com/push/tbkjx.json";
 				let _date=new Date();
 				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
 				fetch(_url)

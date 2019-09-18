@@ -38,6 +38,8 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch button{
 	height: 24px;
 	line-height: 24px;
 	display: inline-block;
+	float: right;
+	margin: 4px auto;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_headspan{
     font-size: 10px;
@@ -84,10 +86,11 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_buy{
 	padding-left: 8px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing{
-	padding-top: 72px
+	padding-top: 72px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing ul{
 	/*background-color: #ccf*/
+	padding-bottom: 40px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li{
 	width: 224px;
@@ -118,4 +121,30 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_listcurrent{
 	/*margin-left: -16px !important;*/
 	background-color: #fff;
 	z-index: 100;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom{
+	position: fixed;
+	width: 224px;
+	/*height: 40px;*/
+	margin-top: 328px;
+	background-color: #f7f3f3; 
+	text-align: center;
+	padding-top: 8px;
+	height: 32px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button{
+	min-width: auto;
+	margin: 0;
+	padding: 0;
+	width: 80px;
+	height: 24px;
+	line-height: 24px;
+	border: none !important;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button:disabled,
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button:disabled:hover{
+	background-color: #ccc;
+	color: #000;
+	cursor: not-allowed;
+	box-shadow: none;
 }

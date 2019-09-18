@@ -5,7 +5,13 @@ sue.apps.tbkjx={
 		let appInfo={
 			appName:"tbkjx",
 			headTitle:"tbkjx",
-			headCloseBtn:true
+			headCloseBtn:true,
+			menu:[
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+			],
+			options:[
+				{type:"range",label:"app_tbkjx_num",name:"n_num",min:10,max:100,step:10},
+			]
 		}
 		sue.apps.init();
 		var dom=sue.apps.initBox(appInfo);
@@ -22,7 +28,7 @@ sue.apps.tbkjx={
 		let boxList=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_boxlist"]}),
 			listHead=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_listhead"]}),
 			listJing=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_listjing"]}),
-			listMore=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_listmore"]});
+			listBottom=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_listbottom"]});
 
 		let boxSearch=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_boxsearch"]});
 		boxSearch.appendChild(sue.apps.domCreate("input",{setName:["id","placeholder","type"],setValue:["su_tbkjx_searchkey","键入关键字搜索","text"]},null,null,null));
@@ -30,12 +36,19 @@ sue.apps.tbkjx={
 
 		let headSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_headspan"]},null,null,null,"1.部分商品由于商家调价，价格有一定变化\n2.只买对的，不买便宜的(*^_^*)")
 
+		let _bottomPre=sue.apps.domCreate("button",{setName:["id","className","title"],setValue:["su_tbkjx_btnpre","su_tbkjx_page","上一页"]},null,null,null,"<"),
+			_bottomHome=sue.apps.domCreate("button",{setName:["id","className","title"],setValue:["su_tbkjx_btnhome","su_tbkjx_page","第一页"]},null,"width:40px;margin:0 4px;",{setName:["page"],setValue:["0"]},"□"),
+			_bottomNext=sue.apps.domCreate("button",{setName:["id","className","title"],setValue:["su_tbkjx_btnnext","su_tbkjx_page","下一页"]},null,null,null,">");
+		listBottom.appendChild(_bottomPre);
+		listBottom.appendChild(_bottomHome);
+		listBottom.appendChild(_bottomNext);
+
 		listHead.appendChild(boxSearch);
 		listHead.appendChild(headSpan);
 
 		boxList.appendChild(listHead);
 		boxList.appendChild(listJing);
-		boxList.appendChild(listMore);
+		boxList.appendChild(listBottom);
 
 		theAppBox.appendChild(boxContent);
 		theAppBox.appendChild(boxList);
@@ -67,16 +80,32 @@ sue.apps.tbkjx={
 		_dom.appendChild(_name);
 		_dom.appendChild(_btnBox);
 	},
-	initList:function(data){
+	initList:function(data,page){
 		sue.apps.tbkjx.cons.curData=data;
+		////
+			let _listLength=sue.apps.tbkjx.config.n_num;
+			let _page=page;
+			let _pagePre=_page=="0"?"-1":(page-1),
+				_pageNext=_page==parseInt(data.length/_listLength)?"-1":Number(_page)+1;
+			data=data.slice(_page*_listLength,(_page*_listLength+_listLength));
+
+			sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnpre").dataset.page=_pagePre;
+			sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnnext").dataset.page=_pageNext;
+			_pagePre==-1?sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnpre").disabled=true:sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnpre").disabled=false;
+			_pageNext==-1?sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnnext").disabled=true:sue.apps.tbkjx.dom.querySelector("#su_tbkjx_btnnext").disabled=false;
+
+			sue.apps.tbkjx.dom.querySelector(".su_tbkjx_boxlist").scrollIntoView();
+
+		////
 		let _dom=sue.apps.tbkjx.dom.querySelector(".su_tbkjx_listjing");
 		data.length==0?_dom.textContent="无匹配的商品":_dom.textContent="";
 		// _dom.textContent="";
 		let _listUL=sue.apps.domCreate("ul");
 		_dom.appendChild(_listUL);
 		for(var i=0;i<data.length;i++){
-			_listUL.appendChild(sue.apps.domCreate("li",{setName:["className","title"],setValue:["su_tbkjx_listitem",data[i][0]]},null,null,{setName:["id"],setValue:[i]},data[i][0]));
+			_listUL.appendChild(sue.apps.domCreate("li",{setName:["className","title"],setValue:["su_tbkjx_listitem",data[i][0]]},null,null,{setName:["id"],setValue:[i+_page*_listLength]},data[i][0]));
 		}
+
 		sue.apps.tbkjx.itemSwitch(_dom.querySelector("li"));
 		sue.apps.tbkjx.itemInit(data[0]);
 	},
@@ -98,6 +127,9 @@ sue.apps.tbkjx={
 				if(e.target.id=="su_tbkjx_search"){
 					sue.apps.tbkjx.itemSearch();
 				}
+				if(e.target.classList.contains("su_tbkjx_page")){
+					sue.apps.tbkjx.initList(sue.apps.tbkjx.cons.curData,e.target.dataset.page);
+				}
 				break
 			case"keypress":
 				if(e.keyCode==13){
@@ -117,7 +149,7 @@ sue.apps.tbkjx={
 				newData.push(data[i]);
 			}
 		}
-		sue.apps.tbkjx.initList(newData);
+		sue.apps.tbkjx.initList(newData,0);
 	},
 	itemSwitch:function(ele){
 		sue.apps.tbkjx.itemInit(sue.apps.tbkjx.cons.curData[ele.dataset.id]);
@@ -131,12 +163,16 @@ sue.apps.tbkjx={
 		chrome.runtime.sendMessage({type:"appsAction",app:"tbkjx",action:"itemOpen",value:link});
 	}
 }
+chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"tbkjx"},function(response){
+	sue.apps.tbkjx.config=response.config;
+	sue.apps.tbkjx.initUI();
+})
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	switch(message.type){
 		case"data":
 			sue.apps.tbkjx.cons.data=message.value.data;
-			sue.apps.tbkjx.initList(message.value.data);
+			sue.apps.tbkjx.initList(message.value.data,0);
 			break;
 	}
 });
-sue.apps.tbkjx.initUI();
+// sue.apps.tbkjx.initUI();

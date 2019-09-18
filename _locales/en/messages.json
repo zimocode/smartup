@@ -1523,5 +1523,8 @@
   },
   "tbkjx":{
     "message":"Coupon"
+  },
+  "app_tbkjx_num":{
+    "message":"Number of list items"
   }
 }
