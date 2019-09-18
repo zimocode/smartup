@@ -4242,8 +4242,8 @@ var sub={
 		tbkjx:{
 			getData:function(message,sender,sendResponse){
 				console.log("tbkjx.getdata");
-				let _url="tbkjx.json";
-				//let _url="https://quan.zimoapps.com/push/tbkjx.json";
+				//let _url="tbkjx.json";
+				let _url="https://quan.zimoapps.com/push/tbkjx.json";
 				let _date=new Date();
 				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
 				fetch(_url)
