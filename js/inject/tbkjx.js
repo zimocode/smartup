@@ -98,10 +98,13 @@ sue.apps.tbkjx={
 
 		////
 		let _dom=sue.apps.tbkjx.dom.querySelector(".su_tbkjx_listjing");
-		data.length==0?_dom.textContent="无匹配的商品":_dom.textContent="";
-		// _dom.textContent="";
+		_dom.textContent="";
 		let _listUL=sue.apps.domCreate("ul");
 		_dom.appendChild(_listUL);
+		if(data.length==0){
+			_listUL.textContent="无匹配的商品";
+			return false;
+		}
 		for(var i=0;i<data.length;i++){
 			_listUL.appendChild(sue.apps.domCreate("li",{setName:["className","title"],setValue:["su_tbkjx_listitem",data[i][0]]},null,null,{setName:["id"],setValue:[i+_page*_listLength]},data[i][0]));
 		}

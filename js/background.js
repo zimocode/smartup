@@ -2040,6 +2040,10 @@ var sub={
 		reloadext:function(){
 			chrome.runtime.reload();
 		},
+		closeapps:function(){
+			let _code='var eles=document.querySelectorAll("smartup.su_apps");for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";window.setTimeout(function(){eles[i]?eles[i].remove():null;},500)}'
+			chrome.tabs.executeScript({code:_code});
+		},
 		dldir:function(){
 			var theFunction=function(){
 				chrome.downloads.showDefaultFolder();

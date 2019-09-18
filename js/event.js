@@ -256,7 +256,7 @@ var sue={
 					e.preventDefault();
 				}
 				//fix switchtab by rges or wges
-				console.log(sue.cons.switchtab)
+				// console.log(sue.cons.switchtab)
 				if(sue.cons.switchtab&&sue.cons.switchtab.contextmenu){
 					e.preventDefault();
 					sue.cons.switchtab.contextmenu=false;
@@ -266,7 +266,7 @@ var sue={
 			case"mousemove":
 				//console.log(sue.drawing)
 				if(sue.drawing&&e.buttons==config.mges.settings.model){
-					console.log("move")
+					// console.log("move")
 					sue.lineDraw(e);
 				}
 				break;
@@ -584,15 +584,18 @@ var sue={
 
 		var ele=e.target;
 		var getParent=function(win){
+			console.log(win);
 			if(win.parent&&win.parent!=win){
 				return arguments.callee(win.parent);
 			}else{
 				return win
 			}
 		}
-		t=getParent(window);
-		sue.window=t;
-		sue.document=t.document.documentElement;
+		// t=getParent(window);
+		// sue.window=t;
+		// sue.document=t.document.documentElement;
+		sue.window=window;
+		sue.document=document.documentElement;
 		sue.initHandle2();
 
 		//drag fn switch
@@ -770,7 +773,7 @@ var sue={
 		}
 	},
 	ui_tip:function(confOBJ,e){
-		console.log(confOBJ)
+		// console.log(confOBJ)
 		if(!config[sue.drawType[0]].ui.tip.enable){return;}
 		var uidom=sue.document.querySelector("div[data-suui=uibox][data-sustyle="+config[sue.drawType[0]].ui.tip.style+"]");
 		if(!uidom){return}
@@ -1018,16 +1021,16 @@ var sue={
 	},
 	sendDir:function(dir,dirType,e){
 		//console.log(sue.drawType)
-		console.log(dirType)
-		console.log({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle})
+		// console.log(dirType)
+		// console.log({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle})
 		var returnValue;
 		chrome.runtime.sendMessage(extID,{type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
-			console.log(response)
+			// console.log(response)
   			returnValue=response;
   			sue.getedConf=returnValue;
   			switch(response.type){
   				case"tip":
-  					console.log(response)
+  					// console.log(response)
   					sue.ui_tip(response,e);
   					sue.ui_note(response,e);
   					sue.ui_allaction(response,e);

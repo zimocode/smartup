@@ -1526,5 +1526,8 @@
   },
   "app_tbkjx_num":{
     "message":"Number of list items"
+  },
+  "closeapps":{
+    "message":"Close all Mini-apps in tab"
   }
 }

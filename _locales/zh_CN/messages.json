@@ -1495,5 +1495,8 @@
   },
   "app_tbkjx_num":{
     "message":"显示商品的数量"
+  },
+  "closeapps":{
+    "message":"关闭当前页内所有迷你应用"
   }
 }
