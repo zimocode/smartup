@@ -216,6 +216,7 @@ sue.apps.rss={
 		let _titleLink=sue.apps.domCreate("a");
 			_titleLink.href=data.link;
 			_titleLink.target="_blank";
+			_titleLink.title=data.title;
 			_titleLink.textContent=data.title;
 		rssheaddom.appendChild(_titleImg);
 		rssheaddom.appendChild(_titleLink);

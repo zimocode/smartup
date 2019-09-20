@@ -854,7 +854,9 @@ var appConfmodel={
 	appslist:{n_closebox:true},
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
-	jslist:{n_closebox:true}
+	jslist:{n_closebox:true},
+	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]},
+	tbkjx:{n_num:50}
 }
 
 var sub={
@@ -2038,6 +2040,10 @@ var sub={
 		reloadext:function(){
 			chrome.runtime.reload();
 		},
+		closeapps:function(){
+			let _code='var eles=document.querySelectorAll("smartup.su_apps");for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";window.setTimeout(function(){eles[i]?eles[i].remove():null;},500)}'
+			chrome.tabs.executeScript({code:_code});
+		},
 		dldir:function(){
 			var theFunction=function(){
 				chrome.downloads.showDefaultFolder();
@@ -2318,6 +2324,24 @@ var sub={
 		},
 
 		//mini apps
+		tbkjx:function(){
+			var _appname="tbkjx";
+			sub.initAppconf(_appname);
+			sub.insertTest(_appname);
+		},
+		homepage:function(){
+			var theFunction=function(){
+				var _appname="homepage";
+				sub.initAppconf(_appname);
+				chrome.topSites.get(function(sites){
+					sub.cons[_appname]=sites;
+					sub.insertTest(_appname);
+				});
+			}
+			var thepers=["topSites"];
+			var theorgs;
+			sub.checkPermission(thepers,theorgs,theFunction);		
+		},
 		autoreload:function(){
 			var _appname="autoreload";
 			sub.insertTest(_appname);
@@ -2448,8 +2472,9 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
+			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
 		},
@@ -3755,6 +3780,7 @@ var sub={
 					.then(response => response.text())
 					.then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
 					.then(xmlData=>{
+						sub.testdata=xmlData
 						let data={};
 						let replace_cdata=function(str){
 							let newstr;
@@ -3763,9 +3789,9 @@ var sub={
 							return newstr;
 						}
 						data={
-							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent):"noname"),
-							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent):""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent):chrome.runtime.getURL("/image/rss.png"))
+							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent).toString():"noname"),
+							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent).toString():""),
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.png"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
@@ -3775,7 +3801,7 @@ var sub={
 						    var _object={};
 							for(var ii=0;ii<_nodes.length;ii++){
 								if(_nodes[ii].tagName){
-									_object[_nodes[ii].tagName.toLowerCase()]=DOMPurify.sanitize(replace_cdata(_nodes[ii].textContent));
+									_object[_nodes[ii].tagName.toLowerCase()]=DOMPurify.sanitize(replace_cdata(_nodes[ii].textContent)).toString();
 								}
 							}
 							data.items.push(_object);
@@ -3932,16 +3958,14 @@ var sub={
 							.then(response => response.text())
 							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
 							.then(htmlData=>{
-								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("td");
 								var data=[];
 								for(var i=5;i<12;i++){
-									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent).toString());
 								}
 								return data;
 							})
 							.then(data=>{
-								console.log(data);
 								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data,lotteryType:message.value.type});
 							})
 						break;
@@ -3960,9 +3984,10 @@ var sub={
 							.then(htmlData=>{
 								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("td");
+								console.log(_options)
 								var data=[];
 								for(var i=5;i<8;i++){
-									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent));
+									data.push(DOMPurify.sanitize(_options[i].querySelector("font").textContent).toString());
 								}
 								return data;
 							})
@@ -4009,7 +4034,7 @@ var sub={
 								console.log(_options)
 								var data=[];
 								for(var i=0;i<_options.length;i++){
-									data.push(DOMPurify.sanitize(_options[i].value));
+									data.push(DOMPurify.sanitize(_options[i].value).toString());
 								}
 								return data;
 							})
@@ -4021,7 +4046,7 @@ var sub={
 						var formData = new FormData();
 							formData.append("lottery_type", "3d");
 							formData.append("r", 1522867870);
-							formData.append("no", "2019144");
+							formData.append("no", "2019217");
 						var _options={
 							method:"POST",
 							body:formData
@@ -4030,13 +4055,13 @@ var sub={
 							.then(response => response.text())
 							.then(str => (new window.DOMParser()).parseFromString(str, "text/html"))
 							.then(htmlData=>{
-								console.log(htmlData);
 								var _options=htmlData.querySelectorAll("#no option");
 								console.log(_options)
 								var data=[];
 								for(var i=0;i<_options.length;i++){
-									data.push(DOMPurify.sanitize(_options[i].value));
+									data.push(DOMPurify.sanitize(_options[i].value).toString());
 								}
+								console.log(data)
 								return data;
 							})
 							.then(data=>{
@@ -4061,7 +4086,7 @@ var sub={
 							for(var i=0;i<_doms.length;i++){
 								var _data=[];
 								for(var ii=0;ii<_doms[i].childNodes.length;ii++){
-									_data.push(DOMPurify.sanitize(_doms[i].childNodes[ii].textContent));
+									_data.push(DOMPurify.sanitize(_doms[i].childNodes[ii].textContent).toString());
 								}
 								_data.push("https://www.poxiao.com"+_doms[i].childNodes[2].getAttribute("href"))
 								data.push(_data);
@@ -4094,10 +4119,10 @@ var sub={
 								for(var ii=0;ii<_doms.length;ii++){
 									if(_doms[ii].childNodes.length>1){
 										for(var iii=0;iii<_doms[ii].childNodes.length;iii++){
-											_data.push(DOMPurify.sanitize(_doms[ii].childNodes[iii].textContent));
+											_data.push(DOMPurify.sanitize(_doms[ii].childNodes[iii].textContent).toString());
 										}
 									}else{
-										_data.push(DOMPurify.sanitize(_doms[ii].textContent));
+										_data.push(DOMPurify.sanitize(_doms[ii].textContent).toString());
 									}
 								}
 								data.info.push(_data);
@@ -4106,18 +4131,129 @@ var sub={
 							let domDls=htmlData.querySelector(".container #ziy .resourcesmain tbody").querySelectorAll("tr");
 							for(var i=0;i<domDls.length-1;i++){
 								var _data=[];
-								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td ").textContent));
-								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td input").value.substr(6)));
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td ").textContent).toString());
+								_data.push(DOMPurify.sanitize(domDls[i].querySelector("td input").value.substr(6)).toString());
 								data.dl.push(_data)
 							}
 
-							data.des=DOMPurify.sanitize(htmlData.querySelectorAll(".filmcontents p")[1].textContent);
-							data.name=DOMPurify.sanitize(htmlData.querySelector(".container #film h1").childNodes[0].textContent);
+							data.des=DOMPurify.sanitize(htmlData.querySelectorAll(".filmcontents p")[1].textContent).toString();
+							data.name=DOMPurify.sanitize(htmlData.querySelector(".container #film h1").childNodes[0].textContent).toString();
 
 							chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data});
 						}
 						reader.readAsText(blob, 'GBK') 
 					})
+			}
+		},
+		homepage:{
+			openItem:function(message,sender,sendResponse){
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
+			},
+			DBAction:function(method/*get or put*/,data,sender){
+				//console.log("data");
+				let request = indexedDB.open("su", 1),
+					db;
+				let setData=function(db){
+					let put=function(db){
+						console.log(method);
+						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
+						let addDB=dbobj.put({
+							url:data.imageURL,
+							base64:data.base64,
+							copyrightString:data.copyrightString,
+							copyrightURL:data.copyrightURL,
+							id:0
+						});
+					}
+					let get=function(db){
+						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
+						let dbget=dbobj.get(0);
+						dbget.onsuccess=function(e){
+							if(!e.target.result){return;}
+							let data={
+								imageURL:e.target.result.base64,
+								copyrightString:e.target.result.copyrightString,
+								copyrightURL:e.target.result.copyrightURL
+							}
+							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+						}
+					}
+					let setImage=function(data){
+						let dom=document.querySelector("homeimage"),
+							domCopyright=document.querySelector("#copyright");
+						dom.style.cssText+="background-image:url("+data.imageURL+");";
+						domCopyright.href=data.copyrightURL;
+						domCopyright.innerText=data.copyrightString;
+						dom.style.cssText+="opacity:1;";
+					}
+					method=="get"?get(db):put(db);
+				}
+				request.onupgradeneeded = function(e){
+					db=e.target.result;
+					var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
+					objectStore.transaction.oncomplete =function(event){
+						setData(db);
+					};
+				};
+				request.onsuccess=function(e){
+					//console.log("onsuccess");
+					db=e.target.result;
+					setData(db)
+				}
+			},
+			getImageURL:function(message,sender,sendResponse){
+				sub.apps.homepage.DBAction("get",null,sender);
+				fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
+					.then(response => response.text())
+					.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
+					.then(xmlData=>{
+						console.log(xmlData)
+						let data={
+							imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
+							copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
+							copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
+						};
+						console.log(data)
+						if(localStorage.getItem("homepageURL")!=data.imageURL){
+							localStorage.setItem("homepageURL",data.imageURL);
+							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+							sub.apps.homepage.getImage(message,sender,sendResponse,data);
+						}
+					})
+			},
+			getImage:function(message,sender,sendResponse,data){
+				fetch(data.imageURL)
+					.then(response=>response.blob())
+					.then(blob=>{
+						let reader = new FileReader();
+						reader.readAsDataURL(blob); 
+						reader.onloadend = function(){
+							console.log(reader.result)
+							data.base64=reader.result;
+							sub.apps.homepage.DBAction("put",data);
+						}
+					})
+			}
+		},
+		tbkjx:{
+			getData:function(message,sender,sendResponse){
+				console.log("tbkjx.getdata");
+				//let _url="tbkjx.json";
+				let _url="https://quan.zimoapps.com/push/tbkjx.json";
+				let _date=new Date();
+				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
+				fetch(_url)
+					.then(response=>response.json())
+					.then(json=>{
+						chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+					})
+			},
+			itemOpen:function(message,sender,sendResponse){
+				sub.open(message.value);
 			}
 		}
 	}

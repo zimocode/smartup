@@ -2146,7 +2146,7 @@ var suo={
 		//show about
 		if(localStorage.getItem("showabout")){
 				suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-				suo.clickMenuLI(document.querySelector("li[data-id0='9'][data-id1='0']"));
+				suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
 				localStorage.removeItem("showabout");
 		}
 		//show first msg
@@ -2561,7 +2561,7 @@ var suo={
 					xhr.onreadystatechange=function(){
 						if (xhr.readyState == 4){
 							let items=JSON.parse(DOMPurify.sanitize(xhr.response));
-							console.log("initxhr")
+							console.log(items)
 							if(items.options.on){
 								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
 									suo.cons.xhrDonate=items;
@@ -2625,9 +2625,16 @@ var suo={
 						_content.setAttribute("id",id_ii);
 					if(ii==0&&id_ii==0){_content.classList.add("donate_contentcurrent")}
 					if(itemOBJ[ii].img){
-						var _img=document.createElement("img");
-							_img.src=itemOBJ[ii].img;
-						_content.appendChild(_img);
+						if(itemOBJ[ii].imglink){
+							var _a=suo.domCreate2("a",{setName:["href","target"],setValue:[itemOBJ[ii].imglink,"_blank"]});
+							var _img=suo.domCreate2("img",{setName:["src"],setValue:[itemOBJ[ii].img]});
+							_a.appendChild(_img);
+							_content.appendChild(_a);
+						}else{
+							var _img=document.createElement("img");
+								_img.src=itemOBJ[ii].img;
+							_content.appendChild(_img);							
+						}
 					}
 					if(itemOBJ[ii].qrcode){
 						var _qrcode=document.createElement("div");

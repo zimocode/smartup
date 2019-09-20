@@ -1,0 +1,63 @@
+smartup.su_apps#su_apps_homepage .su_homepage_box{
+	width: 550px;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_cp{
+	display: block;
+	/* float: left; */
+	font-size: 10px;
+	color: #ccc;
+	text-align: right;
+	width: 580px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 0 8px 2px 0;
+	box-sizing: border-box;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+smartup.su_apps#su_apps_homepage ul{
+	/*padding: 10px;*/
+	width: 100%;
+	text-align: center;
+	padding-bottom: 8px;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_li{
+    float: left;
+    list-style: none;
+    list-style-type: none;
+    margin: 2px;
+    cursor: pointer;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_li div{
+	width: 160px;
+	height: 32px;
+	line-height: 32px;
+	display: block;
+	padding: 2px 8px;
+    border-radius: 2px;
+    border: 1px solid #ccf;
+    background-color: rgba(255,255,255,.7);
+    transition:all .4s ease-in-out;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_li div:hover{
+	background-color: rgba(255,255,255,.9);
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_li div img{
+	position: absolute;
+	margin-top: 7px;
+}
+smartup.su_apps#su_apps_homepage .su_homepage_li div span{
+    color: #000;
+    font-size: 12px;
+    margin: 0;
+    /*margin-left: 24px;*/
+    display: block;
+    overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

@@ -1477,5 +1477,26 @@
   },
   "autoreload_icon":{
     "message":"在扩展图标上显示刷新倒计时"
+  },
+  "homepage":{
+    "message":"主页"
+  },
+  "n_homepage_icon":{
+    "message":"在网站列表项中显示小图标(由Google提供)"
+  },
+  "n_homepage_bg":{
+    "message":"用Bing每日图片设置背景图"
+  },
+  "n_homepage_resize":{
+    "message":"改变窗口大小以更好的显示背景图"
+  },
+  "tbkjx":{
+    "message":"领券购物"
+  },
+  "app_tbkjx_num":{
+    "message":"显示商品的数量"
+  },
+  "closeapps":{
+    "message":"关闭当前页内所有迷你应用"
   }
 }

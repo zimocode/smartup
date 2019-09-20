@@ -76,6 +76,7 @@ let actions={
 			{name:"crpages",selects:["n_crpages","n_optype","n_position"],checks:["n_pin"]}
 		],
 		[//group smartup
+			{name:"closeapps"},
 			{name:"optionspage"},
 			{name:"reloadext"}
 		],
@@ -96,6 +97,8 @@ let actions={
 			{name:"lottery"},
 			{name:"convertcase"},
 			{name:"autoreload"},
+			{name:"homepage"},
+			{name:"tbkjx"},
 			{name:"appslist"}
 			/*{name:"gmail"},
 			{name:"ary"},

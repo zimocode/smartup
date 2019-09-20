@@ -1,6 +1,23 @@
 {
 	"log": [
 		{
+			"ver":"6.5.1232.1015",
+			"date":"2019.09.20",
+			"content":[
+				"new mini-apps: homepage,tbkjx.",
+				"new action: close all mini-apps in tab.",
+				"update translation(ru)",
+				"fix bug: open about error form icon,etc."
+			]
+		},
+		{
+			"ver":"6.4.1103.1003",
+			"date":"2019.08.13",
+			"content":[
+				"fix bugs: error in Trusted Types API environment."
+			]
+		},
+		{
 			"ver":"6.4.887.1001",
 			"date":"2019.07.27",
 			"content":[

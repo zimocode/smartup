@@ -84,7 +84,7 @@ sue.apps={
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
 				if(boxInfo.options[i].type=="range"){
-					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].label));
 					var _domRange=sue.apps.domCreate("input");
 						_domRange.name=boxInfo.options[i].name;
 						_domRange.type="range";
