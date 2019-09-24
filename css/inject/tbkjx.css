@@ -2,7 +2,7 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_box{
 	width: 600px;
 	height: 420px;
 	padding: 8px;
-	height: 440px;
+	height: 436px;
 	padding: 0;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxcontent{
@@ -11,19 +11,27 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxcontent{
 	/*border-right: 1px solid #ccf;*/
 	padding: 8px;
 	padding-right: 20px;
+
+position: sticky;
+width: 340px;
+float: left;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxlist{
 	width: 224px;
 	height: 100%;
 	float: right;
 	background-color: #f7f3f3;
+
+overflow: auto;
 }
 
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listhead{
 	position: fixed;
-width: 208px;
-    background-color: #f7f3f3;
-padding: 2px 8px;
+	width: 208px;
+	background-color: #f7f3f3;
+	padding: 2px 8px;
+/**/
+position: absolute;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch{
 
@@ -31,6 +39,10 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch{
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch input{
 	display: inline-block;
 	width: 90px;
+/**/
+padding: 0px 4px;
+width: 120px;
+margin: 3px 4px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch button{
 	min-width: 10px;
@@ -40,6 +52,9 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_boxsearch button{
 	display: inline-block;
 	float: right;
 	margin: 4px auto;
+/**/
+float: initial;
+margin-left: 4px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_headspan{
     font-size: 10px;
@@ -87,10 +102,22 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_buy{
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing{
 	padding-top: 72px;
+
+padding-top: 0;
+margin-top: 72px;
+position: initial;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing ul{
 	/*background-color: #ccf*/
 	padding-bottom: 40px;
+/**/
+padding-bottom: 0;
+height: 288px;
+overflow-y: auto;
+overflow-x: hidden;
+height: 328px;
+height: 320px;
+padding: 2px 0;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li{
 	width: 224px;
@@ -109,6 +136,8 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li{
 	/*font-weight: bold;*/
 	cursor: pointer;
 	transition:all .1s ease-in-out;
+/**/
+width: 206px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li:hover{
 	border: 1px solid #ccc;
@@ -131,6 +160,10 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom{
 	text-align: center;
 	padding-top: 8px;
 	height: 32px;
+/**/
+position: initial;
+bottom: 0;
+width: 206px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button{
 	min-width: auto;
@@ -140,6 +173,9 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button{
 	height: 24px;
 	line-height: 24px;
 	border: none !important;
+/**/
+width: 70px;
+margin: 4px 0;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button:disabled,
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listbottom button:disabled:hover{

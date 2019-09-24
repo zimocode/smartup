@@ -2149,11 +2149,6 @@ var suo={
 				suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
 				localStorage.removeItem("showabout");
 		}
-		//show first msg
-		if(localStorage.getItem("first")==null){
-			suo.first();
-			localStorage.setItem("first",true);
-		}
 		//init webstore url
 		if(browserType=="cr"){
 			suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/"+chrome.runtime.id+"?hl="+navigator.language;
@@ -2182,17 +2177,6 @@ var suo={
 		if(!config.about||!config.about.donatedev||config.about.donatedev.ad){
 			suo.donateBox.init();
 		}
-	},
-	first:function(){
-		var confid,btn,
-			dom=document.querySelector("smartup.su_apps").cloneNode(true),
-			domcontent=dom.querySelector(".box_content"),
-			btn=["",suo.getI18n("btn_done"),""];
-		domcontent.id="box_first";
-		domcontent.textContent=suo.getI18n("msg_first");	
-		suo.initBoxBtn(dom,btn);
-		dom.style.cssText+="display:block;";
-		suo.initPos(dom);
 	},
 	initBoxBtn:function(dom,btn){
 		var dombtn=dom.querySelectorAll(".box_submit input[type=button]");
