@@ -1,8 +1,8 @@
 {
 	"log": [
 		{
-			"ver":"6.5.1232.1015",
-			"date":"2019.09.20",
+			"ver":"6.5.1240.1020",
+			"date":"2019.09.26",
 			"content":[
 				"new mini-apps: homepage,tbkjx.",
 				"new action: close all mini-apps in tab.",

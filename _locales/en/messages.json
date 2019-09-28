@@ -908,9 +908,6 @@
   "msg_setbg":{
     "message":"Something is wrong!!"
   },
-  "msg_first":{
-    "message":"Thank you for installing this extension.<br \/><li>smartUp is free, I'm glad, if you give a five stars rating.<li>If it's the first time to install, it has been working. Try to hold right button to draw up and right?! If you have installed, wait a minute, it is syncing your settings data in background.<li>For some reasons, some actions can not work in this options page.(scroll,script...).<li>Becouse of Chrome's limitations, smartUp cant work in some tabs too.(newtab,setting page...)<li>There are a few actions, you'll add more."
-  },
   "test_mges": {
     "message": "Drawing line in here."
   },
@@ -1030,9 +1027,6 @@
   },
   "getper_fail":{
     "message":"Failure to get permissions! \nChrome must be upgraded to latest version."
-  },
-  "wel_title":{
-    "message":"Welcome"
   },
   "notif_title":{
     "message":"smartUp Notification"
