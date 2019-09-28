@@ -64,13 +64,13 @@ sue.apps.tbkjx={
 		let _dom=sue.apps.tbkjx.dom.querySelector(".su_main .su_tbkjx_boxcontent");
 		_dom.textContent="";
 		let _img=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_tbkjx_img",data[1]]}),
-			_name=sue.apps.domCreate("div",{setName:["className","title"],setValue:["su_tbkjx_name",data[0]]},null,null,null,data[0]),
+			_name=sue.apps.domCreate("div",{setName:["className","title"],setValue:["su_tbkjx_name",DOMPurify.sanitize(data[0])]},null,null,null,DOMPurify.sanitize(data[0])),
 
-			_spanPrice=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_spanprice su_tbkjx_open"]},null,null,{setName:["link"],setValue:[data[3]]},"券后价"),
-			_price=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_price su_tbkjx_open"]},null,null,{setName:["link"],setValue:[data[3]]},"￥"+data[2]),
-			_buy=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_buy su_tbkjx_open"]},null,null,{setName:["link"],setValue:[data[3]]},"前往领券"),
+			_spanPrice=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_spanprice su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"券后价"),
+			_price=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_price su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"￥"+DOMPurify.sanitize(data[2])),
+			_buy=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_buy su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"前往领券"),
 
-			_btnBox=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_btnbox su_tbkjx_open"]},null,null,{setName:["link"],setValue:[data[3]]});
+			_btnBox=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_btnbox su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]});
 
 		_btnBox.appendChild(_spanPrice);
 		_btnBox.appendChild(_price);
@@ -106,7 +106,7 @@ sue.apps.tbkjx={
 			return false;
 		}
 		for(var i=0;i<data.length;i++){
-			_listUL.appendChild(sue.apps.domCreate("li",{setName:["className","title"],setValue:["su_tbkjx_listitem",data[i][0]]},null,null,{setName:["id"],setValue:[i+_page*_listLength]},data[i][0]));
+			_listUL.appendChild(sue.apps.domCreate("li",{setName:["className","title"],setValue:["su_tbkjx_listitem",DOMPurify.sanitize(data[i][0])]},null,null,{setName:["id"],setValue:[i+_page*_listLength]},DOMPurify.sanitize(data[i][0])));
 		}
 
 		sue.apps.tbkjx.itemSwitch(_dom.querySelector("li"));

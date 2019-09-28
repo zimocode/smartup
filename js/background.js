@@ -3572,6 +3572,8 @@ var sub={
 						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="qr"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
+					}else if(message.apptype=="tbkjx"){
+						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){})
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
@@ -4242,8 +4244,8 @@ var sub={
 		tbkjx:{
 			getData:function(message,sender,sendResponse){
 				console.log("tbkjx.getdata");
-				// let _url="tbkjx.json";
-				let _url="https://quan.zimoapps.com/push/tbkjx.json";
+				let _url="tbkjx.json";
+				// let _url="https://quan.zimoapps.com/push/tbkjx.json";
 				let _date=new Date();
 				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
 				fetch(_url)
