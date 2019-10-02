@@ -1141,6 +1141,16 @@ var sub={
 		}
 		return theIndex;
 	},
+	date:{
+		date:new Date(),
+		get:function(){
+			var _newDate=this.date.getFullYear().toString()+((this.date.getMonth()+1)<10?("0"+(this.date.getMonth()+1)):(this.date.getMonth()+1).toString())+(this.date.getDate()<10?("0"+this.date.getDate()):this.date.getDate().toString());
+			return Number(_newDate);
+		},
+		getTime:function(){
+			return this.date.getTime();
+		}
+	},
 	showNotif:function(type,title,txt){
 		var notif={
 	        	iconUrl:"icon.png",
@@ -4243,16 +4253,37 @@ var sub={
 		},
 		tbkjx:{
 			getData:function(message,sender,sendResponse){
-				console.log("tbkjx.getdata");
-				let _url="tbkjx.json";
-				// let _url="https://quan.zimoapps.com/push/tbkjx.json";
-				let _date=new Date();
-				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
-				fetch(_url)
+				// =======================
+				// let _url="tbkjx.json",
+				// 	_configURL="https://quan.zimoapps.com/push/config.json"+"?"+sub.date.getTime();
+				// =======================
+				let _url="https://quan.zimoapps.com/push/tbkjx.json",
+					_configURL="https://quan.zimoapps.com/push/config.json"+"?"+sub.date.getTime();
+				fetch(_configURL)
 					.then(response=>response.json())
 					.then(json=>{
-						chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>sub.date.get()){
+							_url=_url+"?"+sub.date.get().toString();
+							localStorage.setItem("tbkjx_dataversion",json.version);
+						}else{
+							_url=_url+"?"+localStorage.getItem("tbkjx_dataversion");
+						}
+						console.log(_url);
+						fetch(_url)
+							.then(response=>response.json())
+							.then(json=>{
+								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+							})
 					})
+				// =======================
+
+				// let _date=new Date();
+				// _url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
+				// fetch(_url)
+				// 	.then(response=>response.json())
+				// 	.then(json=>{
+				// 		chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+				// 	})
 			},
 			itemOpen:function(message,sender,sendResponse){
 				sub.open(message.value);

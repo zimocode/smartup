@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22",
 	"name": "smartUp Gestures(Beta)",
 	"short_name":"smartUp",
-	"version": "6.5.1240.1020",
+	"version": "6.5.1240.1022",
 	"description": "__MSG_ext_des__",
 	"default_locale": "en",
 	"author":"zimo",
