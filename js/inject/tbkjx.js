@@ -7,7 +7,8 @@ sue.apps.tbkjx={
 			headTitle:"tbkjx",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/info.svg",title:"app_tip_info",className:"menu_item menu_item_help"}
 			],
 			options:[
 				{type:"range",label:"app_tbkjx_num",name:"n_num",min:10,max:100,step:10},
@@ -33,8 +34,6 @@ sue.apps.tbkjx={
 		let boxSearch=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_boxsearch"]});
 		boxSearch.appendChild(sue.apps.domCreate("input",{setName:["id","placeholder","type"],setValue:["su_tbkjx_searchkey","键入关键字搜索","text"]},null,null,null));
 		boxSearch.appendChild(sue.apps.domCreate("button",{setName:["id"],setValue:["su_tbkjx_search"]},null,null,null,"搜索"));
-
-		let headSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_headspan"]},null,null,null,"1.部分商品由于商家调价，价格有一定变化\n2.只买对的，不买便宜的(*^_^*)");
 
 		let headSort=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_sort"]});
 		let _sortReset=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortreset"]},null,null,null,"默认排序"),
@@ -67,7 +66,6 @@ sue.apps.tbkjx={
 		listBottom.appendChild(_bottomDes);
 
 		listHead.appendChild(boxSearch);
-		// listHead.appendChild(headSpan);
 		listHead.appendChild(headSort);
 		listHead.appendChild(headExtent);
 
@@ -78,8 +76,19 @@ sue.apps.tbkjx={
 		theAppBox.appendChild(boxContent);
 		theAppBox.appendChild(boxList);
 
-		chrome.runtime.sendMessage({type:"appsAction",app:"tbkjx",action:"getData",value:"jingxuan"})
+		let _infoBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_options_help"]}),
+			_info=sue.apps.domCreate("ul");
+		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"1、每日更新上万款优惠券商品，购物前可以从这里搜索是否有和心意的。"));
+		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"2、由于商家调价等因素，部分商品价格可能有变动。"));
+		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"3、理性购物，多多比较，购买需要的物品。"));
+		let _li=sue.apps.domCreate("li",null,null,null,null,"4、此迷你应用也有相应的网页版本：");
+		let _a=sue.apps.domCreate("a",{setName:["href","target"],setValue:["https://quan.zimoapps.com","_blank"]},null,null,null,"quan.zimoapps.com");
+		_li.appendChild(_a);
+		_info.appendChild(_li);
+		_infoBox.appendChild(_info);
+		dom.appendChild(_infoBox);
 
+		chrome.runtime.sendMessage({type:"appsAction",app:"tbkjx",action:"getData",value:"jingxuan"})
 		dom.style.cssText+="border-color:#2b2b34;";
 		dom.querySelector(".su_head").style.cssText+="background-color:#2b2b34;";
 		dom.addEventListener("click",this.handleEvent,false);
@@ -174,14 +183,17 @@ sue.apps.tbkjx={
 				if(e.target.classList.contains("su_tbkjx_extentbtn")){
 					sue.apps.tbkjx.itemExtent();
 				}
-				break
+				if(e.target.classList.contains("menu_item_help")){
+					sue.apps.tbkjx.showHelp(e);
+				}
+				break;
 			case"keypress":
 				if(e.keyCode==13&&e.target.id=="su_tbkjx_searchkey"){
 					sue.apps.tbkjx.itemSearch(e.target);
 				}else if(e.keyCode==13&&e.target.classList.contains("su_tbkjx_extenttext")){
 					sue.apps.tbkjx.itemExtent();
 				}
-				break
+				break;
 		}
 	},
 	itemSearch:function(){
@@ -297,6 +309,15 @@ sue.apps.tbkjx={
 		sue.apps.tbkjx.cons.curData=newData;
 		sue.apps.tbkjx.itemSort(sue.apps.tbkjx.cons.curSort)
 		// sue.apps.tbkjx.initList(newData,0);
+	},
+	showHelp:function(e){
+		var domopt=sue.apps.getAPPboxEle(e).querySelector(".su_options_help");
+		var _opt=window.getComputedStyle(domopt).opacity==0?true:false;
+		if(_opt){
+			domopt.style.cssText+="opacity:.9;z-index:10;";
+		}else{
+			domopt.style.cssText+="opacity:0;z-index:-1;";
+		}
 	}
 }
 chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"tbkjx"},function(response){

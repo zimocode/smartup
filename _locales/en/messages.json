@@ -1145,6 +1145,9 @@
   "app_tip_opt":{
     "message":"Options"
   },
+  "app_tip_info":{
+    "message":"Information"
+  },
   "app_rss_menu":{
     "message":"Menu"
   },
