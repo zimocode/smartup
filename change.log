@@ -1,7 +1,15 @@
 {
 	"log": [
 		{
-			"ver":"6.5.1240.1020",
+			"ver":"6.5.1341.1024",
+			"date":"2019.10.09",
+			"content":[
+				"upgrade tbkjx",
+				"fix bug: action closeapps"
+			]
+		},
+		{
+			"ver":"6.5.1240.1024",
 			"date":"2019.09.26",
 			"content":[
 				"new mini-apps: homepage,tbkjx.",

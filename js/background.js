@@ -2051,7 +2051,7 @@ var sub={
 			chrome.runtime.reload();
 		},
 		closeapps:function(){
-			let _code='var eles=document.querySelectorAll("smartup.su_apps");for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";window.setTimeout(function(){eles[i]?eles[i].remove():null;},500)}'
+			let _code='(function(){let eles=document.querySelectorAll("smartup.su_apps");let _fun=function(ele){window.setTimeout(function(){ele.remove();},500)};for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";_fun(eles[i]);};}())'
 			chrome.tabs.executeScript({code:_code});
 		},
 		dldir:function(){
