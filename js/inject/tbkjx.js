@@ -38,10 +38,14 @@ sue.apps.tbkjx={
 		let headSort=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_sort"]});
 		let _sortReset=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortreset"]},null,null,null,"默认排序"),
 			_sortUp=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortup"]},null,"margin:0 5px;",null,"价格由低到高"),
-			_sortDn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortdn"]},null,null,null,"价格由高到低");
+			_sortDn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortdn"]},null,null,null,"价格由高到低"),
+			_sortCup=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortcup"]},null,null,null,"优惠券额由低到高"),
+			_sortCdn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortcdn"]},null,"margin:4px;",null,"优惠券额由高到低");
 		headSort.appendChild(_sortReset);
 		headSort.appendChild(_sortUp);
 		headSort.appendChild(_sortDn);
+		headSort.appendChild(_sortCup);
+		headSort.appendChild(_sortCdn);
 
 		let headExtent=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_extent"]});
 		let _extentSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_extentspan"]},null,null,null,"价格范围："),
@@ -80,8 +84,9 @@ sue.apps.tbkjx={
 			_info=sue.apps.domCreate("ul");
 		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"1、每日更新上万款优惠券商品，购物前可以从这里搜索是否有和心意的。"));
 		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"2、由于商家调价等因素，部分商品价格可能有变动。"));
-		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"3、理性购物，多多比较，购买需要的物品。"));
-		let _li=sue.apps.domCreate("li",null,null,null,null,"4、此迷你应用也有相应的网页版本：");
+		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"3、点击商品图片显示领券地址的二维码。可以通过手机淘宝扫码在手机上领券购买！"));
+		_info.appendChild(sue.apps.domCreate("li",null,null,null,null,"4、理性购物，多多比较，购买需要的物品。"));
+		let _li=sue.apps.domCreate("li",null,null,null,null,"5、此迷你应用也有相应的网页版本：");
 		let _a=sue.apps.domCreate("a",{setName:["href","target"],setValue:["https://quan.zimoapps.com","_blank"]},null,null,null,"quan.zimoapps.com");
 		_li.appendChild(_a);
 		_info.appendChild(_li);
@@ -93,16 +98,19 @@ sue.apps.tbkjx={
 		dom.querySelector(".su_head").style.cssText+="background-color:#2b2b34;";
 		dom.addEventListener("click",this.handleEvent,false);
 		dom.addEventListener("keypress",this.handleEvent,false);
+		dom.addEventListener("mouseover",this.handleEvent,false);
 	},
 	itemInit:function(data){
 		let _dom=sue.apps.tbkjx.dom.querySelector(".su_main .su_tbkjx_boxcontent");
 		_dom.textContent="";
-		let _img=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_tbkjx_img",data[1]]}),
+		// let _img=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_tbkjx_img",data[1]]}),
+		let _img=sue.apps.domCreate("div",{setName:["className","title"],setValue:["su_tbkjx_img","点击图片显示领券地址的二维码。\n通过手机淘宝扫码在手机上领券购买！"]},null,"background-image:url("+data[1]+");background-size:contain"),
+
 			_name=sue.apps.domCreate("div",{setName:["className","title"],setValue:["su_tbkjx_name",DOMPurify.sanitize(data[0])]},null,null,null,DOMPurify.sanitize(data[0])),
 
 			_spanPrice=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_spanprice su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"券后价"),
 			_price=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_price su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"￥"+DOMPurify.sanitize(data[2])),
-			_buy=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_buy su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"前往领券"),
+			_buy=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_buy su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]},"前往领券(￥"+DOMPurify.sanitize(data[4])+")"),
 
 			_btnBox=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_btnbox su_tbkjx_open"]},null,null,{setName:["link"],setValue:[DOMPurify.sanitize(data[3])]});
 
@@ -113,6 +121,13 @@ sue.apps.tbkjx={
 		_dom.appendChild(_img);
 		_dom.appendChild(_name);
 		_dom.appendChild(_btnBox);
+
+		let _domQr=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_qr"]},null,"display:none;");
+		new QRCode(_domQr,data[3]);
+		_img.appendChild(_domQr);
+		window.setTimeout(function(){
+			_domQr.style.cssText+="display:block;";
+		},500)
 	},
 	initList:function(data,page){
 		// sue.apps.tbkjx.cons.curData=data;
@@ -175,6 +190,10 @@ sue.apps.tbkjx={
 						sortType="up";
 					}else if(e.target.classList.contains("su_tbkjx_sortdn")){
 						sortType="dn";
+					}else if(e.target.classList.contains("su_tbkjx_sortcup")){
+						sortType="cup";
+					}else if(e.target.classList.contains("su_tbkjx_sortcdn")){
+						sortType="cdn";
 					}else{
 						sortType="reset";
 					}
@@ -186,6 +205,9 @@ sue.apps.tbkjx={
 				if(e.target.classList.contains("menu_item_help")){
 					sue.apps.tbkjx.showHelp(e);
 				}
+				if(e.target.classList.contains("su_tbkjx_img")||(e.target.parentNode&&e.target.parentNode.classList.contains("su_tbkjx_qr"))){
+					sue.apps.tbkjx.showQR();
+				}
 				break;
 			case"keypress":
 				if(e.keyCode==13&&e.target.id=="su_tbkjx_searchkey"){
@@ -194,6 +216,17 @@ sue.apps.tbkjx={
 					sue.apps.tbkjx.itemExtent();
 				}
 				break;
+		}
+	},
+	showQR:function(){
+		var _qrImg=sue.apps.tbkjx.dom.querySelector(".su_tbkjx_qr img");
+		console.log(_qrImg)
+		var _qrState=window.getComputedStyle(_qrImg).width=="0px"?true:false;
+		console.log(_qrState)
+		if(_qrState){
+			_qrImg.style.cssText+="width:345px;height:345px;opacity:1;";
+		}else{
+			_qrImg.style.cssText+="width:0px;height:0px;opacity:0;";
 		}
 	},
 	itemSearch:function(){
@@ -207,6 +240,7 @@ sue.apps.tbkjx={
 		let arrayDiff=function(arr) {
 			let result = [];
 			let obj = {};
+			if(!arr){return result;}
 			for(var i=0;i<arr.length;i++){
 				if(!obj[arr[i]]){
 					result.push(arr[i]);
@@ -219,7 +253,7 @@ sue.apps.tbkjx={
 			var _num=-1;
 			for(var ii=0;ii<_keys.length;ii++){
 				if(_keys[ii]==" "){_keys.splice(ii,1);continue;}
-				if(data[i][0].indexOf(_keys[ii])!=-1){
+				if(data[i][0].toLowerCase().indexOf(_keys[ii].toLowerCase())!=-1){
 					_num++;
 				}
 			}
@@ -253,14 +287,26 @@ sue.apps.tbkjx={
 	},
 	itemSort:function(sortType){
 		let compare=function(type){
-			return function(m,n){
-				var a = m[2];
-				var b = n[2];
-				if(type=="up"){
-					return a - b;
-				}else{
-					return b - a;
-				}
+			if(type=="up"||type=="dn"){
+				return function(m,n){
+					var a = m[2];
+					var b = n[2];
+					if(type=="up"){
+						return a - b;
+					}else{
+						return b - a;
+					}
+				}				
+			}else{
+				return function(m,n){
+					var a = m[4];
+					var b = n[4];
+					if(type=="cup"){
+						return a - b;
+					}else{
+						return b - a;
+					}
+				}	
 			}
 		}
 		if(sortType!="reset"){

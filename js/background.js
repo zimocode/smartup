@@ -3583,7 +3583,8 @@ var sub={
 					}else if(message.apptype=="qr"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
-						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
+						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){});
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
@@ -4262,7 +4263,7 @@ var sub={
 				fetch(_configURL)
 					.then(response=>response.json())
 					.then(json=>{
-						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>sub.date.get()){
+						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>=sub.date.get()){
 							_url=_url+"?"+sub.date.get().toString();
 							localStorage.setItem("tbkjx_dataversion",json.version);
 						}else{
