@@ -856,7 +856,7 @@ var appConfmodel={
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
 	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]},
-	tbkjx:{n_num:50}
+	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
 }
 
 var sub={
@@ -1165,6 +1165,12 @@ var sub={
 		if(!config.apps[appname]){
 			config.apps[appname]=appConfmodel[appname];
 			chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
+		}else{
+			for(var i in appConfmodel[appname]){
+				if(config.apps[appname][i]===undefined){
+					config.apps[appname][i]=appConfmodel[appname][i];
+				}
+			}
 		}
 	},
 	insertTest:function(appname){
@@ -4287,7 +4293,11 @@ var sub={
 				// 	})
 			},
 			itemOpen:function(message,sender,sendResponse){
-				sub.open(message.value);
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
 			}
 		}
 	}
