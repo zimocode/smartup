@@ -1148,6 +1148,9 @@
   "app_tip_opt":{
     "message":"设置"
   },
+  "app_tip_info":{
+    "message":"信息"
+  },
   "app_rss_menu":{
     "message":"菜单"
   },

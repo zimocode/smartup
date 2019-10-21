@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"6.5.1348.1026",
+			"date":"2019.10.16",
+			"content":[
+				"upgrade tbkjx",
+				"fix bug: action closeapps, added new options for miniapps don't work"
+			]
+		},
+		{
 			"ver":"6.5.1240.1020",
 			"date":"2019.09.26",
 			"content":[

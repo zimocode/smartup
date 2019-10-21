@@ -856,7 +856,7 @@ var appConfmodel={
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
 	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]},
-	tbkjx:{n_num:50}
+	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
 }
 
 var sub={
@@ -1141,6 +1141,16 @@ var sub={
 		}
 		return theIndex;
 	},
+	date:{
+		date:new Date(),
+		get:function(){
+			var _newDate=this.date.getFullYear().toString()+((this.date.getMonth()+1)<10?("0"+(this.date.getMonth()+1)):(this.date.getMonth()+1).toString())+(this.date.getDate()<10?("0"+this.date.getDate()):this.date.getDate().toString());
+			return Number(_newDate);
+		},
+		getTime:function(){
+			return this.date.getTime();
+		}
+	},
 	showNotif:function(type,title,txt){
 		var notif={
 	        	iconUrl:"icon.png",
@@ -1155,6 +1165,12 @@ var sub={
 		if(!config.apps[appname]){
 			config.apps[appname]=appConfmodel[appname];
 			chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
+		}else{
+			for(var i in appConfmodel[appname]){
+				if(config.apps[appname][i]===undefined){
+					config.apps[appname][i]=appConfmodel[appname][i];
+				}
+			}
 		}
 	},
 	insertTest:function(appname){
@@ -2041,7 +2057,7 @@ var sub={
 			chrome.runtime.reload();
 		},
 		closeapps:function(){
-			let _code='var eles=document.querySelectorAll("smartup.su_apps");for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";window.setTimeout(function(){eles[i]?eles[i].remove():null;},500)}'
+			let _code='(function(){let eles=document.querySelectorAll("smartup.su_apps");let _fun=function(ele){window.setTimeout(function(){ele.remove();},500)};for(var i=0;i<eles.length;i++){eles[i].style.cssText+="transition:all .4s ease-in-out;opacity:0;top:0;";_fun(eles[i]);};}())'
 			chrome.tabs.executeScript({code:_code});
 		},
 		dldir:function(){
@@ -3573,7 +3589,8 @@ var sub={
 					}else if(message.apptype=="qr"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
-						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){})
+						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
+						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){});
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
@@ -4243,19 +4260,44 @@ var sub={
 		},
 		tbkjx:{
 			getData:function(message,sender,sendResponse){
-				console.log("tbkjx.getdata");
-				let _url="tbkjx.json";
-				// let _url="https://quan.zimoapps.com/push/tbkjx.json";
-				let _date=new Date();
-				_url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
-				fetch(_url)
+				// =======================
+				// let _url="tbkjx.json",
+				// 	_configURL="https://quan.zimoapps.com/push/config.json"+"?"+sub.date.getTime();
+				// =======================
+				let _url="https://quan.zimoapps.com/push/tbkjx.json",
+					_configURL="https://quan.zimoapps.com/push/config.json"+"?"+sub.date.getTime();
+				fetch(_configURL)
 					.then(response=>response.json())
 					.then(json=>{
-						chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>=sub.date.get()){
+							_url=_url+"?"+sub.date.get().toString();
+							localStorage.setItem("tbkjx_dataversion",json.version);
+						}else{
+							_url=_url+"?"+localStorage.getItem("tbkjx_dataversion");
+						}
+						console.log(_url);
+						fetch(_url)
+							.then(response=>response.json())
+							.then(json=>{
+								chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+							})
 					})
+				// =======================
+
+				// let _date=new Date();
+				// _url=_url+"?"+_date.getFullYear()+((_date.getMonth()+1)<10?("0"+(_date.getMonth()+1)):(_date.getMonth()+1))+(_date.getDate()<10?("0"+_date.getDate()):_date.getDate())
+				// fetch(_url)
+				// 	.then(response=>response.json())
+				// 	.then(json=>{
+				// 		chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:json});
+				// 	})
 			},
 			itemOpen:function(message,sender,sendResponse){
-				sub.open(message.value);
+				let _URL=message.value,
+					_Target=config.apps[message.app].n_optype,
+					_Index=sub.getIndex(config.apps[message.app].n_position,"new")[0],
+					_Pin=config.apps[message.app].n_pin;
+				sub.open(_URL,_Target,_Index,_Pin);
 			}
 		}
 	}
