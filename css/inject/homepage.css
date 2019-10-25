@@ -61,3 +61,12 @@ smartup.su_apps#su_apps_homepage .su_homepage_li div span{
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+smartup.su_apps#su_apps_homepage .su_homepage_listbox{
+	background-color: #ccf;
+	height: 100%;
+	width: 200px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0.9;
+}

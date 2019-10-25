@@ -4269,6 +4269,7 @@ var sub={
 				fetch(_configURL)
 					.then(response=>response.json())
 					.then(json=>{
+						console.log(_configURL);
 						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>=sub.date.get()){
 							_url=_url+"?"+sub.date.get().toString();
 							localStorage.setItem("tbkjx_dataversion",json.version);

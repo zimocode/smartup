@@ -7,7 +7,9 @@ sue.apps.homepage={
 			headTitle:"homepage",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/menu.svg",title:"app_homepage_list",className:"menu_item menu_item_homepage"},
+				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/edit.png",title:"app_homepage_edit",className:"menu_item menu_item_edit"}
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
@@ -28,6 +30,22 @@ sue.apps.homepage={
 		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_box"]});
 		dom.querySelector(".su_main").appendChild(theAppBox);
 
+		// 
+		let _listBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listbox"]});
+		dom.appendChild(_listBox);
+
+		let _listName=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listnamebox"]},null,null,null,"网站分组");
+		_listBox.appendChild(_listName);
+
+		let _listAddBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listaddbox"]}),
+			_listAddText=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_homepage_listaddtext","text"]}),
+			_listAddBtn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_homepage_listaddbtn"]},null,null,null,"新增分组");
+		_listAddBox.appendChild(_listAddText);
+		_listAddBox.appendChild(_listAddBtn);
+		_listBox.appendChild(_listAddBox);
+
+		// 
+
 		if(sue.apps.homepage.config.n_homepage_bg){
 			dom.querySelector(".su_head").style.background="none";
 			dom.querySelector(".su_main").style.cssText+="background:none;box-shadow:rgba(0,0,0,0.8) 0 0 5px;";
@@ -37,6 +55,18 @@ sue.apps.homepage={
 
 		sue.apps.homepage.initItem();
 		dom.addEventListener("click",this.handleEvent,false);
+	},
+	listInit:function(){
+
+	},
+	listSwitch:function(){
+
+	},
+	listAdd:function(){
+
+	},
+	listDel:function(){
+
 	},
 	handleEvent:function(e){
 		switch(e.type){
