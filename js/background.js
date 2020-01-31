@@ -1634,7 +1634,7 @@ var sub={
 							break;
 					}	
 					clipOBJ.select();
-					document.execCommand('copy', false, null);
+					document.execCommand('copy');
 					clipOBJ.remove();				
 				})
 			}
