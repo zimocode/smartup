@@ -7,9 +7,9 @@ sue.apps.homepage={
 			headTitle:"homepage",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/menu.svg",title:"app_homepage_list",className:"menu_item menu_item_homepage"},
+				{src:"/image/menu.svg",title:"app_homepage_list",className:"menu_item menu_item_homepagelist"},
 				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.png",title:"app_homepage_edit",className:"menu_item menu_item_edit"}
+				{src:"/image/edit.png",title:"app_homepage_edit",className:"menu_item menu_item_homepageedit"}
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
@@ -38,11 +38,29 @@ sue.apps.homepage={
 		_listBox.appendChild(_listName);
 
 		let _listAddBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listaddbox"]}),
-			_listAddText=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_homepage_listaddtext","text"]}),
-			_listAddBtn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_homepage_listaddbtn"]},null,null,null,"新增分组");
-		_listAddBox.appendChild(_listAddText);
-		_listAddBox.appendChild(_listAddBtn);
+
+			_listAddBtnbox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listaddbtnbox"]},null,"background:url("+chrome.runtime.getURL("image/add.svg")+") no-repeat 2px 5px;padding:10px 32px;",null,"Add an new group"),
+			_listAddBtnimg=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_homepage_listaddbtnimg",chrome.runtime.getURL("image/add.svg")]}),
+			_listAddBtnspan=sue.apps.domCreate("span",{setName:["className"],setValue:["su_homepage_listaddbtnspan"]},null,null,null,"Add an new group"),
+
+			_listAddValuebox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listaddvaluebox"]}),
+			_listAddValuetext=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_homepage_listaddtext","text"]}),
+			_listAddValuebtn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_homepage_listaddbtn"]},null,null,null,"确定");
+		// _listAddBtnbox.appendChild(_listAddBtnimg);
+		// _listAddBtnbox.appendChild(_listAddBtnspan);
+
+		_listAddValuebox.appendChild(_listAddValuetext);
+		_listAddValuebox.appendChild(_listAddValuebtn);
+
+		_listAddBox.appendChild(_listAddBtnbox);
+		_listAddBox.appendChild(_listAddValuebox);
+
+		let _listItemBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_listitembox"]});
+
 		_listBox.appendChild(_listAddBox);
+		_listBox.appendChild(_listItemBox);
+
+		sue.apps.homepage.listInit();
 
 		// 
 
@@ -53,20 +71,54 @@ sue.apps.homepage={
 			chrome.runtime.sendMessage({type:"appsAction",app:"homepage",action:"getImageURL"});
 		}
 
-		sue.apps.homepage.initItem();
+		// sue.apps.homepage.itemInit(0);
 		dom.addEventListener("click",this.handleEvent,false);
 	},
 	listInit:function(){
-
+		let _dom=sue.apps.homepage.dom.querySelector(".su_homepage_listitembox");
+		let _ul=sue.apps.domCreate("ul",{setName:["className"],setValue:["su_homepage_listul"]});
+		_dom.textContent="";
+		let _groups=sue.apps.homepage.config.sitegroup.slice(0);
+		_groups.unshift(sue.apps.i18n("apps_homepage_grouptopsites"));
+		for(var i=0;i<_groups.length;i++){
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_homepage_listli"]},null,null,{setName:["id"],setValue:[i]},_groups[i]);
+			_ul.appendChild(_li);
+		}
+		_dom.appendChild(_ul);
+		sue.apps.homepage.listSwitch(0)
 	},
-	listSwitch:function(){
-
+	listSwitch:function(id){
+		sue.apps.homepage.itemInit(id);
+		let _lis=sue.apps.homepage.dom.querySelectorAll(".su_homepage_listul li");
+		for(var i=0;i<_lis.length;i++){
+			if(i==Number(id)){
+				_lis[i].classList.add("su_homepage_listlicur");
+			}else{
+				_lis[i].classList.remove("su_homepage_listlicur");
+			}
+		}
+		sue.apps.homepage.listShow();
 	},
-	listAdd:function(){
+	listAdd:function(e){
+		let _domAdd=e.target.parentNode;
+		_domAdd.style.display=window.getComputedStyle(_domAdd).display=="none"?"block":"none";
 
+		let _value=e.target.parentNode.querySelector(".su_homepage_listaddtext").value;
+		if(_value){
+			sue.apps.homepage.config.sitegroup.push(_value);
+			sue.apps.homepage.saveConf();
+			sue.apps.homepage.listInit();
+			sue.apps.homepage.listSwitch(sue.apps.getAPPboxEle(e).querySelectorAll(".su_homepage_listul li").length-1);
+		}
 	},
-	listDel:function(){
-
+	listDel:function(){},
+	listShow:function(e){
+		let _dom=(e?sue.apps.getAPPboxEle(e):false)||sue.apps.homepage.dom;
+			_dom=_dom.querySelector(".su_homepage_listbox");
+		_dom.style.display=window.getComputedStyle(_dom).display=="none"?"block":"none";
+	},
+	saveConf:function(){
+		chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"homepage",config:sue.apps.homepage.config},function(response){});
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -76,19 +128,57 @@ sue.apps.homepage={
 					if(sue.apps.homepage.config.n_closebox){
 						sue.apps.boxClose(e);
 					}
+				}else if(e.target.classList.contains("su_homepage_listli")){
+					sue.apps.homepage.listSwitch(Number(e.target.dataset.id));
+				}else if(e.target.classList.contains("su_homepage_listaddbtnbox")){
+					sue.apps.homepage.showAddbox(e);
+				}else if(e.target.classList.contains("su_homepage_listaddbtn")){
+					sue.apps.homepage.listAdd(e);
+				}else if(e.target.classList.contains("menu_item_homepagelist")){
+					sue.apps.homepage.listShow(e);
+				}else if(e.target.classList.contains("menu_item_homepageedit")){
+					sue.apps.homepage.editMode(e)
 				}
 		}
 	},
-	initItem:function(){
+	editMode:function(e){
+		if(e.target.classList.contains("su_homepage_editmode")){
+			e.target.classList.remove("su_homepage_editmode");
+			sue.apps.homepage.cons.editMode=false;
+		}else{
+			e.target.classList.add("su_homepage_editmode");
+			sue.apps.homepage.cons.editMode=true;
+		}
+		let _dom=sue.apps.homepage.dom.querySelector(".su_homepage_box ul");
+		if(sue.apps.homepage.cons.editMode){
+			let _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_homepage_li su_homepage_item su_homepage_itemadd"]});
+			_li.appendChild(sue.apps.domCreate("div",null,null,"text-align:center",null,"+"));
+			_dom.appendChild(_li);
+		}else{
+			let _li=_dom.querySelector(".su_homepage_itemadd");
+			_li.remove();
+		}
+	},
+	showAddbox:function(e){
+		let _dom=e.target.parentNode.querySelector(".su_homepage_listaddvaluebox");
+		
+		_dom.style.display=window.getComputedStyle(_dom).display=="none"?"block":"none";
+	},
+	itemInit:function(id){
+		console.log(id);
 		let _dom=sue.apps.homepage.dom.querySelector(".su_homepage_box");
 		let _ul=sue.apps.domCreate("ul");
-		for(var i=0;i<sue.apps.homepage.topSites.length;i++){
-			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_homepage_li su_homepage_item"]},null,null,{setName:["url"],setValue:[sue.apps.homepage.topSites[i].url]});
-			var _div=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_item"]},null,null,{setName:["url"],setValue:[sue.apps.homepage.topSites[i].url]});
+		_dom.textContent="";
+		let sites=sue.apps.homepage.config.sites.slice(0);
+		sites.unshift(sue.apps.homepage.topSites);
+		if(!sites[id]){return false;}
+		for(var i=0;i<sites[id].length;i++){
+			var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_homepage_li su_homepage_item"]},null,null,{setName:["url"],setValue:[sites[id][i].url]});
+			var _div=sue.apps.domCreate("div",{setName:["className"],setValue:["su_homepage_item"]},null,null,{setName:["url"],setValue:[sites[id][i].url]});
 			if(sue.apps.homepage.config.n_homepage_icon){
-				var _img=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_homepage_item","https://www.google.com/s2/favicons?domain="+sue.apps.homepage.topSites[i].url]},null,null,{setName:["url"],setValue:[sue.apps.homepage.topSites[i].url]});
+				var _img=sue.apps.domCreate("img",{setName:["className","src"],setValue:["su_homepage_item","https://www.google.com/s2/favicons?domain="+sites[id][i].url]},null,null,{setName:["url"],setValue:[sites[id][i].url]});
 			}
-			var _span=sue.apps.domCreate("span",{setName:["className"],setValue:["su_homepage_item"]},null,null,{setName:["url"],setValue:[sue.apps.homepage.topSites[i].url]},sue.apps.homepage.topSites[i].title)
+			var _span=sue.apps.domCreate("span",{setName:["className"],setValue:["su_homepage_item"]},null,null,{setName:["url"],setValue:[sites[id][i].url]},sites[id][i].title)
 			if(sue.apps.homepage.config.n_homepage_icon){
 				_div.appendChild(_img);
 				_span.style.cssText+="margin-left:24px;";
@@ -96,7 +186,8 @@ sue.apps.homepage={
 			_div.appendChild(_span);
 			_li.appendChild(_div);
 			_ul.appendChild(_li);
-		}
+		}			
+		
 		_dom.appendChild(_ul);
 	},
 	setBackground:function(data){
