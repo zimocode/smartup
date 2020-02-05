@@ -1526,5 +1526,14 @@
   },
   "closeapps":{
     "message":"Close all Mini-apps in tab"
+  },
+  "magnet":{
+    "message":"Torrent Hash To Magnet URI"
+  },
+  "btn_clear":{
+    "message":"CLEAR"
+  },
+  "magnet_placeholder_input":{
+    "message":"Input torrent hash text."
   }
 }

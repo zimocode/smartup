@@ -99,7 +99,8 @@ let actions={
 			{name:"autoreload"},
 			{name:"homepage"},
 			{name:"tbkjx"},
-			{name:"appslist"}
+			{name:"appslist"},
+			{name:"magnet"}
 			/*{name:"gmail"},
 			{name:"ary"},
 			{name:"color"},
@@ -117,7 +118,8 @@ let actions={
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
 			{name:"extdisable"},
-			{name:"mute",selects:["n_mute"]}
+			{name:"mute",selects:["n_mute"]},
+			{name:"magnet"}
 		],
 		[//ag_exp
 			{name:"recentclosed"},
@@ -144,7 +146,8 @@ let actions={
 			{name:"txtsearch",selects:["n_txtengine","n_encoding","n_optype","n_position"],checks:["n_pin"]},
 			{name:"qr"},
 			{name:"tts",selects:["n_voicename","n_gender"],ranges:["n_rate","n_pitch","n_volume"]},
-			{name:"speaker"}
+			{name:"speaker"},
+			{name:"magnet"}
 		]
 	],
 	ldrg_group:["ag_none",/*"ag_tab","ag_copy",*/"ag_others"],

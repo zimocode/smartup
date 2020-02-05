@@ -1501,5 +1501,14 @@
   },
   "closeapps":{
     "message":"关闭当前页内所有迷你应用"
+  },
+  "magnet":{
+    "message":"特征码转磁链"
+  },
+  "btn_clear":{
+    "message":"清除"
+  },
+  "magnet_placeholder_input":{
+    "message":"输入特征码。"
   }
 }

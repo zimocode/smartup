@@ -1,0 +1,34 @@
+smartup.su_apps#su_apps_magnet .su_magnetbox{
+	width: 520px;
+	padding: 8px;
+}
+smartup.su_apps#su_apps_magnet .su_magenet_domleft{
+	text-align: center;
+	width: 240px;
+	float: left;
+}
+smartup.su_apps#su_apps_magnet .su_magenet_domleft button{
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
+smartup.su_apps#su_apps_magnet .su_magenet_link{
+	text-align: left;
+	text-decoration: underline;
+	color: blue;
+	display: inline-block;
+	word-break: break-all;
+	margin-top: 8px;
+}
+smartup.su_apps#su_apps_magnet textarea{
+	display: block;
+	width: 240px;
+	height: 64px;
+	font-size: 14px;
+}
+smartup.su_apps#su_apps_magnet .su_magenet_qr{
+	height: auto;
+	width: auto;
+	padding-left: 8px;
+	margin-bottom: 8px;
+	float: right;
+}

@@ -2340,6 +2340,16 @@ var sub={
 		},
 
 		//mini apps
+		magnet:function(){
+			console.log(sub.message.selEle);
+			var _appname="magnet";
+			sub.initAppconf(_appname);
+			var _obj={};
+			_obj.seltxt=sub.message.selEle?sub.message.selEle.txt:"";
+			_obj.drawtype=sub.message.drawType;
+			sub.cons[_appname]=_obj;
+			sub.insertTest(_appname);
+		},
 		tbkjx:function(){
 			var _appname="tbkjx";
 			sub.initAppconf(_appname);
@@ -2488,7 +2498,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
@@ -3586,7 +3596,7 @@ var sub={
 					}
 					if(message.apptype=="base64"){
 						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
-					}else if(message.apptype=="qr"){
+					}else if(message.apptype=="qr"||message.apptype=="magnet"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
