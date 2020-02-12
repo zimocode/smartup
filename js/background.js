@@ -661,7 +661,8 @@ var getDefault={
 					settings:{
 						disable:true,
 						opt:true,
-						fnswitch:false
+						fnswitch:false,
+						homepage:true
 					},
 					actions:[
 						{
@@ -855,7 +856,7 @@ var appConfmodel={
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
-	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",sitegroup:["Default Group"],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
+	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,n_homepage_last:true,type:"topsites",sitegroup:[chrome.i18n.getMessage("homepage_groupdefault")],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
 	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
 }
 
@@ -930,6 +931,10 @@ var sub={
 					sub.ctm.fn.push({id:i,fnName:"fn"+fnArray[i],menuId:menuId});
 				}				
 			}
+			if(config.ctm.settings.homepage){
+				chrome.contextMenus.create({contexts:["all"],type:"separator"}, function(){});
+				sub.ctm.menuHomepage=chrome.contextMenus.create({contexts:["all"],title:sub.getI18n("homepage_ctm")}, function(){});
+			}
 			if(config.ctm.settings.disable||config.ctm.settings.opt){
 				chrome.contextMenus.create({contexts:["all"],type:"separator"}, function(){});
 			}
@@ -939,7 +944,6 @@ var sub={
 			if(config.ctm.settings.opt){
 				sub.ctm.menuOpt=chrome.contextMenus.create({contexts:["all"],title:sub.getI18n("ctm_opt")}, function(){});
 			}
-
 		})
 	},
 	CTMclick:function(info,tab){
@@ -987,7 +991,26 @@ var sub={
 		}
 		if(info.menuItemId==sub.ctm.menuOpt){
 			sub.action.optionspage();
-		}	
+		}
+		if(info.menuItemId==sub.ctm.menuHomepage){
+			chrome.tabs.query({highlighted:true,currentWindow:true},function(tabs){
+				var theFunction=function(){
+					var _appname="homepage";
+					sub.initAppconf(_appname);
+					chrome.topSites.get(function(sites){
+						let _obj={};
+							_obj.sites=sites;
+							_obj.listId=localStorage.getItem("homepageListId");
+							_obj.ctm=tab;
+						sub.cons[_appname]=_obj;
+						chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+_appname+'",value:sue.apps.enable,ctm:true,appjs:appType["'+_appname+'"]},function(response){console.log(response)})',runAt:"document_start"});
+					});
+				}
+				var thepers=["topSites"];
+				var theorgs;
+				sub.checkPermission(thepers,theorgs,theFunction);
+			})
+		}
 	},
 	getConfValue:function(type,value){
 		var _value="";
@@ -2360,7 +2383,10 @@ var sub={
 				var _appname="homepage";
 				sub.initAppconf(_appname);
 				chrome.topSites.get(function(sites){
-					sub.cons[_appname]=sites;
+					let _obj={};
+						_obj.sites=sites;
+						_obj.listId=localStorage.getItem("homepageListId");
+					sub.cons[_appname]=_obj;
 					sub.insertTest(_appname);
 				});
 			}
@@ -2597,7 +2623,7 @@ var sub={
 		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin);
 		var fixURL=function(url){
 			//if()
-			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:"];
+			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
 			var theFlag=false;
 			for(var i=0;i<fixstrs.length;i++){
 				if(url.indexOf(fixstrs[i])==0){
@@ -3604,7 +3630,12 @@ var sub={
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){});
+					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
+						//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
+						if(message.apptype=="homepage"&&message.ctm){
+							chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
+						}
+					});
 				}		
 				if(!message.value){
 					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
@@ -4266,6 +4297,9 @@ var sub={
 							sub.apps.homepage.DBAction("put",data);
 						}
 					})
+			},
+			setListId:function(message,sender,sendResponse){
+				localStorage.setItem("homepageListId",message.value);
 			}
 		},
 		tbkjx:{

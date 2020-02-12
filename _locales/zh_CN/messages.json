@@ -1510,5 +1510,41 @@
   },
   "magnet_placeholder_input":{
     "message":"输入特征码。"
+  },
+  "homepage_grouptop":{
+    "message":"最常访问的网站"
+  },
+  "homepage_groupdefault":{
+    "message":"默认分组"
+  },
+  "homepage_grouplist":{
+    "message":"网站分组列表"
+  },
+  "homepage_editmode":{
+    "message":"编辑模式"
+  },
+  "homepage_newgroup":{
+    "message":"新增分组"
+  },
+  "homepage_grouptitle":{
+    "message":"分组名称"
+  },
+  "homepage_sitetitle":{
+    "message":"网站名称"
+  },
+  "homepage_siteurl":{
+    "message":"网站地址"
+  },
+  "homepage_placeurl":{
+    "message":"包括前缀：http，https等。"
+  },
+  "homepage_cfmlistdel":{
+    "message":"该操作会删除相应分组下的所有网站，请再次确认。"
+  },
+  "homepage_ctm":{
+    "message":"添加到迷你应用-主页"
+  },
+  "n_homepage_last":{
+    "message":"设置上一次选中的网站分组为默认"
   }
 }
