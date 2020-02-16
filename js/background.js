@@ -661,7 +661,8 @@ var getDefault={
 					settings:{
 						disable:true,
 						opt:true,
-						fnswitch:false
+						fnswitch:false,
+						homepage:true
 					},
 					actions:[
 						{
@@ -855,7 +856,7 @@ var appConfmodel={
 	recentclosed:{n_num:10,n_closebox:true},
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
-	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,type:"topsites",site:[{title:"Google",url:"https://www.google.com"}]},
+	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,n_homepage_last:true,type:"topsites",sitegroup:[chrome.i18n.getMessage("homepage_groupdefault")],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
 	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
 }
 
@@ -930,6 +931,10 @@ var sub={
 					sub.ctm.fn.push({id:i,fnName:"fn"+fnArray[i],menuId:menuId});
 				}				
 			}
+			if(config.ctm.settings.homepage){
+				chrome.contextMenus.create({contexts:["all"],type:"separator"}, function(){});
+				sub.ctm.menuHomepage=chrome.contextMenus.create({contexts:["all"],title:sub.getI18n("homepage_ctm")}, function(){});
+			}
 			if(config.ctm.settings.disable||config.ctm.settings.opt){
 				chrome.contextMenus.create({contexts:["all"],type:"separator"}, function(){});
 			}
@@ -939,7 +944,6 @@ var sub={
 			if(config.ctm.settings.opt){
 				sub.ctm.menuOpt=chrome.contextMenus.create({contexts:["all"],title:sub.getI18n("ctm_opt")}, function(){});
 			}
-
 		})
 	},
 	CTMclick:function(info,tab){
@@ -987,7 +991,26 @@ var sub={
 		}
 		if(info.menuItemId==sub.ctm.menuOpt){
 			sub.action.optionspage();
-		}	
+		}
+		if(info.menuItemId==sub.ctm.menuHomepage){
+			chrome.tabs.query({highlighted:true,currentWindow:true},function(tabs){
+				var theFunction=function(){
+					var _appname="homepage";
+					sub.initAppconf(_appname);
+					chrome.topSites.get(function(sites){
+						let _obj={};
+							_obj.sites=sites;
+							_obj.listId=localStorage.getItem("homepageListId");
+							_obj.ctm=tab;
+						sub.cons[_appname]=_obj;
+						chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+_appname+'",value:sue.apps.enable,ctm:true,appjs:appType["'+_appname+'"]},function(response){console.log(response)})',runAt:"document_start"});
+					});
+				}
+				var thepers=["topSites"];
+				var theorgs;
+				sub.checkPermission(thepers,theorgs,theFunction);
+			})
+		}
 	},
 	getConfValue:function(type,value){
 		var _value="";
@@ -1545,7 +1568,7 @@ var sub={
 			var theURL,
 				clipOBJ=document.body.appendChild(document.createElement("textarea"));
 			clipOBJ.focus();
-			document.execCommand('paste', false, null);
+			document.execCommand('paste');
 			theURL=clipOBJ.value;
 			clipOBJ.remove();
 
@@ -1634,7 +1657,7 @@ var sub={
 							break;
 					}	
 					clipOBJ.select();
-					document.execCommand('copy', false, null);
+					document.execCommand('copy');
 					clipOBJ.remove();				
 				})
 			}
@@ -1748,7 +1771,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.txt;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1786,7 +1809,7 @@ var sub={
 			console.log("txtsearchclip")
 			let _str,_obj=document.body.appendChild(document.createElement("textarea"));
 				_obj.focus();
-			document.execCommand('paste', false, null);
+			document.execCommand('paste');
 			_str=_obj.value;
 			console.log(_obj)
 			_obj.remove();
@@ -1871,7 +1894,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.lnk;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1884,7 +1907,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.str;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1897,7 +1920,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value='<a href="'+sub.message.selEle.lnk+'">'+sub.message.selEle.str+'<\/a>';
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();			
 			}
 			var thepers=["clipboardRead"];
@@ -1962,7 +1985,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.img;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();
 			}
 
@@ -2340,6 +2363,16 @@ var sub={
 		},
 
 		//mini apps
+		magnet:function(){
+			console.log(sub.message.selEle);
+			var _appname="magnet";
+			sub.initAppconf(_appname);
+			var _obj={};
+			_obj.seltxt=sub.message.selEle?sub.message.selEle.txt:"";
+			_obj.drawtype=sub.message.drawType;
+			sub.cons[_appname]=_obj;
+			sub.insertTest(_appname);
+		},
 		tbkjx:function(){
 			var _appname="tbkjx";
 			sub.initAppconf(_appname);
@@ -2350,7 +2383,10 @@ var sub={
 				var _appname="homepage";
 				sub.initAppconf(_appname);
 				chrome.topSites.get(function(sites){
-					sub.cons[_appname]=sites;
+					let _obj={};
+						_obj.sites=sites;
+						_obj.listId=localStorage.getItem("homepageListId");
+					sub.cons[_appname]=_obj;
 					sub.insertTest(_appname);
 				});
 			}
@@ -2488,7 +2524,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
@@ -2587,7 +2623,7 @@ var sub={
 		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin);
 		var fixURL=function(url){
 			//if()
-			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:"];
+			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
 			var theFlag=false;
 			for(var i=0;i<fixstrs.length;i++){
 				if(url.indexOf(fixstrs[i])==0){
@@ -2675,7 +2711,7 @@ var sub={
 			sub.cons.origins=pers.origins;
 		});
 	},
-	saveConf:function(noInit){
+	saveConf:function(noInit,sendResponse){
 		console.log("save");
 		console.log(config);
 		let _isSync;
@@ -2688,8 +2724,17 @@ var sub={
 		if(_isSync){
 			chrome.storage.sync.clear(function(){
 				chrome.storage.sync.set(config,function(){
-					loadConfig(noInit);
-					//sub.init();
+					if(chrome.runtime.lastError){
+						sub.showNotif("basic",sub.getI18n("notif_title_conferr"),sub.getI18n("msg_conferr0")+"\n"+chrome.runtime.lastError.message+"\n"+sub.getI18n("msg_conferr1"));
+						sub.cons.lastErr=chrome.runtime.lastError.message;
+						chrome.storage.sync.set(sub.cons.lastConf,function(){
+							loadConfig();
+							chrome.runtime.sendMessage({type:"confErr",lastErr:sub.cons.lastErr})
+						});
+					}else{
+						loadConfig();
+						chrome.runtime.sendMessage({type:"confOK"});
+					}
 				})
 			})
 		}else{
@@ -2699,8 +2744,8 @@ var sub={
 					_obj.localConfig=items.localConfig;
 				chrome.storage.local.clear(function(){
 					chrome.storage.local.set(_obj,function(){
-						loadConfig(noInit);
-						//sub.init();
+						loadConfig();
+						chrome.runtime.sendMessage({type:"confOK"});
 					})
 				})
 			})
@@ -2845,6 +2890,13 @@ var sub={
 			else if(config.version<45){
 				sub.setBackup("45")
 			}
+			else if(config.version<46){
+				sub.setBackup("46");
+			}
+		},
+		_46:function(){
+			config.version=46;
+			sub.saveConf(true);
 		},
 		_45:function(){
 			config.touch={};
@@ -3586,7 +3638,7 @@ var sub={
 					}
 					if(message.apptype=="base64"){
 						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
-					}else if(message.apptype=="qr"){
+					}else if(message.apptype=="qr"||message.apptype=="magnet"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
@@ -3594,7 +3646,12 @@ var sub={
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){});
+					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
+						//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
+						if(message.apptype=="homepage"&&message.ctm){
+							chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
+						}
+					});
 				}		
 				if(!message.value){
 					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
@@ -3618,8 +3675,9 @@ var sub={
 				loadConfig();
 				break;
 			case"saveConf":
+				sub.cons.lastConf=config;
 				config=message.value;
-				sub.saveConf();
+				sub.saveConf(true,sendResponse);
 				break;
 			case"per_clear":
 				sub.cons.permissions={};
@@ -3716,7 +3774,7 @@ var sub={
 					if(sub.cons.permissions.contains("clipboardWrite")) {
 						var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 						clipOBJ.focus();
-						document.execCommand('paste', false, null);
+						document.execCommand('paste');
 						var clipData=clipOBJ.value;
 						clipOBJ.remove();
 						sub.theConf.paste=clipData;
@@ -4256,6 +4314,9 @@ var sub={
 							sub.apps.homepage.DBAction("put",data);
 						}
 					})
+			},
+			setListId:function(message,sender,sendResponse){
+				localStorage.setItem("homepageListId",message.value);
 			}
 		},
 		tbkjx:{
@@ -4269,6 +4330,7 @@ var sub={
 				fetch(_configURL)
 					.then(response=>response.json())
 					.then(json=>{
+						console.log(_configURL);
 						if(!localStorage.getItem("tbkjx_dataversion")||Number(json.version)>=sub.date.get()){
 							_url=_url+"?"+sub.date.get().toString();
 							localStorage.setItem("tbkjx_dataversion",json.version);

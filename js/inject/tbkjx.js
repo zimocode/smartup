@@ -1,6 +1,8 @@
 console.log("tbkjx");
 sue.apps.tbkjx={
-	cons:{},
+	cons:{
+		platform:0
+	},
 	initUI:function(){
 		let appInfo={
 			appName:"tbkjx",
@@ -43,12 +45,20 @@ sue.apps.tbkjx={
 			_sortUp=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortup"]},null,"margin:0 5px;",null,"价格由低到高"),
 			_sortDn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortdn"]},null,null,null,"价格由高到低"),
 			_sortCup=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortcup"]},null,null,null,"优惠券额由低到高"),
-			_sortCdn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortcdn"]},null,"margin:4px;",null,"优惠券额由高到低");
+			_sortCdn=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_sortbtn su_tbkjx_sortcdn"]},null,"margin:2px 4px;",null,"优惠券额由高到低");
 		headSort.appendChild(_sortReset);
 		headSort.appendChild(_sortUp);
 		headSort.appendChild(_sortDn);
 		headSort.appendChild(_sortCup);
 		headSort.appendChild(_sortCdn);
+
+		let headPlatform=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_platform"]});
+		let _platformAll=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_platformbtn su_tbkjx_platformall"]},null,null,{setName:["platform"],setValue:["0"]},"所有平台"),
+			_platformTaobao=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_platformbtn su_tbkjx_platformtaobao"]},null,"margin:0 5px;",{setName:["platform"],setValue:["1"]},"淘宝"),
+			_platformTianmao=sue.apps.domCreate("button",{setName:["className"],setValue:["su_tbkjx_platformbtn su_tbkjx_platformtianmao"]},null,"margin:0 5px;",{setName:["platform"],setValue:["2"]},"天猫");
+		headPlatform.appendChild(_platformAll);
+		headPlatform.appendChild(_platformTaobao);
+		headPlatform.appendChild(_platformTianmao);
 
 		let headExtent=sue.apps.domCreate("div",{setName:["className"],setValue:["su_tbkjx_extent"]});
 		let _extentSpan=sue.apps.domCreate("span",{setName:["className"],setValue:["su_tbkjx_extentspan"]},null,null,null,"价格范围："),
@@ -74,6 +84,7 @@ sue.apps.tbkjx={
 
 		listHead.appendChild(boxSearch);
 		listHead.appendChild(headSort);
+		listHead.appendChild(headPlatform);
 		listHead.appendChild(headExtent);
 
 		boxList.appendChild(listHead);
@@ -133,7 +144,24 @@ sue.apps.tbkjx={
 		},500)
 	},
 	initList:function(data,page){
-		// sue.apps.tbkjx.cons.curData=data;
+		let getPlatformData=function(data){
+			if(sue.apps.tbkjx.cons.platform==1){
+				for(var i=data.length-1;i>=0;i--){
+					if(data[i][5]==1){
+						data.splice(i,1);
+					}
+				}
+			}else if(sue.apps.tbkjx.cons.platform==2){
+				for(var i=data.length-1;i>=0;i--){
+					if(data[i][5]==0){
+						data.splice(i,1);
+					}
+				}
+			}
+			return data;
+		}
+
+		data=getPlatformData(data.slice(0));
 		sue.apps.tbkjx.cons.curData=data.slice(0);
 		////
 			let _listLength=sue.apps.tbkjx.config.n_num;
@@ -211,6 +239,12 @@ sue.apps.tbkjx={
 				if(e.target.classList.contains("su_tbkjx_img")||(e.target.parentNode&&e.target.parentNode.classList.contains("su_tbkjx_qr"))){
 					sue.apps.tbkjx.showQR();
 				}
+				if(e.target.classList.contains("su_tbkjx_platformbtn")){
+					sue.apps.tbkjx.cons.platform=Number(e.target.dataset.platform);
+					sue.apps.tbkjx.platformBtn();
+					sue.apps.tbkjx.initList(sue.apps.tbkjx.cons.platformBase,0);
+					sue.apps.tbkjx.itemSort(sue.apps.tbkjx.cons.curSort);
+				}
 				break;
 			case"keypress":
 				if(e.keyCode==13&&e.target.id=="su_tbkjx_searchkey"){
@@ -220,6 +254,13 @@ sue.apps.tbkjx={
 				}
 				break;
 		}
+	},
+	platformBtn:function(){
+		let platformBtns=sue.apps.tbkjx.dom.querySelectorAll(".su_tbkjx_platformbtn");
+		for(var i=0;i<platformBtns.length;i++){
+			platformBtns[i].classList.remove("su_tbkjx_platformbtn_cur");
+		}
+		platformBtns[sue.apps.tbkjx.cons.platform].classList.add("su_tbkjx_platformbtn_cur");
 	},
 	showQR:function(){
 		var _qrImg=sue.apps.tbkjx.dom.querySelector(".su_tbkjx_qr img");
@@ -271,7 +312,9 @@ sue.apps.tbkjx={
 		}
 
 		let newData=arrayDiff(concatArray);
-
+		sue.apps.tbkjx.cons.platform=0;
+		sue.apps.tbkjx.platformBtn();
+		sue.apps.tbkjx.cons.platformBase=newData;
 		sue.apps.tbkjx.cons.curSort="reset";
 		sue.apps.tbkjx.cons.reset=newData;
 		sue.apps.tbkjx.cons.extentBase=newData;
@@ -319,7 +362,7 @@ sue.apps.tbkjx={
 		sue.apps.tbkjx.cons.curSort=sortType;
 		sue.apps.tbkjx.setSortBtn();
 
-		// sue.apps.tbkjx.initList(sue.apps.tbkjx.cons.curData.sort(compare(sortType)),0);
+		// sue.apps.tbkjx.cons.platformBase=sue.apps.tbkjx.cons[sortType];
 	},
 	setSortBtn:function(){
 		console.log("setSortBtn");
@@ -352,12 +395,13 @@ sue.apps.tbkjx={
 				newData.push(data[i]);
 			}
 		}
-
+		sue.apps.tbkjx.cons.platform=0;
+		sue.apps.tbkjx.platformBtn();
+		sue.apps.tbkjx.cons.platformBase=newData;
 		sue.apps.tbkjx.cons.curSort="reset";
 		sue.apps.tbkjx.cons.reset=newData;
 		sue.apps.tbkjx.cons.curData=newData;
-		sue.apps.tbkjx.itemSort(sue.apps.tbkjx.cons.curSort)
-		// sue.apps.tbkjx.initList(newData,0);
+		sue.apps.tbkjx.itemSort(sue.apps.tbkjx.cons.curSort);
 	},
 	showHelp:function(e){
 		var domopt=sue.apps.getAPPboxEle(e).querySelector(".su_options_help");
@@ -376,6 +420,8 @@ chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"tbkjx"},function(respo
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	switch(message.type){
 		case"data":
+			sue.apps.tbkjx.platformBtn();
+			sue.apps.tbkjx.cons.platformBase=message.value.data;
 			sue.apps.tbkjx.cons.data=message.value.data;
 			sue.apps.tbkjx.cons.reset=sue.apps.tbkjx.cons.data.slice(0);
 			sue.apps.tbkjx.cons.extentBase=sue.apps.tbkjx.cons.data.slice(0);

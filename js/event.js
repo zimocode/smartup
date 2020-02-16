@@ -1041,7 +1041,7 @@ var sue={
   						case"paste":
   							var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 							clipOBJ.focus();
-							document.execCommand('paste', false, null);
+							document.execCommand('paste');
 							var clipData=clipOBJ.value;
 							sue.startEle.value+=response.paste;
   							break;

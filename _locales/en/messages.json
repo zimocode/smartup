@@ -1444,10 +1444,10 @@
     "message":"More Extensons"
   },
   "con_ad":{
-    "message":"Show advertisement"
+    "message":"Show advertisements on current options page"
   },
   "des_ad":{
-    "message":"Ads are only shown on the current settings page and will never appear on other pages. Thank you for your supporting."
+    "message":"Ads are only shown on the current options page and will never appear on other pages. Thank you for your supporting."
   },
   "des_moreextlist":{
     "message":"These extensions are developed by me. Welcome to install and use."
@@ -1526,5 +1526,59 @@
   },
   "closeapps":{
     "message":"Close all Mini-apps in tab"
+  },
+  "magnet":{
+    "message":"Torrent Hash To Magnet URI"
+  },
+  "btn_clear":{
+    "message":"CLEAR"
+  },
+  "magnet_placeholder_input":{
+    "message":"Input torrent hash text."
+  },
+  "homepage_grouptop":{
+    "message":"Most Visited Sites"
+  },
+  "homepage_groupdefault":{
+    "message":"Default Group"
+  },
+  "homepage_grouplist":{
+    "message":"Sites group list"
+  },
+  "homepage_editmode":{
+    "message":"Edit Mode"
+  },
+  "homepage_newgroup":{
+    "message":"Add an new group"
+  },
+  "homepage_grouptitle":{
+    "message":"Group Name"
+  },
+  "homepage_sitetitle":{
+    "message":"Site Name"
+  },
+  "homepage_siteurl":{
+    "message":"Site URL"
+  },
+  "homepage_placeurl":{
+    "message":"Including prefix: http, https and etc."
+  },
+  "homepage_cfmlistdel":{
+    "message":"This will delete all sites in the group, Please confirm the operation."
+  },
+  "homepage_ctm":{
+    "message":"Add to Mini-apps: Home Page"
+  },
+  "n_homepage_last":{
+    "message":"Set the last sites group as a default one"
+  },
+  "msg_conferr0":{
+    "message":"Failed to save settings. The error message is:"
+  },
+  "msg_conferr1":{
+    "message":"smartUp Gestures will try to roll back to the previous settings."
+  },
+  "notif_title_conferr":{
+    "message":"Settings save Failed!"
   }
 }

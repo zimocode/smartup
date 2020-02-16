@@ -77,10 +77,25 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_sortbtncur{
 	color: rgb(255, 255, 255);
 	background: rgb(86, 119, 252);
 }
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_platform{
+	margin-bottom: 2px;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_platformbtn{
+	font-size: 10px;
+	height: 18px;
+	line-height: 18px;
+	min-width: auto;
+	padding: 0 4px;
+	margin: 0;
+}
+smartup.su_apps#su_apps_tbkjx .su_tbkjx_platformbtn_cur{
+	color: rgb(255, 255, 255);
+	background: rgb(86, 119, 252);
+}
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_extent{
 	/*padding: 4px 0;*/
 	padding: 0;
-	margin-bottom: 4px;
+	margin-bottom: 2px;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_extenttext{
 	width: 35px;
@@ -146,7 +161,7 @@ smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing{
 	padding-top: 86px;
 
 padding-top: 0;
-margin-top: 106px;
+margin-top: 120px;
 position: initial;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing ul{
@@ -158,7 +173,7 @@ height: 288px;
 overflow-y: auto;
 overflow-x: hidden;
 height: 328px;
-height: 278px;
+height: 264px;
 padding: 2px 0;
 }
 smartup.su_apps#su_apps_tbkjx .su_tbkjx_listjing li{
