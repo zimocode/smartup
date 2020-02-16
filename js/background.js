@@ -1568,7 +1568,7 @@ var sub={
 			var theURL,
 				clipOBJ=document.body.appendChild(document.createElement("textarea"));
 			clipOBJ.focus();
-			document.execCommand('paste', false, null);
+			document.execCommand('paste');
 			theURL=clipOBJ.value;
 			clipOBJ.remove();
 
@@ -1657,7 +1657,7 @@ var sub={
 							break;
 					}	
 					clipOBJ.select();
-					document.execCommand('copy', false, null);
+					document.execCommand('copy');
 					clipOBJ.remove();				
 				})
 			}
@@ -1771,7 +1771,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.txt;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1809,7 +1809,7 @@ var sub={
 			console.log("txtsearchclip")
 			let _str,_obj=document.body.appendChild(document.createElement("textarea"));
 				_obj.focus();
-			document.execCommand('paste', false, null);
+			document.execCommand('paste');
 			_str=_obj.value;
 			console.log(_obj)
 			_obj.remove();
@@ -1894,7 +1894,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.lnk;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1907,7 +1907,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.str;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
 			var thepers=["clipboardRead"];
@@ -1920,7 +1920,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value='<a href="'+sub.message.selEle.lnk+'">'+sub.message.selEle.str+'<\/a>';
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();			
 			}
 			var thepers=["clipboardRead"];
@@ -1985,7 +1985,7 @@ var sub={
 				var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 				clipOBJ.value=sub.message.selEle.img;
 				clipOBJ.select();
-				document.execCommand('copy', false, null);
+				document.execCommand('copy');
 				clipOBJ.remove();
 			}
 
@@ -3767,7 +3767,7 @@ var sub={
 					if(sub.cons.permissions.contains("clipboardWrite")) {
 						var clipOBJ=document.body.appendChild(document.createElement("textarea"));
 						clipOBJ.focus();
-						document.execCommand('paste', false, null);
+						document.execCommand('paste');
 						var clipData=clipOBJ.value;
 						clipOBJ.remove();
 						sub.theConf.paste=clipData;
