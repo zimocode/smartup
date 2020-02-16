@@ -2890,6 +2890,13 @@ var sub={
 			else if(config.version<45){
 				sub.setBackup("45")
 			}
+			else if(config.version<46){
+				sub.setBackup("46");
+			}
+		},
+		_46:function(){
+			config.version=46;
+			sub.saveConf(true);
 		},
 		_45:function(){
 			config.touch={};
