@@ -557,37 +557,6 @@ var suo={
 	},
 	saveConf2:function(str,type,mytime){
 		chrome.runtime.sendMessage({type:"saveConf",value:config});
-		suo.showMsgBox();
-
-		return;
-		console.log("saveConf2")
-		let _isSync;
-		if(config.general.sync.autosync&&chrome.storage.sync){
-			_isSync=true;
-		}else{
-			_isSync=false;
-		}
-		if(_isSync){
-			chrome.storage.sync.clear(function(){
-				chrome.storage.sync.set(config,function(){
-					chrome.runtime.sendMessage({type:"reloadconf"});
-					suo.showMsgBox();
-				})
-			})
-		}else{
-			chrome.storage.local.get(function(items){
-				let _obj=items;
-					_obj.config=config;
-					_obj.localConfig=items.localConfig;
-				chrome.storage.local.clear(function(){
-					chrome.storage.local.set(_obj,function(){
-						chrome.runtime.sendMessage({type:"reloadconf"});
-						suo.showMsgBox();
-					})
-				})
-			})
-		}
-		_isSync?localStorage.setItem("sync","true"):localStorage.setItem("sync","false");
 	},
 	domCreate2:function(edom,eele,einner,ecss,edata,etxt){
 		var dom=document.createElement(edom);
@@ -722,7 +691,17 @@ var suo={
 				OBJ.style.cssText+="background-color:yellow;color:rgba(0,0,0,.8);";
 				break;
 		}
-		OBJ.innerText=str;
+		//OBJ.innerText=str;
+		//
+		OBJ.textContent="";
+		if(typeof str=="string"){
+			OBJ.innerText=str;
+		}else if(typeof str=="object"){
+			for(var i=0;i<str.length;i++){
+				var _div=suo.domCreate2("div",null,null,null,null,str[i]);
+				OBJ.appendChild(_div);
+			}
+		}
 		//OBJ.style.cssText+="top:70px;opacity:0;";
 		window.setTimeout(function(){
 			OBJ.style.cssText+="transition:all .4s ease-in-out;top:70px;opacity:1;z-index:"+index;
@@ -2684,3 +2663,16 @@ chrome.runtime.sendMessage({type:"opt_getconf"},function(response){
 	devMode=response.devMode;
 	suo.begin();
 })
+chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){
+	switch(message.type){
+		case"confErr":
+			suo.showMsgBox([suo.getI18n("msg_conferr0"),message.lastErr,suo.getI18n("msg_conferr1")],"error","5",10000);
+			window.setTimeout(function(){
+				location.reload();
+			},6000);
+			break;
+		case"confOK":
+			suo.showMsgBox();
+			break;
+	}
+});

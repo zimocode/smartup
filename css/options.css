@@ -628,7 +628,7 @@ smartup.su_apps{
 }
 #msgbox{
 	min-width: 300px;
-	height: 40px;
+	min-height: 40px;
 	line-height: 40px;
 	background: rgba(202,239,197,.98);
 	position: fixed;
@@ -642,6 +642,10 @@ smartup.su_apps{
 	color: #fff;
 	font-size: 16px;
 	font-weight: bold;
+}
+#msgbox div{
+	text-align: left;
+	line-height: 20px;
 }
 .head{
 	height: 40px;
@@ -796,7 +800,7 @@ smartup.su_apps{
 .menup{
 	height: 40px;
 	line-height: 40px;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: bold;
 	color: rgba(0,0,0,.9);
 	border-top: 1px solid transparent;

@@ -2711,7 +2711,7 @@ var sub={
 			sub.cons.origins=pers.origins;
 		});
 	},
-	saveConf:function(noInit){
+	saveConf:function(noInit,sendResponse){
 		console.log("save");
 		console.log(config);
 		let _isSync;
@@ -2724,8 +2724,17 @@ var sub={
 		if(_isSync){
 			chrome.storage.sync.clear(function(){
 				chrome.storage.sync.set(config,function(){
-					loadConfig(noInit);
-					//sub.init();
+					if(chrome.runtime.lastError){
+						sub.showNotif("basic",sub.getI18n("notif_title_conferr"),sub.getI18n("msg_conferr0")+"\n"+chrome.runtime.lastError.message+"\n"+sub.getI18n("msg_conferr1"));
+						sub.cons.lastErr=chrome.runtime.lastError.message;
+						chrome.storage.sync.set(sub.cons.lastConf,function(){
+							loadConfig();
+							chrome.runtime.sendMessage({type:"confErr",lastErr:sub.cons.lastErr})
+						});
+					}else{
+						loadConfig();
+						chrome.runtime.sendMessage({type:"confOK"});
+					}
 				})
 			})
 		}else{
@@ -2735,8 +2744,8 @@ var sub={
 					_obj.localConfig=items.localConfig;
 				chrome.storage.local.clear(function(){
 					chrome.storage.local.set(_obj,function(){
-						loadConfig(noInit);
-						//sub.init();
+						loadConfig();
+						chrome.runtime.sendMessage({type:"confOK"});
 					})
 				})
 			})
@@ -3659,8 +3668,9 @@ var sub={
 				loadConfig();
 				break;
 			case"saveConf":
+				sub.cons.lastConf=config;
 				config=message.value;
-				sub.saveConf();
+				sub.saveConf(true,sendResponse);
 				break;
 			case"per_clear":
 				sub.cons.permissions={};

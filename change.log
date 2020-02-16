@@ -1,11 +1,12 @@
 {
 	"log": [
 		{
-			"ver":"6.6.255.1041",
-			"date":"2020.02.12",
+			"ver":"6.6.260.1043",
+			"date":"2020.02.16",
 			"content":[
 				"new action: magnet",
-				"upgrade homepage"
+				"upgrade homepage",
+				"fix bug: issues@github: #74"
 			]
 		},
 		{
