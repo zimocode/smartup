@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"6.6.260.1046",
+			"date":"2020.02.16",
+			"content":[
+				"fix bug: error if there's no sub for rss"
+			]
+		},
+		{
 			"ver":"6.6.260.1045",
 			"date":"2020.02.16",
 			"content":[
