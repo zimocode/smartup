@@ -1,10 +1,10 @@
 {
 	"log": [
 		{
-			"ver":"6.6.260.1046",
-			"date":"2020.02.16",
+			"ver":"6.6.262.1048",
+			"date":"2020.02.18",
 			"content":[
-				"fix bug: error if there's no sub for rss"
+				"fix bugs: error if there's no sub for rss, issues@github: #85"
 			]
 		},
 		{

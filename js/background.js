@@ -1661,7 +1661,7 @@ var sub={
 					clipOBJ.remove();				
 				})
 			}
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -1774,7 +1774,7 @@ var sub={
 				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -1897,7 +1897,7 @@ var sub={
 				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -1910,7 +1910,7 @@ var sub={
 				document.execCommand('copy');
 				clipOBJ.remove();				
 			}
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -1923,7 +1923,7 @@ var sub={
 				document.execCommand('copy');
 				clipOBJ.remove();			
 			}
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -1989,7 +1989,7 @@ var sub={
 				clipOBJ.remove();
 			}
 
-			var thepers=["clipboardRead"];
+			var thepers=["clipboardWrite"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
@@ -2001,7 +2001,7 @@ var sub={
 				.then(buffer => chrome.clipboard.setImageData(buffer,(sub.message.selEle.img.substr(sub.message.selEle.img.length-4)==".jpg"?"jpeg":"png")))
 			}
 
-			let thepers=["clipboardRead"],theorgs;
+			let thepers=["clipboardWrite"],theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		imgsearch:function(){
@@ -3771,18 +3771,19 @@ var sub={
 				sub.theConf=getConf();
 				sub.theConf.type="action";
 				if(sub.theConf.name=="paste"){//for action paste
-					if(sub.cons.permissions.contains("clipboardWrite")) {
-						var clipOBJ=document.body.appendChild(document.createElement("textarea"));
-						clipOBJ.focus();
-						document.execCommand('paste');
-						var clipData=clipOBJ.value;
-						clipOBJ.remove();
-						sub.theConf.paste=clipData;
+					sendResponse(sub.theConf);//error log, if none sendResponse
+					sub.checkPermission(["clipboardRead"],null,function(){
+						var domCB=document.createElement("textarea");
+							domCB.classList.add("su_cb_textarea");
+						document.body.appendChild(domCB);
+						domCB.focus();
+						document.execCommand("paste");
+						sub.theConf.paste=domCB.value;
 						sub.theConf.typeAction="paste";
-						sendResponse(sub.theConf);
-				    }else {
-				    	sub.checkPermission(["clipboardWrite"]);
-				    }
+						chrome.tabs.sendMessage(sender.tab.id,{type:"actionPaste",value:sub.theConf},function(response){
+							domCB.remove();
+						});
+					});
 				}else{
 					sendResponse(sub.theConf);
 				}

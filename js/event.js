@@ -79,9 +79,6 @@ var sue={
 			window.addEventListener("dragover",this.handleEvent,false);
 			window.addEventListener("dragend",this.handleEvent,false);
 		}
-		// if(config.general.settings.clickcancel){
-		// 	window.addEventListener("mouseclick",this.handleEvent,false);
-		// }
 		if(config.general.settings.esc){
 			window.addEventListener("keydown",this.handleEvent,false);
 		}
@@ -89,13 +86,10 @@ var sue={
 			document.addEventListener("click",this.handleEvent,false);
 		}
 		if(config.general.fnswitch.fnwges){
-			//window.addEventListener("mousewheel",this.handleEvent,false);
 			window.addEventListener("wheel",this.handleEvent,false);
 		}
 	},
 	initHandle2:function(){
-		//document.addEventListener("mousedown",this.handleEvent,false);
-		//sue.document.addEventListener("mouseup",this.handleEvent,false);
 		sue.document.addEventListener("mousemove",this.handleEvent,false);
 		sue.document.addEventListener("mouseover",this.handleEvent,false);
 		sue.document.addEventListener("contextmenu",this.handleEvent,false);
@@ -131,12 +125,7 @@ var sue={
 						wheelDelta:e.deltaY
 					}
 
-					chrome.runtime.sendMessage(extID,{type:"action_wges",sendValue:sendValue,selEle:sue.selEle},function(response){
-						// if(response.name=="scroll"){
-						// 	console.log("scroll")
-						// 	e.preventDefault();
-						// }
-					})
+					chrome.runtime.sendMessage(extID,{type:"action_wges",sendValue:sendValue,selEle:sue.selEle})
 					e.preventDefault();
 				}
 				break;
@@ -164,7 +153,6 @@ var sue={
 				if(e.keyCode==27){
 					sue.break=true;
 					sue.stopMges(e);
-					//sue.timeout_nomenu=true;
 				}
 				break;
 			case"mousedown":
@@ -172,7 +160,6 @@ var sue={
 					&&config.general.fnswitch.fnmges
 					&&e.buttons==config.mges.settings.model
 					&&!e[config.mges.settings.holdkey+"Key"]){
-						//console.log("mousedown");
 						sue.lineDrawReady(e,"mges");
 				}
 				//fix rges mouseup bug
@@ -182,7 +169,6 @@ var sue={
 				}
 				break;
 			case"mouseup":
-				//console.log(e)
 				if((e.button==1&&config.mges.settings.model==4)
 					||(e.button==2&&e.button==config.mges.settings.model&&(config.general.linux.cancelmenu&&sue.cons.os!="win"))){
 					if(sue._dirArray&&sue.drawing){
@@ -204,7 +190,6 @@ var sue={
 				}
 				break;
 			case"contextmenu":
-				//console.log("contextmenu")
 				if(config.general.linux.cancelmenu
 					&&sue.cons.os!="win"){
 						//fix mges
@@ -256,7 +241,6 @@ var sue={
 					e.preventDefault();
 				}
 				//fix switchtab by rges or wges
-				// console.log(sue.cons.switchtab)
 				if(sue.cons.switchtab&&sue.cons.switchtab.contextmenu){
 					e.preventDefault();
 					sue.cons.switchtab.contextmenu=false;
@@ -264,15 +248,11 @@ var sue={
 				
 				break;
 			case"mousemove":
-				//console.log(sue.drawing)
 				if(sue.drawing&&e.buttons==config.mges.settings.model){
-					// console.log("move")
 					sue.lineDraw(e);
 				}
 				break;
 			case"dragstart":
-				//console.log("dragstart")
-				//console.log(e.target.draggable)
 				if(!extDisable
 					&&((config.general.fnswitch.fndrg&&!e[config.drg.settings.holdkey+"Key"])
 										||(config.general.fnswitch.fnsdrg&&!e[config.sdrg.settings.holdkey+"Key"]))){
@@ -282,7 +262,6 @@ var sue={
 				}
 				break;
 			case"dragover":
-				//console.log("dragover")
 				if(sue.drawing){
 					sue.lineDraw(e,sue.drawType[0]);
 					if(sue.drawType[0]=="drg"&&config[sue.drawType[0]].ui.tip.type=="follow"){
@@ -294,28 +273,13 @@ var sue={
 						e.preventDefault();						
 					}
 					//drag to text box, cancel
-					//console.log(sue.cons.drginbox)
 					if(!sue.cons.drginbox&&config[sue.drawType[0]].settings.drgtobox&&e.target&&e.target.type&&(e.target.type=="textarea"||e.target.type=="text")){
 						sue.break=true;
 						sue.stopMges(e);
 					}
-					// if(config[sue.drawType[0]].settings.drgtobox&&e.path[0]&&e.path[0].type&&(e.path[0].type=="textarea"||e.path[0].type=="text")){
-					// 	sue.break=true;
-					// 	sue.stopMges(e);
-					// }
 				}
 				break;
 			case"dragend":
-				// var test=function(e){
-				// 	console.log("drag")
-				// 	if(e.keyCode==27){
-				// 		sue.break=true;
-				// 		sue.stopMges(e);
-				// 		sue.timeout_nomenu=true;
-				// 	}
-				// }
-				// document.addEventListener("keydown",test,false)
-
 				if(sue._dirArray&&sue.drawing){
 					sue.stopMges(e);
 				}
@@ -388,7 +352,6 @@ var sue={
 		for(var i=0;i<_uiarray.length;i++){
 			if(config[sue.drawType[0]].ui&&config[sue.drawType[0]].ui[_uiarray[i]].enable){
 				sue.UI(config[sue.drawType[0]].ui[_uiarray[i]].style);
-				//sue.UI(config.mges.ui[_uiarray[i]].style)
 			}
 		}
 	},
@@ -398,13 +361,8 @@ var sue={
 		var dx=Math.abs(x-sue._lastX);
 		var dy=Math.abs(y-sue._lastY);
 		var dz=Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-		//console.log(dx+"/"+dy+"/"+dz)
 		if(dz<1){return}
 		sue.uiPos(e);
-
-		//return;
-		//console.log(sue.drawType[0])
-		//sue.ui_line(e)
 		(config[sue.drawType[0]].ui.line.enable||editMode)?sue.ui_line(e):null;
 		if(dx<config.general.settings.minlength
 			&&dy<config.general.settings.minlength){
@@ -412,10 +370,7 @@ var sue={
 		}
 
 		var dir;
-		dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");
-		//console.log(dir)   	
-
-
+		dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D"); 	
 
 		var lastDir=sue._dirArray.substr(sue._dirArray.length-1,1);
 		if(dir!=lastDir){
@@ -423,29 +378,20 @@ var sue={
 			//show direct
 			sue.drawType[0]!="sdrg"&&config[sue.drawType[0]].ui.direct.enable?sue.ui_direct(e):null;
 			//get tip
-			//sue.drawType[0]!="sdrg"&&(config[sue.drawType[0]].ui.tip.enable||config[sue.drawType[0]].ui.note.enable)?sue.sendDir(sue._dirArray,"gettip",e):null;
-
-			//get tip
 			(config[sue.drawType[0]].ui.tip.enable||config[sue.drawType[0]].ui.note.enable)?sue.sendDir(sue._dirArray,"gettip",e):null;
 		}
 		//timeout
 		if(config.general.settings.timeout){
 			if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
 			sue.timeout=window.setTimeout(function(){
-				//console.log("timeou")
 				sue.break=true;
 				sue.clearUI();
-				//sue.timeout_nomenu=true;
 			},config.general.settings.timeoutvalue)
 		}
-
 		sue._lastX=e.targetTouches[0].clientX;
 		sue._lastY=e.targetTouches[0].clientY;
-		//console.log(sue._dirArray)
 	},
 	touchEnd:function(e){
-		console.log(e);
-		console.log("fun_name:"+arguments.callee.name);
 		if(!sue._dirArray){return;}
 		if(sue.break){
 			sue.clearUI();
@@ -470,35 +416,6 @@ var sue={
 		sue.drawing=false;
 		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
 		sue._dirArray="";
-		//sue.sendDir(sue._dirArray,"action",e);
-
-		return;
-		console.log("stop")
-		if(sue.break){
-			sue.clearUI();
-			sue.break=false;
-			return;
-		}
-		sue.clearUI();
-		if(editMode){
-			editDirect=sue._dirArray;
-			var getele=function(ele){
-				if(ele.tagName.toLowerCase()=="smartup"&&ele.classList.contains("su_apps")){
-					return ele;
-				}else{
-					return getele(ele.parentNode);
-				}
-			}
-			var boxOBJ=getele(document.querySelector(".su_app_test"));
-			boxOBJ.querySelector(".testbox").innerText=sue._dirArray;
-		}else{
-			sue.sendDir(sue._dirArray,"action",e);
-		}
-		
-		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
-		e.preventDefault();
-		sue._dirArray="";
-		sue.drawing=false;
 	},
 	lineDrawReady:function(e,type){
 		console.log("lineDrawReady");
@@ -524,25 +441,23 @@ var sue={
 
 		sue.selEle={};
 		if(type=="drg"||type=="sdrg"){
-			console.log(e)
 			switch(e.target.nodeType){
 				case 3:
-					//sue.drawType=["drg","tdrg"]
-					sue.drawType=[type,"t"+type]
+					sue.drawType=[type,"t"+type];
 					break;
 				case 1:
 					if(e.target.src){
-						sue.drawType=[type,"i"+type]//["drg","idrg"];
-						sue.selEle.img=e.target.src
+						sue.drawType=[type,"i"+type];
+						sue.selEle.img=e.target.src;
 					}else if(e.target.href){
 						if(config[type].settings.drgimg&&e.target.firstElementChild&&e.target.firstElementChild.nodeType==1&&e.target.firstElementChild.src){
-							sue.drawType=[type,"i"+type]//["drg","idrg"];
+							sue.drawType=[type,"i"+type];
 							sue.selEle.img=e.target.firstElementChild.src;
 						}else{
-							sue.drawType=[type,"l"+type]//["drg","ldrg"];
+							sue.drawType=[type,"l"+type];
 						}
 					}else{
-						sue.drawType=[type,"t"+type]//["drg","tdrg"];
+						sue.drawType=[type,"t"+type];
 					}
 					break;
 			}
@@ -557,10 +472,8 @@ var sue={
 				}
 			}
 		}else if(type=="mges"){
-			console.log(sue)
 			sue.drawType=["mges","actions"];
 		}
-		console.log(sue.drawType)
 
 		//sue.selEle={};
 		sue.selEle.txt=window.getSelection().toString();
@@ -591,9 +504,6 @@ var sue={
 				return win
 			}
 		}
-		// t=getParent(window);
-		// sue.window=t;
-		// sue.document=t.document.documentElement;
 		sue.window=window;
 		sue.document=document.documentElement;
 		sue.initHandle2();
@@ -617,11 +527,9 @@ var sue={
 				sue.UI(config[sue.drawType[0]].ui[_uiarray[i]].style);
 			}
 		}
-		console.log(sue.drawing)
 		return
 	},
 	lineDraw:function(e,type){
-		//console.log("lineDraw")
 		var x=e.clientX;
 		var y=e.clientY;
 		var dx=Math.abs(x-sue._lastX);
@@ -657,17 +565,9 @@ var sue={
 			}else if(angle>22.5&&angle<=67.5&&y>sue._lastY&&x<sue._lastX){
 				dir="d"
 			}
-			//console.log(angle+"/"+dir);
 		}else{
-			// if(dx>dy ){
-			// 	dir=x<sue._lastX?"L":"R";
-			// }else{
-			// 	dir=y<sue._lastY?"U":"D";
-			// }
 			dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");    	
 		}
-
-
 
 		var lastDir=sue._dirArray.substr(sue._dirArray.length-1,1);
 		if(dir!=lastDir){
@@ -733,7 +633,6 @@ var sue={
 			svgdiv.appendChild(svgtag);
 			sue.document.appendChild(svgdiv);
 		}
-		//console.log(sue.svgtag)
 		e=e.targetTouches?e.targetTouches[0]:e;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
@@ -773,7 +672,6 @@ var sue={
 		}
 	},
 	ui_tip:function(confOBJ,e){
-		// console.log(confOBJ)
 		if(!config[sue.drawType[0]].ui.tip.enable){return;}
 		var uidom=sue.document.querySelector("div[data-suui=uibox][data-sustyle="+config[sue.drawType[0]].ui.tip.style+"]");
 		if(!uidom){return}
@@ -845,7 +743,6 @@ var sue={
 				+"font-size:"+config[sue.drawType[0]].ui.allaction.width+"px;"
 				+"opacity:"+config[sue.drawType[0]].ui.allaction.opacity/100+";"
 			uidom.appendChild(_dom);
-			//uidom.appendChild(document.createElement("br"));
 		}
 		_dom.textContent="";
 		if(confOBJ.allaction&&confOBJ.allaction.length>0){
@@ -866,7 +763,6 @@ var sue={
 	directimg:function(direct){
 		var myDeg={L:"0deg",U:"90deg",R:"180deg",D:"270deg"};
 		return myDeg[direct];
-		//return "-webkit-transform:rotate(+"+myDeg[direct]+");";
 	},
 	domDir2:function(img){
 		var domimg=document.createElement("img");
@@ -896,7 +792,6 @@ var sue={
 		let domUIs=sue.document.querySelectorAll("div[data-suui=uibox]"),
 			i=0,domWidth,domHeight;
 		e=e.targetTouches?e.targetTouches[0]:e;
-		//console.log(domUIs)
 		for(i=0;i<domUIs.length;i++){
 			if(["center","top","ui_bottom","left","right"].contains(domUIs[i].dataset.sustyle)){
 				domWidth=window.getComputedStyle(domUIs[i]).width;
@@ -934,61 +829,14 @@ var sue={
 					break;
 			}
 		}
-
-		return;
-
-		var uibox_follow=sue.document.querySelector("div[data-suui=uibox][data-sustyle=follow]"),
-			uibox_center=sue.document.querySelector("div[data-suui=uibox][data-sustyle=center]"),
-			uibox_bottom=sue.document.querySelector("div[data-suui=uibox][data-sustyle=ui_bottom]");
-
-		var uibox_leftbottom=sue.document.querySelector("div[data-suui=uibox][data-sustyle=ui_leftbottom]");
-
-		e=e.targetTouches?e.targetTouches[0]:e;
-
-		uibox_follow?(uibox_follow.style.cssText+="left:"+(e.clientX+10)+"px;"+"top:"+(e.clientY+30)+"px"):null;
-		if(uibox_center){
-			var _width=window.getComputedStyle(uibox_center).width;
-				_width=_width.substr(0,_width.length-2);
-				_width=(window.innerWidth-_width)/2;
-			var _height=window.getComputedStyle(uibox_center).height;
-				_height=_height.substr(0,_height.length-2);
-				_height=(window.innerHeight-_height)/2;
-			uibox_center.style.cssText+=
-				"left:"+_width+"px;"+
-				"top:"+_height+"px;";
-		}
-		if(uibox_bottom){
-			var _width=window.getComputedStyle(uibox_bottom).width;
-				_width=_width.substr(0,_width.length-2);
-				_width=(window.innerWidth-_width)/2;
-			var _height=window.getComputedStyle(uibox_bottom).height;
-				_height=_height.substr(0,_height.length-2);
-				_height=(window.innerHeight-_height)/2;
-			uibox_bottom.style.cssText+=
-				"left:"+_width+"px;"/*+
-				"top:"+_height+"px;";*/
-		}
-		// if(uibox_leftbottom){
-		// 	var _width=window.getComputedStyle(uibox_bottom).width;
-		// 		_width=_width.substr(0,_width.length-2);
-		// 		_width=(window.innerWidth-_width)/2;
-		// 	var _height=window.getComputedStyle(uibox_bottom).height;
-		// 		_height=_height.substr(0,_height.length-2);
-		// 		_height=(window.innerHeight-_height)/2;
-		// 	uibox_bottom.style.cssText+=
-		// 		"left:"+_width+"px;"+
-		// 		"bottom:"+"1px; !important";
-		// }
 	},
 	clearUI:function(){
-		//return
 		if(!sue.document){return;}
 		sue.document.querySelector("div[data-suui=line]")?sue.document.querySelector("div[data-suui=line]").remove():null;
 		var doms=sue.document.querySelectorAll("div[data-suui=uibox]");
 		for(var i=0;i<doms.length;i++){
 			if(doms[i]){doms[i].remove()}
 		}
-		// console.log(sue.drawing);
 		sue.drawing=false;
 	},
 	stopMges:function(e){
@@ -1020,38 +868,26 @@ var sue={
 		sue.drawing=false;
 	},
 	sendDir:function(dir,dirType,e){
-		//console.log(sue.drawType)
-		// console.log(dirType)
-		// console.log({type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle})
 		var returnValue;
 		chrome.runtime.sendMessage(extID,{type:dirType,direct:dir,drawType:sue.drawType,selEle:sue.selEle},function(response){
-			// console.log(response)
   			returnValue=response;
   			sue.getedConf=returnValue;
+  			if(!response){return false;}
   			switch(response.type){
   				case"tip":
-  					// console.log(response)
   					sue.ui_tip(response,e);
   					sue.ui_note(response,e);
   					sue.ui_allaction(response,e);
   					sue.uiPos(e);
   					break;
   				case"action":
-  					switch(response.typeAction){
-  						case"paste":
-  							var clipOBJ=document.body.appendChild(document.createElement("textarea"));
-							clipOBJ.focus();
-							document.execCommand('paste');
-							var clipData=clipOBJ.value;
-							sue.startEle.value+=response.paste;
-  							break;
-  					}
   					break;
   			}
 		});
 	}
 }
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
+	console.log(message)
 	if(message.type=="set_confirm"){
 		sendResponse({type:message.type,message:true});
 		if(!confirm("You are try to close multiple tabs. Are you sure you want to continue?")){
@@ -1078,6 +914,9 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 			sue.cons.switchtab={};
 			sue.cons.switchtab.contextmenu=true;
 			sendResponse({type:message.type,message:true});
+			break;
+		case"actionPaste":
+			sue.startEle.value+=message.value.paste;
 			break;
 	}
 });
