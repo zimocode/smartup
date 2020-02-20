@@ -59,7 +59,7 @@ sue.apps.rss={
 			sue.apps.rss.rss(dom,sue.apps.rss.config.feed[0]);
 			sue.apps.rss.menu(dom);
 		}else{
-			dom.querySelector(".rssbox").textContent="there is no sub.";
+			dom.querySelector(".rss_box").textContent="there is no sub.";
 			sue.apps.rss.showSub(dom)
 		}
 
