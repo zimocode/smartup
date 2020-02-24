@@ -530,14 +530,17 @@ smartup.su_apps{
 	height: auto;
 	width: 200px;
 	border: 1px solid #d0d9ff;
+	opacity: 1;
 }
 .item_more:hover{
-	height: 80px;
+	/*height: 80px;*/
 }
 .item_more:hover .item_dir{
-	visibility: visible;
-	opacity: 1;
-	transition: all .4s ease-in-out;
+
+}
+.item_dir{
+	left: 0px;
+	top: 0;
 }
 .item:hover{
 	background: #5677fc;
@@ -550,18 +553,22 @@ smartup.su_apps{
 .item:hover .item_del{
 	display: block;
 	right: 0;
-	top: 0;
-
-	margin-top: -75px;
+	z-index: 100;
 }
 .item:hover .item_dir{
 	display: block;
-
 	position: relative;
-	top: -40px;
+	visibility: visible;
+	opacity: 1;
+	transition: all .4s ease-in-out;
+	left: 0;
+	top: -36px;
+}
+.item_more:hover .item_name{
+	opacity: 0.2;
 }
 .item_del{
-	position: sticky;
+/*	position: sticky;
 	right: 0;
 	top: 20px;
 	display: none;
@@ -578,7 +585,24 @@ smartup.su_apps{
 	color: rgba(255, 255, 255, 0.8);
 	border: 1px solid rgba(255, 255, 255, 0.3);
 	cursor: pointer;
-	transition:all .6s ease-in-out;
+	transition:all .6s ease-in-out;*/
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	border-radius: 100%;
+	padding: 0;
+	margin: -35px -5px 0 0;
+	float: right;
+	font-size: 12px; 
+	display: block;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.8);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	cursor: pointer;
+	transition:all .4s ease-in-out;
+	position: relative;
+	right: -30px;
+	top: 4px;
 }
 .item_del:hover{
 	background: red;
@@ -607,6 +631,22 @@ smartup.su_apps{
     opacity: 0;
     position: relative;
     /*z-index: -1;*/
+}
+.item:hover .item_note{
+	top: -34px;
+	opacity: 1;
+}
+.item_note{
+	position: relative;
+	display: block;
+	top: 0px;
+	height: 14px;
+	line-height: 14px;
+	transition:top .6s ease-in-out;
+overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	opacity: 0;
 }
 .item_sdrgdir{
 	position: relative;
@@ -935,7 +975,8 @@ smartup.su_apps{
 	margin: 5px 5px;
 	padding: 0 10px;
 	cursor: pointer;
-	transition:all .2s ease-in-out;
+	/*transition-duration: .2s;*/
+	/*transition:all .2s ease-in-out;*/
 	color: #303030;
 }
 .con-item li:hover{
@@ -1830,4 +1871,11 @@ summary:hover{
 #donate_box #donate_btn_close:active,
 #donate_box #donate_btn_hide:active{
 	background: blue;
+}
+
+.su_sortable_chosen{
+	border: 1px dashed #ccc;
+}
+.su_sortable_ghost{
+	/*background-color: red;*/
 }

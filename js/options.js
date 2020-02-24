@@ -30,7 +30,8 @@ var suo={
 		os:"win",
 		sizePos:{},
 		menuPin:true,
-		boxmove:{}
+		boxmove:{},
+		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2]]
 	},
 	boxShowFrom:null,
 	selects:["xx"],
@@ -71,19 +72,6 @@ var suo={
 		window.addEventListener("mouseleave",this.handleEvent,false);
 		window.addEventListener("resize",this.handleEvent,false);
 		window.addEventListener("mousedown",this.handleEvent,false);
-	},
-	initDrag:function(){
-		return;
-		let dragEles=document.querySelectorAll("li.item[draggable=true]");
-		for(let i=0;i<dragEles.length;i++){
-			break;
-			dragEles[i].addEventListener("dragstart",this.handleEvent,false);
-			dragEles[i].addEventListener("dragenter",this.handleEvent,false);
-			dragEles[i].addEventListener("dragover",this.handleEvent,false);
-			dragEles[i].addEventListener("dragleave",this.handleEvent,false);
-			dragEles[i].addEventListener("dragend",this.handleEvent,false);
-			dragEles[i].addEventListener("drop",this.handleEvent,false);			
-		}
 	},
 	handleEvent:function(e){
 		let getDragEle=function(ele){
@@ -883,6 +871,32 @@ var suo={
 		if((ele.dataset.id0=="1"&&ele.dataset.id1=="5")){
 			suo.confExport();
 		}
+		//set sort
+		let id0=ele.dataset.id0,
+			id1=ele.dataset.id1;
+		for(var i=0;i<suo.cons.sort.length;i++){
+			if(suo.cons.sort[i][0]==id0&&suo.cons.sort[i][1]==id1){
+				suo.cons.sortDom=Sortable.create(document.querySelector(".set-"+id0+id1+" ul.con-item"),{
+					animation:200,
+					easing:"ease-in-out",
+					ghostClass:"su_sortable_ghost",
+					chosenClass:"su_sortable_chosen",
+					onEnd:function(e){
+						let arr=suo.getConfOBJ(e);
+						for(var ii in arr){
+							if(ii==e.oldIndex){
+								arr.splice(e.newIndex,0,arr.splice(e.oldIndex,1)[0]);
+								break;
+							}
+						}
+						console.log(arr);
+						suo.initListItem(e.item.dataset.actiontype);
+						suo.saveConf();
+					}
+				});
+				break;
+			}
+		}
 	},
 	clickMenuDiv:function(e){
 		var ele=e.target||e;
@@ -1271,7 +1285,7 @@ var suo={
 		}
 	},
 	initListItem:function(type){
-		//console.log(type)
+		console.log(type)
 		domOBJ=document.querySelector(".ul_"+type);
 		domOBJ.textContent="";
 		var confOBJ,eleOBJ,actionType;
@@ -1279,14 +1293,14 @@ var suo={
 			case"mges":
 			case"touch":
 				confOBJ=config[type].actions;
-				eleOBJ={setName:["className"],setValue:["item item_edit item_more item_"+type]};
+				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item_"+type,suo.getI18n("tip_item")]};
 				actionType=type//+"actions";
 				break;
 			case"idrg":
 			case"tdrg":
 			case"ldrg":
 				confOBJ=config["drg"][type];
-				eleOBJ={setName:["className"],setValue:["item item_edit item_more item-"+type]};
+				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item-"+type,suo.getI18n("tip_item")]};
 				actionType=type;
 				break;
 			case"txtengine":
@@ -1369,10 +1383,10 @@ var suo={
 		}
 		//console.log(confOBJ)
 		for(var i=0;i<confOBJ.length;i++){
-			var liOBJ=suo.domCreate2("li",eleOBJ,"","",{setName:["confid","actiontype"],setValue:[i,actionType?actionType:type]});
-				liOBJ.draggable=true;
+			var liOBJ=suo.domCreate2("li",eleOBJ,"","",{setName:["confid","actiontype",],setValue:[i,actionType?actionType:type]});
+				// liOBJ.draggable=true;
 			var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"",{setName:["confid","actiontype"],setValue:[i,actionType?actionType:type]},("txtengine imgengine script".indexOf(type)!=-1)?confOBJ[i].name:((confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name)));
-			var liDel=suo.domCreate2("span",{setName:["className"],setValue:["item_del"]},null,null,null,"x");
+			var liDel=suo.domCreate2("span",{setName:["className","title"],setValue:["item_del",suo.getI18n("tip_del")]},null,null,null,"x");
 			liOBJ.appendChild(liName);
 			liOBJ.appendChild(liDel);
 			if("txtengine imgengine script pop ctm".indexOf(type)!=-1){
@@ -1381,18 +1395,20 @@ var suo={
 				var dirOBJ="";
 				var myDeg={L:"0deg",U:"90deg",R:"180deg",D:"270deg"};
 				//confOBJ[i].direct="undefined"
-				var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]});
+				var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null));
 				for(var k=0;k<confOBJ[i].direct.length;k++){
-					//dirOBJ+="<img class='item_edit' src='../image/direct.png' style='-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");'"+" draggable='false'"+"/>"
-					var _domImg=suo.domCreate2("img",{setName:["className"],setValue:["item_edit"]},null,"-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");");
+					var _domImg=suo.domCreate2("img",{setName:["className"],setValue:["item_edit"]},null,"-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");"+(confOBJ[i].note&&confOBJ[i].note.value?"height:16px;":""));
 					_domImg.src="../image/direct.png";
-					_domImg.draggable="false";
+					// _domImg.draggable="false";
 					lidir.appendChild(_domImg);
 				}
-				//var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},dirOBJ);
 
-				lidir.draggable=false;
-				liOBJ.appendChild(lidir);				
+				// lidir.draggable=false;
+				liOBJ.appendChild(lidir);
+			}
+			if(confOBJ[i].note&&confOBJ[i].note.value){
+				var _note=suo.domCreate2("span",{setName:["className"],setValue:["item_note item_edit"]},null,null,null,confOBJ[i].note.value);
+				liOBJ.appendChild(_note);
 			}
 			domOBJ.appendChild(liOBJ);
 		}

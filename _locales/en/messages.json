@@ -1580,5 +1580,11 @@
   },
   "notif_title_conferr":{
     "message":"Settings save Failed!"
+  },
+  "tip_item":{
+    "message":"Click to edit, drag to sort."
+  },
+  "tip_del":{
+    "message":"Delete"
   }
 }
