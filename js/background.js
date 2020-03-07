@@ -1275,6 +1275,7 @@ var sub={
 	},
 	action:{
 		none:function(){
+			chrome.tabCapture.capture({audio:true},function(stream){console.log(stream)});
 			return;
 		},
 		//group nav
@@ -3643,6 +3644,17 @@ var sub={
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){});
+					}
+
+					// insert sortable.js
+					let arraySort=["homepage","appslist"];
+					if(arraySort.contains(message.apptype)){
+						console.log("ss")
+						chrome.tabs.executeScript({file:"js/sortable.js",runAt:"document_start"},function(){
+							chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
+							chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"});
+						});
+						return;
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});

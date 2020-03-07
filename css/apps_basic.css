@@ -1,9 +1,9 @@
 smartup.su_apps,
 /*smartup.su_apps div,*/
 smartup.su_apps img,
-smartup.su_apps a,
+smartup.su_apps a/*,
 smartup.su_apps ul,
-smartup.su_apps li{
+smartup.su_apps li*/{
 	all: initial;
 	font-family: inherit;
 	font-family: arial,sans-serif;
