@@ -110,3 +110,7 @@ smartup.su_apps#su_apps_appslist .su_appslist_uldisabled::after{
 	font-size: 12px;
 	/*background-color: #ccc;*/
 }
+smartup.su_apps#su_apps_appslist .su_sortable_item>div{
+	border: 1px dashed #ccc;
+	background: #cccccc33;
+}

@@ -577,8 +577,7 @@ var suo={
 	itemDel:function(e){
 		var ele=e.target;
 		var confArray=suo.getDataset(ele,"confobj","value").split("|");
-		//return
-		//permissions del
+		// del permissions 
 		var removePer=function(removed){
 			if (removed) {
 			  	suo.initPer();
@@ -607,14 +606,6 @@ var suo={
 		for(var i=0;i<(confArray.length>=3?confArray.length:confArray.length);i++){
 			confOBJ=confOBJ[confArray[i]];
 		}
-		// var getid=function(ele){
-		// 	if(ele.dataset.confid){
-		// 		return ele.dataset.confid;
-		// 	}else{
-		// 		return getid(ele.parentNode);
-		// 	}
-		// }
-		//console.log(confOBJ)
 		if(confOBJ.length<=1){suo.showMsgBox(suo.getI18n("msg_dellast"),"warning");return;}
 
 		var delId=suo.getDataset(ele,"confid","value");
@@ -656,9 +647,12 @@ var suo={
 				}
 			}
 		}
+		//reset jslist's enabled array.
+		if(confArray[1]=="script"){
+			delete config.apps.jslist.enabled;
+		}
 		suo.saveConf();
 		suo.initListItem(actionType);
-		//confArray.length>=3?suo.initListItem(confArray[confArray.length-1]):suo.initListItem(confArray[confArray.length-1])
 	},
 	showMsgBox:function(str,type,mytime,index){
 		console.log("msgbox")
@@ -1729,6 +1723,10 @@ var suo={
 			var _content=dom.querySelector(".box_content textarea").value;
 			confOBJ.name=_name;
 			confOBJ.content=_content;
+			//if new script , add to jslist's enabled array.
+			if(config.apps.jslist.enabled&&!config.apps.jslist.enabled.contains(confid.toString())){
+				config.apps.jslist.enabled.push(confid.toString());
+			}
 		}else{
 			var theAction=dom.querySelector(".box_content .actionselect").value;
 
@@ -1837,6 +1835,7 @@ var suo={
 		console.log(confArray);
 		var actionType=suo.getDataset(e,"actiontype","value");
 		if(actionType){
+			console.log(actionType)
 			suo.initListItem(actionType);
 			suo.boxClose2(e);
 			return

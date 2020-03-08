@@ -139,6 +139,11 @@ sue.apps={
 				if(e.target.classList.contains("options_btn_save")){
 					sue.apps.saveConf(e);
 				}
+				if(e.target.classList.contains("su_head")||e.target.classList.contains("su_title")){
+					var mytime=new Date();
+						mytime=mytime.getTime();
+					sue.apps.getAPPboxEle(e).style.cssText+="z-index:"+parseInt((mytime)/1000);
+				}
 				break;
 			case"mousedown":
 				if(e.button==0&&(e.target.classList.contains("su_head")||e.target.classList.contains("su_title"))){

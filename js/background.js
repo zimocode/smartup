@@ -69,7 +69,7 @@ var getDefault={
 						icon:true,
 						theme:"colorful",
 						notif:false,
-						appnotif:true,
+						appnotif:false,
 						esc:true
 					},
 					fnswitch:{
@@ -2441,11 +2441,12 @@ var sub={
 			var _appname="jslist";
 			sub.initAppconf(_appname);
 			var _obj={};
-			var jsnames=[];
-			for(var i=0;i<config.general.script.script.length;i++){
-				jsnames.push(config.general.script.script[i].name);
-			}
-			_obj.js=jsnames;
+			// var jsnames=[];
+			// for(var i=0;i<config.general.script.script.length;i++){
+			// 	jsnames.push(config.general.script.script[i].name);
+			// }
+			// _obj.js=jsnames;
+			_obj.js=config.general.script.script;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
 		},
@@ -3647,22 +3648,23 @@ var sub={
 					}
 
 					// insert sortable.js
-					let arraySort=["homepage","appslist"];
+					let arraySort=["homepage","appslist","jslist"];
 					if(arraySort.contains(message.apptype)){
-						console.log("ss")
 						chrome.tabs.executeScript({file:"js/sortable.js",runAt:"document_start"},function(){
 							chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
-							chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"});
+							chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
+								//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
+								if(message.apptype=="homepage"&&message.ctm){
+									chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
+								}
+							});
 						});
 						return;
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
 					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
-						//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
-						if(message.apptype=="homepage"&&message.ctm){
-							chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
-						}
+
 					});
 				}		
 				if(!message.value){

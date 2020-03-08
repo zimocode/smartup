@@ -1598,5 +1598,17 @@
   },
   "appslist_desdisabled":{
     "message":"Dragging into 'Enabled Apps' to show."
+  },
+  "jslist_listenabled":{
+    "message":"Enabled Scripts"
+  },
+  "jslist_listdisabled":{
+    "message":"Disabled Scripts"
+  },
+  "jslist_desenabled":{
+    "message":"Dragging to sort, Drag into 'Disabled Scripts' to hidden."
+  },
+  "jslist_desdisabled":{
+    "message":"Dragging into 'Enabled Scripts' to show."
   }
 }

@@ -533,6 +533,7 @@ sue.apps.homepage={
 		dom.appendChild(domBox);
 	},
 	itemCTMSave:function(e){
+		console.log("ctm")
 		let dom=sue.apps.getAPPboxEle(e);
 		let idgp=sue.apps.getAPPboxEle(e).querySelector(".su_homepage_boxgroup").selectedIndex;
 		let obj={
