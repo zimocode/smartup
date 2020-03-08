@@ -1586,5 +1586,17 @@
   },
   "tip_del":{
     "message":"Delete"
+  },
+  "appslist_listenabled":{
+    "message":"Enabled APPs"
+  },
+  "appslist_listdisabled":{
+    "message":"Disabled APPs"
+  },
+  "appslist_desenabled":{
+    "message":"Dragging to sort, Drag into 'Disabled Apps' to hidden."
+  },
+  "appslist_desdisabled":{
+    "message":"Dragging into 'Enabled Apps' to show."
   }
 }

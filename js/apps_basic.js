@@ -305,7 +305,8 @@ sue.apps={
 			window.setTimeout(function(){domopt.style.cssText+="display:none;";},200)
 		}
 	},
-	initPos:function(dom){
+	initPos:function(e){
+		let dom=sue.apps.getAPPboxEle(e.target||e);
 		let _fn=function(){
 			dom.querySelector(".su_main").style.cssText+="max-height:"+(window.innerHeight-100)+"px;";
 			document.body.appendChild(dom);

@@ -1555,5 +1555,23 @@
   },
   "notif_title_conferr":{
     "message":"设置保存失败！"
+  },
+  "tip_item":{
+    "message":"点击编辑，拖动排序。"
+  },
+  "tip_del":{
+    "message":"删除"
+  },
+  "appslist_listenabled":{
+    "message":"显示的迷你应用"
+  },
+  "appslist_listdisabled":{
+    "message":"隐藏的迷你应用"
+  },
+  "appslist_desenabled":{
+    "message":"拖动排序，拖动到‘隐藏的迷你应用’实现隐藏。"
+  },
+  "appslist_desdisabled":{
+    "message":"拖动到‘显示的迷你应用’实现显示。"
   }
 }
