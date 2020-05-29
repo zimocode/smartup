@@ -344,5 +344,37 @@ sue.apps={
 		}
 		url=_flag?url:("http://"+url);
 		return url;
+	},
+	editBoxInit:function(e,opt){
+		let dom=sue.apps.getAPPboxEle(e)/*.querySelector(".su_apps")*/,
+			domBg=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editbg"]}),
+			domBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editbox"]});
+
+		if(opt){
+			for(var i in opt){
+				domBox.dataset[i]=opt[i];
+			}
+		}
+
+		let boxMain=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editboxmain"]});
+		domBox.appendChild(boxMain);
+
+		let boxBtn=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editboxbtn"]}),
+			boxBtnClose=sue.apps.domCreate("button",{setName:["className"],setValue:["su_editbtncancel"]},null,null,null,sue.apps.i18n("btn_cancel")),
+			boxBtnSave=sue.apps.domCreate("button",{setName:["className"],setValue:["su_editbtnadd"]},null,null,null,sue.apps.i18n("btn_done"));
+		boxBtn.appendChild(boxBtnClose);
+		boxBtn.appendChild(boxBtnSave);
+		domBox.appendChild(boxBtn);
+
+		dom.appendChild(domBg);
+		dom.appendChild(domBox);
+		return boxMain;
+	},
+	editBoxClose:function(e){
+		let dom=sue.apps.getAPPboxEle(e);
+		let domEdit=dom.querySelector(".su_editbox"),
+			domBg=dom.querySelector(".su_editbg");
+		domEdit.remove();
+		domBg.remove();
 	}
 }

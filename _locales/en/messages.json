@@ -1545,7 +1545,7 @@
   "homepage_grouplist":{
     "message":"Sites group list"
   },
-  "homepage_editmode":{
+  "editmode":{
     "message":"Edit Mode"
   },
   "homepage_newgroup":{
@@ -1610,5 +1610,62 @@
   },
   "jslist_desdisabled":{
     "message":"Dragging into 'Enabled Scripts' to show."
+  },
+  "extmgm_alwaysenable":{
+    "message":"Always Enable"
+  },
+  "extmgm_lastenable":{
+    "message":"Last Enabled"
+  },
+  "extmgm_allenable":{
+    "message":"Enable all Extensions"
+  },
+  "extmgm_alldisable":{
+    "message":"Disable all Extensions"
+  },
+  "extmgm_tipdisable":{
+    "message":"Disabled in current group"
+  },
+  "extmgm_tipoption":{
+    "message":"Options Page"
+  },
+  "extmgm_tipuninstall":{
+    "message":"Uninstall"
+  },
+  "extmgm_tipenable":{
+    "message":"Enabled in current group"
+  },
+  "extmgm_grouplist":{
+    "message":"Extension Group List"
+  },
+  "extmgm_editmode":{
+    "message":"Edit Mode"
+  },
+  "n_uninstallconfirm":{
+    "message":"When uninstalling an extension, need to confirm"
+  },
+  "n_enableallconfirm":{
+    "message":"When enabling all extensions, need to confirm"
+  },
+  "n_disableallconfirm":{
+    "message":"When disabling all extensions, need to confirm"
+  },
+  "extmgm_confirmenableall":{
+    "message":"All extensions will be enabled, please confirm again."
+  },
+  "extmgm_confirmdisableall":{
+    "message":"All extensions will be disabled, please confirm again."
+  },
+  "extmgm_defaultgroup":{
+    "message":"Default Group"
+  },
+  "tip_more":{
+    "message":"More"
+  },
+  "tip_editmode":{
+    "message":"Edit Mode"
+  },
+  "tip_edit":{
+    "message":"Edit"
   }
 }

@@ -9,7 +9,7 @@ sue.apps.homepage={
 			menu:[
 				{src:"/image/menu.svg",title:"homepage_grouplist",className:"menu_item menu_item_homepagelist"},
 				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.png",title:"homepage_editmode",className:"menu_item menu_item_homepageedit"}
+				{src:"/image/edit.png",title:"editmode",className:"menu_item menu_item_homepageedit"}
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
@@ -327,7 +327,7 @@ sue.apps.homepage={
 		}else{
 			e.target.classList.add("su_homepage_editmode");
 			sue.apps.homepage.cons.editMode=true;
-			sue.apps.getAPPboxEle(e).querySelector(".su_title").textContent=sue.apps.i18n("homepage")+" ("+sue.apps.i18n("homepage_editmode")+")";
+			sue.apps.getAPPboxEle(e).querySelector(".su_title").textContent=sue.apps.i18n("homepage")+" ("+sue.apps.i18n("editmode")+")";
 		}
 	},
 	showAddbox:function(e){

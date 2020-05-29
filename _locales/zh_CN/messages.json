@@ -1520,7 +1520,7 @@
   "homepage_grouplist":{
     "message":"网站分组列表"
   },
-  "homepage_editmode":{
+  "editmode":{
     "message":"编辑模式"
   },
   "homepage_newgroup":{

@@ -5,9 +5,5 @@
 "optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","topSites"]
 
 //firefox
-"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","tts","downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background"],
-"optional_permissions": ["browserSettings"]
-
-//firefox
 "permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","unlimitedStorage","management","sessions"],
 "optional_permissions": ["browserSettings","downloads","clipboardRead","clipboardWrite","bookmarks","history","topSites"]

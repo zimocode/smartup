@@ -857,7 +857,8 @@ var appConfmodel={
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
 	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,n_homepage_last:true,type:"topsites",sitegroup:[chrome.i18n.getMessage("homepage_groupdefault")],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
-	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
+	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false},
+	extmgm:{n_uninstallconfirm:true,n_enableallconfirm:true,n_disableallconfirm:true,always:[]/*,group:[chrome.i18n.getMessage("extmgm_gplast"),chrome.i18n.getMessage("extmgm_gpalways")],exts:[]*/}
 }
 
 var sub={
@@ -870,6 +871,7 @@ var sub={
 		permissions:{},
 		os:"win"
 	},
+	extID:chrome.runtime.id,
 	checkMouseup:function(){
 		if(chrome.browserSettings&&chrome.browserSettings.contextMenuShowEvent){
 			browser.browserSettings.contextMenuShowEvent.set({value:"mouseup"});
@@ -1185,16 +1187,26 @@ var sub={
 	},
 	initAppconf:function(appname){
 		if(!config.apps){config.apps={}}
-		if(!config.apps[appname]){
-			config.apps[appname]=appConfmodel[appname];
-			chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
-		}else{
+		if(config.apps[appname]){
 			for(var i in appConfmodel[appname]){
+				console.log(i)
 				if(config.apps[appname][i]===undefined){
 					config.apps[appname][i]=appConfmodel[appname][i];
 				}
 			}
+		}else{
+			config.apps[appname]=appConfmodel[appname];
 		}
+		// if(!config.apps[appname]){
+		// 	config.apps[appname]=appConfmodel[appname];
+		// 	chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
+		// }else{
+		// 	for(var i in appConfmodel[appname]){
+		// 		if(config.apps[appname][i]===undefined){
+		// 			config.apps[appname][i]=appConfmodel[appname][i];
+		// 		}
+		// 	}
+		// }
 	},
 	insertTest:function(appname){
 		//console.log("appname")
@@ -2579,18 +2591,70 @@ var sub={
 				var _obj={};
 					_obj.ext_enabled=[];
 					_obj.ext_disabled=[];
-				chrome.management.getAll(function(ext){
-					for(var i=0;i<ext.length;i++){
-						if(ext[i].type=="extension"){
-							if(ext[i].enabled){
-								if(ext[i].id!=sub.extID){_obj.ext_enabled.push(ext[i]);}
-							}else{
-								_obj.ext_disabled.push(ext[i]);
+					_obj.extLast=[];
+
+				if(!config.apps.extmgm.exts){
+					let _newExts=[
+						{
+							gpname:"default group",
+							id:[]
+						}
+					];
+					chrome.management.getAll(function(exts){
+						for(var i=0;i<exts.length;i++){
+							if(exts[i].enabled){
+								_newExts[0].id.push(exts[i].id);
 							}
 						}
+						config.apps.extmgm.exts=_newExts;
+						sub.insertTest(_appname);					
+					})
+				}else{
+					sub.insertTest(_appname);
+				}
+
+				chrome.management.getAll(function(exts){
+					let getBase64=function(url,size,callback){
+						console.log(url)
+					    var canvas = document.createElement("canvas");
+					    var ctx = canvas.getContext("2d");
+					    var img = new Image;
+					    img.crossOrigin = 'Anonymous';
+					    img.src = url;
+					    img.onload = function () {
+					        canvas.height = size;
+					        canvas.width = size;
+					        ctx.drawImage(img, 0, 0, size, size);
+					        var dataURL = canvas.toDataURL("image/" + "ico");
+					        callback.call(this, dataURL);
+					        // return dataURL;
+					        canvas = null;
+					    }
 					}
+					for(var i=0;i<exts.length;i++){
+						exts[i].iconBase64="";
+						(function(i){
+							// console.time()
+							getBase64(exts[i].icons?exts[i].icons[exts[i].icons.length-1].url:"",(exts[i].icons?exts[i].icons[exts[i].icons.length-1].size:32),function(data){
+								exts[i].iconBase64=data;
+							});
+							// console.timeEnd();
+						})(i);
+						if(exts[i].enabled){
+							if(exts[i].id!=sub.extID){
+								_obj.extLast.push(exts[i].id);
+							}
+						}
+						// if(exts[i].type=="extension"){
+						// 	if(exts[i].enabled){
+						// 		if(exts[i].id!=sub.extID){_obj.ext_enabled.push(exts[i]);}
+						// 	}else{
+						// 		_obj.ext_disabled.push(exts[i]);
+						// 	}
+						// }
+					}
+					_obj.exts=exts;
 					sub.cons[_appname]=_obj;
-					sub.insertTest(_appname);	
 				})
 			}
 			var thepers=["management"];
@@ -4017,6 +4081,77 @@ var sub={
 						break;
 				}
 				sendResponse({type:"extmgm",actionDone:true});
+			},
+			getext:function(message,sender,sendResponse){
+				let _config=config.apps.extmgm.exts[message.value].id,
+					_exts=[];
+				for(var i=0;i<_config.length;i++){
+					for(var ii=0;ii<sub.cons.extmgm.exts.length;ii++){
+						if(_config[i]==sub.cons.extmgm.exts[ii].id){
+							_exts.push(sub.cons.extmgm.exts[ii]);
+							continue;
+						}
+					}
+				}
+				
+				sendResponse({exts:_exts})
+				// let _config=config.apps.extmgm.exts[message.value].id,
+				// 	_exts=[];
+				// for(var i=0;i<_config.length;i++){
+				// 	for(var ii=0;ii<sub.cons.extmgm.exts.length;ii++){
+				// 		if(_config[i]==sub.cons.extmgm.exts[ii].id){
+				// 			_exts.push(sub.cons.extmgm.exts[ii]);
+				// 			continue;
+				// 		}
+				// 	}
+				// }
+				
+				// sendResponse({exts:_exts})
+			},
+			getAllExt:function(message,sender,sendResponse){
+				sendResponse({exts:sub.cons.extmgm.exts});
+			},
+			itemDisable:function(message,sender,sendResponse){
+				console.log(message)
+				chrome.management.setEnabled(message.extId,false);
+			},
+			itemEnable:function(message,sender,sendResponse){
+				console.log(message)
+				chrome.management.setEnabled(message.extId,true);
+			},
+			itemOpturl:function(message,sender,sendResponse){
+				sub.open(message.url);
+			},
+			itemUninstall:function(message,sender,sendResponse){
+				//chrome.management.uninstall(message.extId,{showConfirmDialog:false});
+				chrome.management.uninstall(message.extId,{showConfirmDialog:config.apps.extmgm.n_uninstallconfirm},function(s){
+					console.log("s")
+					chrome.management.getAll(function(exts){
+						let _exts=[];
+						for(var i=0;i<exts.length;i++){
+							_exts.push(exts[i].id)
+						}
+						console.log(_exts);
+						if(!_exts.contains(message.extId)){
+							chrome.tabs.sendMessage(sender.tab.id,{type:"itemUninstall",id:message.id,extId:message.extId});
+						}
+					})
+				});
+			},
+			enableAll:function(message,sender,sendResponse){
+				chrome.management.getAll(function(exts){
+					for(var i=0;i<exts.length;i++){
+						//chrome.management.setEnabled(exts[i].id,true);
+					}
+				})
+			},
+			disableAll:function(message,sender,sendResponse){
+				chrome.management.getAll(function(exts){
+					for(var i=0;i<exts.length;i++){
+						if(exts[i].id==sub.extID){continue;}
+						//chrome.management.setEnabled(exts[i].id,false);
+					}
+				})
 			}
 		},
 		lottery:{

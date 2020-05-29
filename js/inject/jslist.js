@@ -8,7 +8,7 @@ sue.apps.jslist={
 			headCloseBtn:true,
 			menu:[
 				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.png",title:"homepage_editmode",className:"menu_item menu_item_edit"}
+				{src:"/image/edit.png",title:"editmode",className:"menu_item menu_item_edit"}
 			],
 			options:[
 				{type:"checkbox",label:"n_closebox",name:"n_closebox"},
@@ -65,7 +65,7 @@ sue.apps.jslist={
 		}else{
 			e.target.classList.add("su_jslist_editmode");
 			sue.apps.jslist.cons.editMode=true;
-			sue.apps.getAPPboxEle(e).querySelector(".su_title").textContent=sue.apps.i18n("jslist")+" ("+sue.apps.i18n("homepage_editmode")+")";
+			sue.apps.getAPPboxEle(e).querySelector(".su_title").textContent=sue.apps.i18n("jslist")+" ("+sue.apps.i18n("editmode")+")";
 			sue.apps.jslist.editModeInit(e);
 		}
 	},
