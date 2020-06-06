@@ -7,7 +7,7 @@ sue.apps.synced={
 			headTitle:"synced",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"}
 			],
 			options:[
 				{type:"checkbox",label:"n_closebox",name:"n_closebox",checked:true}

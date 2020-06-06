@@ -29,7 +29,7 @@ sue.apps.savepdf={
 			headTitle:"savepdf",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
 				{src:"/image/info.svg",title:"",className:"menu_item menu_item_help"}
 			]
 		}

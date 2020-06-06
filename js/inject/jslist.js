@@ -7,8 +7,8 @@ sue.apps.jslist={
 			headTitle:"jslist",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.png",title:"editmode",className:"menu_item menu_item_edit"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/edit.svg",title:"editmode",className:"menu_item menu_item_edit"}
 			],
 			options:[
 				{type:"checkbox",label:"n_closebox",name:"n_closebox"},
@@ -40,8 +40,8 @@ sue.apps.jslist={
 		}
 		theAppBox.appendChild(_ul);
 		dom.addEventListener("click",this.handleEvent,false)
-		dom.style.cssText+="border-color:#e91e63;";
-		dom.querySelector(".su_head").style.cssText+="background-color:#e91e63;";
+		dom.style.cssText+="border-color:#351fe5;";
+		dom.querySelector(".su_head").style.cssText+="background-color:#351fe5;";
 	},
 	handleEvent:function(e){
 		switch(e.type){

@@ -8,8 +8,8 @@ sue.apps.homepage={
 			headCloseBtn:true,
 			menu:[
 				{src:"/image/menu.svg",title:"homepage_grouplist",className:"menu_item menu_item_homepagelist"},
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.png",title:"editmode",className:"menu_item menu_item_homepageedit"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/edit.svg",title:"editmode",className:"menu_item menu_item_homepageedit"}
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},
@@ -48,8 +48,10 @@ sue.apps.homepage={
 			dom.querySelector(".su_main").style.cssText+="background:none;box-shadow:rgba(0,0,0,0.8) 0 0 5px;";
 			dom.style.cssText+="background-color:#ccc;background-size:cover;border-color:rgba(252, 252, 252, 0);";
 			chrome.runtime.sendMessage({type:"appsAction",app:"homepage",action:"getImageURL"});
+		}else{
+			dom.style.cssText+="border-color:#8856fc;";
+			dom.querySelector(".su_head").style.cssText+="background-color:#8856fc;";
 		}
-
 		dom.addEventListener("click",this.handleEvent,false);
 	},
 	listInit:function(e){

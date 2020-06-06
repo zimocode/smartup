@@ -7,7 +7,7 @@ sue.apps.speaker={
 			headTitle:"speaker",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"}
 			],
 			options:[
 				{type:"select",label:"n_voicename",name:"n_voicename",value:[]},

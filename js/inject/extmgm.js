@@ -2,7 +2,8 @@ console.log("extmgm")
 sue.apps.extmgm={
 	cons:{
 		boxmove:{},
-		curId:0
+		curId:0,
+		editMode:false
 	},
 	initUI:function(){
 		let appInfo={
@@ -13,7 +14,7 @@ sue.apps.extmgm={
 				{src:"/image/menu.svg",title:"extmgm_grouplist",className:"menu_item menu_item_extmgmgroup"},
 				{src:"/image/more.svg",title:"tip_more",className:"menu_item menu_item_extmgmmore"},
 				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/edit.svg",title:"extmgm_editmode",className:"menu_item menu_item_extmgmedit"}
+				{src:"/image/edit.svg",title:"tip_editmode",className:"menu_item menu_item_extmgmedit"}
 			],
 			options:[
 				{type:"checkbox",label:"n_uninstallconfirm",name:"n_uninstallconfirm"},
@@ -29,7 +30,6 @@ sue.apps.extmgm={
 
 		let theAppBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_extmgm_box"]});
 		dom.querySelector(".su_main").appendChild(theAppBox);
-		// sue.apps.extmgm.itemInit(dom,0);
 		sue.apps.extmgm.firstItem(dom);
 
 		let boxMore=sue.apps.domCreate("div",{setName:["className"],setValue:["su_extmgm_boxmore"]}),
@@ -44,6 +44,8 @@ sue.apps.extmgm={
 		dom.appendChild(boxGroup);
 		sue.apps.extmgm.groupInit(dom);
 
+		dom.style.cssText+="border-color:#0a5fa2;";
+		dom.querySelector(".su_head").style.cssText+="background-color:#0a5fa2;";
 		dom.addEventListener("click",this.handleEvent,false);
 	},
 	firstItem:function(dom){
@@ -83,7 +85,7 @@ sue.apps.extmgm={
 		//delete class before
 		_ul.className="su_extmgm_itemul";
 
-		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"getAllExt"},function(response){
+		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"getAllExt",extsEnable:sue.apps.extmgm.config.exts[id]},function(response){
 			if(!response||!response.exts||!response.exts.length){return}
 
 			let _uldis=_dom.querySelector(".su_extmgm_itemuldis");
@@ -102,6 +104,7 @@ sue.apps.extmgm={
 			let _exts=response.exts;
 			console.log(_uldis)
 			for(var i=0;i<_exts.length;i++){
+				if(_exts[i].id==sue.apps.extmgm.extID){continue;}
 				if(sue.apps.extmgm.config.exts[id].id.contains(_exts[i].id)){
 					var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_itemli"]},null,null,{setName:["id"],setValue:[_exts[i].id]});
 					var _div=sue.apps.domCreate("div",{setName:["className"],setValue:["su_extmgm_item"]},null,null,{setName:["id"],setValue:[_exts[i].id]});
@@ -124,6 +127,8 @@ sue.apps.extmgm={
 					continue;
 				}else{
 					if(sue.apps.extmgm.cons.editMode){
+						_ul.classList.add("su_extmgm_itemuleditbefore");
+						_uldis.classList.add("su_extmgm_itemuldiseditbefore");
 						var _li=sue.apps.domCreate("li",{setName:["className"],setValue:["su_extmgm_itemli"]},null,null,{setName:["id"],setValue:[_exts[i].id]});
 						var _div=sue.apps.domCreate("div",{setName:["className"],setValue:["su_extmgm_item"]},null,null,{setName:["id"],setValue:[_exts[i].id]});
 						var _img=sue.apps.domCreate("img",{setName:["src"],setValue:[_exts[i].iconBase64?_exts[i].iconBase64:chrome.runtime.getURL("image/extension.svg")]});
@@ -199,8 +204,8 @@ sue.apps.extmgm={
 				}
 			})	
 		}else{
-			sue.apps.extmgm.cons.sortItemEnabled?sue.apps.extmgm.cons.sortItemEnabled.destroy():null;
-			sue.apps.extmgm.cons.sortItemDisabled?sue.apps.extmgm.cons.sortItemDisabled.destroy():null;
+			// sue.apps.extmgm.cons.sortItemEnabled?sue.apps.extmgm.cons.sortItemEnabled.destroy():null;
+			// sue.apps.extmgm.cons.sortItemDisabled?sue.apps.extmgm.cons.sortItemDisabled.destroy():null;
 		}
 	},
 	itemDisable:function(e){
@@ -212,6 +217,7 @@ sue.apps.extmgm={
 					break;
 				}
 			}
+			chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"itemDisable",extId:e.target.dataset.id});
 			sue.apps.extmgm.confSave();
 			sue.apps.extmgm.moreAlways(sue.apps.getAPPboxEle(e));
 			return true;
@@ -220,9 +226,9 @@ sue.apps.extmgm={
 		let _id=parseInt(_dom.dataset.id);
 		let _extId=e.target.dataset.id;
 		// disable ext
-		if(!sue.apps.extmgm.cons.editMode){
-			chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"itemDisable",extId:_extId});
-		}
+		// if(!sue.apps.extmgm.cons.editMode){
+		// 	chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"itemDisable",extId:_extId});
+		// }
 		// remove form cur group
 		for(var i=0;i<sue.apps.extmgm.config.exts[_id].id.length;i++){
 			if(sue.apps.extmgm.config.exts[_id].id[i]==_extId){
@@ -245,9 +251,9 @@ sue.apps.extmgm={
 		let _id=parseInt(_dom.dataset.id);
 		let _extId=e.target.dataset.id;
 		// enable ext
-		if(!sue.apps.extmgm.cons.editMode){
-			chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"itemEnable",extId:_extId});
-		}
+		// if(!sue.apps.extmgm.cons.editMode){
+		// 	chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"itemEnable",extId:_extId});
+		// }
 		// add to cur group
 		sue.apps.extmgm.config.exts[_id].id.push(_extId);
 		sue.apps.extmgm.itemInit(_dom,sue.apps.extmgm.cons.curId);
@@ -362,19 +368,19 @@ sue.apps.extmgm={
 				}
 			})
 		}else{
-			sue.apps.extmgm.cons.sortGroup?sue.apps.extmgm.cons.sortGroup.destroy():null;
+			//sue.apps.extmgm.cons.sortGroup?sue.apps.extmgm.cons.sortGroup.destroy():null;
 		}
 	},
 	groupNew:function(e){
 		let dom=sue.apps.editBoxInit(e,{type:"new"});
-		let _span=sue.apps.domCreate("span",null,null,null,null,"group name"),
+		let _span=sue.apps.domCreate("span",null,null,null,null,sue.apps.i18n("extmgm_groupname")),
 			_text=sue.apps.domCreate("input",{setName:["type"],setValue:["text"]},null,null,null,null);
 		dom.appendChild(_span);
 		dom.appendChild(_text);
 	},
 	groupEdit:function(e){
 		let dom=sue.apps.editBoxInit(e,{type:"edit",id:e.target.dataset.id.toString()});
-		let _span=sue.apps.domCreate("span",null,null,null,null,"group name"),
+		let _span=sue.apps.domCreate("span",null,null,null,null,sue.apps.i18n("extmgm_groupname")),
 			_text=sue.apps.domCreate("input",{setName:["type","value"],setValue:["text",sue.apps.extmgm.config.exts[e.target.dataset.id].gpname]});
 		dom.appendChild(_span);
 		dom.appendChild(_text);
@@ -425,7 +431,7 @@ sue.apps.extmgm={
 		//delete class before
 		_ul.className="su_extmgm_itemul";
 
-		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"getAllExt"},function(response){
+		chrome.runtime.sendMessage({type:"appsAction",app:"extmgm",action:"getAllExt",extsLast:sue.apps.extmgm.cons.extLast},function(response){
 			if(!response||!response.exts||!response.exts.length){return}
 
 			let _uldis=_dom.querySelector(".su_extmgm_itemuldis");
@@ -676,7 +682,7 @@ sue.apps.extmgm={
 	},
 	confSave:function(){
 		console.log(sue.apps.extmgm.config);
-		//chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"extmgm",config:sue.apps.extmgm.config});
+		chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"extmgm",config:sue.apps.extmgm.config});
 	},
 	handleEvent:function(e){
 		switch(e.type){
@@ -764,7 +770,7 @@ sue.apps.extmgm={
 				}
 			})			
 		}else{
-			sue.apps.extmgm.cons.sortGroup.destroy();
+			//sue.apps.extmgm.cons.sortGroup.destroy();
 		}
 	},
 	showGroupPanel:function(e){
@@ -813,6 +819,7 @@ chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"extmgm"},function(resp
 	// sue.apps.extmgm.exts=response.value.exts;
 	sue.apps.extmgm.config=response.config;
 	sue.apps.extmgm.cons.extLast=response.value.extLast;
+	sue.apps.extmgm.extID=response.value.extID;
 	sue.apps.extmgm.initUI();
 })
 

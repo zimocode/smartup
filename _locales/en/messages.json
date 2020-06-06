@@ -1624,7 +1624,7 @@
     "message":"Disable all Extensions"
   },
   "extmgm_tipdisable":{
-    "message":"Disabled in current group"
+    "message":"Disable in current group"
   },
   "extmgm_tipoption":{
     "message":"Options Page"
@@ -1662,10 +1662,22 @@
   "tip_more":{
     "message":"More"
   },
-  "tip_editmode":{
-    "message":"Edit Mode"
-  },
   "tip_edit":{
     "message":"Edit"
+  },
+  "extmgm_firstitem":{
+    "message":"Choose which group to enable"
+  },
+  "extmgm_groupenable":{
+    "message":"Enabled in the group"
+  },
+  "extmgm_groupdisable":{
+    "message":"Disable in the group"
+  },
+  "extmgm_newgroup":{
+    "message":"New Group"
+  },
+  "extmgm_groupname":{
+    "message":"Group name"
   }
 }

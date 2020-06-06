@@ -190,6 +190,24 @@ smartup.su_apps#su_apps_extmgm .su_extmgm_itemul_firstitem::before{
 	font-size: 12px;
 	color: #ccc;
 }
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemuleditbefore::before{
+	content: "__MSG_extmgm_groupenable__";
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	font-size: 12px;
+	color: #ccc;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemuldiseditbefore::before{
+	content: "__MSG_extmgm_groupdisable__";
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	font-size: 12px;
+	color: #ccc;
+}
 smartup.su_apps#su_apps_extmgm .su_extmgm_editmode{
 	background-color: red;
 }

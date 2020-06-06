@@ -1565,7 +1565,7 @@ var suo={
 		//edit icon
 		var actionArray=["mgesactions","tdrgactions","ldrgactions","idrgactions","mges","touch","tdrg","idrg","ldrg"]
 		if(actionArray.contains(actiontype)){
-			var editOBJ=suo.domCreate2("img",{setName:["className","title","src"],setValue:["box_diredit",suo.getI18n("tip_editdir"),"../image/edit.png"]});
+			var editOBJ=suo.domCreate2("img",{setName:["className","title","src"],setValue:["box_diredit",suo.getI18n("tip_editdir"),"../image/edit.svg"]});
 			OBJ.appendChild(editOBJ);			
 		}
 		//direct icon

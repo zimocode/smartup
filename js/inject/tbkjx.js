@@ -9,7 +9,7 @@ sue.apps.tbkjx={
 			headTitle:"tbkjx",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
 				{src:"/image/info.svg",title:"app_tip_info",className:"menu_item menu_item_help"}
 			],
 			options:[

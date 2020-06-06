@@ -2592,11 +2592,12 @@ var sub={
 					_obj.ext_enabled=[];
 					_obj.ext_disabled=[];
 					_obj.extLast=[];
+					_obj.extID=sub.extID;
 
 				if(!config.apps.extmgm.exts){
 					let _newExts=[
 						{
-							gpname:"default group",
+							gpname:chrome.i18n.getMessage("extmgm_defaultgroup"),
 							id:[]
 						}
 					];
@@ -3712,7 +3713,7 @@ var sub={
 					}
 
 					// insert sortable.js
-					let arraySort=["homepage","appslist","jslist"];
+					let arraySort=["homepage","appslist","jslist","extmgm"];
 					if(arraySort.contains(message.apptype)){
 						chrome.tabs.executeScript({file:"js/sortable.js",runAt:"document_start"},function(){
 							chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
@@ -3947,7 +3948,7 @@ var sub={
 						data={
 							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent).toString():"noname"),
 							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent).toString():""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.png"))
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.svg"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
@@ -4069,11 +4070,12 @@ var sub={
 				switch(message.value.actionType){
 					case"enable":
 					case"disable":
+						if(message.value.id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(message.value.id))){break}
 						chrome.management.setEnabled(message.value.id,message.value.actionType=="enable"?true:false,function(){});
 						break;
 					case"disableall":
 						for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
-							if(sub.cons.extmgm.ext_enabled[i].id==chrome.runtime.id){
+							if(sub.cons.extmgm.ext_enabled[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.ext_enabled[i].id))){
 								continue;
 							}
 							chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
@@ -4110,6 +4112,27 @@ var sub={
 			},
 			getAllExt:function(message,sender,sendResponse){
 				sendResponse({exts:sub.cons.extmgm.exts});
+				console.log(message.extsEnable)
+				if(message.extsEnable){
+					for(var i=0;i<sub.cons.extmgm.exts.length;i++){
+						if(sub.cons.extmgm.exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.exts[i].id))){continue;}
+						if(message.extsEnable.id.contains(sub.cons.extmgm.exts[i].id)){
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,true);
+						}else{
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,false);
+						}
+					}
+				}
+				if(message.extsLast){
+					for(var i=0;i<sub.cons.extmgm.exts.length;i++){
+						if(sub.cons.extmgm.exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.exts[i].id))){continue;}
+						if(message.extsLast.contains(sub.cons.extmgm.exts[i].id)){
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,true);
+						}else{
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,false);
+						}
+					}
+				}
 			},
 			itemDisable:function(message,sender,sendResponse){
 				console.log(message)
@@ -4141,15 +4164,15 @@ var sub={
 			enableAll:function(message,sender,sendResponse){
 				chrome.management.getAll(function(exts){
 					for(var i=0;i<exts.length;i++){
-						//chrome.management.setEnabled(exts[i].id,true);
+						chrome.management.setEnabled(exts[i].id,true);
 					}
 				})
 			},
 			disableAll:function(message,sender,sendResponse){
 				chrome.management.getAll(function(exts){
 					for(var i=0;i<exts.length;i++){
-						if(exts[i].id==sub.extID){continue;}
-						//chrome.management.setEnabled(exts[i].id,false);
+						if(exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(exts[i].id))){continue;}
+						chrome.management.setEnabled(exts[i].id,false);
 					}
 				})
 			}
@@ -4570,8 +4593,8 @@ else{
 				        iconUrl: "icon.png",
 				        items: [],
 				        buttons:[
-							{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.png"},
-							{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.png"}
+							{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.svg"},
+							{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.svg"}
 						]
 					}
 					var xhr = new XMLHttpRequest();

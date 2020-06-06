@@ -24,7 +24,7 @@ sue.apps={
 		window.addEventListener("change",this.handleEvent,false);
 	},
 	initBox:function(boxInfo){
-		//{headTitle:"title",headCloseBtn:true,menu:[{src:"/image/options.png",title:"app_tip_opt"}],options:[{type:"select",label:"label",name:"name",value:["value1","value2"]},{type:"checkbox",label:"label",name:"name",checked:true}]}
+		//{headTitle:"title",headCloseBtn:true,menu:[{src:"/image/options.svg",title:"app_tip_opt"}],options:[{type:"select",label:"label",name:"name",value:["value1","value2"]},{type:"checkbox",label:"label",name:"name",checked:true}]}
 		let domBox,domHead,domMain,domMenu,domOptions;
 		domBox=sue.apps.domCreate("smartup",{setName:["className"],setValue:["su_apps"]},null,"z-index:"+(parseInt((new Date().getTime())/1000)),{setName:["appname"],setValue:[boxInfo.appName]});
 		//head
