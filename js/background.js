@@ -1654,7 +1654,7 @@ var sub={
 		copytabele:function(){
 			var theFunction=function(){
 				var theIndex=sub.getIndex(sub.getConfValue("selects","n_tab_single"))[0];
-				chrome.tabs.query({index:theIndex},function(tabs){
+				chrome.tabs.query({index:theIndex,currentWindow:true},function(tabs){
 					var cptarget=tabs[0];
 					var cpcontent=sub.getConfValue("selects","n_copytabele_content");
 					var clipOBJ=document.body.appendChild(document.createElement("textarea"));

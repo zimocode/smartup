@@ -1,6 +1,15 @@
 {
 	"log": [
 		{
+			"ver":"6.6.765.1074",
+			"date":"2020.06.26",
+			"content":[
+				"sort support",
+				"upgrade mini-apps",
+				"fix bugs: issues@github: #97"
+			]	
+		},
+		{
 			"ver":"6.6.262.1048",
 			"date":"2020.02.18",
 			"content":[
