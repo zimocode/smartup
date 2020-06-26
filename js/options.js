@@ -2406,7 +2406,17 @@ var suo={
 			addOBJ.dataset.confid=confid;
 			addOBJ.dataset.close=dataclose+"resetdirect";
 			addOBJ.querySelectorAll("input[type=button]")[1].className="box_btn box_btn_diredit";
-			addOBJ.querySelector(".box_content").appendChild(suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes));
+			// addOBJ.querySelector(".box_content").appendChild(suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes));
+
+		let testDom=suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes);
+		if(confArray[1]=="ldrg"){
+			testDom.textContent="";
+			testDom.appendChild(suo.domCreate2("a",{setName:["href"],setValue:["###"]},null,null,null,suo.getI18n("test_ldrg")));
+		}else if(confArray[1]=="idrg"){
+			testDom.appendChild(suo.domCreate2("img",{setName:["src"],setValue:["../icon.png"]}));
+		}
+		addOBJ.querySelector(".box_content").appendChild(testDom);
+
 		suo.initPos(addOBJ);
 	},
 	initAPPbox:function(btn,size,title,bg,actiontype){
