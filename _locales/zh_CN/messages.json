@@ -1654,5 +1654,8 @@
   },
   "extmgm_groupname":{
     "message":"分组名称"
+  },
+  "tip_showlist":{
+    "message":"所有操作"
   }
 }

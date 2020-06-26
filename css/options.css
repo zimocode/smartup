@@ -327,7 +327,8 @@ menu #menu_bottom:hover img{
 	transition:all .4s ease-in-out;
 }
 
-#btn_add{
+#btn_add,
+.btn_list{
 	display: none;
 	position: fixed;
 	bottom:120px;
@@ -339,17 +340,39 @@ menu #menu_bottom:hover img{
 	font-size: 24px;
 	font-weight: bold;
 	text-align: center;
-	background: #F44336;
+	background: #fff;
 	cursor: pointer;
 	z-index: 2;
 	color: #d0d9ff;
 	transition:all .2s ease-in-out;
+	/*---------*/
+	position: absolute;
+	display: block;
+	padding: 4px;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	border-radius: 100%;
+	top: 24px;
+	/*right: 72px;*/
 }
-#btn_add:active{
-	width: 40px;
+#btn_add:active,
+.btn_list:active{
+/*	width: 40px;
 	height: 40px;
-	line-height: 40px;
-	margin: 8px 8px 0 0;
+	line-height: 40px;*/
+	margin: 2px;
+}
+#btn_add:hover,
+.btn_list:hover{
+	background-color: #d0d9ff;
+}
+#btn_add{
+	top: 24px;
+	right: 24px;
+}
+.btn_list{
+	right: 72px;
 }
 .btn_engine,.btn_script{
 	transition:background .2s ease-in-out;

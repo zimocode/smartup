@@ -1679,5 +1679,8 @@
   },
   "extmgm_groupname":{
     "message":"Group name"
+  },
+  "tip_showlist":{
+    "message":"All actions"
   }
 }
