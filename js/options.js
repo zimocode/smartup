@@ -14,8 +14,8 @@ var config,
 //check browser
 if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
 	browserType="fx";
-}else if(navigator.userAgent.toLowerCase().indexOf("edge")!=-1){
-	browserType="msg";
+}else if(navigator.userAgent.toLowerCase().indexOf("edg")!=-1){
+	browserType="edg";
 }else{
 	browserType="cr";
 }
@@ -2176,9 +2176,15 @@ var suo={
 		}
 		//init webstore url
 		if(browserType=="cr"){
-			suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/"+chrome.runtime.id+"?hl="+navigator.language;
+			if(devMode){
+				suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb";
+			}else{
+				suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn";
+			}
 		}else if(browserType=="fx"){
 			suo.cons.webstoreURL="https://addons.mozilla.org/firefox/addon/smartup";
+		}else if(browserType=="edg"){
+			suo.cons.webstoreURL="https://microsoftedge.microsoft.com/addons/detail/elponhbfjjjihgeijofonnflefhcbckp";
 		}
 		//disable option auto sync
 		if(!chrome.storage.sync){
@@ -2222,22 +2228,41 @@ var suo={
 				var xhrLog=JSON.parse(xhr.response);
 				var domlog=document.querySelector(".set.set-115.confobj>.setcontent");
 					domlog.textContent=""
+
+				var _detailsMore=suo.domCreate2("details");
+				var _summaryMore=suo.domCreate2("summary",null,null,null,null,"more...");
+				_detailsMore.appendChild(_summaryMore);
+
 				for(var i=0;i<xhrLog.log.length;i++){
-					var dom=suo.domCreate2("details");
-						dom.open="open";
-					var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
-					var _ul=suo.domCreate2("ul");
-					for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
-						var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
-						_ul.appendChild(_li);
+					if(i>8){
+						var dom=suo.domCreate2("details");
+						var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
+						var _ul=suo.domCreate2("ul");
+						for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
+							var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
+							_ul.appendChild(_li);
+						}
+						dom.appendChild(_summary);
+						dom.appendChild(_ul);
+						_detailsMore.appendChild(dom);
+						domlog.appendChild(_detailsMore);
+					}else{
+						var dom=suo.domCreate2("details");
+							dom.open="open";
+						var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
+						var _ul=suo.domCreate2("ul");
+						for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
+							var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
+							_ul.appendChild(_li);
+						}
+						dom.appendChild(_summary);
+						dom.appendChild(_ul);
+						domlog.appendChild(dom);						
 					}
-					dom.appendChild(_summary);
-					dom.appendChild(_ul);
-					domlog.appendChild(dom);
 				}
-				var _details=suo.domCreate2("details");
-				var _summary=suo.domCreate2("summary",null,null,null,null,"more...");
-				_details.appendChild(_summary);
+				// var _details=suo.domCreate2("details");
+				// var _summary=suo.domCreate2("summary",null,null,null,null,"more...");
+				// _details.appendChild(_summary);
 				for(var i=0;i<xhrLog.oldlog.length;i++){
 					var dom=suo.domCreate2("details");
 					var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.oldlog[i].ver+" - "+xhrLog.oldlog[i].date);
@@ -2248,9 +2273,9 @@ var suo={
 					}
 					dom.appendChild(_summary);
 					dom.appendChild(_ul);
-					_details.appendChild(dom);
+					_detailsMore.appendChild(dom);
 				}
-				domlog.appendChild(_details);
+				// domlog.appendChild(_details);
 			}
 		}
 		xhr.open('GET',"../change.log", true);
