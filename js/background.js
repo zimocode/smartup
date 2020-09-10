@@ -858,7 +858,11 @@ var appConfmodel={
 	jslist:{n_closebox:true},
 	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,n_homepage_last:true,type:"topsites",sitegroup:[chrome.i18n.getMessage("homepage_groupdefault")],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
 	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false},
-	extmgm:{n_uninstallconfirm:true,n_enableallconfirm:true,n_disableallconfirm:true,always:[]/*,group:[chrome.i18n.getMessage("extmgm_gplast"),chrome.i18n.getMessage("extmgm_gpalways")],exts:[]*/}
+	extmgm:{n_uninstallconfirm:true,n_enableallconfirm:true,n_disableallconfirm:true,always:[]/*,group:[chrome.i18n.getMessage("extmgm_gplast"),chrome.i18n.getMessage("extmgm_gpalways")],exts:[]*/},
+	notepad:{
+		n_notepad_delconfirm:true,
+		n_notepad_switchsave:true
+	}
 }
 
 var sub={
@@ -2376,6 +2380,11 @@ var sub={
 		},
 
 		//mini apps
+		notepad:function(){
+			var _appname="notepad";
+			sub.initAppconf(_appname);
+			sub.insertTest(_appname);
+		},
 		magnet:function(){
 			console.log(sub.message.selEle);
 			var _appname="magnet";
@@ -4405,7 +4414,7 @@ var sub={
 			},
 			DBAction:function(method/*get or put*/,data,sender){
 				//console.log("data");
-				let request = indexedDB.open("su", 1),
+				let request = indexedDB.open("su", 3),
 					db;
 				let setData=function(db){
 					let put=function(db){
@@ -4534,6 +4543,69 @@ var sub={
 					_Pin=config.apps[message.app].n_pin;
 				sub.open(_URL,_Target,_Index,_Pin);
 			}
+		},
+		notepad:{
+			DBAction:function(message,sender,sendResponse){
+			//DBAction:function(method,data{
+				//console.log("data");
+				let request = indexedDB.open("su", 3),
+					db;
+				let setData={
+					add:function(db,data){
+						db.transaction(["notepad"], "readwrite")
+						.objectStore("notepad")
+						.add({
+							id:data.id,
+							item:data.item
+						});
+					},
+					put:function(db,data){
+						let dbobj=db.transaction(["notepad"], "readwrite").objectStore("notepad");
+						let addDB=dbobj.put(message.value.data);
+					},
+					get:function(db){
+						let dbobj=db.transaction(["notepad"], "readwrite").objectStore("notepad");
+						let dbget=dbobj.get(0);
+						dbget.onsuccess=function(e){
+							if(!e.target.result){
+								return;
+							}else{
+								console.log(e.target.result);
+								let data=e.target.result;
+								message.type="appsListener_get";
+								message.data=data;
+								chrome.tabs.sendMessage(sender.tab.id,message);								
+							}
+
+						}
+					}
+				}
+				request.onupgradeneeded = function(e){
+					db=e.target.result;
+					if(!db.objectStoreNames.contains('notepad')){
+						let objectStore = db.createObjectStore("notepad", { keyPath: "id" });
+						objectStore.transaction.oncomplete =function(event){
+							//setData(db);
+							setData["add"](db,{
+								id:0,
+								item:[
+									{
+										title:"new note",
+										content:""
+									}
+								]
+							});
+						};						
+					}
+
+				};
+				request.onsuccess=function(e){
+					//console.log("onsuccess");
+					db=e.target.result;
+					//setData(db)
+					setData[message.value.method](db,message.value.data);
+				}
+			},
 		}
 	}
 }
