@@ -1,0 +1,153 @@
+smartup.su_apps#su_apps_notepad .su_notepad_box{
+	/*width: 500px;*/
+	padding: 8px;
+	padding: 0;
+}
+smartup.su_apps#su_apps_notepad button{
+	color: #7e7943;
+}
+smartup.su_apps#su_apps_notepad button:hover{
+	background-color: #7e7943;
+	color: #fff;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_list{
+	float: left;
+	width: 180px;
+	/*background: #ccf;*/
+	margin-bottom: 4px;
+	text-align: center;
+}
+smartup.su_apps#su_apps_notepad ul{
+	/*padding: 10px;*/
+	width: 100%;
+	text-align: center;
+	padding: 16px 0;
+	overflow: auto;
+	height: 380px;
+/*	margin-top: -10px;
+	margin-left: -10px;*/
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_list li{
+	width: 100%;
+	text-align: left;
+	padding: 0 4px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: pointer;
+	margin: 1px 0;
+	height: 32px;
+	line-height: 32px;
+	font-size: 14px;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_li:hover{
+	background: rgba(126,121,67,.7);
+}
+smartup.su_apps#su_apps_notepad .su_notepad_listitem{
+	width: 98%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_litext{
+	display: none;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_liedit{
+	transition:all .3s ease-out;
+	float: left;
+	width: 24px;
+	text-align: center;
+	margin-left: -48px;
+	/*background: rgba(0, 0, 0, 0.5);*/
+	color: white !important;
+	font-size: 16px !important;
+	cursor: pointer;
+	margin-top: -30px;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_li>div:hover .su_notepad_liedit{
+	margin-top: 3px;
+	position: relative;
+	left: 174px;
+	border-radius: 50%;
+}
+/*==================================================*/
+smartup.su_apps#su_apps_notepad .su_notepad_lidel{
+	/*position: absolute;*/
+	transition:all .3s ease-out;
+	float: left;
+	width: 24px;
+	text-align: center;
+	margin-left: -30px;
+	/*background: rgba(0, 0, 0, 0.5);*/
+	color: white !important;
+	font-size: 16px !important;
+	cursor: pointer;
+	margin-top: -30px;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_li>div:hover .su_notepad_lidel{
+	margin-top: 3px;
+	position: relative;
+	left: 180px;
+	border-radius: 50%;
+}
+/*==============================*/
+smartup.su_apps#su_apps_notepad .su_notepad_li>div:hover .su_notepad_liedit:hover,
+smartup.su_apps#su_apps_notepad .su_notepad_li>div:hover .su_notepad_lidel:hover{
+	background-color: red;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_btnadd{
+	margin-top:0px;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_licur{
+	background: rgba(126,121,67,.7);
+	color: #fff;
+	font-weight: bold;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_main{
+	float: right;
+	width: 400px;
+	padding: 8px 8px 8px 0;
+	/*padding-left: 0;*/
+}
+smartup.su_apps#su_apps_notepad .su_notepad_content,
+smartup.su_apps#su_apps_notepad textarea:focus{
+	display: inline-block;
+	min-width: 360px;
+	min-height: 260px;
+	width: 100%;
+	height: 400px;
+	float: left;
+
+    font: 14px/24px Open Sans;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: transparent;
+    border: 0;
+    resize: none;
+	/*border: 1px solid #dccc16;*/
+	border:none;
+	border-radius: 2px;
+
+    outline: none !important;
+	background-image: -webkit-linear-gradient(top, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 95%, hsla(0,25%,50%,.1) 95%, hsla(0,25%,50%,.1) 100%);
+	background-size: 24px 24px;
+	padding: 0 8px;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_boxbtn{
+	float: left;
+	padding: 4px 0;
+	width: 100%;
+	text-align: right;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_boxbtn div{
+	font-size: 12px;
+	color: #ccc;
+	/*display: inline-block;*/
+	text-align: left;
+	/*float: left;*/
+}
+smartup.su_apps#su_apps_notepad #su_notepad_btnsave{
+	float: right;
+}
