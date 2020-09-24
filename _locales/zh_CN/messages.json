@@ -1657,5 +1657,38 @@
   },
   "tip_showlist":{
     "message":"所有操作"
+  },
+  "notepad":{
+    "message":"记事本"
+  },
+  "des_notepad_bottom":{
+    "message":"所有记事未经加密直接保存于本地，且不会被浏览器同步。"
+  },
+  "btn_new":{
+    "message":"新建"
+  },
+  "tip_save":{
+    "message":"保存"
+  },
+  "tip_cancel":{
+    "message":"取消"
+  },
+  "su_notepad_defalut_title":{
+    "message":"默认标题"
+  },
+  "su_notepad_defalut_content":{
+    "message":"空白内容"
+  },
+  "n_notepad_delconfirm":{
+    "message":"当删除某个记事时，需要再次确认。"
+  },
+  "n_notepad_switchsave":{
+    "message":"在不同记事间切换时，自动保存。"
+  },
+  "n_notepad_last":{
+    "message":"设置上一次编辑的记事为默认项。"
+  },
+  "notepad_delconfirm":{
+    "message":"请再次确认是否删除？"
   }
 }

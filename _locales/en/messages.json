@@ -1682,5 +1682,38 @@
   },
   "tip_showlist":{
     "message":"All actions"
+  },
+  "notepad":{
+    "message":"Notepad"
+  },
+  "des_notepad_bottom":{
+    "message":"All the notes are stored at locally without encrypted, and, will not be synced by browser."
+  },
+  "btn_new":{
+    "message":"NEW"
+  },
+  "tip_save":{
+    "message":"SAVE"
+  },
+  "tip_cancel":{
+    "message":"CANCEL"
+  },
+  "su_notepad_defalut_title":{
+    "message":"Default Title"
+  },
+  "su_notepad_defalut_content":{
+    "message":"Default Content"
+  },
+  "n_notepad_delconfirm":{
+    "message":"When deleting note, need to confirm."
+  },
+  "n_notepad_switchsave":{
+    "message":"Automatically save when switching notes."
+  },
+  "n_notepad_last":{
+    "message":"Set last edited note as the default one."
+  },
+  "notepad_delconfirm":{
+    "message":"confirm to delete this notes?"
   }
 }

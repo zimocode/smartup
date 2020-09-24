@@ -861,7 +861,8 @@ var appConfmodel={
 	extmgm:{n_uninstallconfirm:true,n_enableallconfirm:true,n_disableallconfirm:true,always:[]/*,group:[chrome.i18n.getMessage("extmgm_gplast"),chrome.i18n.getMessage("extmgm_gpalways")],exts:[]*/},
 	notepad:{
 		n_notepad_delconfirm:true,
-		n_notepad_switchsave:true
+		n_notepad_switchsave:true,
+		n_notepad_last:true
 	}
 }
 
@@ -4556,6 +4557,7 @@ var sub={
 						.objectStore("notepad")
 						.add({
 							id:data.id,
+							last:0,
 							item:data.item
 						});
 					},
