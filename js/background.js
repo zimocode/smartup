@@ -2692,7 +2692,8 @@ var sub={
 			//console.log(message)
 			config.apps[message.apptype]=message.config;
 			sub.saveConf();
-			(!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
+			// (!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
+			sendResponse({type:message.apptype,value:sub.getI18n("notif_con_appsave")})
 		}
 	},
 	open:function(url,target,position,pin,flag){
@@ -3720,6 +3721,8 @@ var sub={
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){});
+					}else if(message.apptype=="notepad"){
+						chrome.tabs.executeScript({file:"js/md5.js",runAt:"document_start"});
 					}
 
 					// insert sortable.js

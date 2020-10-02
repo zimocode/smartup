@@ -321,3 +321,22 @@ smartup.su_apps .su_editbox{
 smartup.su_apps .su_editboxbtn{
 	text-align: center;
 }
+smartup.su_apps .su_notifi{
+	padding: 0px 30px 70px 30px;
+	box-sizing: border-box;
+	height: 48px;
+	width: auto;
+	min-width: 160px;
+	line-height: 24px;
+	background-color: #ccf;
+	position: absolute;
+	top: 0px;
+	border-radius: 24px;
+	opacity: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+	/*margin-left: 40px;*/
+	z-index: -100;
+	text-align: center;
+}

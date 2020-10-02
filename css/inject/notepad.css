@@ -173,3 +173,29 @@ smartup.su_apps#su_apps_notepad .su_notepad_des{
 	/*float: left;*/
 	padding: 4px 8px;
 }
+smartup.su_apps#su_apps_notepad .su_notepad_lock{
+	display: none;
+	opacity: 0;
+	background-color: #ccf;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	padding: 8px;
+	box-sizing: border-box;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_lock span{
+	display: block;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_lock input[type=password]{
+	display: block;
+	margin: 2px auto;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_lock button{
+	display: block;
+	margin: 8px auto;
+}
+smartup.su_apps#su_apps_notepad .su_notepad_lockenable,
+smartup.su_apps#su_apps_notepad .su_notepad_lockdisable{
+	width: 300px;
+}

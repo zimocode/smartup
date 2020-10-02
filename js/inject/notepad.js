@@ -8,7 +8,8 @@ sue.apps.notepad={
 			headCloseBtn:true,
 			menu:[
 				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
-				{src:"/image/more.svg",title:"tip_more",className:"menu_item menu_item_extmgmmore"}
+				{src:"/image/more.svg",title:"tip_more",className:"menu_item menu_item_extmgmmore"},
+				{src:"/image/lock.svg",title:"tip_lock",className:"menu_item su_notepad_menulock",action:"notepad-lock"}
 			],
 			options:[
 				{type:"checkbox",label:"n_notepad_delconfirm",name:"n_notepad_delconfirm",checked:true},
@@ -42,6 +43,19 @@ sue.apps.notepad={
 		theAppBox.appendChild(_boxBottom);
 
 		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{method:"get"}});
+
+		let _time=new Date().getTime();
+		let boxLock=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lock"]}),
+			lockCheck=sue.apps.domCreate("input",{setName:["className","type","id"],setValue:["su_notepad_locksw","checkbox","su_notepad_locksw"+_time]}),
+			lockLabel=sue.apps.domCreate("label",{setName:["className","for"],setValue:["su_notepas_lockswlabel","su_notepad_locksw"+_time]},null,null,null,"Protect your notes with password."),
+			lockEnable=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lockenable"]}),
+			lockDisable=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lockdisable"]});
+		boxLock.appendChild(lockCheck);
+		boxLock.appendChild(lockLabel);
+		boxLock.appendChild(lockEnable);
+		boxLock.appendChild(lockDisable);
+		dom.querySelector(".su_main").appendChild(boxLock);
+
 
 		dom.style.cssText+="border-color:rgb(128 123 67);";
 		dom.querySelector(".su_head").style.cssText+="background-color:rgb(128 123 67);";
@@ -77,6 +91,9 @@ sue.apps.notepad={
 					case"notepad-contentsave":
 						sue.apps.notepad.contentSave(e);
 						break;
+					case"notepad-lock":
+						sue.apps.notepad.showLock(e);
+						break;
 				}
 				break;
 			case"keypress":
@@ -96,25 +113,8 @@ sue.apps.notepad={
 				break;
 		}
 	},
-	saveConf:function(){
-		chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"notepad",config:sue.apps.notepad.config});
-	},
-	itemInit:function(e){
-		let ele=e.target||e;
-		let _id=parseInt(ele.dataset.id);
-		let data=sue.apps.notepad.cons.message.data.item;
-		sue.apps.getAPPboxEle(ele).querySelector("textarea").value=data[_id].content;
-		sue.apps.getAPPboxEle(ele).querySelector("textarea").focus();
-		sue.apps.getAPPboxEle(ele).querySelector(".su_notepad_btnsave").dataset.id=_id;
-
-	},
-	itemAdd:function(e){
-		sue.apps.notepad.cons.message.data.item.unshift({
-			title:sue.apps.i18n("su_notepad_defalut_title"),
-			content:sue.apps.i18n("su_notepad_defalut_content")
-		});
-		console.log(sue.apps.notepad.cons.message.data.item);
-		// return false;
+	saveConf:function(e){
+		// chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"notepad",config:sue.apps.notepad.config});
 		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
 			method:"put",
 			data:{
@@ -123,6 +123,33 @@ sue.apps.notepad={
 				item:sue.apps.notepad.cons.message.data.item
 			}
 		}});
+		sue.apps.notification(e.target||e)
+	},
+	itemInit:function(e){
+		let ele=e.target||e;
+		let _id=parseInt(ele.dataset.id);
+		let data=sue.apps.notepad.cons.message.data.item;
+		sue.apps.getAPPboxEle(ele).querySelector("textarea").value=data[_id].content;
+		sue.apps.getAPPboxEle(ele).querySelector("textarea").focus();
+		sue.apps.getAPPboxEle(ele).querySelector(".su_notepad_btnsave").dataset.id=_id;
+	},
+	itemAdd:function(e){
+		sue.apps.notepad.cons.message.data.item.unshift({
+			title:sue.apps.i18n("su_notepad_defalut_title"),
+			content:sue.apps.i18n("su_notepad_defalut_content")
+		});
+		console.log(sue.apps.notepad.cons.message.data.item);
+		// return false;
+		// chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
+		// 	method:"put",
+		// 	data:{
+		// 		id:0,
+		// 		last:0,
+		// 		item:sue.apps.notepad.cons.message.data.item
+		// 	}
+		// }});
+		// sue.apps.notification(e.target);
+		sue.apps.notepad.saveConf(e);
 		sue.apps.notepad.listInit();
 		sue.apps.notepad.itemSwitch(sue.apps.notepad.dom.querySelectorAll(".su_notepad_list li")[0],false);
 		sue.apps.notepad.itemEdit(sue.apps.notepad.dom.querySelectorAll(".su_notepad_list li")[0]);
@@ -165,14 +192,16 @@ sue.apps.notepad={
 	itemEditSave:function(e){
 		let _id=parseInt(e.target.dataset.id);
 		sue.apps.notepad.cons.message.data.item[_id].title=e.target.parentNode.querySelector(".su_notepad_litext").value;
-		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
-			method:"put",
-			data:{
-				id:0,
-				last:_id,
-				item:sue.apps.notepad.cons.message.data.item
-			}
-		}});
+		// chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
+		// 	method:"put",
+		// 	data:{
+		// 		id:0,
+		// 		last:_id,
+		// 		item:sue.apps.notepad.cons.message.data.item
+		// 	}
+		// }});
+		// sue.apps.notification(e.target);
+		sue.apps.notepad.saveConf(e);
 		sue.apps.notepad.listInit();
 		sue.apps.notepad.itemSwitch(sue.apps.notepad.dom.querySelectorAll(".su_notepad_list li>div")[_id]);
 	},
@@ -188,14 +217,16 @@ sue.apps.notepad={
 		}
 		
 		sue.apps.notepad.cons.message.data.item.splice(_id,1);
-		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
-			method:"put",
-			data:{
-				id:0,
-				last:0,
-				item:sue.apps.notepad.cons.message.data.item
-			}
-		}});
+		// chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
+		// 	method:"put",
+		// 	data:{
+		// 		id:0,
+		// 		last:0,
+		// 		item:sue.apps.notepad.cons.message.data.item
+		// 	}
+		// }});
+		// sue.apps.notification(e.target);
+		sue.apps.notepad.saveConf(e);
 		sue.apps.notepad.listInit();
 		sue.apps.notepad.itemSwitch(sue.apps.notepad.dom.querySelectorAll(".su_notepad_list li>div")[_id>0?_id-1:0],false);
 	},
@@ -220,14 +251,51 @@ sue.apps.notepad={
 		let ele=e.target||e;
 		console.log(ele);
 		sue.apps.notepad.cons.message.data.item[parseInt(ele.dataset.id)].content=sue.apps.getAPPboxEle(e).querySelector("textarea").value;
-		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
-			method:"put",
-			data:{
-				id:0,
-				last:parseInt(ele.dataset.id),
-				item:sue.apps.notepad.cons.message.data.item
-			}
-		}});
+		// chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
+		// 	method:"put",
+		// 	data:{
+		// 		id:0,
+		// 		last:parseInt(ele.dataset.id),
+		// 		item:sue.apps.notepad.cons.message.data.item
+		// 	}
+		// }});
+		// sue.apps.notification(ele);
+		sue.apps.notepad.saveConf(e);
+	},
+	showLock:function(e){
+		let ele=e.target||e;
+		let dom=sue.apps.getAPPboxEle(ele).querySelector(".su_notepad_lock");
+		dom.textContent="";
+
+		let _time=new Date().getTime();
+		let lockCheck=sue.apps.domCreate("input",{setName:["className","type","id"],setValue:["su_notepad_locksw","checkbox","su_notepad_locksw"+_time]}),
+			lockLabel=sue.apps.domCreate("label",{setName:["className","for"],setValue:["su_notepas_lockswlabel","su_notepad_locksw"+_time]},null,null,null,"Protect your notes with password."),
+			lockEnable=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lockenable"]}),
+			lockDisable=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lockdisable"]});
+		dom.appendChild(lockCheck);
+		dom.appendChild(lockLabel);
+		dom.appendChild(lockEnable);
+		dom.appendChild(lockDisable);
+
+		let spanenablePw=sue.apps.domCreate("span",{setName:["className"],setValue:["su_notepad_lockspan"]},null,null,null,"input password:"),
+			enablePw=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_notepad_lockenable_pw","password"]}),
+			spanenablePwre=sue.apps.domCreate("span",{setName:["className"],setValue:["su_notepad_lockspan"]},null,null,null,"confirm password:"),
+			enablePwre=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_notepad_lockenable_pwre","password"]}),
+			enableBtn=sue.apps.domCreate("button",null,null,null,{setName:["action"],setValue:["notepad-lockenable"]},sue.apps.i18n("btn_done")),
+			spandisablePw=sue.apps.domCreate("span",{setName:["className"],setValue:["su_notepad_lockspan"]},null,null,null,"input password:"),
+			disablePw=sue.apps.domCreate("input",{setName:["className","type"],setValue:["su_notepad_lockdisable_pw","password"]}),
+			disableBtn=sue.apps.domCreate("button",null,null,null,{setName:["action"],setValue:["notepad-lockdisable"]},sue.apps.i18n("btn_done"));
+
+		lockEnable.appendChild(spanenablePw);
+		lockEnable.appendChild(enablePw);
+		lockEnable.appendChild(spanenablePwre);
+		lockEnable.appendChild(enablePwre);
+		lockEnable.appendChild(enableBtn);
+		lockDisable.appendChild(spandisablePw);
+		lockDisable.appendChild(disablePw);
+		lockDisable.appendChild(disableBtn);
+
+		sue.apps.showPanel(dom);
 	}
 }
 chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"notepad"},function(response){
