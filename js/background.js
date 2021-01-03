@@ -4626,7 +4626,6 @@ var sub={
 		shorturl:{
 			getURL:async function(message,sender,sendResponse){
 				console.log(message);
-				console.log(encodeURIComponent(sender.url));
 				try {
 					let response = await fetch(
 						(config.apps.shorturl.n_suyourls?"https://url.zimoapps.com/yourls-api.php":config.apps.shorturl.n_yourls+"/yourls-api.php")
