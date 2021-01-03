@@ -1,0 +1,56 @@
+smartup.su_apps#su_apps_shorturl .su_shorturl_box{
+	/*width: 500px;*/
+	padding: 8px;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_qr{
+	width: 200px;
+	height: 200px;
+	float: right;
+	margin-left: 16px;
+	margin-bottom: 8px;
+	display: none;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_qr>img{
+	width: 200px;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_action{
+	width: 380px;
+	height: auto;
+	/*background: blue;*/
+	float: left;
+	padding-bottom: 24px;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_textsource{
+	height: 64px;
+	border: 1px solid rgb(208, 217, 255);
+	border-radius: 2px;
+	resize: none;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_btn{
+	clear: both;
+	margin: 0 auto;
+	/* width: 120px; */
+	display: block;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_info{
+	position: absolute;
+	bottom: 4px;
+    font-size: 12px;
+    color: #777;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_action label{
+	width: 120px;
+	display: block;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	text-align: right;
+	overflow: hidden;
+}
+smartup.su_apps#su_apps_shorturl .su_shorturl_action input,
+smartup.su_apps#su_apps_shorturl .su_shorturl_action textarea{
+	width: 240px;
+	float: right;
+	margin-right: 1px;
+	background-color: #fff; 
+}

@@ -109,6 +109,17 @@ sue.apps={
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
+				if(boxInfo.options[i].type=="text"){
+					var _time=parseInt((new Date().getTime())/1000);
+					var _domText=sue.apps.domCreate("input");
+						_domText.name=boxInfo.options[i].name;
+						_domText.type="text";
+						_domText.id=boxInfo.options[i].name+"_"+_time;
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					domOptions.appendChild(_label);
+					domOptions.appendChild(_domText);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
 			}
 			domBox.appendChild(domOptions);
 			//button box

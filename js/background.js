@@ -863,6 +863,12 @@ var appConfmodel={
 		n_notepad_delconfirm:true,
 		n_notepad_switchsave:true,
 		n_notepad_last:true
+	},
+	shorturl:{
+		n_qr:true,
+		n_suyourls:true,
+		n_yourls:"",
+		n_sign:""
 	}
 }
 
@@ -2381,6 +2387,11 @@ var sub={
 		},
 
 		//mini apps
+		shorturl:function(){
+			var _appname="shorturl";
+			sub.initAppconf(_appname);
+			sub.insertTest(_appname);
+		},
 		notepad:function(){
 			var _appname="notepad";
 			sub.initAppconf(_appname);
@@ -2548,7 +2559,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet","notepad","shorturl"];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
@@ -3716,7 +3727,7 @@ var sub={
 					}
 					if(message.apptype=="base64"){
 						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
-					}else if(message.apptype=="qr"||message.apptype=="magnet"){
+					}else if(message.apptype=="qr"||message.apptype=="magnet"||message.apptype=="shorturl"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
@@ -4611,6 +4622,30 @@ var sub={
 					setData[message.value.method](db,message.value.data);
 				}
 			},
+		},
+		shorturl:{
+			getURL:async function(message,sender,sendResponse){
+				console.log(message);
+				console.log(encodeURIComponent(sender.url));
+				try {
+					let response = await fetch(
+						(config.apps.shorturl.n_suyourls?"https://url.zimoapps.com/yourls-api.php":config.apps.shorturl.n_yourls+"/yourls-api.php")
+						+"?action=shorturl"
+						+"&format=json"
+						+"&keyword="+message.value.key
+						+"&url="+encodeURIComponent(sender.url)
+						+"&signature="+(config.apps.shorturl.n_suyourls?"ab279117c0":config.apps.shorturl.n_sign),
+						{
+							method:"POST"
+						});
+					let data=await response.json();
+					console.log(data);
+					chrome.tabs.sendMessage(sender.tab.id,{type:"url",app:"shorturl",value:data});
+				} catch(e) {
+					console.log(e.toString());
+					chrome.tabs.sendMessage(sender.tab.id,{type:"err",app:"shorturl",value:e.toString()});
+				}
+			}
 		}
 	}
 }

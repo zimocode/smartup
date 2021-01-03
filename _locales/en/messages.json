@@ -1715,5 +1715,41 @@
   },
   "notepad_delconfirm":{
     "message":"confirm to delete this notes?"
+  },
+  "shorturl":{
+    "message":"Short URL"
+  },
+  "app_shorturl_btn":{
+    "message":"Get Short URL"
+  },
+  "app_shorturl_key":{
+    "message":"Key word:"
+  },
+  "app_shorturl_source":{
+    "message":"Source URL:"
+  },
+  "app_shorturl_short":{
+    "message":"Short URL:"
+  },
+  "app_shorturl_wait":{
+    "message":"Waiting for operation ..."
+  },
+  "app_shorturl_waitserver":{
+    "message":"Waiting for server response ..."
+  },
+  "app_shorturl_success":{
+    "message":"Get short URL successfully !"
+  },
+  "app_shorturl_err":{
+    "message":"Error : "
+  },
+  "n_qr":{
+    "message":"Show QR code"
+  },
+  "n_suyourls":{
+    "message":"Use martUp short URL service"
+  },
+  "app_shorturl_keyholder":{
+    "message":"Input keyword, or leave blank to generate automatically."
   }
 }
