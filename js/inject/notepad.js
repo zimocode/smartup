@@ -7,9 +7,9 @@ sue.apps.notepad={
 			headTitle:"notepad",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"},
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"}/*,
 				{src:"/image/more.svg",title:"tip_more",className:"menu_item menu_item_extmgmmore"},
-				{src:"/image/lock.svg",title:"tip_lock",className:"menu_item su_notepad_menulock",action:"notepad-lock"}
+				{src:"/image/lock.svg",title:"tip_lock",className:"menu_item su_notepad_menulock",action:"notepad-lock"}*/
 			],
 			options:[
 				{type:"checkbox",label:"n_notepad_delconfirm",name:"n_notepad_delconfirm",checked:true},

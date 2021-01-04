@@ -1690,5 +1690,41 @@
   },
   "notepad_delconfirm":{
     "message":"请再次确认是否删除？"
+  },
+  "shorturl":{
+    "message":"短网址"
+  },
+  "app_shorturl_btn":{
+    "message":"获取短网址"
+  },
+  "app_shorturl_key":{
+    "message":"关键字："
+  },
+  "app_shorturl_source":{
+    "message":"原网址："
+  },
+  "app_shorturl_short":{
+    "message":"短网址："
+  },
+  "app_shorturl_wait":{
+    "message":"等待操作 ..."
+  },
+  "app_shorturl_waitserver":{
+    "message":"等待服务器响应 ..."
+  },
+  "app_shorturl_success":{
+    "message":"获取短网址成功 !"
+  },
+  "app_shorturl_err":{
+    "message":"错误 : "
+  },
+  "n_qr":{
+    "message":"显示二维码"
+  },
+  "n_suyourls":{
+    "message":"使用smartUp手势提供的短网址服务"
+  },
+  "app_shorturl_keyholder":{
+    "message":"输入关键词，留空则自动生成"
   }
 }

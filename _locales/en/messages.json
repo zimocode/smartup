@@ -1747,7 +1747,7 @@
     "message":"Show QR code"
   },
   "n_suyourls":{
-    "message":"Use martUp short URL service"
+    "message":"Use smartUp short URL service"
   },
   "app_shorturl_keyholder":{
     "message":"Input keyword, or leave blank to generate automatically."

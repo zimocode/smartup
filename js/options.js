@@ -2394,6 +2394,7 @@ var suo={
 		return "#"+colorStr;
 	},
 	showBtnAdd:function(type,confobj,dom){
+		console.log(confobj)
 		var btnOBJ=document.querySelector("#btn_add");
 		if(!type){btnOBJ.style.cssText+="display:none;";return;}
 		confobj?btnOBJ.setAttribute("data-confobj",confobj):null;
@@ -2402,7 +2403,7 @@ var suo={
 		if(!dom.querySelector("#btn_add")){
 			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj"],setValue:[confobj]}));
 		};
-		if(!dom.querySelector(".btn_list")&&(confobj&&confobj.indexOf("script")==-1)){
+		if(!dom.querySelector(".btn_list")&&(confobj&&(confobj.indexOf("script")==-1&&confobj.indexOf("ctm")==-1&&confobj.indexOf("pop")==-1))){
 			dom.appendChild(suo.domCreate2("img",{setName:["className","src","title"],setValue:["btn_list","../image/list.svg",suo.getI18n("tip_showlist")]},null,null,{setName:["confobj"],setValue:[confobj]}));
 		}
 	},

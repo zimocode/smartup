@@ -1,10 +1,11 @@
 {
 	"log": [
 		{
-			"ver":"6.6.765.1074",
-			"date":"2020.06.26",
+			"ver":"6.7.125.1074",
+			"date":"2021.01.04",
 			"content":[
 				"sort support",
+				"new mini-apps: notepad, short url"
 				"upgrade mini-apps",
 				"submit to microsoft edge #90",
 				"fix bugs: issues@github: #97, #87, #63"

@@ -10,10 +10,10 @@ sue.apps.shorturl={
 				{src:"/image/edit.svg",title:"editmode",className:"menu_item menu_item_edit"}*/
 			],
 			options:[
-				{type:"checkbox",label:"n_qr",name:"n_qr",checked:true},
+				{type:"checkbox",label:"n_qr",name:"n_qr",checked:true}/*,
 				{type:"checkbox",label:"n_suyourls",name:"n_suyourls",checked:true},
 				{type:"text",label:"n_yourls",name:"n_yourls",checked:true},
-				{type:"text",label:"n_sign",name:"n_sign",checked:true}
+				{type:"text",label:"n_sign",name:"n_sign",checked:true}*/
 			]
 		}
 		sue.apps.init();
