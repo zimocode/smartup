@@ -5,10 +5,10 @@
 			"date":"2021.01.04",
 			"content":[
 				"sort support",
-				"new mini-apps: notepad, short url"
+				"new mini-apps: notepad, short url",
 				"upgrade mini-apps",
 				"submit to microsoft edge #90",
-				"upgrade purify.js"
+				"upgrade purify.js",
 				"fix bugs: issues@github: #97, #87, #63"
 			]	
 		},

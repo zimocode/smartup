@@ -4479,38 +4479,81 @@ var sub={
 					setData(db)
 				}
 			},
-			getImageURL:function(message,sender,sendResponse){
-				sub.apps.homepage.DBAction("get",null,sender);
-				fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
-					.then(response => response.text())
-					.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
-					.then(xmlData=>{
-						console.log(xmlData)
-						let data={
-							imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
-							copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
-							copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
-						};
-						console.log(data)
-						if(localStorage.getItem("homepageURL")!=data.imageURL){
-							localStorage.setItem("homepageURL",data.imageURL);
-							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
-							sub.apps.homepage.getImage(message,sender,sendResponse,data);
-						}
-					})
+			getImageURL:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("su");
+				let	data=await sub.IDB.itemGet(db,"homepage",0);
+				if(data){
+					data={
+						imageURL:data.base64,
+						copyrightString:data.copyrightString,
+						copyrightURL:data.copyrightURL
+					}
+					chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+				}
+
+				try {
+					let response = await fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1");
+					let data=await response.text();
+						data=(new window.DOMParser()).parseFromString(data, "text/xml");
+					let _data={
+						imageURL:"https://www.bing.com"+DOMPurify.sanitize(data.querySelector("images>image>url").textContent).toString(),
+						copyrightString:DOMPurify.sanitize(data.querySelector("images>image>copyright").textContent).toString(),
+						copyrightURL:DOMPurify.sanitize(data.querySelector("images>image>copyrightlink").textContent).toString()
+					};
+					if(localStorage.getItem("homepageURL")!=_data.imageURL){
+						localStorage.setItem("homepageURL",_data.imageURL);
+						chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:_data});
+						sub.apps.homepage.getImage(message,sender,sendResponse,_data);
+					}
+					console.log(_data);
+				} catch(e) {
+					console.log(e.toString());
+				}
+
+
+				// sub.apps.homepage.DBAction("get",null,sender);
+				// fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
+				// 	.then(response => response.text())
+				// 	.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
+				// 	.then(xmlData=>{
+				// 		console.log(xmlData)
+				// 		let data={
+				// 			imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
+				// 			copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
+				// 			copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
+				// 		};
+				// 		console.log(data)
+				// 		console.log(localStorage.getItem("homepageURL")!=data.imageURL)
+				// 		if(localStorage.getItem("homepageURL")!=data.imageURL){
+				// 			localStorage.setItem("homepageURL",data.imageURL);
+				// 			chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+				// 			sub.apps.homepage.getImage(message,sender,sendResponse,data);
+				// 		}
+				// 	})
 			},
-			getImage:function(message,sender,sendResponse,data){
-				fetch(data.imageURL)
-					.then(response=>response.blob())
-					.then(blob=>{
-						let reader = new FileReader();
-						reader.readAsDataURL(blob); 
-						reader.onloadend = function(){
-							console.log(reader.result)
-							data.base64=reader.result;
-							sub.apps.homepage.DBAction("put",data);
-						}
-					})
+			getImage:async function(message,sender,sendResponse,data){
+				let response=await fetch(data.imageURL);
+					response=data.blob();
+				let reader = new FileReader();
+				reader.readAsDataURL(response); 
+				reader.onloadend = function(){
+					console.log(reader.result)
+					data.base64=reader.result;
+					let db=sub.IDB.DBGet("su");
+					sub.IDB.itemModify(db,"homepage",0);
+				}
+
+				// fetch(data.imageURL)
+				// 	.then(response=>response.blob())
+				// 	.then(blob=>{
+				// 		let reader = new FileReader();
+				// 		reader.readAsDataURL(blob); 
+				// 		reader.onloadend = function(){
+				// 			console.log(reader.result)
+				// 			data.base64=reader.result;
+				// 			sub.apps.homepage.DBAction("put",data);
+				// 		}
+				// 	})
 			},
 			setListId:function(message,sender,sendResponse){
 				localStorage.setItem("homepageListId",message.value);
@@ -4645,6 +4688,159 @@ var sub={
 					chrome.tabs.sendMessage(sender.tab.id,{type:"err",app:"shorturl",value:e.toString()});
 				}
 			}
+		}
+	},
+	IDBtest:{
+		test:async function(){
+			try{
+				var x=await sub.IDB.DBGet("su");
+				// x=await sub.IDB.setItem(x,"notepad",{id:1,value:""});
+				// x=await sub.IDB.getItem(x,"notepad",1)	
+				// x=await sub.IDB.itemModify(x,"notepad",2,{id:2,value:"xxxxxxxxxxxxxxxxxx"})	;	
+				x=await sub.IDB.itemDel(x,"notepad",2)	
+			}catch(err){
+				console.log(err)
+			}
+		}
+	},
+	IDB:{
+		init:async function(){
+			let dbVer=13;
+			let db=await sub.IDB.DBGet("su");
+
+			let	dbHomepage;
+			try{
+				dbHomepage=await sub.IDB.itemGet(db,"homepage",0);
+			}catch(err){
+				console.log(err);
+				db.close();
+				let _db=await sub.IDB.DBUpgrade("su",dbVer);
+				console.log(_db)
+					_db=await sub.IDB.DBInit(_db,"homepage","id");
+					_db=await sub.IDB.itemSet(_db,"homepage",{id:0});
+			}
+		},
+		action:function(){
+			let request = indexedDB.open("su", 3),
+				db;
+		},
+		itemDel:function(db,storeName,key){
+			return new Promise((resolve,reject)=>{
+				let request=db.transaction(storeName,"readwrite").objectStore(storeName).delete(key);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					resolve(e.target.result);
+				}
+			})
+		},
+		itemModify:function(db,storeName,key,newData){
+			return new Promise(async (resolve,reject)=>{
+				let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					if(e.target.result){
+						let _request=db.transaction(storeName,"readwrite").objectStore(storeName).put(newData);
+						_request.onerror=reject;
+						_request.onsuccess=function(e){
+							resolve(newData);
+						}
+					}else{
+						reject("err");
+					}
+				}
+			})
+		},
+		itemGet:function(db,storeName,key){
+			return new Promise((resolve,reject)=>{
+				// try{
+				// 	let _request=db.transaction(storeName,"readonly");
+				// }catch(err){
+				// 	console.log(err)
+				// }
+
+				// let _request=db.transaction(storeName,"readonly");
+					// _request.onerror=reject;
+					// _request.onsuccess=function(){
+					// 	let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
+					// 	request.onerror=reject;
+					// 	request.onsuccess=function(e){
+					// 		console.log(e.target);
+					// 		resolve(e.target.result);
+					// 	}
+					// }
+
+
+				let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					console.log(e.target);
+					resolve(e.target.result);
+				}
+			})
+		},
+		itemSet:function(db,storeName,data/*object,{xx:"xx",...}*/){
+			return new Promise((resolve,reject)=>{
+				let request=db.transaction(storeName,"readwrite").objectStore(storeName).add(data);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					console.log(e.target.result);
+					resolve(e.target.result);
+				}
+			})
+		},
+		DBInit:function(db,storeName/*string*/,keyPath/*string*//*,indexarray,[{xx:"xx"},...]*/){
+			return new Promise((resolve,reject)=>{
+				let store=db.createObjectStore(storeName,{keyPath:keyPath});
+				store.transaction.onerror=reject;
+				store.transaction.oncomplete=function(e){
+					console.log(e.target.db);
+					resolve(e.target.db);
+				}
+			})
+		},
+		DBUpgrade:function(dbname,ver){
+			console.log("upgrade");
+			// return;
+			return new Promise((resolve,reject)=>{
+				const request=window.indexedDB.open(dbname,ver);
+				request.onerror=reject;
+				request.onupgradeneeded=function(e){
+					let db=e.target.result;
+					console.log(db.name);
+					resolve(db);
+				}
+			})
+		},
+		DBGet:function(dbname){
+			return new Promise((resolve,reject)=>{
+				const request=window.indexedDB.open(dbname);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					let db=e.target.result;
+					console.log(db.name);
+					resolve(db);
+				}
+				// request.onupgradeneeded=function(e){
+				// 	resolve(sub.IDB.DBUpgrade(dbname));
+				// }
+			})
+		},
+		set:function(){
+			request.onupgradeneeded = function(e){
+				db=e.target.result;
+				var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
+				objectStore.transaction.oncomplete =function(event){
+					setData(db);
+				};
+			};
+			request.onsuccess=function(e){
+				//console.log("onsuccess");
+				db=e.target.result;
+				setData(db)
+			}
+		},
+		get:function(){
+
 		}
 	}
 }
