@@ -576,6 +576,7 @@ chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"homepage"},function(re
 	sue.apps.homepage.initUI();
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){
+	console.log(message)
 	switch(message.type){
 		case"imageURL":
 			sue.apps.homepage.setBackground(message.value);

@@ -42,7 +42,7 @@ sue.apps.notepad={
 		theAppBox.appendChild(_boxMain);
 		theAppBox.appendChild(_boxBottom);
 
-		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{method:"get"}});
+		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"get",value:{method:"get"}});
 
 		let _time=new Date().getTime();
 		let boxLock=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notepad_lock"]}),
@@ -115,7 +115,7 @@ sue.apps.notepad={
 	},
 	saveConf:function(e){
 		// chrome.runtime.sendMessage({type:"apps_saveconf",apptype:"notepad",config:sue.apps.notepad.config});
-		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"DBAction",value:{
+		chrome.runtime.sendMessage({type:"appsAction",app:"notepad",action:"set",value:{
 			method:"put",
 			data:{
 				id:0,
@@ -135,8 +135,8 @@ sue.apps.notepad={
 	},
 	itemAdd:function(e){
 		sue.apps.notepad.cons.message.data.item.unshift({
-			title:sue.apps.i18n("su_notepad_defalut_title"),
-			content:sue.apps.i18n("su_notepad_defalut_content")
+			title:sue.apps.i18n("notepad_defalut_title"),
+			content:sue.apps.i18n("notepad_defalut_content")
 		});
 		console.log(sue.apps.notepad.cons.message.data.item);
 		// return false;
@@ -303,6 +303,7 @@ chrome.runtime.sendMessage({type:"apps_getvalue",apptype:"notepad"},function(res
 	sue.apps.notepad.initUI();
 });
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){
+	console.log(message);
 	switch(message.type){
 		case"appsListener_get":
 			sue.apps.notepad.cons.message={};

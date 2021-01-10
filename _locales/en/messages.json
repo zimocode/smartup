@@ -1698,10 +1698,10 @@
   "tip_cancel":{
     "message":"CANCEL"
   },
-  "su_notepad_defalut_title":{
+  "notepad_defalut_title":{
     "message":"Default Title"
   },
-  "su_notepad_defalut_content":{
+  "notepad_defalut_content":{
     "message":"Default Content"
   },
   "n_notepad_delconfirm":{

@@ -4427,63 +4427,20 @@ var sub={
 					_Pin=config.apps[message.app].n_pin;
 				sub.open(_URL,_Target,_Index,_Pin);
 			},
-			DBAction:function(method/*get or put*/,data,sender){
-				//console.log("data");
-				let request = indexedDB.open("su", 3),
-					db;
-				let setData=function(db){
-					let put=function(db){
-						console.log(method);
-						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
-						let addDB=dbobj.put({
-							url:data.imageURL,
-							base64:data.base64,
-							copyrightString:data.copyrightString,
-							copyrightURL:data.copyrightURL,
-							id:0
-						});
-					}
-					let get=function(db){
-						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
-						let dbget=dbobj.get(0);
-						dbget.onsuccess=function(e){
-							if(!e.target.result){return;}
-							let data={
-								imageURL:e.target.result.base64,
-								copyrightString:e.target.result.copyrightString,
-								copyrightURL:e.target.result.copyrightURL
-							}
-							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
-						}
-					}
-					let setImage=function(data){
-						let dom=document.querySelector("homeimage"),
-							domCopyright=document.querySelector("#copyright");
-						dom.style.cssText+="background-image:url("+data.imageURL+");";
-						domCopyright.href=data.copyrightURL;
-						domCopyright.innerText=data.copyrightString;
-						dom.style.cssText+="opacity:1;";
-					}
-					method=="get"?get(db):put(db);
-				}
-				request.onupgradeneeded = function(e){
-					db=e.target.result;
-					var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
-					objectStore.transaction.oncomplete =function(event){
-						setData(db);
-					};
-				};
-				request.onsuccess=function(e){
-					//console.log("onsuccess");
-					db=e.target.result;
-					setData(db)
-				}
-			},
 			getImageURL:async function(message,sender,sendResponse){
-				let db=await sub.IDB.DBGet("su");
-				let	data=await sub.IDB.itemGet(db,"homepage",0);
+				let db=await sub.IDB.DBGet("homepage"),
+					data;
+				if(db.version<2){
+					db.close();
+					data=await sub.IDB.initApps("homepage");
+					console.log(data)
+				}else{
+					data=await sub.IDB.itemGet(db,"bingimg",0);
+				}
+				console.log(data)
 				if(data){
 					data={
+						id:0,
 						imageURL:data.base64,
 						copyrightString:data.copyrightString,
 						copyrightURL:data.copyrightURL
@@ -4496,64 +4453,34 @@ var sub={
 					let data=await response.text();
 						data=(new window.DOMParser()).parseFromString(data, "text/xml");
 					let _data={
+						id:0,
 						imageURL:"https://www.bing.com"+DOMPurify.sanitize(data.querySelector("images>image>url").textContent).toString(),
 						copyrightString:DOMPurify.sanitize(data.querySelector("images>image>copyright").textContent).toString(),
 						copyrightURL:DOMPurify.sanitize(data.querySelector("images>image>copyrightlink").textContent).toString()
 					};
 					if(localStorage.getItem("homepageURL")!=_data.imageURL){
-						localStorage.setItem("homepageURL",_data.imageURL);
 						chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:_data});
 						sub.apps.homepage.getImage(message,sender,sendResponse,_data);
 					}
-					console.log(_data);
 				} catch(e) {
 					console.log(e.toString());
 				}
-
-
-				// sub.apps.homepage.DBAction("get",null,sender);
-				// fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
-				// 	.then(response => response.text())
-				// 	.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
-				// 	.then(xmlData=>{
-				// 		console.log(xmlData)
-				// 		let data={
-				// 			imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
-				// 			copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
-				// 			copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
-				// 		};
-				// 		console.log(data)
-				// 		console.log(localStorage.getItem("homepageURL")!=data.imageURL)
-				// 		if(localStorage.getItem("homepageURL")!=data.imageURL){
-				// 			localStorage.setItem("homepageURL",data.imageURL);
-				// 			chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
-				// 			sub.apps.homepage.getImage(message,sender,sendResponse,data);
-				// 		}
-				// 	})
 			},
 			getImage:async function(message,sender,sendResponse,data){
 				let response=await fetch(data.imageURL);
-					response=data.blob();
+					response=await response.blob();
 				let reader = new FileReader();
 				reader.readAsDataURL(response); 
 				reader.onloadend = function(){
-					console.log(reader.result)
 					data.base64=reader.result;
-					let db=sub.IDB.DBGet("su");
-					sub.IDB.itemModify(db,"homepage",0);
+					(async function(){
+						let db=await sub.IDB.DBGet("homepage");
+						await sub.IDB.itemModify(db,"bingimg",0,data);
+						if(localStorage.getItem("homepageURL")!=data.imageURL){
+							localStorage.setItem("homepageURL",data.imageURL);
+						}						
+					})();
 				}
-
-				// fetch(data.imageURL)
-				// 	.then(response=>response.blob())
-				// 	.then(blob=>{
-				// 		let reader = new FileReader();
-				// 		reader.readAsDataURL(blob); 
-				// 		reader.onloadend = function(){
-				// 			console.log(reader.result)
-				// 			data.base64=reader.result;
-				// 			sub.apps.homepage.DBAction("put",data);
-				// 		}
-				// 	})
 			},
 			setListId:function(message,sender,sendResponse){
 				localStorage.setItem("homepageListId",message.value);
@@ -4603,68 +4530,27 @@ var sub={
 			}
 		},
 		notepad:{
-			DBAction:function(message,sender,sendResponse){
-			//DBAction:function(method,data{
-				//console.log("data");
-				let request = indexedDB.open("su", 3),
-					db;
-				let setData={
-					add:function(db,data){
-						db.transaction(["notepad"], "readwrite")
-						.objectStore("notepad")
-						.add({
-							id:data.id,
-							last:0,
-							item:data.item
-						});
-					},
-					put:function(db,data){
-						let dbobj=db.transaction(["notepad"], "readwrite").objectStore("notepad");
-						let addDB=dbobj.put(message.value.data);
-					},
-					get:function(db){
-						let dbobj=db.transaction(["notepad"], "readwrite").objectStore("notepad");
-						let dbget=dbobj.get(0);
-						dbget.onsuccess=function(e){
-							if(!e.target.result){
-								return;
-							}else{
-								console.log(e.target.result);
-								let data=e.target.result;
-								message.type="appsListener_get";
-								message.data=data;
-								chrome.tabs.sendMessage(sender.tab.id,message);								
-							}
-
-						}
-					}
+			get:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("notepad"),
+					data;
+				if(db.version<2){
+					db.close();
+					data=await sub.IDB.initApps("notepad");
+				}else{
+					data=await sub.IDB.itemGet(db,"note",0);
 				}
-				request.onupgradeneeded = function(e){
-					db=e.target.result;
-					if(!db.objectStoreNames.contains('notepad')){
-						let objectStore = db.createObjectStore("notepad", { keyPath: "id" });
-						objectStore.transaction.oncomplete =function(event){
-							//setData(db);
-							setData["add"](db,{
-								id:0,
-								item:[
-									{
-										title:"new note",
-										content:""
-									}
-								]
-							});
-						};						
-					}
-
-				};
-				request.onsuccess=function(e){
-					//console.log("onsuccess");
-					db=e.target.result;
-					//setData(db)
-					setData[message.value.method](db,message.value.data);
+					console.log(data)
+				if(data){
+					console.log("get")
+					message.type="appsListener_get";
+					message.data=data;
+					chrome.tabs.sendMessage(sender.tab.id,message);	
 				}
 			},
+			set:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("notepad");
+					db=await sub.IDB.itemModify(db,"note",message.value.data.id,message.value.data);
+			}
 		},
 		shorturl:{
 			getURL:async function(message,sender,sendResponse){
@@ -4690,39 +4576,42 @@ var sub={
 			}
 		}
 	},
-	IDBtest:{
-		test:async function(){
-			try{
-				var x=await sub.IDB.DBGet("su");
-				// x=await sub.IDB.setItem(x,"notepad",{id:1,value:""});
-				// x=await sub.IDB.getItem(x,"notepad",1)	
-				// x=await sub.IDB.itemModify(x,"notepad",2,{id:2,value:"xxxxxxxxxxxxxxxxxx"})	;	
-				x=await sub.IDB.itemDel(x,"notepad",2)	
-			}catch(err){
-				console.log(err)
-			}
-		}
-	},
 	IDB:{
-		init:async function(){
-			let dbVer=13;
-			let db=await sub.IDB.DBGet("su");
-
-			let	dbHomepage;
-			try{
-				dbHomepage=await sub.IDB.itemGet(db,"homepage",0);
-			}catch(err){
-				console.log(err);
-				db.close();
-				let _db=await sub.IDB.DBUpgrade("su",dbVer);
-				console.log(_db)
-					_db=await sub.IDB.DBInit(_db,"homepage","id");
-					_db=await sub.IDB.itemSet(_db,"homepage",{id:0});
-			}
-		},
-		action:function(){
-			let request = indexedDB.open("su", 3),
-				db;
+		initApps:function(appname){
+			return new Promise((resolve,reject)=>{
+				let db;
+				switch(appname){
+					case"homepage":
+						(async function(){
+							db=await sub.IDB.DBUpgrade(appname,2);
+							db=await sub.IDB.DBInit(db,"bingimg","id");
+							db=await sub.IDB.itemSet(db,"bingimg",{
+								id:0,
+								imageURL:"",
+								copyrightString:"",
+								copyrightURL:""
+							});
+							resolve(db);
+						})()
+						break;
+					case"notepad":
+						(async function(){
+							db=await sub.IDB.DBUpgrade(appname,2);
+							db=await sub.IDB.DBInit(db,"note","id");
+							db=await sub.IDB.itemSet(db,"note",{
+								id:0,
+								item:[
+									{
+										title:sub.getI18n("notepad_defalut_title"),
+										content:sub.getI18n("notepad_defalut_content")
+									}
+								]
+							});
+							resolve(db);
+						})()
+						break;
+				}				
+			})
 		},
 		itemDel:function(db,storeName,key){
 			return new Promise((resolve,reject)=>{
@@ -4751,40 +4640,23 @@ var sub={
 			})
 		},
 		itemGet:function(db,storeName,key){
+			if(key==null){return;}
 			return new Promise((resolve,reject)=>{
-				// try{
-				// 	let _request=db.transaction(storeName,"readonly");
-				// }catch(err){
-				// 	console.log(err)
-				// }
-
-				// let _request=db.transaction(storeName,"readonly");
-					// _request.onerror=reject;
-					// _request.onsuccess=function(){
-					// 	let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
-					// 	request.onerror=reject;
-					// 	request.onsuccess=function(e){
-					// 		console.log(e.target);
-					// 		resolve(e.target.result);
-					// 	}
-					// }
-
-
 				let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
-				request.onerror=reject;
-				request.onsuccess=function(e){
-					console.log(e.target);
-					resolve(e.target.result);
-				}
-			})
+					request.onerror=reject;
+					request.onsuccess=function(e){
+						console.log(e.target);
+						resolve(e.target.result);
+					}
+			});
 		},
 		itemSet:function(db,storeName,data/*object,{xx:"xx",...}*/){
 			return new Promise((resolve,reject)=>{
 				let request=db.transaction(storeName,"readwrite").objectStore(storeName).add(data);
 				request.onerror=reject;
 				request.onsuccess=function(e){
-					console.log(e.target.result);
-					resolve(e.target.result);
+					console.log(e.target);
+					resolve(data);
 				}
 			})
 		},
@@ -4793,22 +4665,18 @@ var sub={
 				let store=db.createObjectStore(storeName,{keyPath:keyPath});
 				store.transaction.onerror=reject;
 				store.transaction.oncomplete=function(e){
-					console.log(e.target.db);
 					resolve(e.target.db);
 				}
 			})
 		},
 		DBUpgrade:function(dbname,ver){
-			console.log("upgrade");
-			// return;
+			ver=ver||1;
 			return new Promise((resolve,reject)=>{
-				const request=window.indexedDB.open(dbname,ver);
+				let request=window.indexedDB.open(dbname,ver);
 				request.onerror=reject;
 				request.onupgradeneeded=function(e){
-					let db=e.target.result;
-					console.log(db.name);
-					resolve(db);
-				}
+					resolve(e.target.result);
+				};
 			})
 		},
 		DBGet:function(dbname){
@@ -4820,27 +4688,7 @@ var sub={
 					console.log(db.name);
 					resolve(db);
 				}
-				// request.onupgradeneeded=function(e){
-				// 	resolve(sub.IDB.DBUpgrade(dbname));
-				// }
 			})
-		},
-		set:function(){
-			request.onupgradeneeded = function(e){
-				db=e.target.result;
-				var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
-				objectStore.transaction.oncomplete =function(event){
-					setData(db);
-				};
-			};
-			request.onsuccess=function(e){
-				//console.log("onsuccess");
-				db=e.target.result;
-				setData(db)
-			}
-		},
-		get:function(){
-
 		}
 	}
 }
