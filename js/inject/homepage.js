@@ -46,7 +46,7 @@ sue.apps.homepage={
 		if(sue.apps.homepage.config.n_homepage_bg){
 			dom.querySelector(".su_head").style.background="none";
 			dom.querySelector(".su_main").style.cssText+="background:none;box-shadow:rgba(0,0,0,0.8) 0 0 5px;";
-			dom.style.cssText+="background-color:#ccc;background-size:cover;border-color:rgba(252, 252, 252, 0);";
+			dom.style.cssText+="background-color:#8856fc;background-size:cover;border-color:rgba(252, 252, 252, 0);";
 			chrome.runtime.sendMessage({type:"appsAction",app:"homepage",action:"getImageURL"});
 		}else{
 			dom.style.cssText+="border-color:#8856fc;";
@@ -547,6 +547,7 @@ sue.apps.homepage={
 		sue.apps.homepage.itemInit(idgp+1,e);
 	},
 	setBackground:function(data){
+		console.log("setBackground")
 		let dom=sue.apps.homepage.dom;
 		dom.style.cssText+="background-image:url("+data.imageURL+");background-size:cover;";
 		if(sue.apps.homepage.config.n_homepage_resize){
