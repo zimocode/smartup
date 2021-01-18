@@ -9,7 +9,7 @@ sue.apps.rss={
 			headCloseBtn:true,
 			menu:[
 				{src:"/image/menu.svg",title:"app_rss_menu",className:"menu_item menu_item_rss"},
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"}
 			],
 			options:[
 				{type:"select",label:"n_optype",name:"n_optype",value:["s_new","s_back","s_current","s_incog"]},

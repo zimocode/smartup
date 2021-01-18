@@ -46,3 +46,232 @@ smartup.su_apps#su_apps_extmgm .su_extmgm_disableall{
 smartup.su_apps#su_apps_extmgm .su_extmgm_disableall:hover{
 	padding-left: 0;
 }
+
+/*-------------------------------------------------------------*/
+smartup.su_apps#su_apps_extmgm .su_extmgm_box{
+	padding: 8px;
+	/*width: 500px;*/
+	width: auto;
+	min-height: 200px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemul{
+	float: left;
+	width: 495px;
+	padding: 4px;
+	min-height: 200px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemuldis{
+	float: right;
+	width: 332px;
+	padding: 4px;
+	background-color: #ccc8;
+	border-radius: 2px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemli>div{
+	border: 1px solid rgba(204, 204, 255, 0.6);
+	padding: 0 8px;
+	margin: 1px;
+	font-size: 14px;
+	font-weight: bold;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.7);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	cursor: pointer;
+	transition:all .4s ease-in-out;
+	border-radius: 5px;
+	width: 160px;
+	height: 48px;
+	line-height: 48px;
+	box-sizing: border-box;
+	display: inline-block;
+	text-align: left;
+	padding: 0 2px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemli>div:hover{
+	box-shadow: 0px 1px 3px #ccc;
+	background: #d0d9ff;
+	line-height: 32px;
+	border-color: rgba(86,119,252,.5) !important;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemli>div:hover .su_extmgm_itemname{
+    height: 24px;
+    line-height: 24px;
+    transition:all .2s ease-in-out;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemli img{
+	height: 42px;
+	margin-top: 2px;
+	float: left;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemli span{
+	font-size: 12px;
+	padding-left: 2px;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;	
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemname{
+    height: 48px;
+    line-height: 48px;
+    /*margin-top: 8px;*/
+    transition:all .2s ease-in-out;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemaction{
+	transition:all .4s ease-in-out;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemaction img{
+	height: 16px;
+	margin: 0 4px;
+	border: 1px solid #ccc0;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemaction img:hover{
+	background: #fc1010;
+	border-radius: 50%;
+	border: 1px solid #ccca;
+	cursor: pointer;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_boxgroup,
+smartup.su_apps#su_apps_extmgm .su_extmgm_boxmore{
+	background-color: rgb(231, 233, 253);
+	height: 100%;
+	width: 200px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0.9;
+	overflow: hidden auto;
+	z-index: 100;
+	display: none;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_boxgroupul,
+smartup.su_apps#su_apps_extmgm .su_extmgm_boxmoreul{
+	margin-top: 80px;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli,
+smartup.su_apps#su_apps_extmgm .su_extmgm_moreli{
+	width: 100%;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div,
+smartup.su_apps#su_apps_extmgm .su_extmgm_moreli>div{
+	text-align: right;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	cursor: pointer;
+	margin: 2px 0;
+	padding-right: 8px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupul,
+smartup.su_apps#su_apps_extmgm .su_extmgm_moreul{
+	width: 100%;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div:hover,
+smartup.su_apps#su_apps_extmgm .su_extmgm_moreli>div:hover{
+	transition:all .4s ease-out;
+	background: #a6baff;
+	color: #3f51b5;	
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemul_firstitem{
+	width: 100%;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemul_firstitem::before{
+	content: "__MSG_extmgm_firstitem__";
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	font-size: 12px;
+	color: #ccc;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemuleditbefore::before{
+	content: "__MSG_extmgm_groupenable__";
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	font-size: 12px;
+	color: #ccc;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_itemuldiseditbefore::before{
+	content: "__MSG_extmgm_groupdisable__";
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	font-size: 12px;
+	color: #ccc;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_editmode{
+	background-color: red;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupaddbtn{
+	border-top: 1px solid #d0d9ff;
+	width: 100%;
+	padding: 10px 0px 10px 32px;
+	position: absolute;
+	bottom: 0;
+	background: #e7e9fd;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupaddbtn:hover{	
+	cursor: pointer;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupdel{
+	transition:all .3s ease-out;
+	float: left;
+	width: 24px;
+	text-align: center;
+	margin-left: -24px;
+	/*background: rgba(0, 0, 0, 0.5);*/
+	color: white !important;
+	font-size: 16px !important;
+	cursor: pointer;
+	margin-top: 3px;
+/*	position: absolute;
+	left: 0;*/
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div:hover .su_extmgm_groupdel{
+	margin-left: 0px;
+	position: absolute;
+	left: 0;
+	border-radius: 50%;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div:hover .su_extmgm_groupdel:hover{
+	background-color: red;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupedit{
+	transition:all .3s ease-out;
+	float: left;
+	width: 24px;
+	text-align: center;
+	margin-left: -24px;
+	/*background: rgba(0, 0, 0, 0.5);*/
+	color: white !important;
+	font-size: 16px !important;
+	cursor: pointer;
+	margin-top: 3px;
+/*	position: absolute;
+	left: 0;*/
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div:hover .su_extmgm_groupedit{
+	margin-left: 26px;
+	position: absolute;
+	left: 0;
+	border-radius: 50%;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_groupli>div:hover .su_extmgm_groupedit:hover{
+	background-color: red;
+}
+smartup.su_apps#su_apps_extmgm .su_extmgm_morelicur>div,
+smartup.su_apps#su_apps_extmgm .su_extmgm_grouplicur>div{
+	background: #a6baff;
+	color: #3f51b5;
+	transition:all .3s ease-out;
+	font-weight: bold;
+}

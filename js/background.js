@@ -69,7 +69,7 @@ var getDefault={
 						icon:true,
 						theme:"colorful",
 						notif:false,
-						appnotif:true,
+						appnotif:false,
 						esc:true
 					},
 					fnswitch:{
@@ -857,7 +857,19 @@ var appConfmodel={
 	synced:{n_closebox:true},
 	jslist:{n_closebox:true},
 	homepage:{n_optype:"s_new",n_position:"s_default",n_pin:false,n_closebox:true,n_homepage_icon:true,n_homepage_bg:true,n_homepage_resize:true,n_homepage_last:true,type:"topsites",sitegroup:[chrome.i18n.getMessage("homepage_groupdefault")],sites:[[{title:"smartUp Gestures",url:"https://smartup.zimoapps.com/"}]],site:[{title:"Google",url:"https://www.google.com"}]},
-	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false}
+	tbkjx:{n_num:50,n_optype:"s_new",n_position:"s_default",n_pin:false},
+	extmgm:{n_uninstallconfirm:true,n_enableallconfirm:true,n_disableallconfirm:true,always:[]/*,group:[chrome.i18n.getMessage("extmgm_gplast"),chrome.i18n.getMessage("extmgm_gpalways")],exts:[]*/},
+	notepad:{
+		n_notepad_delconfirm:true,
+		n_notepad_switchsave:true,
+		n_notepad_last:true
+	},
+	shorturl:{
+		n_qr:true,
+		n_suyourls:true,
+		n_yourls:"",
+		n_sign:""
+	}
 }
 
 var sub={
@@ -870,6 +882,7 @@ var sub={
 		permissions:{},
 		os:"win"
 	},
+	extID:chrome.runtime.id,
 	checkMouseup:function(){
 		if(chrome.browserSettings&&chrome.browserSettings.contextMenuShowEvent){
 			browser.browserSettings.contextMenuShowEvent.set({value:"mouseup"});
@@ -1185,16 +1198,26 @@ var sub={
 	},
 	initAppconf:function(appname){
 		if(!config.apps){config.apps={}}
-		if(!config.apps[appname]){
-			config.apps[appname]=appConfmodel[appname];
-			chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
-		}else{
+		if(config.apps[appname]){
 			for(var i in appConfmodel[appname]){
+				console.log(i)
 				if(config.apps[appname][i]===undefined){
 					config.apps[appname][i]=appConfmodel[appname][i];
 				}
 			}
+		}else{
+			config.apps[appname]=appConfmodel[appname];
 		}
+		// if(!config.apps[appname]){
+		// 	config.apps[appname]=appConfmodel[appname];
+		// 	chrome.storage.sync.set(JSON.parse(JSON.stringify(config)),function(){});
+		// }else{
+		// 	for(var i in appConfmodel[appname]){
+		// 		if(config.apps[appname][i]===undefined){
+		// 			config.apps[appname][i]=appConfmodel[appname][i];
+		// 		}
+		// 	}
+		// }
 	},
 	insertTest:function(appname){
 		//console.log("appname")
@@ -1275,6 +1298,7 @@ var sub={
 	},
 	action:{
 		none:function(){
+			chrome.tabCapture.capture({audio:true},function(stream){console.log(stream)});
 			return;
 		},
 		//group nav
@@ -1641,7 +1665,7 @@ var sub={
 		copytabele:function(){
 			var theFunction=function(){
 				var theIndex=sub.getIndex(sub.getConfValue("selects","n_tab_single"))[0];
-				chrome.tabs.query({index:theIndex},function(tabs){
+				chrome.tabs.query({index:theIndex,currentWindow:true},function(tabs){
 					var cptarget=tabs[0];
 					var cpcontent=sub.getConfValue("selects","n_copytabele_content");
 					var clipOBJ=document.body.appendChild(document.createElement("textarea"));
@@ -2363,6 +2387,16 @@ var sub={
 		},
 
 		//mini apps
+		shorturl:function(){
+			var _appname="shorturl";
+			sub.initAppconf(_appname);
+			sub.insertTest(_appname);
+		},
+		notepad:function(){
+			var _appname="notepad";
+			sub.initAppconf(_appname);
+			sub.insertTest(_appname);
+		},
 		magnet:function(){
 			console.log(sub.message.selEle);
 			var _appname="magnet";
@@ -2440,11 +2474,12 @@ var sub={
 			var _appname="jslist";
 			sub.initAppconf(_appname);
 			var _obj={};
-			var jsnames=[];
-			for(var i=0;i<config.general.script.script.length;i++){
-				jsnames.push(config.general.script.script[i].name);
-			}
-			_obj.js=jsnames;
+			// var jsnames=[];
+			// for(var i=0;i<config.general.script.script.length;i++){
+			// 	jsnames.push(config.general.script.script[i].name);
+			// }
+			// _obj.js=jsnames;
+			_obj.js=config.general.script.script;
 			sub.cons[_appname]=_obj;
 			sub.insertTest(_appname);
 		},
@@ -2524,7 +2559,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"/*,"notepad","shorturl"*/];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;
@@ -2577,18 +2612,71 @@ var sub={
 				var _obj={};
 					_obj.ext_enabled=[];
 					_obj.ext_disabled=[];
-				chrome.management.getAll(function(ext){
-					for(var i=0;i<ext.length;i++){
-						if(ext[i].type=="extension"){
-							if(ext[i].enabled){
-								if(ext[i].id!=sub.extID){_obj.ext_enabled.push(ext[i]);}
-							}else{
-								_obj.ext_disabled.push(ext[i]);
+					_obj.extLast=[];
+					_obj.extID=sub.extID;
+
+				if(!config.apps.extmgm.exts){
+					let _newExts=[
+						{
+							gpname:chrome.i18n.getMessage("extmgm_defaultgroup"),
+							id:[]
+						}
+					];
+					chrome.management.getAll(function(exts){
+						for(var i=0;i<exts.length;i++){
+							if(exts[i].enabled){
+								_newExts[0].id.push(exts[i].id);
 							}
 						}
+						config.apps.extmgm.exts=_newExts;
+						sub.insertTest(_appname);					
+					})
+				}else{
+					sub.insertTest(_appname);
+				}
+
+				chrome.management.getAll(function(exts){
+					let getBase64=function(url,size,callback){
+						console.log(url)
+					    var canvas = document.createElement("canvas");
+					    var ctx = canvas.getContext("2d");
+					    var img = new Image;
+					    img.crossOrigin = 'Anonymous';
+					    img.src = url;
+					    img.onload = function () {
+					        canvas.height = size;
+					        canvas.width = size;
+					        ctx.drawImage(img, 0, 0, size, size);
+					        var dataURL = canvas.toDataURL("image/" + "ico");
+					        callback.call(this, dataURL);
+					        // return dataURL;
+					        canvas = null;
+					    }
 					}
+					for(var i=0;i<exts.length;i++){
+						exts[i].iconBase64="";
+						(function(i){
+							// console.time()
+							getBase64(exts[i].icons?exts[i].icons[exts[i].icons.length-1].url:"",(exts[i].icons?exts[i].icons[exts[i].icons.length-1].size:32),function(data){
+								exts[i].iconBase64=data;
+							});
+							// console.timeEnd();
+						})(i);
+						if(exts[i].enabled){
+							if(exts[i].id!=sub.extID){
+								_obj.extLast.push(exts[i].id);
+							}
+						}
+						// if(exts[i].type=="extension"){
+						// 	if(exts[i].enabled){
+						// 		if(exts[i].id!=sub.extID){_obj.ext_enabled.push(exts[i]);}
+						// 	}else{
+						// 		_obj.ext_disabled.push(exts[i]);
+						// 	}
+						// }
+					}
+					_obj.exts=exts;
 					sub.cons[_appname]=_obj;
-					sub.insertTest(_appname);	
 				})
 			}
 			var thepers=["management"];
@@ -2615,7 +2703,8 @@ var sub={
 			//console.log(message)
 			config.apps[message.apptype]=message.config;
 			sub.saveConf();
-			(!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
+			// (!config.general.settings.appnotif)?null:sub.showNotif("basic",sub.getI18n("notif_title_appsave"),sub.getI18n("notif_con_appsave"));
+			sendResponse({type:message.apptype,value:sub.getI18n("notif_con_appsave")})
 		}
 	},
 	open:function(url,target,position,pin,flag){
@@ -3638,19 +3727,33 @@ var sub={
 					}
 					if(message.apptype=="base64"){
 						chrome.tabs.executeScript({file:"js/base64.js",runAt:"document_start"},function(){})
-					}else if(message.apptype=="qr"||message.apptype=="magnet"){
+					}else if(message.apptype=="qr"||message.apptype=="magnet"||message.apptype=="shorturl"){
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){})
 					}else if(message.apptype=="tbkjx"){
 						chrome.tabs.executeScript({file:"js/purify.js",runAt:"document_start"},function(){});
 						chrome.tabs.executeScript({file:"js/qrcode.js",runAt:"document_start"},function(){});
+					}else if(message.apptype=="notepad"){
+						chrome.tabs.executeScript({file:"js/md5.js",runAt:"document_start"});
+					}
+
+					// insert sortable.js
+					let arraySort=["homepage","appslist","jslist","extmgm"];
+					if(arraySort.contains(message.apptype)){
+						chrome.tabs.executeScript({file:"js/sortable.js",runAt:"document_start"},function(){
+							chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
+							chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
+								//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
+								if(message.apptype=="homepage"&&message.ctm){
+									chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
+								}
+							});
+						});
+						return;
 					}
 
 					chrome.tabs.insertCSS({file:"css/inject/"+message.apptype+".css",runAt:"document_start"},function(){});
 					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
-						//after insert js, run sue.apps.homepage.itemCTM() for miniapps-homepage
-						if(message.apptype=="homepage"&&message.ctm){
-							chrome.tabs.executeScript({code:"sue.apps['"+message.apptype+"'].itemCTM();",runAt:"document_start"});
-						}
+
 					});
 				}		
 				if(!message.value){
@@ -3869,7 +3972,7 @@ var sub={
 						data={
 							title:replace_cdata(xmlData.querySelector("channel>title")?DOMPurify.sanitize(xmlData.querySelector("channel>title").textContent).toString():"noname"),
 							link:replace_cdata(xmlData.querySelector("channel>image>link")?DOMPurify.sanitize(xmlData.querySelector("channel>image>link").textContent).toString():""),
-							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.png"))
+							img:replace_cdata(xmlData.querySelector("channel>image>url")?DOMPurify.sanitize(xmlData.querySelector("channel>image>url").textContent).toString():chrome.runtime.getURL("/image/rss.svg"))
 						}
 
 						let items=xmlData.querySelectorAll("item");
@@ -3991,11 +4094,12 @@ var sub={
 				switch(message.value.actionType){
 					case"enable":
 					case"disable":
+						if(message.value.id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(message.value.id))){break}
 						chrome.management.setEnabled(message.value.id,message.value.actionType=="enable"?true:false,function(){});
 						break;
 					case"disableall":
 						for(var i=0;i<sub.cons.extmgm.ext_enabled.length;i++){
-							if(sub.cons.extmgm.ext_enabled[i].id==chrome.runtime.id){
+							if(sub.cons.extmgm.ext_enabled[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.ext_enabled[i].id))){
 								continue;
 							}
 							chrome.management.setEnabled(sub.cons.extmgm.ext_enabled[i].id,false);
@@ -4003,6 +4107,98 @@ var sub={
 						break;
 				}
 				sendResponse({type:"extmgm",actionDone:true});
+			},
+			getext:function(message,sender,sendResponse){
+				let _config=config.apps.extmgm.exts[message.value].id,
+					_exts=[];
+				for(var i=0;i<_config.length;i++){
+					for(var ii=0;ii<sub.cons.extmgm.exts.length;ii++){
+						if(_config[i]==sub.cons.extmgm.exts[ii].id){
+							_exts.push(sub.cons.extmgm.exts[ii]);
+							continue;
+						}
+					}
+				}
+				
+				sendResponse({exts:_exts})
+				// let _config=config.apps.extmgm.exts[message.value].id,
+				// 	_exts=[];
+				// for(var i=0;i<_config.length;i++){
+				// 	for(var ii=0;ii<sub.cons.extmgm.exts.length;ii++){
+				// 		if(_config[i]==sub.cons.extmgm.exts[ii].id){
+				// 			_exts.push(sub.cons.extmgm.exts[ii]);
+				// 			continue;
+				// 		}
+				// 	}
+				// }
+				
+				// sendResponse({exts:_exts})
+			},
+			getAllExt:function(message,sender,sendResponse){
+				sendResponse({exts:sub.cons.extmgm.exts});
+				console.log(message.extsEnable)
+				if(message.extsEnable){
+					for(var i=0;i<sub.cons.extmgm.exts.length;i++){
+						if(sub.cons.extmgm.exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.exts[i].id))){continue;}
+						if(message.extsEnable.id.contains(sub.cons.extmgm.exts[i].id)){
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,true);
+						}else{
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,false);
+						}
+					}
+				}
+				if(message.extsLast){
+					for(var i=0;i<sub.cons.extmgm.exts.length;i++){
+						if(sub.cons.extmgm.exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(sub.cons.extmgm.exts[i].id))){continue;}
+						if(message.extsLast.contains(sub.cons.extmgm.exts[i].id)){
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,true);
+						}else{
+							chrome.management.setEnabled(sub.cons.extmgm.exts[i].id,false);
+						}
+					}
+				}
+			},
+			itemDisable:function(message,sender,sendResponse){
+				console.log(message)
+				chrome.management.setEnabled(message.extId,false);
+			},
+			itemEnable:function(message,sender,sendResponse){
+				console.log(message)
+				chrome.management.setEnabled(message.extId,true);
+			},
+			itemOpturl:function(message,sender,sendResponse){
+				sub.open(message.url);
+			},
+			itemUninstall:function(message,sender,sendResponse){
+				//chrome.management.uninstall(message.extId,{showConfirmDialog:false});
+				chrome.management.uninstall(message.extId,{showConfirmDialog:config.apps.extmgm.n_uninstallconfirm},function(s){
+					console.log("s")
+					chrome.management.getAll(function(exts){
+						let _exts=[];
+						for(var i=0;i<exts.length;i++){
+							_exts.push(exts[i].id)
+						}
+						console.log(_exts);
+						if(!_exts.contains(message.extId)){
+							chrome.tabs.sendMessage(sender.tab.id,{type:"itemUninstall",id:message.id,extId:message.extId});
+						}
+					})
+				});
+			},
+			enableAll:function(message,sender,sendResponse){
+				chrome.management.getAll(function(exts){
+					for(var i=0;i<exts.length;i++){
+						chrome.management.setEnabled(exts[i].id,true);
+					}
+				})
+			},
+			disableAll:function(message,sender,sendResponse){
+				chrome.management.getAll(function(exts){
+					for(var i=0;i<exts.length;i++){
+						if(exts[i].id==sub.extID||(config.apps.extmgm.always&&config.apps.extmgm.always.contains(exts[i].id))){continue;}
+						chrome.management.setEnabled(exts[i].id,false);
+					}
+				})
 			}
 		},
 		lottery:{
@@ -4231,90 +4427,60 @@ var sub={
 					_Pin=config.apps[message.app].n_pin;
 				sub.open(_URL,_Target,_Index,_Pin);
 			},
-			DBAction:function(method/*get or put*/,data,sender){
-				//console.log("data");
-				let request = indexedDB.open("su", 1),
-					db;
-				let setData=function(db){
-					let put=function(db){
-						console.log(method);
-						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
-						let addDB=dbobj.put({
-							url:data.imageURL,
-							base64:data.base64,
-							copyrightString:data.copyrightString,
-							copyrightURL:data.copyrightURL,
-							id:0
-						});
-					}
-					let get=function(db){
-						let dbobj=db.transaction(["bingimg"], "readwrite").objectStore("bingimg");
-						let dbget=dbobj.get(0);
-						dbget.onsuccess=function(e){
-							if(!e.target.result){return;}
-							let data={
-								imageURL:e.target.result.base64,
-								copyrightString:e.target.result.copyrightString,
-								copyrightURL:e.target.result.copyrightURL
-							}
-							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
-						}
-					}
-					let setImage=function(data){
-						let dom=document.querySelector("homeimage"),
-							domCopyright=document.querySelector("#copyright");
-						dom.style.cssText+="background-image:url("+data.imageURL+");";
-						domCopyright.href=data.copyrightURL;
-						domCopyright.innerText=data.copyrightString;
-						dom.style.cssText+="opacity:1;";
-					}
-					method=="get"?get(db):put(db);
+			getImageURL:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("homepage"),
+					data;
+				if(db.version<2){
+					db.close();
+					data=await sub.IDB.initApps("homepage");
+					console.log(data)
+				}else{
+					data=await sub.IDB.itemGet(db,"bingimg",0);
 				}
-				request.onupgradeneeded = function(e){
-					db=e.target.result;
-					var objectStore = db.createObjectStore("bingimg", { keyPath: "id" });
-					objectStore.transaction.oncomplete =function(event){
-						setData(db);
+				console.log(data)
+				if(data){
+					data={
+						id:0,
+						imageURL:data.base64,
+						copyrightString:data.copyrightString,
+						copyrightURL:data.copyrightURL
+					}
+					chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
+				}
+
+				try {
+					let response = await fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1");
+					let data=await response.text();
+						data=(new window.DOMParser()).parseFromString(data, "text/xml");
+					let _data={
+						id:0,
+						imageURL:"https://www.bing.com"+DOMPurify.sanitize(data.querySelector("images>image>url").textContent).toString(),
+						copyrightString:DOMPurify.sanitize(data.querySelector("images>image>copyright").textContent).toString(),
+						copyrightURL:DOMPurify.sanitize(data.querySelector("images>image>copyrightlink").textContent).toString()
 					};
-				};
-				request.onsuccess=function(e){
-					//console.log("onsuccess");
-					db=e.target.result;
-					setData(db)
+					if(localStorage.getItem("homepageURL")!=_data.imageURL){
+						chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:_data});
+						sub.apps.homepage.getImage(message,sender,sendResponse,_data);
+					}
+				} catch(e) {
+					console.log(e.toString());
 				}
 			},
-			getImageURL:function(message,sender,sendResponse){
-				sub.apps.homepage.DBAction("get",null,sender);
-				fetch("https://bing.com/HPImageArchive.aspx?idx=0&n=1")
-					.then(response => response.text())
-					.then(text => (new window.DOMParser()).parseFromString(text, "text/xml"))
-					.then(xmlData=>{
-						console.log(xmlData)
-						let data={
-							imageURL:"https://www.bing.com"+DOMPurify.sanitize(xmlData.querySelector("images>image>url").textContent).toString(),
-							copyrightString:DOMPurify.sanitize(xmlData.querySelector("images>image>copyright").textContent).toString(),
-							copyrightURL:DOMPurify.sanitize(xmlData.querySelector("images>image>copyrightlink").textContent).toString()
-						};
-						console.log(data)
+			getImage:async function(message,sender,sendResponse,data){
+				let response=await fetch(data.imageURL);
+					response=await response.blob();
+				let reader = new FileReader();
+				reader.readAsDataURL(response); 
+				reader.onloadend = function(){
+					data.base64=reader.result;
+					(async function(){
+						let db=await sub.IDB.DBGet("homepage");
+						await sub.IDB.itemModify(db,"bingimg",0,data);
 						if(localStorage.getItem("homepageURL")!=data.imageURL){
 							localStorage.setItem("homepageURL",data.imageURL);
-							chrome.tabs.sendMessage(sender.tab.id,{type:"imageURL",value:data});
-							sub.apps.homepage.getImage(message,sender,sendResponse,data);
-						}
-					})
-			},
-			getImage:function(message,sender,sendResponse,data){
-				fetch(data.imageURL)
-					.then(response=>response.blob())
-					.then(blob=>{
-						let reader = new FileReader();
-						reader.readAsDataURL(blob); 
-						reader.onloadend = function(){
-							console.log(reader.result)
-							data.base64=reader.result;
-							sub.apps.homepage.DBAction("put",data);
-						}
-					})
+						}						
+					})();
+				}
 			},
 			setListId:function(message,sender,sendResponse){
 				localStorage.setItem("homepageListId",message.value);
@@ -4362,6 +4528,167 @@ var sub={
 					_Pin=config.apps[message.app].n_pin;
 				sub.open(_URL,_Target,_Index,_Pin);
 			}
+		},
+		notepad:{
+			get:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("notepad"),
+					data;
+				if(db.version<2){
+					db.close();
+					data=await sub.IDB.initApps("notepad");
+				}else{
+					data=await sub.IDB.itemGet(db,"note",0);
+				}
+					console.log(data)
+				if(data){
+					console.log("get")
+					message.type="appsListener_get";
+					message.data=data;
+					chrome.tabs.sendMessage(sender.tab.id,message);	
+				}
+			},
+			set:async function(message,sender,sendResponse){
+				let db=await sub.IDB.DBGet("notepad");
+					db=await sub.IDB.itemModify(db,"note",message.value.data.id,message.value.data);
+			}
+		},
+		shorturl:{
+			getURL:async function(message,sender,sendResponse){
+				console.log(message);
+				try {
+					let response = await fetch(
+						(config.apps.shorturl.n_suyourls?"https://url.zimoapps.com/yourls-api.php":config.apps.shorturl.n_yourls+"/yourls-api.php")
+						+"?action=shorturl"
+						+"&format=json"
+						+"&keyword="+message.value.key
+						+"&url="+encodeURIComponent(sender.url)
+						+"&signature="+(config.apps.shorturl.n_suyourls?"ab279117c0":config.apps.shorturl.n_sign),
+						{
+							method:"POST"
+						});
+					let data=await response.json();
+					console.log(data);
+					chrome.tabs.sendMessage(sender.tab.id,{type:"url",app:"shorturl",value:data});
+				} catch(e) {
+					console.log(e.toString());
+					chrome.tabs.sendMessage(sender.tab.id,{type:"err",app:"shorturl",value:e.toString()});
+				}
+			}
+		}
+	},
+	IDB:{
+		initApps:function(appname){
+			return new Promise((resolve,reject)=>{
+				let db;
+				switch(appname){
+					case"homepage":
+						(async function(){
+							db=await sub.IDB.DBUpgrade(appname,2);
+							db=await sub.IDB.DBInit(db,"bingimg","id");
+							db=await sub.IDB.itemSet(db,"bingimg",{
+								id:0,
+								imageURL:"",
+								copyrightString:"",
+								copyrightURL:""
+							});
+							resolve(db);
+						})()
+						break;
+					case"notepad":
+						(async function(){
+							db=await sub.IDB.DBUpgrade(appname,2);
+							db=await sub.IDB.DBInit(db,"note","id");
+							db=await sub.IDB.itemSet(db,"note",{
+								id:0,
+								item:[
+									{
+										title:sub.getI18n("notepad_defalut_title"),
+										content:sub.getI18n("notepad_defalut_content")
+									}
+								]
+							});
+							resolve(db);
+						})()
+						break;
+				}				
+			})
+		},
+		itemDel:function(db,storeName,key){
+			return new Promise((resolve,reject)=>{
+				let request=db.transaction(storeName,"readwrite").objectStore(storeName).delete(key);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					resolve(e.target.result);
+				}
+			})
+		},
+		itemModify:function(db,storeName,key,newData){
+			return new Promise(async (resolve,reject)=>{
+				let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					if(e.target.result){
+						let _request=db.transaction(storeName,"readwrite").objectStore(storeName).put(newData);
+						_request.onerror=reject;
+						_request.onsuccess=function(e){
+							resolve(newData);
+						}
+					}else{
+						reject("err");
+					}
+				}
+			})
+		},
+		itemGet:function(db,storeName,key){
+			if(key==null){return;}
+			return new Promise((resolve,reject)=>{
+				let request=db.transaction(storeName,"readonly").objectStore(storeName).get(key);
+					request.onerror=reject;
+					request.onsuccess=function(e){
+						console.log(e.target);
+						resolve(e.target.result);
+					}
+			});
+		},
+		itemSet:function(db,storeName,data/*object,{xx:"xx",...}*/){
+			return new Promise((resolve,reject)=>{
+				let request=db.transaction(storeName,"readwrite").objectStore(storeName).add(data);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					console.log(e.target);
+					resolve(data);
+				}
+			})
+		},
+		DBInit:function(db,storeName/*string*/,keyPath/*string*//*,indexarray,[{xx:"xx"},...]*/){
+			return new Promise((resolve,reject)=>{
+				let store=db.createObjectStore(storeName,{keyPath:keyPath});
+				store.transaction.onerror=reject;
+				store.transaction.oncomplete=function(e){
+					resolve(e.target.db);
+				}
+			})
+		},
+		DBUpgrade:function(dbname,ver){
+			ver=ver||1;
+			return new Promise((resolve,reject)=>{
+				let request=window.indexedDB.open(dbname,ver);
+				request.onerror=reject;
+				request.onupgradeneeded=function(e){
+					resolve(e.target.result);
+				};
+			})
+		},
+		DBGet:function(dbname){
+			return new Promise((resolve,reject)=>{
+				const request=window.indexedDB.open(dbname);
+				request.onerror=reject;
+				request.onsuccess=function(e){
+					let db=e.target.result;
+					console.log(db.name);
+					resolve(db);
+				}
+			})
 		}
 	}
 }
@@ -4421,8 +4748,8 @@ else{
 				        iconUrl: "icon.png",
 				        items: [],
 				        buttons:[
-							{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.png"},
-							{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.png"}
+							{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.svg"},
+							{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.svg"}
 						]
 					}
 					var xhr = new XMLHttpRequest();

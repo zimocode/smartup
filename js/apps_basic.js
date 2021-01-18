@@ -24,7 +24,7 @@ sue.apps={
 		window.addEventListener("change",this.handleEvent,false);
 	},
 	initBox:function(boxInfo){
-		//{headTitle:"title",headCloseBtn:true,menu:[{src:"/image/options.png",title:"app_tip_opt"}],options:[{type:"select",label:"label",name:"name",value:["value1","value2"]},{type:"checkbox",label:"label",name:"name",checked:true}]}
+		//{headTitle:"title",headCloseBtn:true,menu:[{src:"/image/options.svg",title:"app_tip_opt"}],options:[{type:"select",label:"label",name:"name",value:["value1","value2"]},{type:"checkbox",label:"label",name:"name",checked:true}]}
 		let domBox,domHead,domMain,domMenu,domOptions;
 		domBox=sue.apps.domCreate("smartup",{setName:["className"],setValue:["su_apps"]},null,"z-index:"+(parseInt((new Date().getTime())/1000)),{setName:["appname"],setValue:[boxInfo.appName]});
 		//head
@@ -45,7 +45,7 @@ sue.apps={
 		if(boxInfo.menu){
 			domMenu=sue.apps.domCreate("div",{setName:["className"],setValue:["su_menu"]});
 			for(var i=0;i<boxInfo.menu.length;i++){
-				var _domMenuImg=sue.apps.domCreate("img",{setName:["className"],setValue:[boxInfo.menu[i].className]});
+				var _domMenuImg=sue.apps.domCreate("img",{setName:["className"],setValue:[boxInfo.menu[i].className]},null,null,boxInfo.menu[i].action?({setName:["action"],setValue:[boxInfo.menu[i].action]}):null);
 					_domMenuImg.src=chrome.runtime.getURL(boxInfo.menu[i].src);
 					_domMenuImg.title=sue.apps.i18n(boxInfo.menu[i].title);
 				var _domBr=sue.apps.domCreate("br");
@@ -109,6 +109,17 @@ sue.apps={
 					domOptions.appendChild(_label);
 					domOptions.appendChild(sue.apps.domCreate("br"));
 				}
+				if(boxInfo.options[i].type=="text"){
+					var _time=parseInt((new Date().getTime())/1000);
+					var _domText=sue.apps.domCreate("input");
+						_domText.name=boxInfo.options[i].name;
+						_domText.type="text";
+						_domText.id=boxInfo.options[i].name+"_"+_time;
+					var _label=sue.apps.domCreate("label",{setName:["className"],setValue:["options_labelname"]},null,null,null,sue.apps.i18n(boxInfo.options[i].name));
+					domOptions.appendChild(_label);
+					domOptions.appendChild(_domText);
+					domOptions.appendChild(sue.apps.domCreate("br"));
+				}
 			}
 			domBox.appendChild(domOptions);
 			//button box
@@ -138,6 +149,11 @@ sue.apps={
 				}
 				if(e.target.classList.contains("options_btn_save")){
 					sue.apps.saveConf(e);
+				}
+				if(e.target.classList.contains("su_head")||e.target.classList.contains("su_title")){
+					var mytime=new Date();
+						mytime=mytime.getTime();
+					sue.apps.getAPPboxEle(e).style.cssText+="z-index:"+parseInt((mytime)/1000);
 				}
 				break;
 			case"mousedown":
@@ -211,7 +227,11 @@ sue.apps={
 		for(var i=0;i<ranges.length;i++){
 			_config[ranges[i].name]=Number(ranges[i].value);
 		}
-		chrome.runtime.sendMessage({type:"apps_saveconf",apptype:_appname,config:_config},function(response){})
+		chrome.runtime.sendMessage({type:"apps_saveconf",apptype:_appname,config:_config},function(response){
+			console.log(response)
+			// response&&response.type?sue.apps.notification(e.target,response.value):null;
+			!response||!response.type||!config.general.settings.appnotif?null:sue.apps.notification(e.target,response.value);
+		})
 		sue.apps.showOpt(e);
 	},
 	getAPPboxEle:function(e){
@@ -305,7 +325,8 @@ sue.apps={
 			window.setTimeout(function(){domopt.style.cssText+="display:none;";},200)
 		}
 	},
-	initPos:function(dom){
+	initPos:function(e){
+		let dom=sue.apps.getAPPboxEle(e.target||e);
 		let _fn=function(){
 			dom.querySelector(".su_main").style.cssText+="max-height:"+(window.innerHeight-100)+"px;";
 			document.body.appendChild(dom);
@@ -338,5 +359,82 @@ sue.apps={
 		}
 		url=_flag?url:("http://"+url);
 		return url;
+	},
+	editBoxInit:function(e,opt){
+		let dom=sue.apps.getAPPboxEle(e)/*.querySelector(".su_apps")*/,
+			domBg=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editbg"]}),
+			domBox=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editbox"]});
+
+		if(opt){
+			for(var i in opt){
+				domBox.dataset[i]=opt[i];
+			}
+		}
+
+		let boxMain=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editboxmain"]});
+		domBox.appendChild(boxMain);
+
+		let boxBtn=sue.apps.domCreate("div",{setName:["className"],setValue:["su_editboxbtn"]}),
+			boxBtnClose=sue.apps.domCreate("button",{setName:["className"],setValue:["su_editbtncancel"]},null,null,null,sue.apps.i18n("btn_cancel")),
+			boxBtnSave=sue.apps.domCreate("button",{setName:["className"],setValue:["su_editbtnadd"]},null,null,null,sue.apps.i18n("btn_done"));
+		boxBtn.appendChild(boxBtnClose);
+		boxBtn.appendChild(boxBtnSave);
+		domBox.appendChild(boxBtn);
+
+		dom.appendChild(domBg);
+		dom.appendChild(domBox);
+		return boxMain;
+	},
+	editBoxClose:function(e){
+		let dom=sue.apps.getAPPboxEle(e);
+		let domEdit=dom.querySelector(".su_editbox"),
+			domBg=dom.querySelector(".su_editbg");
+		domEdit.remove();
+		domBg.remove();
+	},
+	notification:function(e,text,type,time){
+		text=text||sue.apps.i18n("msg_saved");
+		type=type||"success";
+		time=time||"2000";
+		let _dom=sue.apps.getAPPboxEle(e);
+		let _domNotif=sue.apps.domCreate("div",{setName:["className"],setValue:["su_notifi"]},null,null,null,text);
+		switch(type){
+			case"success":
+				_domNotif.style.cssText+="background-color:#259b24;";
+				break;
+			case"error":
+				_domNotif.style.cssText+="background-color:red;";
+				break;
+			case"warning":
+				_domNotif.style.cssText+="background-color:yellow;color:rgba(0,0,0,.8);";
+				break;
+		}
+		_dom.insertBefore(_domNotif,_dom.querySelector("div.su_head"));
+		let _domNotifWidth=window.getComputedStyle(_domNotif).width;
+			_domNotifWidth=_domNotifWidth.substr(0,_domNotifWidth.length-2);
+		let _domWidth=window.getComputedStyle(_dom).width;
+			_domWidth=_domWidth.substr(0,_domWidth.length-2);
+		_domNotif.style.cssText+="left:"+(_domWidth-_domNotifWidth)/2+"px;";
+
+		window.setTimeout(function(){
+			_domNotif.style.cssText+="transition:all .2s ease-in-out;top:-24px;opacity:.8;z-index:0";
+			window.setTimeout(function(){
+				_domNotif.style.cssText+="transition:all .5s ease-in-out;top:0px;opacity:0;z-index:-100";
+				window.setTimeout(function(){
+					_domNotif.remove();
+				},500)
+			},time)
+		},100);
+	},
+	showPanel:function(dom){
+		console.log(dom);
+		let _show=window.getComputedStyle(dom).opacity==0?true:false;
+		if(_show){
+			dom.style.cssText+="display:block;";
+			window.setTimeout(function(){dom.style.cssText+="opacity:0.96;z-index:10;";},10)
+		}else{
+			dom.style.cssText+="opacity:0;z-index:-1;";
+			window.setTimeout(function(){dom.style.cssText+="display:none;";},200)
+		}
 	}
 }

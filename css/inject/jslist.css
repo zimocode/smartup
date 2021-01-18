@@ -1,12 +1,12 @@
 smartup.su_apps#su_apps_jslist .su_jslist_box{
-	width: 480px;
+	/*width: 480px;*/
 	padding: 8px;
 }
 smartup.su_apps#su_apps_jslist ul{
 	/*padding: 10px;*/
 	text-align: center;
 }
-smartup.su_apps#su_apps_jslist li{
+smartup.su_apps#su_apps_jslist li>div{
 	border: 1px solid rgba(204, 204, 255, 0.6);
 	padding: 0 8px;
 	margin: 1px;
@@ -20,39 +20,88 @@ smartup.su_apps#su_apps_jslist li{
 	cursor: pointer;
 	transition:all .4s ease-in-out;
 	border-radius: 5px;
-	width: 238px;
-	height: 30px;
-	line-height: 30px;
+	width: 160px;
+	height: 32px;
+	line-height: 32px;
 	box-sizing: border-box;
 	display: inline-block;
 	text-align: center;
 }
-smartup.su_apps#su_apps_jslist li img{
-	width: 16px;
-	margin-right: 5px;
-}
-smartup.su_apps#su_apps_jslist li:hover{
+smartup.su_apps#su_apps_jslist li>div:hover{
 	box-shadow: 0px 1px 3px #ccc;
-	/*background: rgba(204, 204, 204, 0.2);*/
 	background: #d0d9ff;
-	/*width: 337px;*/
-	/*margin: 0 -5px;*/
-	/*height: 40px;*/
-	line-height: 30px;
+	line-height: 32px;
 	border-color: rgba(86,119,252,.5) !important;
 }
-smartup.su_apps#su_apps_jslist li:hover .su_tablist_button_liclose{
+smartup.su_apps#su_apps_jslist li>div:hover .su_tablist_button_liclose{
 	opacity: 1;
 	margin-top: -30px;
 }
-smartup.su_apps#su_apps_jslist li span{
-	display: inline-block;
-	width: 372px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+
+
+smartup.su_apps#su_apps_jslist .su_jslist_editmode{
+	background-color: red;
 }
-smartup.su_apps#su_apps_jslist li:hover .li_0{
-	transition:all .4s ease-out;
-	margin-left: -372px;
+smartup.su_apps#su_apps_jslist .su_jslist_ulenabled{
+	width: 487px;
+}
+smartup.su_apps#su_apps_jslist .su_jslist_ulenabled_before{
+	width: 496px;
+	float: left;
+	border: 1px solid #cccccc30;
+	border-radius: 2px;
+	padding: 4px;
+	margin-bottom: 8px;
+}
+smartup.su_apps#su_apps_jslist .su_jslist_ulenabled_before::before{
+	/*content: "enabled lists:";*/
+	content: "__MSG_jslist_listenabled__";
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+}
+smartup.su_apps#su_apps_jslist .su_jslist_ulenabled_before::after{
+	/*content: "enabled lists:";*/
+	content: "__MSG_jslist_desenabled__";
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 2px 0;
+	text-align: left;
+	color: #ccc;
+	font-size: 12px;
+}
+smartup.su_apps#su_apps_jslist .su_jslist_uldisabled{
+	width: 335px;
+	min-height: 160px;
+	border: 1px solid #cccccc30;
+	border-radius: 2px;
+	padding: 4px;
+	margin-left: 4px;
+	margin-bottom: 8px;
+	background-color: #cccccc52;
+}
+smartup.su_apps#su_apps_jslist .su_jslist_uldisabled::before{
+	content: "__MSG_jslist_listdisabled__";
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 2px;
+	/*background-color: #ccc;*/
+}
+smartup.su_apps#su_apps_jslist .su_jslist_uldisabled::after{
+	content: "__MSG_jslist_desdisabled__";
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 2px;
+	text-align: left;
+	color: #ccc;
+	font-size: 12px;
+	/*background-color: #ccc;*/
+}
+smartup.su_apps#su_apps_jslist .su_sortable_item>div{
+	border: 1px dashed #ccc;
+	background: #cccccc33;
 }

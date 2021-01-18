@@ -1545,7 +1545,7 @@
   "homepage_grouplist":{
     "message":"Sites group list"
   },
-  "homepage_editmode":{
+  "editmode":{
     "message":"Edit Mode"
   },
   "homepage_newgroup":{
@@ -1580,5 +1580,176 @@
   },
   "notif_title_conferr":{
     "message":"Settings save Failed!"
+  },
+  "tip_item":{
+    "message":"Click to edit, drag to sort."
+  },
+  "tip_del":{
+    "message":"Delete"
+  },
+  "appslist_listenabled":{
+    "message":"Enabled APPs"
+  },
+  "appslist_listdisabled":{
+    "message":"Disabled APPs"
+  },
+  "appslist_desenabled":{
+    "message":"Dragging to sort, Drag into 'Disabled Apps' to hidden."
+  },
+  "appslist_desdisabled":{
+    "message":"Dragging into 'Enabled Apps' to show."
+  },
+  "jslist_listenabled":{
+    "message":"Enabled Scripts"
+  },
+  "jslist_listdisabled":{
+    "message":"Disabled Scripts"
+  },
+  "jslist_desenabled":{
+    "message":"Dragging to sort, Drag into 'Disabled Scripts' to hidden."
+  },
+  "jslist_desdisabled":{
+    "message":"Dragging into 'Enabled Scripts' to show."
+  },
+  "extmgm_alwaysenable":{
+    "message":"Always Enable"
+  },
+  "extmgm_lastenable":{
+    "message":"Last Enabled"
+  },
+  "extmgm_allenable":{
+    "message":"Enable all Extensions"
+  },
+  "extmgm_alldisable":{
+    "message":"Disable all Extensions"
+  },
+  "extmgm_tipdisable":{
+    "message":"Disable in current group"
+  },
+  "extmgm_tipoption":{
+    "message":"Options Page"
+  },
+  "extmgm_tipuninstall":{
+    "message":"Uninstall"
+  },
+  "extmgm_tipenable":{
+    "message":"Enabled in current group"
+  },
+  "extmgm_grouplist":{
+    "message":"Extension Group List"
+  },
+  "extmgm_editmode":{
+    "message":"Edit Mode"
+  },
+  "n_uninstallconfirm":{
+    "message":"When uninstalling an extension, need to confirm"
+  },
+  "n_enableallconfirm":{
+    "message":"When enabling all extensions, need to confirm"
+  },
+  "n_disableallconfirm":{
+    "message":"When disabling all extensions, need to confirm"
+  },
+  "extmgm_confirmenableall":{
+    "message":"All extensions will be enabled, please confirm again."
+  },
+  "extmgm_confirmdisableall":{
+    "message":"All extensions will be disabled, please confirm again."
+  },
+  "extmgm_defaultgroup":{
+    "message":"Default Group"
+  },
+  "tip_more":{
+    "message":"More"
+  },
+  "tip_edit":{
+    "message":"Edit"
+  },
+  "extmgm_firstitem":{
+    "message":"Choose which group to enable"
+  },
+  "extmgm_groupenable":{
+    "message":"Enabled in the group"
+  },
+  "extmgm_groupdisable":{
+    "message":"Disable in the group"
+  },
+  "extmgm_newgroup":{
+    "message":"New Group"
+  },
+  "extmgm_groupname":{
+    "message":"Group name"
+  },
+  "tip_showlist":{
+    "message":"All actions"
+  },
+  "notepad":{
+    "message":"Notepad"
+  },
+  "des_notepad_bottom":{
+    "message":"All the notes are stored at locally without encrypted, and, will not be synced by browser."
+  },
+  "btn_new":{
+    "message":"NEW"
+  },
+  "tip_save":{
+    "message":"SAVE"
+  },
+  "tip_cancel":{
+    "message":"CANCEL"
+  },
+  "notepad_defalut_title":{
+    "message":"Default Title"
+  },
+  "notepad_defalut_content":{
+    "message":"Default Content"
+  },
+  "n_notepad_delconfirm":{
+    "message":"When deleting note, need to confirm."
+  },
+  "n_notepad_switchsave":{
+    "message":"Automatically save when switching notes."
+  },
+  "n_notepad_last":{
+    "message":"Set last edited note as the default one."
+  },
+  "notepad_delconfirm":{
+    "message":"confirm to delete this notes?"
+  },
+  "shorturl":{
+    "message":"Short URL"
+  },
+  "app_shorturl_btn":{
+    "message":"Get Short URL"
+  },
+  "app_shorturl_key":{
+    "message":"Key word:"
+  },
+  "app_shorturl_source":{
+    "message":"Source URL:"
+  },
+  "app_shorturl_short":{
+    "message":"Short URL:"
+  },
+  "app_shorturl_wait":{
+    "message":"Waiting for operation ..."
+  },
+  "app_shorturl_waitserver":{
+    "message":"Waiting for server response ..."
+  },
+  "app_shorturl_success":{
+    "message":"Get short URL successfully !"
+  },
+  "app_shorturl_err":{
+    "message":"Error : "
+  },
+  "n_qr":{
+    "message":"Show QR code"
+  },
+  "n_suyourls":{
+    "message":"Use smartUp short URL service"
+  },
+  "app_shorturl_keyholder":{
+    "message":"Input keyword, or leave blank to generate automatically."
   }
 }

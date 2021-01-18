@@ -14,8 +14,8 @@ var config,
 //check browser
 if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
 	browserType="fx";
-}else if(navigator.userAgent.toLowerCase().indexOf("edge")!=-1){
-	browserType="msg";
+}else if(navigator.userAgent.toLowerCase().indexOf("edg")!=-1){
+	browserType="edg";
 }else{
 	browserType="cr";
 }
@@ -30,7 +30,8 @@ var suo={
 		os:"win",
 		sizePos:{},
 		menuPin:true,
-		boxmove:{}
+		boxmove:{},
+		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2]]
 	},
 	boxShowFrom:null,
 	selects:["xx"],
@@ -71,19 +72,6 @@ var suo={
 		window.addEventListener("mouseleave",this.handleEvent,false);
 		window.addEventListener("resize",this.handleEvent,false);
 		window.addEventListener("mousedown",this.handleEvent,false);
-	},
-	initDrag:function(){
-		return;
-		let dragEles=document.querySelectorAll("li.item[draggable=true]");
-		for(let i=0;i<dragEles.length;i++){
-			break;
-			dragEles[i].addEventListener("dragstart",this.handleEvent,false);
-			dragEles[i].addEventListener("dragenter",this.handleEvent,false);
-			dragEles[i].addEventListener("dragover",this.handleEvent,false);
-			dragEles[i].addEventListener("dragleave",this.handleEvent,false);
-			dragEles[i].addEventListener("dragend",this.handleEvent,false);
-			dragEles[i].addEventListener("drop",this.handleEvent,false);			
-		}
 	},
 	handleEvent:function(e){
 		let getDragEle=function(ele){
@@ -269,6 +257,9 @@ var suo={
 				}
 				if(ele.classList.contains("item_del")){
 					suo.itemDel(e);
+				}
+				if(ele.classList.contains("btn_list")){
+					suo.showList(e);
 				}
 				break;
 			case"mouseup":
@@ -509,6 +500,34 @@ var suo={
 				break;
 		}
 	},
+	showList:function(e){
+		var btnArray=[];
+		var _dom=suo.initAPPbox(btnArray,[400,230],suo.getI18n("tip_showlist"),"bg","showlist");
+
+		var confArray=e.target.dataset.confobj.split("|");
+		var confOBJ=config;
+		for(var i=0;i<confArray.length;i++){
+			confOBJ=confOBJ[confArray[i]];
+		}
+		console.log(confOBJ);
+		var _ul=suo.domCreate2("ul",null,null,"height:"+(window.innerHeight-150)+"px;list-style:none;padding:0;margin:0;min-width:300px;");
+		for(var i=0;i<confOBJ.length;i++){
+			var _li=suo.domCreate2("li",null,null,"padding:2px 0;");
+			var _title=suo.domCreate2("span",null,null,"padding-right:20px;min-width:120px;display:inline-block;",null,(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name)));
+			console.log(_title);
+			_li.appendChild(_title);
+			var _direct=suo.domCreate2("span",null,null,"background-color:#d0d9ff; display:inline-block; border-radius:20px;padding:4px 8px 2px 8px;");
+			for(var j=0;j<confOBJ[i].direct.length;j++){
+				var _img=suo.domCreate2("img",{setName:["className","src"],setValue:["item_edit",chrome.extension.getURL("")+"image/"+"direct.png"]},null,"height:24px;"+suo.directimg(confOBJ[i].direct[j]));
+				_direct.appendChild(_img);
+			}
+			_li.appendChild(_direct);
+			_ul.appendChild(_li);
+		}
+		_dom.querySelector(".box_content").style.cssText+="overflow:auto;margin-bottom:8px;";
+		_dom.querySelector(".box_content").appendChild(_ul);
+		suo.initPos(_dom);
+	},
 	initPop:function(){
 		if(config.general.fnswitch.fnicon){
 			chrome.browserAction.setPopup({popup:""});
@@ -589,8 +608,7 @@ var suo={
 	itemDel:function(e){
 		var ele=e.target;
 		var confArray=suo.getDataset(ele,"confobj","value").split("|");
-		//return
-		//permissions del
+		// del permissions 
 		var removePer=function(removed){
 			if (removed) {
 			  	suo.initPer();
@@ -619,14 +637,6 @@ var suo={
 		for(var i=0;i<(confArray.length>=3?confArray.length:confArray.length);i++){
 			confOBJ=confOBJ[confArray[i]];
 		}
-		// var getid=function(ele){
-		// 	if(ele.dataset.confid){
-		// 		return ele.dataset.confid;
-		// 	}else{
-		// 		return getid(ele.parentNode);
-		// 	}
-		// }
-		//console.log(confOBJ)
 		if(confOBJ.length<=1){suo.showMsgBox(suo.getI18n("msg_dellast"),"warning");return;}
 
 		var delId=suo.getDataset(ele,"confid","value");
@@ -668,9 +678,12 @@ var suo={
 				}
 			}
 		}
+		//reset jslist's enabled array.
+		if(confArray[1]=="script"){
+			delete config.apps.jslist.enabled;
+		}
 		suo.saveConf();
 		suo.initListItem(actionType);
-		//confArray.length>=3?suo.initListItem(confArray[confArray.length-1]):suo.initListItem(confArray[confArray.length-1])
 	},
 	showMsgBox:function(str,type,mytime,index){
 		console.log("msgbox")
@@ -871,10 +884,10 @@ var suo={
 			||(ele.dataset.id0=="9"&&ele.dataset.id1=="1")
 			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")){
 				if(ele.dataset.id0=="1"&&ele.dataset.id1=="2"){
-					suo.showBtnAdd(true,setDom.dataset.confobj+"|script");
+					suo.showBtnAdd(true,setDom.dataset.confobj+"|script",setDom);
 					return;
 				}
-				suo.showBtnAdd(true,setDom.dataset.confobj);
+				suo.showBtnAdd(true,setDom.dataset.confobj,setDom);
 				//document.querySelector("#btn_add").style.cssText+="display:block;"
 		}else{
 			suo.showBtnAdd(false);
@@ -882,6 +895,32 @@ var suo={
 		}
 		if((ele.dataset.id0=="1"&&ele.dataset.id1=="5")){
 			suo.confExport();
+		}
+		//set sort
+		let id0=ele.dataset.id0,
+			id1=ele.dataset.id1;
+		for(var i=0;i<suo.cons.sort.length;i++){
+			if(suo.cons.sort[i][0]==id0&&suo.cons.sort[i][1]==id1){
+				suo.cons.sortDom=Sortable.create(document.querySelector(".set-"+id0+id1+" ul.con-item"),{
+					animation:200,
+					easing:"ease-in-out",
+					ghostClass:"su_sortable_ghost",
+					chosenClass:"su_sortable_chosen",
+					onEnd:function(e){
+						let arr=suo.getConfOBJ(e);
+						for(var ii in arr){
+							if(ii==e.oldIndex){
+								arr.splice(e.newIndex,0,arr.splice(e.oldIndex,1)[0]);
+								break;
+							}
+						}
+						console.log(arr);
+						suo.initListItem(e.item.dataset.actiontype);
+						suo.saveConf();
+					}
+				});
+				break;
+			}
 		}
 	},
 	clickMenuDiv:function(e){
@@ -1271,7 +1310,7 @@ var suo={
 		}
 	},
 	initListItem:function(type){
-		//console.log(type)
+		console.log(type)
 		domOBJ=document.querySelector(".ul_"+type);
 		domOBJ.textContent="";
 		var confOBJ,eleOBJ,actionType;
@@ -1279,14 +1318,14 @@ var suo={
 			case"mges":
 			case"touch":
 				confOBJ=config[type].actions;
-				eleOBJ={setName:["className"],setValue:["item item_edit item_more item_"+type]};
+				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item_"+type,suo.getI18n("tip_item")]};
 				actionType=type//+"actions";
 				break;
 			case"idrg":
 			case"tdrg":
 			case"ldrg":
 				confOBJ=config["drg"][type];
-				eleOBJ={setName:["className"],setValue:["item item_edit item_more item-"+type]};
+				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item-"+type,suo.getI18n("tip_item")]};
 				actionType=type;
 				break;
 			case"txtengine":
@@ -1369,10 +1408,10 @@ var suo={
 		}
 		//console.log(confOBJ)
 		for(var i=0;i<confOBJ.length;i++){
-			var liOBJ=suo.domCreate2("li",eleOBJ,"","",{setName:["confid","actiontype"],setValue:[i,actionType?actionType:type]});
-				liOBJ.draggable=true;
+			var liOBJ=suo.domCreate2("li",eleOBJ,"","",{setName:["confid","actiontype",],setValue:[i,actionType?actionType:type]});
+				// liOBJ.draggable=true;
 			var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"",{setName:["confid","actiontype"],setValue:[i,actionType?actionType:type]},("txtengine imgengine script".indexOf(type)!=-1)?confOBJ[i].name:((confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name)));
-			var liDel=suo.domCreate2("span",{setName:["className"],setValue:["item_del"]},null,null,null,"x");
+			var liDel=suo.domCreate2("span",{setName:["className","title"],setValue:["item_del",suo.getI18n("tip_del")]},null,null,null,"x");
 			liOBJ.appendChild(liName);
 			liOBJ.appendChild(liDel);
 			if("txtengine imgengine script pop ctm".indexOf(type)!=-1){
@@ -1381,18 +1420,20 @@ var suo={
 				var dirOBJ="";
 				var myDeg={L:"0deg",U:"90deg",R:"180deg",D:"270deg"};
 				//confOBJ[i].direct="undefined"
-				var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]});
+				var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null));
 				for(var k=0;k<confOBJ[i].direct.length;k++){
-					//dirOBJ+="<img class='item_edit' src='../image/direct.png' style='-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");'"+" draggable='false'"+"/>"
-					var _domImg=suo.domCreate2("img",{setName:["className"],setValue:["item_edit"]},null,"-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");");
+					var _domImg=suo.domCreate2("img",{setName:["className"],setValue:["item_edit"]},null,"-webkit-transform:rotate("+myDeg[confOBJ[i].direct[k]]+");"+(confOBJ[i].note&&confOBJ[i].note.value?"height:16px;":""));
 					_domImg.src="../image/direct.png";
-					_domImg.draggable="false";
+					// _domImg.draggable="false";
 					lidir.appendChild(_domImg);
 				}
-				//var lidir=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},dirOBJ);
 
-				lidir.draggable=false;
-				liOBJ.appendChild(lidir);				
+				// lidir.draggable=false;
+				liOBJ.appendChild(lidir);
+			}
+			if(confOBJ[i].note&&confOBJ[i].note.value){
+				var _note=suo.domCreate2("span",{setName:["className"],setValue:["item_note item_edit"]},null,null,null,confOBJ[i].note.value);
+				liOBJ.appendChild(_note);
 			}
 			domOBJ.appendChild(liOBJ);
 		}
@@ -1555,7 +1596,7 @@ var suo={
 		//edit icon
 		var actionArray=["mgesactions","tdrgactions","ldrgactions","idrgactions","mges","touch","tdrg","idrg","ldrg"]
 		if(actionArray.contains(actiontype)){
-			var editOBJ=suo.domCreate2("img",{setName:["className","title","src"],setValue:["box_diredit",suo.getI18n("tip_editdir"),"../image/edit.png"]});
+			var editOBJ=suo.domCreate2("img",{setName:["className","title","src"],setValue:["box_diredit",suo.getI18n("tip_editdir"),"../image/edit.svg"]});
 			OBJ.appendChild(editOBJ);			
 		}
 		//direct icon
@@ -1713,6 +1754,10 @@ var suo={
 			var _content=dom.querySelector(".box_content textarea").value;
 			confOBJ.name=_name;
 			confOBJ.content=_content;
+			//if new script , add to jslist's enabled array.
+			if(config.apps.jslist.enabled&&!config.apps.jslist.enabled.contains(confid.toString())){
+				config.apps.jslist.enabled.push(confid.toString());
+			}
 		}else{
 			var theAction=dom.querySelector(".box_content .actionselect").value;
 
@@ -1821,6 +1866,7 @@ var suo={
 		console.log(confArray);
 		var actionType=suo.getDataset(e,"actiontype","value");
 		if(actionType){
+			console.log(actionType)
 			suo.initListItem(actionType);
 			suo.boxClose2(e);
 			return
@@ -2130,9 +2176,15 @@ var suo={
 		}
 		//init webstore url
 		if(browserType=="cr"){
-			suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/"+chrome.runtime.id+"?hl="+navigator.language;
+			if(devMode){
+				suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/jbfidehpoofganklkddfkcjeeaabimmb";
+			}else{
+				suo.cons.webstoreURL="https://chrome.google.com/webstore/detail/bgjfekefhjemchdeigphccilhncnjldn";
+			}
 		}else if(browserType=="fx"){
 			suo.cons.webstoreURL="https://addons.mozilla.org/firefox/addon/smartup";
+		}else if(browserType=="edg"){
+			suo.cons.webstoreURL="https://microsoftedge.microsoft.com/addons/detail/elponhbfjjjihgeijofonnflefhcbckp";
 		}
 		//disable option auto sync
 		if(!chrome.storage.sync){
@@ -2176,22 +2228,41 @@ var suo={
 				var xhrLog=JSON.parse(xhr.response);
 				var domlog=document.querySelector(".set.set-115.confobj>.setcontent");
 					domlog.textContent=""
+
+				var _detailsMore=suo.domCreate2("details");
+				var _summaryMore=suo.domCreate2("summary",null,null,null,null,"more...");
+				_detailsMore.appendChild(_summaryMore);
+
 				for(var i=0;i<xhrLog.log.length;i++){
-					var dom=suo.domCreate2("details");
-						dom.open="open";
-					var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
-					var _ul=suo.domCreate2("ul");
-					for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
-						var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
-						_ul.appendChild(_li);
+					if(i>8){
+						var dom=suo.domCreate2("details");
+						var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
+						var _ul=suo.domCreate2("ul");
+						for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
+							var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
+							_ul.appendChild(_li);
+						}
+						dom.appendChild(_summary);
+						dom.appendChild(_ul);
+						_detailsMore.appendChild(dom);
+						domlog.appendChild(_detailsMore);
+					}else{
+						var dom=suo.domCreate2("details");
+							dom.open="open";
+						var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.log[i].ver+" - "+xhrLog.log[i].date);
+						var _ul=suo.domCreate2("ul");
+						for(var ii=0;ii<xhrLog.log[i].content.length;ii++){
+							var _li=suo.domCreate2("li",null,null,null,null,xhrLog.log[i].content[ii]);
+							_ul.appendChild(_li);
+						}
+						dom.appendChild(_summary);
+						dom.appendChild(_ul);
+						domlog.appendChild(dom);						
 					}
-					dom.appendChild(_summary);
-					dom.appendChild(_ul);
-					domlog.appendChild(dom);
 				}
-				var _details=suo.domCreate2("details");
-				var _summary=suo.domCreate2("summary",null,null,null,null,"more...");
-				_details.appendChild(_summary);
+				// var _details=suo.domCreate2("details");
+				// var _summary=suo.domCreate2("summary",null,null,null,null,"more...");
+				// _details.appendChild(_summary);
 				for(var i=0;i<xhrLog.oldlog.length;i++){
 					var dom=suo.domCreate2("details");
 					var _summary=suo.domCreate2("summary",null,null,null,null,xhrLog.oldlog[i].ver+" - "+xhrLog.oldlog[i].date);
@@ -2202,9 +2273,9 @@ var suo={
 					}
 					dom.appendChild(_summary);
 					dom.appendChild(_ul);
-					_details.appendChild(dom);
+					_detailsMore.appendChild(dom);
 				}
-				domlog.appendChild(_details);
+				// domlog.appendChild(_details);
 			}
 		}
 		xhr.open('GET',"../change.log", true);
@@ -2322,11 +2393,19 @@ var suo={
 		}
 		return "#"+colorStr;
 	},
-	showBtnAdd:function(type,confobj){
+	showBtnAdd:function(type,confobj,dom){
+		console.log(confobj)
 		var btnOBJ=document.querySelector("#btn_add");
 		if(!type){btnOBJ.style.cssText+="display:none;";return;}
 		confobj?btnOBJ.setAttribute("data-confobj",confobj):null;
-		btnOBJ.style.cssText+="display:block;";
+		// btnOBJ.style.cssText+="display:block;";
+
+		if(!dom.querySelector("#btn_add")){
+			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj"],setValue:[confobj]}));
+		};
+		if(!dom.querySelector(".btn_list")&&(confobj&&(confobj.indexOf("script")==-1&&confobj.indexOf("ctm")==-1&&confobj.indexOf("pop")==-1))){
+			dom.appendChild(suo.domCreate2("img",{setName:["className","src","title"],setValue:["btn_list","../image/list.svg",suo.getI18n("tip_showlist")]},null,null,{setName:["confobj"],setValue:[confobj]}));
+		}
 	},
 	itemAddBefore:function(e){
 		let ele=e.target||e;
@@ -2391,7 +2470,17 @@ var suo={
 			addOBJ.dataset.confid=confid;
 			addOBJ.dataset.close=dataclose+"resetdirect";
 			addOBJ.querySelectorAll("input[type=button]")[1].className="box_btn box_btn_diredit";
-			addOBJ.querySelector(".box_content").appendChild(suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes));
+			// addOBJ.querySelector(".box_content").appendChild(suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes));
+
+		let testDom=suo.domCreate2("div",{setName:["className"],setValue:["testbox"]},null,null,null,testdes);
+		if(confArray[1]=="ldrg"){
+			testDom.textContent="";
+			testDom.appendChild(suo.domCreate2("a",{setName:["href"],setValue:["###"]},null,null,null,suo.getI18n("test_ldrg")));
+		}else if(confArray[1]=="idrg"){
+			testDom.appendChild(suo.domCreate2("img",{setName:["src"],setValue:["../icon.png"]}));
+		}
+		addOBJ.querySelector(".box_content").appendChild(testDom);
+
 		suo.initPos(addOBJ);
 	},
 	initAPPbox:function(btn,size,title,bg,actiontype){

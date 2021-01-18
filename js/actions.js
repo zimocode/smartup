@@ -100,8 +100,10 @@ let actions={
 			{name:"homepage"},
 			{name:"tbkjx"},
 			{name:"appslist"},
-			{name:"magnet"}
-			/*{name:"gmail"},
+			{name:"magnet"}/*,
+			{name:"notepad"},
+			{name:"shorturl"}
+			{name:"gmail"},
 			{name:"ary"},
 			{name:"color"},
 			{name:"autoreload"},

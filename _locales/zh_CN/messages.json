@@ -1520,7 +1520,7 @@
   "homepage_grouplist":{
     "message":"网站分组列表"
   },
-  "homepage_editmode":{
+  "editmode":{
     "message":"编辑模式"
   },
   "homepage_newgroup":{
@@ -1555,5 +1555,176 @@
   },
   "notif_title_conferr":{
     "message":"设置保存失败！"
+  },
+  "tip_item":{
+    "message":"点击编辑，拖动排序。"
+  },
+  "tip_del":{
+    "message":"删除"
+  },
+  "appslist_listenabled":{
+    "message":"显示的迷你应用"
+  },
+  "appslist_listdisabled":{
+    "message":"隐藏的迷你应用"
+  },
+  "appslist_desenabled":{
+    "message":"拖动排序，拖动到‘隐藏的迷你应用’实现隐藏。"
+  },
+  "appslist_desdisabled":{
+    "message":"拖动到‘显示的迷你应用’实现显示。"
+  },
+  "jslist_listenabled":{
+    "message":"启用的脚本"
+  },
+  "jslist_listdisabled":{
+    "message":"禁用的脚本"
+  },
+  "jslist_desenabled":{
+    "message":"拖动排序, 拖动到‘禁用的脚本’实现隐藏。"
+  },
+  "jslist_desdisabled":{
+    "message":"拖动到‘启用的脚本’实现显示。"
+  },
+  "extmgm_alwaysenable":{
+    "message":"始终启用"
+  },
+  "extmgm_lastenable":{
+    "message":"最后启用"
+  },
+  "extmgm_allenable":{
+    "message":"启用所有扩展"
+  },
+  "extmgm_alldisable":{
+    "message":"禁用所有扩展"
+  },
+  "extmgm_tipdisable":{
+    "message":"在当前组中禁用"
+  },
+  "extmgm_tipoption":{
+    "message":"设置"
+  },
+  "extmgm_tipuninstall":{
+    "message":"卸载"
+  },
+  "extmgm_tipenable":{
+    "message":"在当前组中启用"
+  },
+  "extmgm_grouplist":{
+    "message":"扩展分组列表"
+  },
+  "n_uninstallconfirm":{
+    "message":"卸载扩展程序时，需要确认"
+  },
+  "n_enableallconfirm":{
+    "message":"启用所有扩展时，需要确认"
+  },
+  "n_disableallconfirm":{
+    "message":"禁用所有扩展名时，需要确认"
+  },
+  "extmgm_confirmenableall":{
+    "message":"所有扩展将被启用，请再次确认。"
+  },
+  "extmgm_confirmdisableall":{
+    "message":"所有扩展将被禁用，请再次确认。"
+  },
+  "extmgm_defaultgroup":{
+    "message":"默认组"
+  },
+  "tip_more":{
+    "message":"更多"
+  },
+  "tip_editmode":{
+    "message":"编辑模式"
+  },
+  "tip_edit":{
+    "message":"编辑"
+  },
+  "extmgm_firstitem":{
+    "message":"选择要启用的组"
+  },
+  "extmgm_groupenable":{
+    "message":"在当前组中启用"
+  },
+  "extmgm_groupdisable":{
+    "message":"在当前组中禁用"
+  },
+  "extmgm_newgroup":{
+    "message":"新建分组"
+  },
+  "extmgm_groupname":{
+    "message":"分组名称"
+  },
+  "tip_showlist":{
+    "message":"所有操作"
+  },
+  "notepad":{
+    "message":"记事本"
+  },
+  "des_notepad_bottom":{
+    "message":"所有记事未经加密直接保存于本地，且不会被浏览器同步。"
+  },
+  "btn_new":{
+    "message":"新建"
+  },
+  "tip_save":{
+    "message":"保存"
+  },
+  "tip_cancel":{
+    "message":"取消"
+  },
+  "su_notepad_defalut_title":{
+    "message":"默认标题"
+  },
+  "su_notepad_defalut_content":{
+    "message":"空白内容"
+  },
+  "n_notepad_delconfirm":{
+    "message":"当删除某个记事时，需要再次确认。"
+  },
+  "n_notepad_switchsave":{
+    "message":"在不同记事间切换时，自动保存。"
+  },
+  "n_notepad_last":{
+    "message":"设置上一次编辑的记事为默认项。"
+  },
+  "notepad_delconfirm":{
+    "message":"请再次确认是否删除？"
+  },
+  "shorturl":{
+    "message":"短网址"
+  },
+  "app_shorturl_btn":{
+    "message":"获取短网址"
+  },
+  "app_shorturl_key":{
+    "message":"关键字："
+  },
+  "app_shorturl_source":{
+    "message":"原网址："
+  },
+  "app_shorturl_short":{
+    "message":"短网址："
+  },
+  "app_shorturl_wait":{
+    "message":"等待操作 ..."
+  },
+  "app_shorturl_waitserver":{
+    "message":"等待服务器响应 ..."
+  },
+  "app_shorturl_success":{
+    "message":"获取短网址成功 !"
+  },
+  "app_shorturl_err":{
+    "message":"错误 : "
+  },
+  "n_qr":{
+    "message":"显示二维码"
+  },
+  "n_suyourls":{
+    "message":"使用smartUp手势提供的短网址服务"
+  },
+  "app_shorturl_keyholder":{
+    "message":"输入关键词，留空则自动生成"
   }
 }

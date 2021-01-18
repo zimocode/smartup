@@ -9,7 +9,7 @@ sue.apps.recentclosed={
 			headTitle:"recentclosed",
 			headCloseBtn:true,
 			menu:[
-				{src:"/image/options.png",title:"app_tip_opt",className:"menu_item menu_item_opt"}
+				{src:"/image/options.svg",title:"app_tip_opt",className:"menu_item menu_item_opt"}
 			],
 			options:[
 				{type:"range",label:"app_recentbk_recentlength",name:"n_num",min:5,max:25},

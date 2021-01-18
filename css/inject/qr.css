@@ -1,7 +1,8 @@
 smartup.su_apps#su_apps_qr .su_qrbox{
-	/*width: 480px;*/
+	width: 510px;
 	/*height: 370px;*/
 	padding: 8px;
+	height: 264px;
 }
 smartup.su_apps#su_apps_qr input[type=radio]{
 	margin: 5px;
@@ -9,27 +10,28 @@ smartup.su_apps#su_apps_qr input[type=radio]{
 smartup.su_apps#su_apps_qr button{
 	margin: 5px 10px;
 }
-smartup.su_apps#su_apps_qr .qr_outputbox,
 smartup.su_apps#su_apps_qr .qr_inputbox{
 	text-align: center;
-	width: 410px;
+	width: 240px;
+	float: left;
 }
 smartup.su_apps#su_apps_qr .qr_typelist{
 	text-align: left;
 }
 smartup.su_apps#su_apps_qr .qr_inputarea{
-	width: 360px;
-	height: 150px;
+	width: 220px;
+	height: 100px;
 }
 smartup.su_apps#su_apps_qr .qr_outputbox{
+	float: right;
+	margin-left: 248px;
+	/*width: 240px;*/
 	position: absolute;
-	left: -500px;
 	background-color: #fff;
 	transition:all .4s ease-in-out;
-	height: 320px;
-	top: 8px;
-	padding: 0;
-	padding-top: 24px;
+	padding: 4px;
+    border: 1px solid #ccc5;
+    border-radius: 2px;
 }
 smartup.su_apps#su_apps_qr .su_copyright{
 	font-size: 12px;

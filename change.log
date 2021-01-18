@@ -1,6 +1,18 @@
 {
 	"log": [
 		{
+			"ver":"6.7.141.1102",
+			"date":"2021.01.18",
+			"content":[
+				"sort support",
+				"new mini-apps: notepad, short url",
+				"upgrade mini-apps",
+				"submit to microsoft edge #90",
+				"upgrade purify.js",
+				"fix bugs: issues@github: #97, #87, #63"
+			]	
+		},
+		{
 			"ver":"6.6.262.1048",
 			"date":"2020.02.18",
 			"content":[

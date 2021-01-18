@@ -1,9 +1,9 @@
+smartup.su_apps *{
+	box-sizing: border-box;
+}
 smartup.su_apps,
-/*smartup.su_apps div,*/
 smartup.su_apps img,
-smartup.su_apps a,
-smartup.su_apps ul,
-smartup.su_apps li{
+smartup.su_apps a{
 	all: initial;
 	font-family: inherit;
 	font-family: arial,sans-serif;
@@ -292,4 +292,52 @@ smartup .su_options .options_btnbox{
 }
 smartup .su_options .options_btnbox input[type=button]{
 	margin: 0 10px;
+}
+smartup.su_apps .su_editbg{
+
+}
+smartup.su_apps .su_editbg{
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 101;
+}
+smartup.su_apps .su_editbox{
+	margin: 0 auto;
+	width: auto;
+	height: auto;
+	top: 48px;
+	left: 120px;
+	padding: 4px;
+	background: #cef;
+	margin: 0 auto;
+	position: absolute;
+	border-radius: 2px;
+	z-index: 102;
+}
+smartup.su_apps .su_editboxbtn{
+	text-align: center;
+}
+smartup.su_apps .su_notifi{
+	padding: 0px 30px 70px 30px;
+	padding: 1px 24px;
+	box-sizing: border-box;
+	height: 24px;
+	width: auto;
+	min-width: 160px;
+	line-height: 24px;
+	background-color: #ccf;
+	position: absolute;
+	top: 0px;
+	border-radius: 24px 24px 0 0;
+	opacity: 0;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+	/*margin-left: 40px;*/
+	z-index: -100;
+	text-align: center;
 }
