@@ -1,14 +1,14 @@
 {
 	"log": [
 		{
-			"ver":"6.7.125.1074",
-			"date":"2021.01.04",
+			"ver":"6.7.141.1102",
+			"date":"2021.01.18",
 			"content":[
 				"sort support",
-				"new mini-apps: notepad, short url"
+				"new mini-apps: notepad, short url",
 				"upgrade mini-apps",
 				"submit to microsoft edge #90",
-				"upgrade purify.js"
+				"upgrade purify.js",
 				"fix bugs: issues@github: #97, #87, #63"
 			]	
 		},

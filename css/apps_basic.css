@@ -323,15 +323,16 @@ smartup.su_apps .su_editboxbtn{
 }
 smartup.su_apps .su_notifi{
 	padding: 0px 30px 70px 30px;
+	padding: 1px 24px;
 	box-sizing: border-box;
-	height: 48px;
+	height: 24px;
 	width: auto;
 	min-width: 160px;
 	line-height: 24px;
 	background-color: #ccf;
 	position: absolute;
 	top: 0px;
-	border-radius: 24px;
+	border-radius: 24px 24px 0 0;
 	opacity: 0;
 	color: #fff;
 	font-weight: bold;

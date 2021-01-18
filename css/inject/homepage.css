@@ -269,7 +269,7 @@ smartup.su_apps#su_apps_homepage .su_homepage_editbox{
 	z-index: 102;
 }
 smartup.su_apps#su_apps_homepage .su_homepage_editmode{
-	background-color: red;
+	background-color: #8856fc;
 }
 smartup.su_apps#su_apps_homepage .su_homepage_listitembox{
 	margin: 16px -8px;
