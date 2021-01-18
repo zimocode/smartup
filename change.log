@@ -1,8 +1,8 @@
 {
 	"log": [
 		{
-			"ver":"6.7.132.1088",
-			"date":"2021.01.09",
+			"ver":"6.7.141.1102",
+			"date":"2021.01.18",
 			"content":[
 				"sort support",
 				"new mini-apps: notepad, short url",
