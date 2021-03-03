@@ -1755,7 +1755,7 @@ var suo={
 			confOBJ.name=_name;
 			confOBJ.content=_content;
 			//if new script , add to jslist's enabled array.
-			if(config.apps.jslist.enabled&&!config.apps.jslist.enabled.contains(confid.toString())){
+			if(config.apps&&config.apps.jslist&&config.apps.jslist.enabled&&!config.apps.jslist.enabled.contains(confid.toString())){
 				config.apps.jslist.enabled.push(confid.toString());
 			}
 		}else{
