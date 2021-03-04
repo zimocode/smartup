@@ -22,7 +22,7 @@ Array.prototype.containsAll=function(ele){
 }
 
 
-var devMode=false;
+var devMode=true;
 var	config,
 	defaultConf,
 	_SYNC,
