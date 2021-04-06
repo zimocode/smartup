@@ -1802,7 +1802,7 @@ summary:hover{
 }
 #donate_box .donate_listli{
 	cursor: pointer;
-	max-width: 64px;
+	max-width: 128px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -1821,8 +1821,10 @@ summary:hover{
 	display: none;
 }
 #donate_box #donate_content{
-	padding: 8px;
+	/*padding-top: 1px;*/
+	border-top: 1px solid #999;
 	background-color: #fff;
+	width: 360px;
 }
 #donate_box .donate_contentlist{
 	display: none;
@@ -1833,7 +1835,8 @@ summary:hover{
 }
 #donate_box .donate_contentlist img{
 	display: block;
-	width: 192px;
+	/*width: 192px;*/
+	width: 100%;
 	margin: 0 auto;
 }
 #donate_box .donate_contentlist span{

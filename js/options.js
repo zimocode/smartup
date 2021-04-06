@@ -183,7 +183,7 @@ var suo={
 						break;
 				}
 				if(ele.classList.contains("donate_listli")){
-					suo.donateBox.switchDonate(ele);
+					suo.donateBox.switch(ele);
 				}
 				if(ele.classList.contains("menuplus_save")){
 					suo.saveConf2();
@@ -2600,139 +2600,120 @@ var suo={
 	donateBox:{
 		init:function(){
 			chrome.runtime.sendMessage({type:"getDonateData"},function(response){
-				console.log(response)
-				if(response.value){
-					suo.cons.xhrDonate=response.value;
+				let localType=navigator.language,
+					_url="https://apis.zimoapps.com/su";
+				localType=localType.replace("-","_");
+				fetch(_url,{
+					method:"GET",
+					cache:"no-cache"
+				}).then(response=>response.json())
+				.then(response=>{
+					suo.cons.xhrDonate=response;
 					suo.donateBox.show();
-				}else{
-					let xhr = new XMLHttpRequest(),
-						localType=navigator.language,
-						_url="https://push.zimoapps.com/smartup/message.json";
-					//localType="zh-CN";
-					// _url="../message.json";
-					xhr.onreadystatechange=function(){
-						if (xhr.readyState == 4){
-							let items=JSON.parse(DOMPurify.sanitize(xhr.response));
-							console.log(items)
-							if(items.options.on){
-								if((items.all_local&&items.all_local.length>0)||(items[localType]&&items[localType].length>0)){
-									suo.cons.xhrDonate=items;
-									suo.donateBox.show();
-									chrome.runtime.sendMessage({type:"setDonateData",value:items});
-								}
-							}
+					let data={
+						donate:[],
+						ad:[]
+					}
+					if(response[0]&&response[0]["on"]&&response[0].donate[0][localType]){
+						data.donate.push(response[0].donate[0][localType]);
+					}else{
+						if(response[0].donate[0]["default"]){
+							data.donate.push(response[0].donate[0]["default"]);
+						}else{
+							data.donate.length=0;
 						}
 					}
-					xhr.open('GET',_url+"?"+new Date().getTime(), true);
-					xhr.send();
-				}
+					if(response[1]&&response[1]["on"]&&response[1].ad[0][localType]){
+						data.ad.push(response[1].ad[0][localType]);
+					}else{
+						if(response[1].ad[0]["default"]){
+							data.ad.push(response[1].ad[0]["default"]);
+						}else{
+							data.ad.length=0;
+						}
+					}
+					suo.donateBox.dom(data);
+				})
 			})
 		},
-		show:function(){
-			document.querySelector("#donate_box").style.cssText+="display:block;";
-		},
-		checkPushMessage:function(){
-			let _items=suo.cons.xhrDonate;
-			let lang=navigator.language;
-			//lang="zh-CN";
-			let i=0,itemArray=[];
-				itemLocal=_items[lang],
-				itemAllLocal=_items.all_local;
-			if(_items.all_local_i18n&&_items.all_local_i18n[lang]){
-				for(i=0;i<_items.all_local_i18n[lang].length;i++){
-					for(var ii in _items.all_local_i18n[lang][i]){
-						itemAllLocal[i][ii]=_items.all_local_i18n[lang][i][ii]
-					}			
-				}
-			}
-			if(itemLocal){itemArray.push(itemLocal)}
-			if(itemAllLocal){itemArray.push(itemAllLocal)}
-			suo.donateBox.setPushDom(itemArray)
-		},
-		setPushDom:function(items){
-			console.log(items)
+		dom:function(items){
 			let domMain=document.querySelector("#donate_main"),
 				domList=document.querySelector("#donate_list"),
 				domContent=document.querySelector("#donate_content");
 			domList.textContent="";
 			domContent.textContent="";
-			let i=0,ii=0,id_i=0,id_ii=0;
-			let initDom=function(itemOBJ){
-				let i=0,ii=0;
-				for(i=0;i<itemOBJ.length;i++){
-					console.log(itemOBJ[i]);
-					var _list=document.createElement("li");
-						_list.classList.add("donate_listli");
-						_list.setAttribute("id",id_i);
-						_list.innerText=itemOBJ[i].title;
-						_list.title=itemOBJ[i].title;
-					if(i==0&&id_i==0){_list.classList.add("donate_listcurrent");}
-					domList.appendChild(_list);
-					id_i++;
-				}
-				for(ii=0;ii<itemOBJ.length;ii++){
-					console.log(ii);
-					var _content=document.createElement("div");
-						_content.classList.add("donate_contentlist");
-						_content.setAttribute("id",id_ii);
-					if(ii==0&&id_ii==0){_content.classList.add("donate_contentcurrent")}
-					if(itemOBJ[ii].img){
-						if(itemOBJ[ii].imglink){
-							var _a=suo.domCreate2("a",{setName:["href","target"],setValue:[itemOBJ[ii].imglink,"_blank"]});
-							var _img=suo.domCreate2("img",{setName:["src"],setValue:[itemOBJ[ii].img]});
-							_a.appendChild(_img);
-							_content.appendChild(_a);
-						}else{
-							var _img=document.createElement("img");
-								_img.src=itemOBJ[ii].img;
-							_content.appendChild(_img);							
-						}
-					}
-					if(itemOBJ[ii].qrcode){
-						var _qrcode=document.createElement("div");
-						new QRCode(_qrcode,itemOBJ[ii].qrcode);
-						_content.appendChild(_qrcode);
-					}
-					if(itemOBJ[ii].link){
+			let initDom=function(itemOBJ,id){
+				var _list=suo.domCreate2("li",{setName:["className","title"],setValue:["donate_listli",itemOBJ.name]},null,null,{setName:["id"],setValue:[id]},itemOBJ.name);
+				domList.appendChild(_list);
+				var _content=suo.domCreate2("div",{setName:["className"],setValue:["donate_contentlist"]},null,null,{setName:["id"],setValue:[id]});
+				switch(itemOBJ.type){
+					case"text":
+						var _text=document.createElement("span");
+							_text.textContent=itemOBJ.text;
+						_content.appendChild(_text);	
+						break;
+					case"img":
+						var _img=document.createElement("img");
+							_img.src=itemOBJ.url;
+						_content.appendChild(_img);	
+						break;
+					case"link":
 						var _link=document.createElement("a");
-							_link.href=itemOBJ[ii].link;
+							_link.href=itemOBJ.url;
 							_link.target="_blank";
-							_link.innerText=itemOBJ[ii].linktext;
+							_link.textContent=itemOBJ.text;
 						_content.appendChild(_link);
-					}
-					if(itemOBJ[ii].des){
-						var _des=document.createElement("span");
-							_des.innerText=itemOBJ[ii].des;
-						_content.appendChild(_des);
-					}
-					domContent.appendChild(_content);
-					id_ii++;
+						break;
+					case"linkimg":
+						var _a=suo.domCreate2("a",{setName:["href","target"],setValue:[itemOBJ.url,"_blank"]});
+						var _img=suo.domCreate2("img",{setName:["src"],setValue:[itemOBJ.img]});
+						_a.appendChild(_img);
+						_content.appendChild(_a);
+						break;
+					case"qrcode":
+						console.log("qr")
+						var _qrcode=document.createElement("div");
+						new QRCode(_qrcode,itemOBJ.code);
+						_content.appendChild(_qrcode);
+						break;
+				}
+				domContent.appendChild(_content);
+				// return _list;
+			}
+			for(var i=0;items.donate&&items.donate[0]&&items.donate[0].length>0&&i<items.donate[0].length;i++){
+				initDom(items.donate[0][i],i);
+			}
+			let _flag=i;
+			for(var i=0;items.ad&&items.ad[0]&&items.ad[0].length>0&&i<items.ad[0].length;i++){
+				initDom(items.ad[0][i],_flag+i);
+			}
+			suo.donateBox.switch(document.querySelectorAll("#donate_list li")[0]);
+		},
+		switch:function(dom){
+			let lists=document.querySelectorAll("#donate_main #donate_list li"),
+				contents=document.querySelectorAll("#donate_main #donate_content .donate_contentlist");
+			for(var i=0;i<lists.length;i++){
+				if(lists[i].classList.contains("donate_listcurrent")){
+					lists[i].classList.remove("donate_listcurrent");
 				}
 			}
-			for(i=0;i<items.length;i++){
-				initDom(items[i]);
+			dom.classList.add("donate_listcurrent");
+			for(var i=0;i<contents.length;i++){
+				if(contents[i].classList.contains("donate_contentcurrent")){
+					contents[i].classList.remove("donate_contentcurrent");
+				}
 			}
-			document.querySelector("#donate_loading").style.cssText+="display:none;";
-			domMain.style.cssText+="display:block;";
-			document.querySelector("#donate_btn_close").style.cssText+="display:block;";
-			document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
+			document.querySelector("div[data-id='"+dom.dataset.id+"']").classList.add("donate_contentcurrent");
 		},
-		switchDonate:function(ele){
-			console.log(ele);
-			console.log(ele.id);
-			document.querySelector(".donate_listcurrent").classList.remove("donate_listcurrent");
-			ele.classList.add("donate_listcurrent");
-
-			let donateContents=document.querySelectorAll(".donate_contentlist");
-			let contentLastCurrent=document.querySelector(".donate_contentcurrent");
-				contentLastCurrent.classList.remove("donate_contentcurrent");
-			let contentCurrent=document.querySelector(".donate_contentlist[id='"+ele.id+"']");
-				contentCurrent.classList.add("donate_contentcurrent");
+		show:function(){
+			document.querySelector("#donate_box").style.cssText+="display:block;";
 		},
 		showDonate:function(){
-			document.querySelector("#donate_main").style.cssText+="display:none;";
-			document.querySelector("#donate_loading").style.cssText+="display:block;";
-			suo.donateBox.checkPushMessage();
+			document.querySelector("#donate_loading").style.cssText+="display:none;";
+			// domMain.style.cssText+="display:block;";
+			document.querySelector("#donate_main").style.cssText+="display:block;";
+			document.querySelector("#donate_btn_close").style.cssText+="display:block;";
+			document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
 		},
 		hideDonate:function(ele){
 			console.log(ele);
