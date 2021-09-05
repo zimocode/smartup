@@ -292,7 +292,7 @@ menu #menu_bottom{
 	width: 240px;
 	position: absolute;
 	bottom: 0;
-	background: #e7e9fd;
+	background: #ffeb3b;
 	transition:all .4s ease-in-out;
 }
 menu #menu_bottom img{
@@ -309,7 +309,7 @@ menu #menu_bottom span{
 }
 menu #menu_bottom:hover{
 	cursor: pointer;
-	background: #d0d9ff;
+	background: #ffff72;
 }
 menu #menu_bottom:hover img{
 	filter: grayscale(30%)
@@ -1773,8 +1773,8 @@ summary:hover{
 	opacity: .98;
 	font-size: 14px;
 	padding: 6px;
-	background-color: #2b2b34;
-	color: #fff;
+	background-color: #ff9800;
+	color: #000;
 	font-weight: bold;	
     border: 1px solid rgba(255,255,255,.5);
     border-right: none;
@@ -1782,8 +1782,14 @@ summary:hover{
     border-top-right-radius: unset;
     border-bottom-right-radius: unset;
     display: none;
+
+    display: none;
+    bottom: 36px;
+    left: 0;
+    right: auto;
+    top: auto;
 }
-#donate_box ul{
+#donate_box #donate_list{
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
@@ -1799,6 +1805,7 @@ summary:hover{
 #donate_name{
 	cursor: pointer;
 	display: inline-block;
+	color: #fff;
 }
 #donate_box .donate_listli{
 	cursor: pointer;
@@ -1812,9 +1819,10 @@ summary:hover{
 #donate_box .donate_listcurrent{
 	border: 1px solid #fff;
 	background-color: #fff;
-	color: #000;
+	color: #c66900;
 	margin: -1px 0;
 	border-radius: 2px 2px 0 0;
+	font-weight: bold;
 }
 #donate_main{
 	margin-top: 5px;
@@ -1822,13 +1830,14 @@ summary:hover{
 }
 #donate_box #donate_content{
 	/*padding-top: 1px;*/
-	border-top: 1px solid #999;
+	border-top: 1px solid #ff9800;
 	background-color: #fff;
 	width: 360px;
 }
 #donate_box .donate_contentlist{
 	display: none;
 	text-align: center;	
+	min-height: 240px;
 }
 #donate_box .donate_contentcurrent{
 	display: block;
@@ -1849,6 +1858,9 @@ summary:hover{
 	padding-top: 5px;
 	margin: auto;
 }
+#donate_box .donate_contentlist textarea{
+	min-height: 60px;
+}
 #donate_box .donate_contentlist a{
 	display: block;
 	font-size: 16px;
@@ -1863,7 +1875,8 @@ summary:hover{
 #donate_box #donate_bottom{
 	font-size: 10px;
 	font-weight: normal;
-	color: #aaa;
+	color: #000;
+	clear: both;
 }
 #donate_box #donate_btn_close{
 	display: none;
@@ -1899,6 +1912,86 @@ summary:hover{
 #donate_box #donate_btn_hide:active{
 	background: blue;
 }
+#donate_box .donate_ccul{
+	list-style-type: none;
+	width: 140px;
+	background-color: #ffcc80;
+	padding: 2px;
+	margin: 0 0 0 0;
+	float: left;
+	box-sizing: border-box;
+	height: 240px;
+}
+#donate_box .donate_ccul li{
+	cursor: pointer;
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #ffffff00;
+	margin: 2px 0;
+	padding: 2px 0;
+	border-radius: 4px 0 0 4px;
+	color: #000;
+	font-weight: normal;
+}
+#donate_box .donate_ccul .donate_listcurrent{
+	background-color: #fff;
+	color: #ff9800;
+	font-weight: bold;
+}
+
+#donate_box .donate_ccdiv{
+	float: right;
+	width: 200px;
+}
+#donate_box .donate_ccdiv .donate_cccontent{
+	display: none;
+	padding: 2px;
+}
+#donate_box .donate_ccdiv .donate_contentcurrent{
+	display: block;
+}
+#donate_box .donate_ccdiv .donate_cccontent img{
+	display: inline;
+	width: 80%;
+	border: 1px solid #ccc6;
+	padding: 4px;
+	border-radius: 2px;
+}
+menu #menu_donate{
+	margin-bottom: 20px;
+	position: absolute;
+	bottom: 80px;
+	background-color: #ff9800;
+	width: 240px;
+	padding: 10px 10px;
+	/*height: 32px;*/
+	/*line-height: 32px;*/
+
+	display: none;
+	border-top: 1px solid #d0d9ff;
+	transition:all .4s ease-in-out;
+	color: #fff;
+}
+menu #menu_donate:hover{
+	cursor: pointer;
+	background: #ffc947;
+}
+menu #menu_donate:hover img{
+	filter: grayscale(30%)
+}
+menu #menu_donate img{
+	height: 16px;
+	filter: grayscale(100%);
+	float: left;
+	vertical-align: middle;
+}
+menu #menu_donate span{
+	text-indent: 20px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: block;
+}
 
 .su_sortable_chosen{
 	border: 1px dashed #ccc;
@@ -1906,16 +1999,3 @@ summary:hover{
 .su_sortable_ghost{
 	/*background-color: red;*/
 }
-/*img{
-    animation-name: spin;
-    animation-duration: 4000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-@keyframes spin { 
-    from { 
-        transform: rotate(0deg); 
-    } to { 
-        transform: rotate(360deg); 
-    }
-}*/

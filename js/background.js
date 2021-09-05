@@ -21,7 +21,7 @@ Array.prototype.containsAll=function(ele){
 	}
 }
 
-
+console.log("d")
 var devMode=true;
 var	config,
 	defaultConf,
