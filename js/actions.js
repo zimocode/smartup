@@ -228,7 +228,7 @@ let actionOptions={
 		n_copytabele_content:["s_tabele_title","s_tabele_url","s_tabele_aslnk"],
 		n_crpages:["s_cr_set","s_cr_ext","s_cr_history","s_cr_app","s_cr_bookmark","s_cr_dl","s_cr_flag"],
 		n_dlbar:["s_yes","s_no"],
-		n_encoding:["s_none","s_unicode","s_uri","s_uric"],
+		n_encoding:["s_none","s_unicode","s_uri","s_uric","s_uricgbk"],
 		n_zoom:["s_in","s_out","s_reset"],
 		n_scroll:["s_up","s_down","s_left","s_right","s_top","s_bottom","s_leftmost","s_rightmost"],
 		n_mail:["s_gmail","s_defaultmail","s_gmailapps"],

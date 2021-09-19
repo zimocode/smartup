@@ -3,7 +3,7 @@
 	"minimum_chrome_version": "22",
 	"name": "smartUp Gestures(Beta)",
 	"short_name":"smartUp",
-	"version": "6.7.1231.1112",
+	"version": "6.7.1231.1113",
 	"description": "__MSG_ext_des__",
 	"default_locale": "en",
 	"author":"zimo",
@@ -13,7 +13,7 @@
 		"128": "icon.png"
 	},
 	"background": {
-		"scripts": ["js/purify.js","js/background.js"],
+		"scripts": ["js/purify.js","js/gbk.js","js/background.js"],
 		"persistent": true
 	},
 	"content_scripts": [

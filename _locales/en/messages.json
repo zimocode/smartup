@@ -356,6 +356,9 @@
   "s_uric":{
     "message":"encodeURIComponent"
   },
+  "s_uricgbk":{
+    "message":"encodeURI(GBK)"
+  },
   "s_none": {
     "message": "None"
   },
