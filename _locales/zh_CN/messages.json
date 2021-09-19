@@ -521,6 +521,9 @@
   "n_dialog":{
     "message":"显示对话框"
   },
+  "n_duplicatetype":{
+    "message":"在后台打开复制的标签页。"
+  },
   "script": {
     "message": "运行脚本"
   },

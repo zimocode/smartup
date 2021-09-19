@@ -524,6 +524,9 @@
   "n_dialog":{
     "message":"Show dialog box"
   },
+  "n_duplicatetype":{
+    "message":"Open duplicated tab in background."
+  },
   "script": {
     "message": "Script"
   },

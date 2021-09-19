@@ -1,12 +1,12 @@
 {
 	"log": [
 		{
-			"ver":"6.7.1231.1113",
+			"ver":"6.7.1231.1114",
 			"date":"2021.09.19",
 			"content":[
 				"new: add new option open type - current window",
 				"improve: Support Developer",
-				"fix bugs: issues@github: #141, #154"
+				"fix bugs: issues@github: #141, #154, #113"
 			]
 		},
 		{

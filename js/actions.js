@@ -31,7 +31,7 @@ let actions={
 			{name:"move",selects:["n_position_lrhl"]},
 			{name:"detach",selects:["n_tab"]},//movetowin
 			{name:"pin",selects:["n_tab"]},
-			{name:"duplicate",selects:["n_tab"]},
+			{name:"duplicate",selects:["n_tab"],checks:["n_duplicatetype"]},
 			{name:"copytabele",selects:["n_tab_single","n_copytabele_content"]}
 		],
 		[//group window
@@ -265,7 +265,8 @@ let actionOptions={
 
 		n_closePin:false,
 		n_closeConfirm:true,
-		n_dialog:false
+		n_dialog:false,
+		n_duplicatetype:false
 	}
 }
 

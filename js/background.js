@@ -1658,9 +1658,12 @@ var sub={
 			var _target=sub.getConfValue("selects","n_tab"),
 				ids=sub.getId(_target);
 			for(var i=0;i<ids.length;i++){
-				chrome.tabs.duplicate(ids[i],function(tab){});
+				chrome.tabs.duplicate(ids[i],function(tab){
+					if(sub.getConfValue("checks","n_duplicatetype")){
+						chrome.tabs.update(sub.curTab.id,{highlighted:true});
+					}
+				});
 			}
-			//chrome.tabs.duplicate(sub.curTab.id,function(tab){})
 		},
 		copytabele:function(){
 			var theFunction=function(){
