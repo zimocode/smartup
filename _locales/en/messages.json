@@ -222,7 +222,10 @@
     "message": "Default"
   },
   "s_current": {
-    "message": "Current"
+    "message": "Current Tab"
+  },
+  "s_currentwin":{
+    "message":"Current Window"
   },
   "s_others": {
     "message": "Others"

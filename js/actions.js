@@ -198,10 +198,10 @@ let actionOptions={
 			n_optype:["s_current","s_new","s_back","s_win","s_winback","s_incog"]
 		},
 		increment:{
-			n_optype:["s_current","s_new","s_back","s_win","s_winback","s_incog"]
+			n_optype:["s_current","s_currentwin","s_new","s_back","s_win","s_winback","s_incog"]
 		},
 		decrement:{
-			n_optype:["s_current","s_new","s_back","s_win","s_winback","s_incog"]
+			n_optype:["s_current","s_currentwin","s_new","s_back","s_win","s_winback","s_incog"]
 		},
 	},
 	selects:{

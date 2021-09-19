@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"6.7.1231.1112",
+			"date":"2021.09.19",
+			"content":[
+				"new: add new option open type - current window",
+				"improve: Support Developer"
+			]
+		},
+		{
 			"ver":"6.7.366.1103",
 			"date":"2021.03.03",
 			"content":[

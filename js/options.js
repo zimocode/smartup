@@ -182,8 +182,14 @@ var suo={
 						window.setTimeout(function(){window.location.reload()},500);
 						break;
 				}
+				if(ele.classList.contains("donate_cctext")){
+					ele.select();
+				}
 				if(ele.classList.contains("donate_listli")){
 					suo.donateBox.switch(ele);
+				}
+				if(ele.classList.contains("donate_ccli")){
+					suo.donateBox.switchCcli(ele);
 				}
 				if(ele.classList.contains("menuplus_save")){
 					suo.saveConf2();
@@ -230,6 +236,9 @@ var suo={
 				}
 				if(ele.classList.contains("rate")||(ele.tagName.toLowerCase()!="html"&&ele.parentNode.classList.contains("rate"))){
 					chrome.tabs.create({url:suo.cons.webstoreURL})
+				}
+				if(ele.classList.contains("donate")||(ele.tagName.toLowerCase()!="html"&&ele.parentNode.classList.contains("donate"))){
+					suo.donateBox.showDonate();
 				}
 				if(ele.className&&e.target.classList.contains("menuli")){
 					suo.clickMenuLI(e);
@@ -2370,7 +2379,7 @@ var suo={
 			window.setTimeout(function(){document.querySelector("menu #menu_name").style.cssText+="display:inline;"
 				document.querySelector("menu #menu_name").style.cssText+="opacity:1;";
 			},800)
-			document.querySelector("#menubox").style.height=(window.innerHeight-64-80-40+75)+"px";
+			document.querySelector("#menubox").style.height=(window.innerHeight-64-80-40+75-40)+"px";
 			//document.querySelector("#menu_bottom").style.cssText+="bottom:0px;";
 		}else{
 			document.querySelector("menu").style.cssText+="left: -260px;top: 0;";
@@ -2602,6 +2611,7 @@ var suo={
 			chrome.runtime.sendMessage({type:"getDonateData"},function(response){
 				let localType=navigator.language,
 					_url="https://apis.zimoapps.com/su";
+					// _url="http://127.0.0.1:3000/su";
 				localType=localType.replace("-","_");
 				fetch(_url,{
 					method:"GET",
@@ -2643,10 +2653,35 @@ var suo={
 			domList.textContent="";
 			domContent.textContent="";
 			let initDom=function(itemOBJ,id){
+				console.log(itemOBJ);
 				var _list=suo.domCreate2("li",{setName:["className","title"],setValue:["donate_listli",itemOBJ.name]},null,null,{setName:["id"],setValue:[id]},itemOBJ.name);
 				domList.appendChild(_list);
 				var _content=suo.domCreate2("div",{setName:["className"],setValue:["donate_contentlist"]},null,null,{setName:["id"],setValue:[id]});
 				switch(itemOBJ.type){
+					case"cryptocurrency":
+						console.log("cryptocurrency")
+						var _ccul=suo.domCreate2("ul",{setName:["className"],setValue:["donate_ccul"]});
+						// _ccul.appendChild(suo.domCreate2("span",null,null,null,null,"Network Type:"))
+						for(var i=0;i<itemOBJ.data.length;i++){
+							_ccul.appendChild(suo.domCreate2("li",{setName:["className"],setValue:["donate_ccli"]},null,null,{setName:["id"],setValue:[i]},itemOBJ.data[i].name));
+						}
+
+
+						var _ccdiv=suo.domCreate2("div",{setName:["className"],setValue:["donate_ccdiv"]});
+						for(var i=0;i<itemOBJ.data.length;i++){
+							var _cccontent=suo.domCreate2("div",{setName:["className"],setValue:["donate_cccontent"]},null,null,{setName:["id"],setValue:[i]});
+
+							_cccontent.appendChild(suo.domCreate2("textarea",{setName:["className","readOnly"],setValue:["donate_cctext",true]},null,null,{setName:["id"],setValue:[i]},itemOBJ.data[i].address));
+							var _ccqr=suo.domCreate2("div");
+							new QRCode(_ccqr,itemOBJ.data[i].address);
+							_cccontent.appendChild(_ccqr);
+
+							_ccdiv.appendChild(_cccontent);
+						}
+						
+						_content.appendChild(_ccul);
+						_content.appendChild(_ccdiv);
+						break;
 					case"text":
 						var _text=document.createElement("span");
 							_text.textContent=itemOBJ.text;
@@ -2688,10 +2723,19 @@ var suo={
 				initDom(items.ad[0][i],_flag+i);
 			}
 			suo.donateBox.switch(document.querySelectorAll("#donate_list li")[0]);
+
+			//if cryptocurrency show the first one
+			if(items&&items.donate&&items.donate[0][0].type=="cryptocurrency"){
+				console.log("cc")
+				suo.donateBox.switchCcli(document.querySelector("#donate_content li.donate_ccli[data-id='0']"))
+			}
 		},
-		switch:function(dom){
-			let lists=document.querySelectorAll("#donate_main #donate_list li"),
-				contents=document.querySelectorAll("#donate_main #donate_content .donate_contentlist");
+		switchCcli:function(dom){
+			console.log(dom)
+			let lists=document.querySelectorAll("#donate_main .donate_ccli"),
+				contents=document.querySelectorAll("#donate_main .donate_cccontent");
+
+			console.log(contents)
 			for(var i=0;i<lists.length;i++){
 				if(lists[i].classList.contains("donate_listcurrent")){
 					lists[i].classList.remove("donate_listcurrent");
@@ -2703,22 +2747,43 @@ var suo={
 					contents[i].classList.remove("donate_contentcurrent");
 				}
 			}
-			document.querySelector("div[data-id='"+dom.dataset.id+"']").classList.add("donate_contentcurrent");
+			console.log(dom.dataset.id)
+			document.querySelector(".donate_ccdiv .donate_cccontent[data-id='"+dom.dataset.id+"']").classList.add("donate_contentcurrent");
+		},
+		switch:function(dom){
+			let lists=document.querySelectorAll("#donate_main #donate_list li"),
+				contents=document.querySelectorAll("#donate_main #donate_content .donate_contentlist");
+
+			console.log(contents)
+			for(var i=0;i<lists.length;i++){
+				if(lists[i].classList.contains("donate_listcurrent")){
+					lists[i].classList.remove("donate_listcurrent");
+				}
+			}
+			dom.classList.add("donate_listcurrent");
+			for(var i=0;i<contents.length;i++){
+				if(contents[i].classList.contains("donate_contentcurrent")){
+					contents[i].classList.remove("donate_contentcurrent");
+				}
+			}
+			console.log(dom.dataset.id)
+			document.querySelector(".donate_contentlist[data-id='"+dom.dataset.id+"']").classList.add("donate_contentcurrent");
 		},
 		show:function(){
-			document.querySelector("#donate_box").style.cssText+="display:block;";
+			document.querySelector("#menu_donate").style.cssText+="display:block;";
 		},
 		showDonate:function(){
+			document.querySelector("#donate_box").style.cssText+="display:block;";
 			document.querySelector("#donate_loading").style.cssText+="display:none;";
 			// domMain.style.cssText+="display:block;";
 			document.querySelector("#donate_main").style.cssText+="display:block;";
 			document.querySelector("#donate_btn_close").style.cssText+="display:block;";
-			document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
+			// document.querySelector("#donate_btn_hide").style.cssText+="display:block;";
 		},
 		hideDonate:function(ele){
 			console.log(ele);
 			document.querySelector("#donate_btn_close").style.cssText+="display:none;";
-			document.querySelector("#donate_btn_hide").style.cssText+="display:none;";
+			// document.querySelector("#donate_btn_hide").style.cssText+="display:none;";
 			document.querySelector("#donate_main").style.cssText+="display:none;";
 			if(ele.id=="donate_btn_close"){
 				document.querySelector("#donate_box").style.cssText+="display:none;";
