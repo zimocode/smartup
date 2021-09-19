@@ -219,7 +219,10 @@
     "message": "默认"
   },
   "s_current": {
-    "message": "当前"
+    "message": "当前标签页"
+  },
+  "s_currentwin":{
+    "message":"当前窗口"
   },
   "s_others": {
     "message": "其他"

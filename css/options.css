@@ -287,12 +287,12 @@ menu #menu_topbox{
 	width: 100%;
 }
 menu #menu_bottom{
-	border-top: 1px solid #d0d9ff;
+	border-top: 1px solid #d0d9ff48;
 	padding: 10px;
 	width: 240px;
 	position: absolute;
 	bottom: 0;
-	background: #ffeb3b;
+	/*background: #ffeb3b;*/
 	transition:all .4s ease-in-out;
 }
 menu #menu_bottom img{
@@ -309,7 +309,7 @@ menu #menu_bottom span{
 }
 menu #menu_bottom:hover{
 	cursor: pointer;
-	background: #ffff72;
+	background: #ffc947;
 }
 menu #menu_bottom:hover img{
 	filter: grayscale(30%)
@@ -425,11 +425,12 @@ smartup.su_apps{
 }
 .box_title{
 	display: inline-block;
-	padding-top: 8px;
+	padding-top: 0;
 	font-size: 18px;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
+	margin-top: 6px;
 }
 .box_btn_close{
 	color: rgba(255, 255, 255, 0.5);
@@ -437,10 +438,17 @@ smartup.su_apps{
 	top: 5px;
 	right: 5px;
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	padding: 2px 6px;
+	padding: 1px;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
 	border-radius: 100%;
 	cursor: pointer;
+	text-align: center;
+	font-family: arial,sans-serif;
 	transition:all .4s ease-in-out;
+	-webkit-user-select: none !important;
+	user-select: none !important;
 }
 .box_btn_close:hover{
 	background: red;
@@ -455,7 +463,9 @@ smartup.su_apps{
 .box_main{
 	min-width: 100px;
 	min-height: 100px;
-	margin: 40px 16px 16px 16px;
+	top: 32px;
+	margin: 0 8px;
+	margin-bottom: 40px;
 	background: #fff;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 	overflow: auto;
@@ -1961,16 +1971,16 @@ menu #menu_donate{
 	margin-bottom: 20px;
 	position: absolute;
 	bottom: 80px;
-	background-color: #ff9800;
+	/*background-color: #ff9800;*/
 	width: 240px;
 	padding: 10px 10px;
 	/*height: 32px;*/
 	/*line-height: 32px;*/
 
 	display: none;
-	border-top: 1px solid #d0d9ff;
+	border-top: 1px solid #d0d9ff48;
 	transition:all .4s ease-in-out;
-	color: #fff;
+	/*color: #fff;*/
 }
 menu #menu_donate:hover{
 	cursor: pointer;
@@ -1998,4 +2008,23 @@ menu #menu_donate span{
 }
 .su_sortable_ghost{
 	/*background-color: red;*/
+}
+
+.suapps_tab{
+	display: flex;
+	list-style: none;
+	list-style-type: none;
+	padding: 0;
+    margin: -8px -8px 0 -8px;
+    background-color: #ccf;
+}
+.suapps_tablist{
+	margin: 0 4px;
+	padding: 4px;
+	cursor: pointer;
+}
+.suapps_tablistcurrent{
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	background-color: #ffffffff;
 }

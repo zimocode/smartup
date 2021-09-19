@@ -2740,6 +2740,9 @@ var sub={
 		if(theTarget=="s_current"){
 			chrome.tabs.update({url:theURL,pinned:thePin});
 			return;
+		}else if(theTarget=="s_currentwin"){
+			chrome.tabs.remove(sub.curTab.id);
+			chrome.tabs.create({url:theURL,index:sub.curTab.index});
 		}else if(theTarget=="s_win"){
 			//fix fx unsupport focused
 			var _obj=browserType=="fx"?{url:theURL}:{url:theURL,focused:true};
