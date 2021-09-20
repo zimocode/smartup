@@ -1658,9 +1658,12 @@ var sub={
 			var _target=sub.getConfValue("selects","n_tab"),
 				ids=sub.getId(_target);
 			for(var i=0;i<ids.length;i++){
-				chrome.tabs.duplicate(ids[i],function(tab){});
+				chrome.tabs.duplicate(ids[i],function(tab){
+					if(sub.getConfValue("checks","n_duplicatetype")){
+						chrome.tabs.update(sub.curTab.id,{highlighted:true});
+					}
+				});
 			}
-			//chrome.tabs.duplicate(sub.curTab.id,function(tab){})
 		},
 		copytabele:function(){
 			var theFunction=function(){
@@ -1820,6 +1823,9 @@ var sub={
 				case"s_uric":
 					enTxt=encodeURIComponent(sub.message.selEle.txt);
 					break;
+				case"s_uricgbk":
+					enTxt=GBK.URI.encodeURI(sub.message.selEle.txt);
+					break;
 				default:
 					enTxt=sub.message.selEle.txt;
 					break;
@@ -1853,6 +1859,9 @@ var sub={
 					break;
 				case"s_uric":
 					_txt=encodeURIComponent(_str);
+					break;
+				case"s_uricgbk":
+					_txt=GBK.URI.encodeURI(_str);
 					break;
 				default:
 					_txt=_str;
@@ -2046,6 +2055,9 @@ var sub={
 					break;
 				case"s_uric":
 					enURL=encodeURIComponent(sub.message.selEle.img);
+					break;
+				case"s_uricgbk":
+					enURL=GBK.URI.encodeURI(sub.message.selEle.img);
 					break;
 				default:
 					enURL=sub.message.selEle.img;
@@ -2743,6 +2755,7 @@ var sub={
 		}else if(theTarget=="s_currentwin"){
 			chrome.tabs.remove(sub.curTab.id);
 			chrome.tabs.create({url:theURL,index:sub.curTab.index});
+			return;
 		}else if(theTarget=="s_win"){
 			//fix fx unsupport focused
 			var _obj=browserType=="fx"?{url:theURL}:{url:theURL,focused:true};
