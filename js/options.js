@@ -1522,7 +1522,7 @@ var suo={
 
 			actionBox.appendChild(suo.itemAction(confOBJ,actionType));
 			actionBox.appendChild(suo.itemDes(confOBJ));
-			actionBox.appendChild(suo.itemMore(confOBJ));
+			actionBox.appendChild(suo.itemMore(confOBJ,actiontype));
 			domContent.appendChild(actionBox);
 
 			var _rightbox=suo.domCreate2("div",{setName:["className"],setValue:["otherbox"]});
@@ -1547,7 +1547,7 @@ var suo={
 			var actionName=confOBJ.name;
 			actionBox.appendChild(suo.itemAction(confOBJ,actionType));
 			actionBox.appendChild(suo.itemDes(confOBJ));
-			actionBox.appendChild(suo.itemMore(confOBJ));
+			actionBox.appendChild(suo.itemMore(confOBJ,actiontype));
 			domContent.appendChild(actionBox);
 			domContent.appendChild(suo.domCreate2("div","","","clear:both;"));
 		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"){
@@ -1556,7 +1556,7 @@ var suo={
 			var actionName=confOBJ.name;
 			actionBox.appendChild(suo.itemAction(confOBJ,actionType));
 			actionBox.appendChild(suo.itemDes(confOBJ));
-			actionBox.appendChild(suo.itemMore(confOBJ));
+			actionBox.appendChild(suo.itemMore(confOBJ,actiontype));
 			domContent.appendChild(actionBox);
 			domContent.appendChild(suo.domCreate2("div","","","clear:both;"));
 		}
@@ -1649,8 +1649,49 @@ var suo={
 		domSelect.selectedIndex=index;
 		return domSelect;
 	},
-	itemMore:function(confOBJ){
+	itemMore:function(confOBJ,actionType){
 		console.log(confOBJ)
+
+		// fix new added options of actions dont show and delete droped options.
+		for(var i=0;i<actions[actionType].length;i++){
+			for(var ii=0;ii<actions[actionType][i].length;ii++){
+				if(actions[actionType][i][ii].name==confOBJ.name){
+					var arrayConfType=["selects","texts","checks","ranges"];
+					for(var act in arrayConfType){
+						if(actions[actionType][i][ii][arrayConfType[act]]){
+							var _arrayConf=[],
+								_arrayModel=[];
+							for(var jj=0;jj<confOBJ[arrayConfType[act]].length;jj++){
+								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							}
+
+							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
+								_arrayModel.push(actions[actionType][i][ii][arrayConfType[act]][jj]);
+							}
+
+							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
+								if(confOBJ[arrayConfType[act]]){
+									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
+										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									}
+								}else{
+									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
+									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+								}
+							}
+
+							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
+									confOBJ[arrayConfType[act]].splice(j,1);
+								}
+							}
+						}							
+					}
+					break;
+				}				
+			}
+		}
+
 		var domMore=suo.domCreate2("div",{setName:["className"],setValue:["box_more"]});
 		if(confOBJ.texts){
 			for(var i=0;i<confOBJ.texts.length;i++){
@@ -2009,7 +2050,7 @@ var suo={
 					theOBJ.mydes={}
 					theOBJ.mydes.type=false;
 					theOBJ.mydes.value="";
-					suo.itemMore(theOBJ);
+					suo.itemMore(theOBJ,actionType);
 					break;
 				}				
 			}
@@ -2026,7 +2067,7 @@ var suo={
 			// boxdom.querySelector("#mydesbox #mydestext").style.display="none";
 		}
 		getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
-		getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ));
+		getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
 		return;
 	},
 	getPermission:function(permission){
