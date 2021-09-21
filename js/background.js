@@ -206,7 +206,9 @@ var getDefault={
 								{type:"n_close_sel",value:"s_default"}
 							],
 							checks:[
-								{type:"n_close_keep",value:false}
+								{type:"n_close_keep",value:false},
+								{type:"n_closePin",value:false},
+								{type:"n_closeConfirm",value:true}
 							]
 						},
 						{
