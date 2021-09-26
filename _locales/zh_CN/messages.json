@@ -219,7 +219,10 @@
     "message": "默认"
   },
   "s_current": {
-    "message": "当前"
+    "message": "当前标签页"
+  },
+  "s_currentwin":{
+    "message":"当前窗口"
   },
   "s_others": {
     "message": "其他"
@@ -349,6 +352,9 @@
   },
   "s_uric":{
     "message":"encodeURIComponent"
+  },
+  "s_uricgbk":{
+    "message":"encodeURI(GBK)"
   },
   "s_none": {
     "message": "无"
@@ -514,6 +520,9 @@
   },
   "n_dialog":{
     "message":"显示对话框"
+  },
+  "n_duplicatetype":{
+    "message":"在后台打开复制的标签页。"
   },
   "script": {
     "message": "运行脚本"

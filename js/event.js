@@ -126,7 +126,7 @@ var sue={
 					}
 
 					chrome.runtime.sendMessage(extID,{type:"action_wges",sendValue:sendValue,selEle:sue.selEle})
-					e.preventDefault();
+					// e.preventDefault();
 				}
 				break;
 			case"click":

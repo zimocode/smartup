@@ -1,6 +1,17 @@
 {
 	"log": [
 		{
+			"ver":"6.8.1233.1117",
+			"date":"2021.09.21",
+			"content":[
+				"new: add new option open type - current window",
+				"improve: Support Developer",
+				"update README",
+				"fix bugs: issues@github: #141, #154, #113, #152",
+				"fix new added options of actions dont show and delete droped options"
+			]
+		},
+		{
 			"ver":"6.7.366.1103",
 			"date":"2021.03.03",
 			"content":[
