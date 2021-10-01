@@ -192,6 +192,15 @@ actions.mgesactions=actions.mges;
 actions.touch=actions.mges;
 //actions.touchactions_group=actions.mgesactions_group=actions.mges_group;
 
+actions.tsdrg=actions.tdrg;
+actions.lsdrg=actions.ldrg;
+actions.isdrg=actions.idrg;
+actions.rges=actions.mges;
+actions.wges=actions.mges;
+actions.icon=actions.mges;
+actions.ctm=actions.mges;
+actions.pop=actions.mges;
+
 let actionOptions={
 	special:{
 		upperlevel:{
