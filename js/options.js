@@ -42,7 +42,7 @@ var suo={
 			suo.init();
 			suo.initMenu();
 			suo.initI18n();
-			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch"];
+			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca"];
 			for(var i=0;i<itemArray.length;i++){
 				suo.initListItem(itemArray[i]);
 			}
@@ -72,6 +72,7 @@ var suo={
 		window.addEventListener("mouseleave",this.handleEvent,false);
 		window.addEventListener("resize",this.handleEvent,false);
 		window.addEventListener("mousedown",this.handleEvent,false);
+		window.addEventListener("keydown",this.handleEvent,false);
 	},
 	handleEvent:function(e){
 		let getDragEle=function(ele){
@@ -94,6 +95,13 @@ var suo={
 			case"click":
 				var ele=e.target;
 				switch(ele.id){
+					case"dca_keycusreset":
+						document.querySelector("#dca_keycusbox").value="";
+						suo.saveConf();
+						break;
+					case"dca_keycusbox":
+						suo.dcaKeycus(e);
+						break;
 					case"donate_btn_close":
 					case"donate_btn_hide":
 						suo.donateBox.hideDonate(ele);
@@ -871,6 +879,7 @@ var suo={
 			window.setTimeout(function(){
 				setDom.style.cssText+="opacity:.9;transition:all .9s ease-in-out;"
 			},10)
+			suo.initValue(setDom,true)
 		}
 		//document.querySelector("#nav_txt").innerText=ele.parentNode.previousSibling.innerText+" · "+ele.innerText;
 		console.log(setDom)
@@ -1070,11 +1079,14 @@ var suo={
 			var setcontent=suo.domCreate2("div");
 		}
 	},
-	initValue:function(){
+	initValue:function(delayDom,delay){
 		//return
 		suo.initId();
 		//return;
 		var doms=document.querySelectorAll(".init");
+		if(delay){
+			doms=delayDom.querySelectorAll(".init-delay");
+		}
 		for(var i=0;i<doms.length;i++){
 			var confOBJ=suo.getConfOBJ(doms[i]);
 			//var value//=confOBJ[doms[i].dataset.confele];
@@ -1277,9 +1289,13 @@ var suo={
 		var ele=e.target||e;
 		var domOBJ=document.querySelector("#m-"+ele.dataset.confele.substr(2,ele.dataset.confele.length-2));
 		if(ele.checked){
-			suo.domShow(domOBJ)
+			suo.domShow(domOBJ);
+			if(!config[ele.dataset.confele.substr(2)]){
+				config[ele.dataset.confele.substr(2)]=defaultConf[ele.dataset.confele.substr(2)];
+				suo.saveConf();
+			}
 		}else{
-			suo.domHide(domOBJ)
+			suo.domHide(domOBJ);
 		}
 	},
 	initPer:function(){
@@ -1360,6 +1376,7 @@ var suo={
 			case"pop":
 			case"icon":
 			case"ctm":
+			case"dca":
 				confOBJ=config[type].actions;
 				eleOBJ={setName:["className"],setValue:["item item_edit item-"+type+" edit_"+type]};
 				actionType=type;
@@ -1406,7 +1423,7 @@ var suo={
 			}
 			return;
 		}
-		if(type=="icon"){
+		if(type=="icon"||"dca"){
 			for(var i=0;i<confOBJ.length;i++){
 				var liOBJ=suo.domCreate2("li",eleOBJ,"","padding-right:0;",{setName:["confid","actiontype"],setValue:[i,actionType]});
 				var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"width:160px;",{setName:["confid","actiontype"],setValue:[i,actionType]},(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name));
@@ -1446,6 +1463,9 @@ var suo={
 			}
 			domOBJ.appendChild(liOBJ);
 		}
+	},
+	dcaKeycus:function(e){
+		
 	},
 	itemEdit:function(confobj,confid,type,direct,actiontype){
 		console.log(direct);
@@ -1550,7 +1570,7 @@ var suo={
 			actionBox.appendChild(suo.itemMore(confOBJ,actiontype));
 			domContent.appendChild(actionBox);
 			domContent.appendChild(suo.domCreate2("div","","","clear:both;"));
-		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"){
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
 			var actionBox=suo.domCreate2("div",{setName:["className"],setValue:["actionbox"]});
 			var actionType=actionType;
 			var actionName=confOBJ.name;
@@ -1633,7 +1653,7 @@ var suo={
 		var flag=0,index=0;
 		if("tsdrg lsdrg isdrg".indexOf(actionType)!=-1){
 			actionType=actionType.substr(0,1)+actionType.substr(2);
-		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"){
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
 			actionType="mges"
 		}
 		for(var i=0;i<actions[actionType+"_group"].length;i++){

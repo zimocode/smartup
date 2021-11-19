@@ -80,7 +80,8 @@ var getDefault={
 						fnwges:false,
 						fnpop:false,
 						fnicon:false,
-						fnctm:false
+						fnctm:false,
+						fndca:false
 					},
 					engine:{
 						txtengine:[
@@ -754,6 +755,33 @@ var getDefault={
 						{
 							direct:"RDLU",
 							name:"optionspage"
+						}
+					]
+				},
+				dca:{
+					settings:{
+						keytype:"ctrl",
+						ctrl:"ctrl",
+						cus:"",
+						confirm:false,
+						box:false
+					},
+					actions:[
+						{
+							name:"close",
+							mydes:{type:true,value:getDefault.i18n("init_close_current")},
+							selects:[
+								{type:"n_tab",value:"s_current"},
+								{type:"n_close_sel",value:"s_default"}
+							],
+							checks:[
+								{type:"n_close_keep",value:false},
+								{type:"n_closePin",value:false},
+								{type:"n_closeConfirm",value:true}
+							],
+							radio:[
+								{keytype:"holdkey"}
+							]
 						}
 					]
 				},
@@ -3860,6 +3888,16 @@ var sub={
 				}
 				sub.initCurrent(sender,sub.theConf)
 				break;
+			case"action_dca":
+				sub.theConf=config.dca.actions[0];
+				if(sub.theConf.name=="scroll"){//fix action scrollame});
+					window.setTimeout(function(){
+						sub.initCurrent(sender,sub.theConf);
+					},200)
+					return
+				}
+				sub.initCurrent(sender,sub.theConf)				
+				break;
 			case"gettip":
 				sub.theConf=getConf();
 				let _sendConf={};
@@ -3906,6 +3944,7 @@ var sub={
 						});
 					});
 				}else{
+					console.log("s")
 					sendResponse(sub.theConf);
 				}
 				sub.initCurrent(sender,sub.theConf);

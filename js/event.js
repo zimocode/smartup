@@ -88,6 +88,9 @@ var sue={
 		if(config.general.fnswitch.fnwges){
 			window.addEventListener("wheel",this.handleEvent,false);
 		}
+		if(config.general.fnswitch.fndca){
+			window.addEventListener("dblclick",this.handleEvent,false);
+		}
 	},
 	initHandle2:function(){
 		sue.document.addEventListener("mousemove",this.handleEvent,false);
@@ -287,6 +290,19 @@ var sue={
 				sue._lastX=e.clientX;
 				sue._lastY=e.clientY;
 				sue.inDrg=false;
+				break;
+			case"dblclick":
+				console.log("sdf");
+				if(!editMode){
+					if(!config.dca.settings.box&&(e.target.tagName&&((e.target.tagName.toLowerCase()=="input"&&e.target.type=="text")||e.target.tagName.toLowerCase()=="textarea"))){
+						console.log("ss")
+						break;
+					}
+					if(config.dca.settings.confirm&&!window.confirm(chrome.i18n.getMessage("dca_confirmmessage"))){
+						break;
+					}
+					chrome.runtime.sendMessage(extID,{type:"action_dca",sendValue:sendValue,selEle:sue.selEle});
+				}	
 				break;
 		}
 	},

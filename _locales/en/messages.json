@@ -1760,5 +1760,26 @@
   },
   "app_shorturl_keyholder":{
     "message":"Input keyword, or leave blank to generate automatically."
+  },
+  "dca":{
+    "message":"Double Click Action"
+  },
+  "con_dcatrigger":{
+    "message":"Hold the following key to trigger:"
+  },
+  "con_dcakeynone":{
+    "message":"None."
+  },
+  "con_dcakeyctrl": {
+    "message": "Alt Ctrl or Shift:"
+  },
+  "con_dcakeycus": {
+    "message": "Custom keys:"
+  },
+  "con_dcabox": {
+    "message": "Enable in a text box."
+  },
+  "con_dcaconfirm":{
+    "message": "Need confirm, before the operation."
   }
 }
