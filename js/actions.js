@@ -10,7 +10,7 @@ let actions={
 		[//group nav
 			{name:"back"},
 			{name:"forward"},
-			{name:"scroll",selects:["n_scroll","n_effect"]},
+			{name:"scroll",selects:["n_scroll"/*,"n_effect"*/],checks:["n_effect"]},
 			{name:"reload",selects:["n_tab"],checks:["n_reload_clear"]},
 			{name:"stop",selects:["n_tab"]},
 			/*{name:"lastlevel"},*/
@@ -276,7 +276,8 @@ let actionOptions={
 		n_closePin:false,
 		n_closeConfirm:true,
 		n_dialog:false,
-		n_duplicatetype:false
+		n_duplicatetype:false,
+		n_effect:true
 	}
 }
 
