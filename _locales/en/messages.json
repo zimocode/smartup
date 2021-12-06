@@ -1781,5 +1781,8 @@
   },
   "con_dcaconfirm":{
     "message": "Need confirm, before the operation."
+  },
+  "ksa":{
+    "message": "Keyboard Shortcut Actions"
   }
 }

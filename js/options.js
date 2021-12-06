@@ -42,7 +42,7 @@ var suo={
 			suo.init();
 			suo.initMenu();
 			suo.initI18n();
-			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca"];
+			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca","ksa"];
 			for(var i=0;i<itemArray.length;i++){
 				suo.initListItem(itemArray[i]);
 			}
@@ -256,7 +256,12 @@ var suo={
 					suo.clickMenuDiv(e);
 				}
 				if(ele.classList.contains("item_edit")){
-					suo.itemEditBefor(e);
+					console.log(e.target)
+					if(e.target.dataset.actiontype&&e.target.dataset.actiontype=="ksa"){
+						suo.itemEditKsa(e);
+					}else{
+						suo.itemEditBefor(e);
+					}
 				}
 				if(ele.classList.contains("item_add")){
 					suo.itemAddBefore(e);
@@ -900,7 +905,8 @@ var suo={
 			||(ele.dataset.id0=="4"&&ele.dataset.id1=="4")
 			||(ele.dataset.id0=="7"&&ele.dataset.id1=="1")
 			||(ele.dataset.id0=="9"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")){
+			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="12"&&ele.dataset.id1=="1")){
 				if(ele.dataset.id0=="1"&&ele.dataset.id1=="2"){
 					suo.showBtnAdd(true,setDom.dataset.confobj+"|script",setDom);
 					return;
@@ -1342,6 +1348,7 @@ var suo={
 		switch(type){
 			case"mges":
 			case"touch":
+			case"ksa":
 				confOBJ=config[type].actions;
 				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item_"+type,suo.getI18n("tip_item")]};
 				actionType=type//+"actions";
@@ -1423,11 +1430,26 @@ var suo={
 			}
 			return;
 		}
-		if(type=="icon"||"dca"){
+		if(type=="icon"||type=="dca"){
 			for(var i=0;i<confOBJ.length;i++){
 				var liOBJ=suo.domCreate2("li",eleOBJ,"","padding-right:0;",{setName:["confid","actiontype"],setValue:[i,actionType]});
 				var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"width:160px;",{setName:["confid","actiontype"],setValue:[i,actionType]},(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name));
 				liOBJ.appendChild(liName);
+				domOBJ.appendChild(liOBJ);
+			}
+			return;
+		}
+		if(type=="ksa"){
+			for(var i=0;i<confOBJ.length;i++){
+				var liOBJ=suo.domCreate2("li",eleOBJ,"","padding-right:0;",{setName:["confid","actiontype"],setValue:[i,actionType]});
+				var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"width:160px;",{setName:["confid","actiontype"],setValue:[i,actionType]},(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name));
+				var liDel=suo.domCreate2("span",{setName:["className","title"],setValue:["item_del",suo.getI18n("tip_del")]},null,null,null,"x");
+				liOBJ.appendChild(liName);
+				liOBJ.appendChild(liDel);
+
+				var _domCode=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null),{setName:["confid","actiontype"],setValue:[i,actionType]},suo.ksa.keyFormat(suo.ksa.keyString(confOBJ[0].codes)));
+				liOBJ.appendChild(_domCode);
+
 				domOBJ.appendChild(liOBJ);
 			}
 			return;
@@ -1464,8 +1486,205 @@ var suo={
 			domOBJ.appendChild(liOBJ);
 		}
 	},
+	ksa:{
+		keyMap:[
+			{key:"Esc",code:27},
+			{key:"F1",code:112},
+			{key:"F2",code:113},
+			{key:"F3",code:114},
+			{key:"F4",code:115},
+			{key:"F5",code:116},
+			{key:"F6",code:117},
+			{key:"F7",code:118},
+			{key:"F8",code:119},
+			{key:"F9",code:120},
+			{key:"F10",code:121},
+			{key:"F11",code:122},
+			{key:"F12",code:123},
+			{key:"Insert",code:45},
+			{key:"Delete",code:46},
+			{key:"Home",code:36},
+			{key:"End",code:35},
+			{key:"`",code:192},
+			{key:"1",code:49},
+			{key:"2",code:50},
+			{key:"3",code:51},
+			{key:"4",code:52},
+			{key:"5",code:53},
+			{key:"6",code:54},
+			{key:"7",code:55},
+			{key:"8",code:56},
+			{key:"9",code:57},
+			{key:"0",code:48},
+			{key:"-",code:189},
+			{key:"=",code:187},
+			{key:"Backspace",code:8},
+			{key:"Tab",code:9},
+			{key:"Q",code:81},
+			{key:"W",code:87},
+			{key:"E",code:69},
+			{key:"R",code:82},
+			{key:"T",code:84},
+			{key:"Y",code:89},
+			{key:"U",code:85},
+			{key:"I",code:73},
+			{key:"O",code:79},
+			{key:"P",code:80},
+			{key:"[",code:219},
+			{key:"]",code:221},
+			//{key:"\\",code:220},
+			{key:"CapsLock",code:20},
+			{key:"A",code:65},
+			{key:"S",code:83},
+			{key:"D",code:68},
+			{key:"F",code:70},
+			{key:"G",code:71},
+			{key:"H",code:72},
+			{key:"J",code:74},
+			{key:"K",code:75},
+			{key:"L",code:76},
+			{key:";",code:186},
+			//{key:"'",code:222},
+			{key:"Enter",code:13},
+
+			{key:"Z",code:90},
+			{key:"X",code:88},
+			{key:"C",code:67},
+			{key:"V",code:86},
+			{key:"B",code:66},
+			{key:"N",code:78},
+			{key:"M",code:77},
+			{key:",",code:188},
+			{key:".",code:190},
+			{key:"/",code:191},
+			{key:"Space",code:32},
+			{key:"PageUp",code:33},
+			{key:"PageDown",code:34}
+		],
+		keyFormat:function(key){
+			var _str="";
+			for(var i=0;i<key.length;i++){
+				_str=(_str?_str+" ":"")+key[i].toString();
+			}
+			return _str;
+		},
+		keyString:function(code){
+			if(!code){return ""}
+			code=code.toString();
+			var codes=code.split(",");
+			var keys=[];
+			for(var i=0;i<codes.length;i++){
+				for(var ii=0;ii<this.keyMap.length;ii++){
+					if(this.keyMap[ii].code==codes[i]){
+						keys.push(this.keyMap[ii].key);
+						break;
+					}
+				}			
+			}
+			return keys;
+		},
+	},
 	dcaKeycus:function(e){
 		
+	},
+	getDataset2:function(e,type){
+		var ele=e.target||e;
+		var getdata=function(ele){
+			if(ele.dataset[type]==""||ele.dataset[type]){
+				return ele;
+			}else{
+				return arguments.callee(ele.parentNode);
+			}
+		}
+		return getdata(ele).dataset[type];
+	},
+	itemEditKsa:function(e){
+		let type="edit";
+		function getDom(ele){
+			ele=ele.target||ele;
+			console.log(ele)
+			if(!ele.dataset.actiontype){
+				return arguments.callee(ele.parentNode);
+			}else{
+				return ele;
+			}
+		}
+		let dom=getDom(e);
+		let confId=suo.getDataset2(e,"confid"),
+			confArray=suo.getDataset2(e,"confobj").split("|"),
+			actionType=suo.getDataset2(e,"actiontype");
+		console.log(confArray)
+
+		let confOBJ=config;
+		for(var i=0;i<confArray.length;i++){
+			confOBJ=confOBJ[confArray[i]];
+		}
+
+		if(type=="edit"){
+			confOBJ=confOBJ[confId];
+		}else{
+			//var newOBJ;//={name:"none",direct:editDirect};
+			//	!editDirect?newOBJ={name:"none"}:newOBJ={name:"none",direct:editDirect};
+			var newOBJ={};
+			if(["txtengine","imgengine","script"].contains(actionType)){
+				newOBJ={name:"none",content:""}
+			}else{
+				!editDirect?newOBJ={name:"none"}:newOBJ={name:"none",direct:editDirect};
+			}
+
+			confOBJ[confOBJ.length]=newOBJ;
+			confOBJ=confOBJ[confOBJ.length-1];
+			//del last id
+			boxOBJ.dataset.close="dellast";
+		}
+		console.log(confOBJ)
+
+		let btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_save")],
+			btnArrayDel=[suo.getI18n("btn_del"),suo.getI18n("btn_cancel"),suo.getI18n("btn_save")];
+		if(type=="edit"){btnArray=btnArrayDel}
+
+		var titleOBJ={
+			newaction:suo.getI18n("title_newaction"),
+			newengine:suo.getI18n("title_newengine"),
+			newscript:suo.getI18n("title_newscript"),
+			editaction:suo.getI18n("title_editaction"),
+			editengine:suo.getI18n("title_editengine"),
+			editscript:suo.getI18n("title_editscript")
+		}
+
+		let domBox=suo.initAPPbox(btnArray,[400,230],titleOBJ.editaction,"bg",actionType);
+		suo.initPos(domBox);
+
+		let domContent=domBox.querySelector(".box_content");
+		console.log(domContent);
+
+		let domTab=suo.domCreate2("div",{setName:["className"],setValue:["box_tab"]});
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,null,"Keys"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,null,"Action"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,null,"More"));
+		domContent.appendChild(domTab);
+
+		let domTabListKeys=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistkeys box_tablistactive"]});
+		let domTabListAction=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistaction"]});
+		let domTabListMore=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistmore"]});
+		domContent.appendChild(domTabListKeys);
+		domContent.appendChild(domTabListAction);
+		domContent.appendChild(domTabListMore);
+
+
+
+		// function getele(ele){
+		// 	ele=ele.target||ele;
+		// 	console.log(ele)
+		// 	if(!ele.dataset.actiontype){
+		// 		return arguments.callee(ele.parentNode);
+		// 	}else{
+		// 		return ele;
+		// 	}
+		// }
+		// var ele=getele(e);
+
+		// suo.itemEdit(suo.getDataset(ele,"confobj","value"),suo.getDataset(ele,"confid","value"),null,null,ele.dataset.actiontype);
 	},
 	itemEdit:function(confobj,confid,type,direct,actiontype){
 		console.log(direct);
@@ -2296,7 +2515,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-115.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-135.confobj>.setcontent");
 					domlog.textContent=""
 
 				var _detailsMore=suo.domCreate2("details");

@@ -4,7 +4,7 @@
 			"ver":"6.8.1477.1121",
 			"date":"2021.11.23",
 			"content":[
-				"new feature: Double Click Action"
+				"new feature: Double Click Action",
 				"fix scroll bugs: issues@github: #177, #176, #175, #170, #121"
 			]
 		},

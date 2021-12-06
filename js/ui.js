@@ -172,8 +172,8 @@ var ui={
 	]
 }
 var menuModel={
-	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca"],
-	main:["fnswitch","general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca","about"],
+	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca","ksa"],
+	main:["fnswitch","general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca","ksa","about"],
 	fnswitch:["setting"],
 	general:["setting",/*"fnswitch",*/"searchmgr","scriptmgr","linux","per","conf"],
 	mges:["setting","ui","gesmgr"],
@@ -188,5 +188,6 @@ var menuModel={
 	apps:["settings"],
 	touch:["setting","ui","action"],
 	dca:["setting","action"],
+	ksa:["setting","action"],
 	about:["about","donatedev","moreext","translate","thanks",/*"help",*/"changelog"]
 }
