@@ -201,6 +201,7 @@ actions.icon=actions.mges;
 actions.ctm=actions.mges;
 actions.pop=actions.mges;
 actions.dca=actions.mges;
+actions.ksa=actions.mges;
 
 let actionOptions={
 	special:{

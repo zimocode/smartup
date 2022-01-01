@@ -2028,3 +2028,74 @@ menu #menu_donate span{
 	border-top-right-radius: 2px;
 	background-color: #ffffffff;
 }
+
+/*new edit box*/
+.box_main{
+	padding: 0;
+}
+.box_content{
+	padding: 0;
+}
+.box_tab{
+	margin: -1px;
+	background-color: #ccc;
+	box-sizing: border-box;
+	height: 24px;
+}
+.box_tabtitle{
+	display: inline-block;
+	box-sizing: border-box;
+	min-width: 50px;
+	text-align: center;
+	padding: 2px;
+	cursor: pointer;
+	height: 24px;
+	line-height: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-weight: bold;
+}
+.box_tabtitle:hover{
+	background-color: #ccf;
+}
+.box_tabtitleactive,.box_tabtitleactive:hover{
+	background-color: #fff;
+}
+
+.box_tabbox{
+	box-sizing: border-box;
+	padding: 8px;
+}
+.box_tablist{
+	display: none;
+}
+.box_tablistactive{
+	display: block;
+}
+
+
+.box_action{
+	box-sizing: border-box;
+	float: left;
+}
+.box_option{
+	/*float: ;*/
+	width: 300px;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 0 8px;
+}
+
+.box_submit{
+	margin: 2px 0;
+}
+.box_submit{
+	background-color: #ccf;
+}
+
+.box_keyvalue:focus{
+	border-color: #fff0;
+	outline: dashed red;
+}
+/*////////////*/

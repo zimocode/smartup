@@ -152,7 +152,10 @@ var sue={
 				if(sue.inDrg&&config.drg.settings.clickcancel){console.log("cancel");sue.break=true;sue.stopMges(e);}
 				break;
 			case"keydown":
-				console.log(e.keyCode)
+				console.log(e.keyCode);
+				if(!editMode&&config.general.fnswitch.fnksa){
+					sue.ksa.action(e);
+				}
 				if(e.keyCode==27){
 					sue.break=true;
 					sue.stopMges(e);
@@ -304,6 +307,40 @@ var sue={
 					chrome.runtime.sendMessage(extID,{type:"action_dca",sendValue:sendValue,selEle:sue.selEle});
 				}	
 				break;
+		}
+	},
+	ksa:{
+		timeout:null,
+		keyArray:[],
+		action:function(e){
+			if(e.target.tagName.toLowerCase()=="input"
+				||e.target.tagName.toLowerCase()=="textarea"
+				||e.keyCode==16
+				||e.keyCode==17
+				||e.keyCode==18){
+					return
+			}
+			sue.ksa.keyArray.push(e.keyCode)	
+			var key={
+				alt:e.altKey,
+				shift:e.shiftKey,
+				ctrl:e.ctrlKey,
+				codes:sue.ksa.keyArray
+			}
+			for(var i=0;i<config.ksa.actions.length;i++){
+				if(key.ctrl==config.ksa.actions[i].ctrl
+					&&key.alt==config.ksa.actions[i].alt
+					&&key.shift==config.ksa.actions[i].shift
+					&&key.codes.toString()==config.ksa.actions[i].codes.toString()){
+						var selEle={txt:window.getSelection().toString()}
+						chrome.runtime.sendMessage(extID,{type:"action_ksa",selEle:selEle,id:i},function(response){})
+						break;
+				}
+			}
+			// window.clearTimeout(sue.ksa.timeout);
+			sue.ksa.timeout=window.setTimeout(function(){
+				sue.ksa.keyArray=[];
+			},config.ksa.settings.timeout)
 		}
 	},
 	domCreate:function(edom,eele,einner,ecss,edata,etxt){

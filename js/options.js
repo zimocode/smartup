@@ -83,6 +83,16 @@ var suo={
 			}
 		}
 		switch(e.type){
+			case"keydown":
+				console.log(e.target);
+				suo.itemEditDca(e);
+
+				//key edit sca
+				console.log(e);
+				if(e.target.classList.contains("box_keyvalue")){
+					suo.keyEdit(e);
+				}
+				break;
 			case"mousedown":
 				if(e.button==0&&(e.target.classList.contains("box_head")||e.target.classList.contains("box_title"))){
 					var boxposX=e.target.classList.contains("box_head")?e.target.parentNode.offsetLeft:e.target.parentNode.parentNode.offsetLeft,
@@ -157,6 +167,11 @@ var suo={
 						suo.saveConf2();
 						break;
 					case"btn_add":
+						if(suo.getDataset(e,"confobj","value").split("|")[0]=="ksa"){
+							e.target.dataset.confid=config.ksa.actions.length;
+							suo.itemEditKsa(e,"new");
+							break;
+						}
 						suo.itemAddBefore(e);
 						break;
 					case"conf_import":
@@ -189,6 +204,12 @@ var suo={
 						suo.saveConf2();
 						window.setTimeout(function(){window.location.reload()},500);
 						break;
+				}
+				if(ele.classList.contains("box_btnkeyrst")){
+					e.target.parentNode.querySelector(".box_keyvalue").value="";
+				}
+				if(ele.classList.contains("box_tabtitle")&&!ele.classList.contains("box_tabtitleactive")){
+					suo.tabSwitch(e);
 				}
 				if(ele.classList.contains("donate_cctext")){
 					ele.select();
@@ -522,6 +543,11 @@ var suo={
 				break;
 		}
 	},
+	keyEdit:function(e){
+		console.log(e);
+		var dom=e.target;
+		dom.value+=(dom.value==""?"":" ")+suo.ksa.keyGet(e.keyCode);
+	},
 	showList:function(e){
 		var btnArray=[];
 		var _dom=suo.initAPPbox(btnArray,[400,230],suo.getI18n("tip_showlist"),"bg","showlist");
@@ -608,12 +634,14 @@ var suo={
 					dom.setAttribute(eele.setName[i],eele.setValue[i]);
 				}else if(eele.setName[i]=="checked"){
 					eele.setValue[i]?dom.setAttribute(eele.setName[i],"checked"):null;
+				}else if(eele.setName[i]=="readonly"){
+					dom.setAttribute(eele.setName[i],"");
 				}else{
 					dom[eele.setName[i]]=eele.setValue[i];
 				}
 			}
 		}
-		if(einner){}
+		if(einner){dom.innerHTML=einner}
 		if(ecss){
 			dom.style.cssText+=ecss;
 		}
@@ -1447,7 +1475,7 @@ var suo={
 				liOBJ.appendChild(liName);
 				liOBJ.appendChild(liDel);
 
-				var _domCode=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null),{setName:["confid","actiontype"],setValue:[i,actionType]},suo.ksa.keyFormat(suo.ksa.keyString(confOBJ[0].codes)));
+				var _domCode=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null),{setName:["confid","actiontype"],setValue:[i,actionType]},suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ[i].codes)));
 				liOBJ.appendChild(_domCode);
 
 				domOBJ.appendChild(liOBJ);
@@ -1568,7 +1596,7 @@ var suo={
 			}
 			return _str;
 		},
-		keyString:function(code){
+		keyGet:function(code){
 			if(!code){return ""}
 			code=code.toString();
 			var codes=code.split(",");
@@ -1583,6 +1611,20 @@ var suo={
 			}
 			return keys;
 		},
+		keyToCode:function(key){
+			if(!key){return "";}
+			var keys=key.split(" "),
+				codes=[];
+			for(var i=0;i<keys.length;i++){
+				for(var ii=0;ii<this.keyMap.length;ii++){
+					if(this.keyMap[ii].key==keys[i]){
+						codes.push(this.keyMap[ii].code);
+						break;
+					}
+				}
+			}
+			return codes;
+		}
 	},
 	dcaKeycus:function(e){
 		
@@ -1598,8 +1640,33 @@ var suo={
 		}
 		return getdata(ele).dataset[type];
 	},
-	itemEditKsa:function(e){
-		let type="edit";
+	itemEditDca:function(e){
+		return;
+		if(!editMode||e.target.classList.contains("box_text")||e.target.classList.contains("box_note")||e.target.classList.contains("box_destext")){return;}
+		e.preventDefault();
+		var dombox=document.querySelector("smartkey.sk_apps_edit"),
+			domkeybox=dombox.querySelector(".box_keyvalue");
+		if(!sdo.cons.editedConf.conf.code){sdo.cons.editedConf.conf.code=[]}
+		var _keyarray=["ctrl","alt","shift"];
+		for(var i=0;i<_keyarray.length;i++){
+			var _dom=dombox.querySelector("#box_"+_keyarray[i]);
+			if(e[_keyarray[i]+"Key"]){
+				_dom.checked=true;
+			}else{
+				_dom.checked=false;
+			}
+		}
+		var _key=sdo.codeToKey(e.keyCode);
+		domkeybox.value+=_key?(" "+_key):"";
+		if(_key){
+			sdo.cons.editedConf.conf.code.push(e.keyCode);
+		}
+	},
+	itemEditKsa:function(e,editType){
+		let type=editType||"edit";
+		if(type=="new"){
+
+		}
 		function getDom(ele){
 			ele=ele.target||ele;
 			console.log(ele)
@@ -1613,7 +1680,8 @@ var suo={
 		let confId=suo.getDataset2(e,"confid"),
 			confArray=suo.getDataset2(e,"confobj").split("|"),
 			actionType=suo.getDataset2(e,"actiontype");
-		console.log(confArray)
+		console.log(confArray);
+		console.log(dom);
 
 		let confOBJ=config;
 		for(var i=0;i<confArray.length;i++){
@@ -1635,7 +1703,7 @@ var suo={
 			confOBJ[confOBJ.length]=newOBJ;
 			confOBJ=confOBJ[confOBJ.length-1];
 			//del last id
-			boxOBJ.dataset.close="dellast";
+			// dom.dataset.close="dellast";
 		}
 		console.log(confOBJ)
 
@@ -1653,23 +1721,41 @@ var suo={
 		}
 
 		let domBox=suo.initAPPbox(btnArray,[400,230],titleOBJ.editaction,"bg",actionType);
+		domBox.dataset.id=confId;
+		domBox.dataset.confid=confId;
+		domBox.dataset.confobj=confArray.join("|");
 		suo.initPos(domBox);
+
+		//del last id when type=new
+		if(type=="new"){
+			domBox.dataset.close="dellast";			
+		}
+
 
 		let domContent=domBox.querySelector(".box_content");
 		console.log(domContent);
 
 		let domTab=suo.domCreate2("div",{setName:["className"],setValue:["box_tab"]});
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,null,"Keys"));
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,null,"Action"));
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,null,"More"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,{setName:["tab"],setValue:["keys"]},"Keys"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["action"]},"Action"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["more"]},"More"));
 		domContent.appendChild(domTab);
 
-		let domTabListKeys=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistkeys box_tablistactive"]});
-		let domTabListAction=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistaction"]});
-		let domTabListMore=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistmore"]});
-		domContent.appendChild(domTabListKeys);
-		domContent.appendChild(domTabListAction);
-		domContent.appendChild(domTabListMore);
+		let domTabbox=suo.domCreate2("div",{setName:["className"],setValue:["box_tabbox"]});
+		let domTabListKeys=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistkeys box_tablistactive"]},null,null,{setName:["tab"],setValue:["keys"]});
+		let domTabListAction=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistaction"]},null,null,{setName:["tab"],setValue:["action"]});
+		let domTabListMore=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistmore"]},null,null,{setName:["tab"],setValue:["more"]});
+		domTabbox.appendChild(domTabListKeys);
+		domTabbox.appendChild(domTabListAction);
+		domTabbox.appendChild(domTabListMore);
+		domContent.appendChild(domTabbox);
+
+		domTabListKeys.appendChild(suo.itemKey(confOBJ));
+		domTabListAction.appendChild(suo.itemAction2(confOBJ,"mges"));
+		domTabListAction.appendChild(suo.itemOption(confOBJ,"mges"));
+		// domTabListAction.appendChild(suo.itemDes(confOBJ));
+		// domTabListAction.appendChild(suo.itemMore(confOBJ,"mges"));
+		domTabListMore.appendChild(suo.itemNote(confOBJ,"mges"));
 
 
 
@@ -1815,6 +1901,45 @@ var suo={
 			boxBGOBJ?boxBGOBJ.style.cssText+="opacity:.8;":null;
 		},200)
 	},
+	tabSwitch:function(e){
+		console.log("tabSwitch");
+		let dom=suo.getAPPboxEle(e);
+		let tabId=e.target.dataset.tab;
+		let domTabs=dom.querySelectorAll(".box_tab>.box_tabtitle"),
+			domLists=dom.querySelectorAll(".box_tabbox>.box_tablist");
+		console.log(domTabs)
+		for(var i=0;i<domTabs.length;i++){
+			if(domTabs[i].dataset.tab==tabId){
+				domTabs[i].classList.add("box_tabtitleactive");
+			}else{
+				domTabs[i].classList.remove("box_tabtitleactive");
+			}
+		}
+		for(var i=0;i<domLists.length;i++){
+			if(domLists[i].dataset.tab==tabId){
+				domLists[i].classList.add("box_tablistactive");
+			}else{
+				domLists[i].classList.remove("box_tablistactive");
+			}
+		}
+	},
+	itemKey:function(confOBJ){
+		console.log("key");
+		console.log(confOBJ);
+		let dom=suo.domCreate2("div",{setName:["className"],setValue:["box_key"]}),
+			_str="<input id='box_ctrl' type='checkbox'"+(confOBJ.ctrl?"checked":"")+"><label for='box_ctrl'>Ctrl</label>"
+			+"<input id='box_alt' type='checkbox'"+(confOBJ.alt?"checked":"")+"><label for='box_alt'>Alt</label>"
+			+"<input id='box_shift' type='checkbox'"+(confOBJ.shift?"checked":"")+"><label for='box_shift'>Shift</label>",
+			// +"<input id='box_reset' type='button' value='"+suo.getI18n("btn_reset")+"' style='height:20px;line-height:20px;min-width:60px;margin:1px;float:right;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);'>",
+			_resetBtn=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_btnkeyrst","button",suo.getI18n("btn_reset")]},null,null,null);
+			metabox=suo.domCreate2("div",null,_str,"padding:3px 0;");
+			codebox=suo.domCreate2("input",{setName:["type","value","className","readonly"],setValue:["text",suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ.codes)),"box_keyvalue",""]});
+
+		dom.appendChild(codebox);
+		dom.appendChild(_resetBtn);
+		dom.appendChild(metabox);
+		return dom;
+	},
 	itemNote:function(confOBJ,type){
 		var dom=suo.domCreate2("div");
 		var notevalue=confOBJ.note?confOBJ.note.value:"";
@@ -1888,6 +2013,144 @@ var suo={
 		domSelect.selectedIndex=index;
 		return domSelect;
 	},
+	itemAction2:function(confOBJ,actionType){
+		let dom=suo.domCreate2("div",{setName:["className"],setValue:["box_action"]});
+
+		var valueOBJ={setName:["name","className"],setValue:[actionType,"box_select actionselect"]};
+		var domSelect=suo.domCreate2("select",valueOBJ,null,null,{setName:["actiontype"],setValue:[actionType]});//edom,eele,einner,ecss,edata,etxt
+		var flag=0,index=0;
+		if("tsdrg lsdrg isdrg".indexOf(actionType)!=-1){
+			actionType=actionType.substr(0,1)+actionType.substr(2);
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
+			actionType="mges"
+		}
+		for(var i=0;i<actions[actionType+"_group"].length;i++){
+			var domOptgroup=suo.domCreate2("optgroup",{setName:["label"],setValue:[suo.getI18n(actions[actionType+"_group"][i])]});
+			for(var j=0;j<actions[actionType][i].length;j++){
+				var domOption=suo.domCreate2("option",{setName:["value"],setValue:[actions[actionType][i][j]["name"]]},null,null,null,suo.getI18n(actions[actionType][i][j]["name"]));
+				domOptgroup.appendChild(domOption);
+				if(confOBJ.name==actions[actionType][i][j]["name"]){index=flag;}
+				flag+=1;
+			}
+			domSelect.appendChild(domOptgroup);
+		}
+		domSelect.selectedIndex=index;
+
+		dom.appendChild(domSelect);
+		return dom;
+	},
+	itemOption:function(confOBJ,actionType){
+		// fix new added options of actions dont show and delete droped options.
+		for(var i=0;i<actions[actionType].length;i++){
+			for(var ii=0;ii<actions[actionType][i].length;ii++){
+				if(actions[actionType][i][ii].name==confOBJ.name){
+					var arrayConfType=["selects","texts","checks","ranges"];
+					for(var act in arrayConfType){
+						if(actions[actionType][i][ii][arrayConfType[act]]){
+							var _arrayConf=[],
+								_arrayModel=[];
+							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
+								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							}
+
+							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
+								_arrayModel.push(actions[actionType][i][ii][arrayConfType[act]][jj]);
+							}
+
+							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
+								if(confOBJ[arrayConfType[act]]){
+									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
+										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									}
+								}else{
+									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
+									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+								}
+							}
+
+							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
+									confOBJ[arrayConfType[act]].splice(j,1);
+								}
+							}
+						}							
+					}
+					break;
+				}				
+			}
+		}
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_option box_more"]});
+
+		var domDes=suo.domCreate2("div",{setName:["className"],setValue:["box_desbox"]});
+		// var spacelabel=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
+		// var spacelabel2=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
+		var checkbox=suo.domCreate2("input",{setName:["id","className","type"],setValue:["box_mydes","box_desck","checkbox"]});
+			checkbox.checked=confOBJ.mydes?confOBJ.mydes.type:false;
+		var checklabel=suo.domCreate2("label","",null,null,null,suo.getI18n("tip_actionname"));
+		var destext=suo.domCreate2("input",{setName:["id","className","type","value"],setValue:["mydestext","box_destext","text",confOBJ.mydes?confOBJ.mydes.value:""]});
+		if(!confOBJ.mydes||!confOBJ.mydes.type){
+			destext.style.display="none";
+		}
+		checklabel.setAttribute("for","box_mydes");
+		domDes.appendChild(checkbox);
+		domDes.appendChild(checklabel);
+		domDes.appendChild(suo.domCreate2("br"));
+		domDes.appendChild(destext);
+		dom.appendChild(domDes);
+
+		if(confOBJ.texts){
+			for(var i=0;i<confOBJ.texts.length;i++){
+				//fix action of mail
+				if(confOBJ.texts[i].type=="n_mail_domain"){
+					var _css,_class;
+					if(confOBJ.selects[0].value=="s_gmailapps"){
+						_css="display:inline-block";
+						_class="confix confix-no";
+					}else{
+						_css="display:none";
+						_class="confix confix-yes"
+					}
+					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
+					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
+					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+					_div.appendChild(suo.domCreate2("br"));
+					dom.appendChild(_div);
+					continue;
+				}
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
+				dom.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.selects){
+			for(var i=0;i<confOBJ.selects.length;i++){
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.selects[i].type)));
+				dom.appendChild(suo.createMoreSelect(confOBJ.selects[i].type,confOBJ.selects[i].value,confOBJ));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.ranges){
+			console.log("range")
+			for(var i=0;i<confOBJ.ranges.length;i++){
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
+				dom.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.checks){
+			for(var i=0;i<confOBJ.checks.length;i++){
+				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
+				dom.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
+				dom.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+
+
+
+		return dom;
+	},
 	itemMore:function(confOBJ,actionType){
 		console.log(confOBJ)
 
@@ -1900,7 +2163,7 @@ var suo={
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
 								_arrayModel=[];
-							for(var jj=0;jj<confOBJ[arrayConfType[act]].length;jj++){
+							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
 								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
 							}
 
@@ -2148,6 +2411,23 @@ var suo={
 				confOBJ.ranges?(delete confOBJ.ranges):null;
 			}
 			//confOBJ.ranges=theRanges;
+
+			//keys
+			var theCodes=[],
+				codesOBJ=dom.querySelector(".box_keyvalue");
+			codesOBJ?theCodes=suo.ksa.keyToCode(codesOBJ.value):null;
+			if(theCodes.length>0){
+				confOBJ.codes=theCodes;
+			}else{
+				confOBJ.codes?(delete confOBJ.codes):null;
+			}
+
+			var codeCtrlOBJ=dom.querySelector(".box_key #box_ctrl"),
+				codeAltOBJ=dom.querySelector(".box_key #box_alt"),
+				codeShiftOBJ=dom.querySelector(".box_key #box_shift");
+			codeCtrlOBJ?confOBJ.ctrl=codeCtrlOBJ.checked:null;
+			codeAltOBJ?confOBJ.alt=codeAltOBJ.checked:null;
+			codeShiftOBJ?confOBJ.shift=codeShiftOBJ.checked:null;
 		}
 		suo.saveConf();
 		suo.initActionEle();
@@ -2305,8 +2585,15 @@ var suo={
 			// boxdom.querySelector("#mydesbox #mydestext").value="";
 			// boxdom.querySelector("#mydesbox #mydestext").style.display="none";
 		}
-		getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
-		getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
+		if(getele(ele).querySelector(".actionbox")){
+			getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
+			getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
+		}else if(getele(ele).querySelector(".box_option")){
+			getele(ele).querySelector(".box_option").innerHTML="";
+			getele(ele).querySelector(".box_option").appendChild(suo.itemOption(theOBJ,actionType));
+		}
+		// getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
+		// getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
 		return;
 	},
 	getPermission:function(permission){
@@ -2690,7 +2977,7 @@ var suo={
 		// btnOBJ.style.cssText+="display:block;";
 
 		if(!dom.querySelector("#btn_add")){
-			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj"],setValue:[confobj]}));
+			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj","actiontype"],setValue:[confobj,confobj.split("|")[0]]}));
 		};
 		if(!dom.querySelector(".btn_list")&&(confobj&&(confobj.indexOf("script")==-1&&confobj.indexOf("ctm")==-1&&confobj.indexOf("pop")==-1))){
 			dom.appendChild(suo.domCreate2("img",{setName:["className","src","title"],setValue:["btn_list","../image/list.svg",suo.getI18n("tip_showlist")]},null,null,{setName:["confobj"],setValue:[confobj]}));
@@ -2823,6 +3110,8 @@ var suo={
 		return getele(ele);
 	},
 	getDataset:function(e,type,returntype){
+		console.log(e);
+		console.log(type+"//"+returntype)
 		var ele=e.target||e;
 		var type=type?type:"confobj",
 			returntype=returntype?returntype:"ele";

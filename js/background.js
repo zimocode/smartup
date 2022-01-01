@@ -3926,6 +3926,28 @@ var sub={
 				console.log(_sendConf)
 				sendResponse(_sendConf);
 				break;
+			case"action_ksa":
+				sub.theConf=config.ksa.actions[sub.message.id];
+				if(sub.theConf.name=="paste"){//for action paste
+					sendResponse(sub.theConf);//error log, if none sendResponse
+					sub.checkPermission(["clipboardRead"],null,function(){
+						var domCB=document.createElement("textarea");
+							domCB.classList.add("su_cb_textarea");
+						document.body.appendChild(domCB);
+						domCB.focus();
+						document.execCommand("paste");
+						sub.theConf.paste=domCB.value;
+						sub.theConf.typeAction="paste";
+						chrome.tabs.sendMessage(sender.tab.id,{type:"actionPaste",value:sub.theConf},function(response){
+							domCB.remove();
+						});
+					});
+				}else{
+					console.log("s")
+					sendResponse(sub.theConf);
+				}
+				sub.initCurrent(sender,sub.theConf);
+				break		
 			case"action":
 				sub.theConf=getConf();
 				sub.theConf.type="action";
