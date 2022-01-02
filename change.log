@@ -1,8 +1,8 @@
 {
 	"log": [
 		{
-			"ver":"7.0.12.1127",
-			"date":"2022.1.1",
+			"ver":"7.0.123.1128",
+			"date":"2022.1.2",
 			"content":[
 				"new feature: Double Click Action, Keyboard Shortcut Actions",
 				"fix scroll bugs: issues@github: #177, #176, #175, #170, #121"

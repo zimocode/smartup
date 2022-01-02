@@ -42,7 +42,27 @@ var suo={
 			suo.init();
 			suo.initMenu();
 			suo.initI18n();
-			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca","ksa"];
+			// var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca","ksa"];
+			var itemArray=["txtengine","imgengine","script"];
+
+			var arrayFn=Object.getOwnPropertyNames(config.general.fnswitch);
+			for(var i=0;i<arrayFn.length;i++){
+				if(config.general.fnswitch[arrayFn[i]]){}else{
+					continue;
+				}
+				if(arrayFn[i].substr(2)=="drg"){
+					itemArray.push("tdrg");
+					itemArray.push("ldrg");
+					itemArray.push("idrg");
+				}else if(arrayFn[i].substr(2)=="sdrg"){
+					itemArray.push("tsdrg");
+					itemArray.push("lsdrg");
+					itemArray.push("isdrg");
+				}else{
+					itemArray.push(arrayFn[i].substr(2));
+				}
+			}
+
 			for(var i=0;i<itemArray.length;i++){
 				suo.initListItem(itemArray[i]);
 			}
@@ -87,7 +107,7 @@ var suo={
 				console.log(e.target);
 				suo.itemEditDca(e);
 
-				//key edit sca
+				//key edit ksa
 				console.log(e);
 				if(e.target.classList.contains("box_keyvalue")){
 					suo.keyEdit(e);
@@ -1329,6 +1349,7 @@ var suo={
 				config[ele.dataset.confele.substr(2)]=defaultConf[ele.dataset.confele.substr(2)];
 				suo.saveConf();
 			}
+			suo.initListItem(ele.dataset.confele.substr(2));
 		}else{
 			suo.domHide(domOBJ);
 		}
