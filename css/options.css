@@ -2038,7 +2038,7 @@ menu #menu_donate span{
 }
 .box_tab{
 	margin: -1px;
-	background-color: #ccc;
+	background-color: #8e99f3;
 	box-sizing: border-box;
 	height: 24px;
 }
@@ -2047,20 +2047,23 @@ menu #menu_donate span{
 	box-sizing: border-box;
 	min-width: 50px;
 	text-align: center;
-	padding: 2px;
+	padding: 0 12px;
 	cursor: pointer;
 	height: 24px;
-	line-height: 100%;
+	line-height: 24px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	font-weight: bold;
+	color: #26418f;
 }
 .box_tabtitle:hover{
-	background-color: #ccf;
+	background-color: #26418f;
+	color: #fff;
 }
 .box_tabtitleactive,.box_tabtitleactive:hover{
 	background-color: #fff;
+	color: #26418f;
 }
 
 .box_tabbox{
@@ -2088,10 +2091,19 @@ menu #menu_donate span{
 }
 
 .box_submit{
-	margin: 2px 0;
+	margin: 0;
+}
+.box_content{
+	border-radius: 0;
 }
 .box_submit{
-	background-color: #ccf;
+	background-color: #8e99f3;
+}
+.box_head{
+	background-color: #5c6bc0;
+}
+smartup.su_apps{
+	border: 1px solid #5c6bc0;
 }
 
 .box_keyvalue:focus{

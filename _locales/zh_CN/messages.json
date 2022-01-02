@@ -207,7 +207,7 @@
     "message":"如果你的电脑与Google的服务器连接不顺畅，或者扩展的配置经常被重置，可以试试不选中此项。请尝试通过导出配置文件来保存你的设置。"
   },
   "des_item": {
-    "message": "单击列表项进入编辑，点击“X”删除，“+”添加。"
+    "message": "单击列表项进入编辑，点击“X”删除，“+”添加，拖动排序。"
   },
   "des_fnswitch": {
     "message": "建议按需启用，禁用不会用到的功能。"
@@ -1735,5 +1735,44 @@
   },
   "app_shorturl_keyholder":{
     "message":"输入关键词，留空则自动生成"
+  },
+  "dca":{
+    "message":"双击操作"
+  },
+  "con_dcatrigger":{
+    "message":"按住以下键触发："
+  },
+  "con_dcakeynone":{
+    "message":"无"
+  },
+  "con_dcakeyctrl": {
+    "message": "Alt、Ctrl或Shift："
+  },
+  "con_dcakeycus": {
+    "message": "使用自定义键："
+  },
+  "con_dcabox": {
+    "message": "在文本框中启用。"
+  },
+  "con_dcaconfirm":{
+    "message": "操作执行前需要确认。"
+  },
+  "con_dcaselnothing":{
+    "message": "仅当未选中内容时才有效。"
+  },
+  "ksa":{
+    "message": "快捷键操作"
+  },
+  "con_keys":{
+    "message": "按键"
+  },
+  "con_actions":{
+    "message": "操作"
+  },
+  "con_others":{
+    "message": "其它"
+  },
+  "tip_enterkeys":{
+    "message":"使用键盘输入按键"
   }
 }

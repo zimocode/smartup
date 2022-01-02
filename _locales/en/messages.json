@@ -210,7 +210,7 @@
     "message":"If you can't connect the browser's service (Google,Mozilla and so on) easily, or configuration cant be saved and aways reset to last one, you may try to uncheck this, by exporting the configuration to preserve your settings."
   },
   "des_item": {
-    "message": "Click item to edit, click 'X' to delete, and, '+' to add a new item."
+    "message": "Click item to edit, 'X' to delete, '+' to add a new one, and, drag to sort."
   },
   "des_fnswitch": {
     "message": "Based on individual needs to choose, advised to turn off the feature which is not commonly used."
@@ -1782,7 +1782,22 @@
   "con_dcaconfirm":{
     "message": "Need confirm, before the operation."
   },
+  "con_dcaselnothing":{
+    "message": "Only enabled when there is nothing be selected."
+  },
   "ksa":{
     "message": "Keyboard Shortcut Actions"
+  },
+  "con_keys":{
+    "message": "KEYS"
+  },
+  "con_actions":{
+    "message": "ACTIONS"
+  },
+  "con_others":{
+    "message": "OTHERS"
+  },
+  "tip_enterkeys":{
+    "message":"Use keyboard to enter keys"
   }
 }

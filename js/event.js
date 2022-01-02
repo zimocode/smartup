@@ -304,6 +304,20 @@ var sue={
 					if(config.dca.settings.confirm&&!window.confirm(chrome.i18n.getMessage("dca_confirmmessage"))){
 						break;
 					}
+					if(config.dca.settings.selnothing&&window.getSelection().toString().trim()!=""){
+						break;
+					}
+					//cancel dca when on some elements: select, radio, button,
+					if(e.target.tagName.toLowerCase()=="select"
+						||e.target.tagName.toLowerCase()=="button"
+						||(e.target.tagName.toLowerCase()=="input"&&e.target.type=="text")
+						||(e.target.tagName.toLowerCase()=="input"&&e.target.type=="checkbox")
+						||(e.target.tagName.toLowerCase()=="input"&&e.target.type=="radio")
+						||(e.target.tagName.toLowerCase()=="input"&&e.target.type=="range")
+						||(e.target.tagName.toLowerCase()=="input"&&e.target.type=="color")
+						){
+						break;
+					}
 					chrome.runtime.sendMessage(extID,{type:"action_dca",sendValue:sendValue,selEle:sue.selEle});
 				}	
 				break;

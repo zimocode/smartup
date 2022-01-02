@@ -760,30 +760,44 @@ var getDefault={
 				},
 				dca:{
 					settings:{
-						keytype:"ctrl",
-						ctrl:"ctrl",
-						cus:"",
+						keytype:"hotkey",
+						hotkey:"ctrl",
+						cuskey:"",
 						confirm:false,
-						box:false
+						box:false,
+						selnothing:true
 					},
 					actions:[
 						{
-							name:"close",
-							mydes:{type:true,value:getDefault.i18n("init_close_current")},
+							name:"newtab",
 							selects:[
-								{type:"n_tab",value:"s_current"},
-								{type:"n_close_sel",value:"s_default"}
+								{type:"n_optype",value:"n_new"},
+								{type:"n_position",value:"s_default"}
 							],
 							checks:[
-								{type:"n_close_keep",value:false},
-								{type:"n_closePin",value:false},
-								{type:"n_closeConfirm",value:true}
-							],
-							radio:[
-								{keytype:"holdkey"}
+								{type:"n_pin",value:false}
 							]
 						}
 					]
+				},
+				ksa:{
+					settings:{
+						timeout:1000
+					},
+					actions:[{
+						name:"newtab",
+						selects:[
+							{type:"n_optype",value:"n_new"},
+							{type:"n_position",value:"s_default"}
+						],
+						checks:[
+							{type:"n_pin",value:false}
+						],
+						codes:[79,69,87],
+						ctrl:false,
+						alt:false,
+						shift:false						
+					}]
 				},
 				about:{
 					donatedev:{

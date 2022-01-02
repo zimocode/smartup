@@ -31,7 +31,7 @@ var suo={
 		sizePos:{},
 		menuPin:true,
 		boxmove:{},
-		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2]]
+		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2],[12,1]]
 	},
 	boxShowFrom:null,
 	selects:["xx"],
@@ -545,6 +545,7 @@ var suo={
 	},
 	keyEdit:function(e){
 		console.log(e);
+		editMode=true;
 		var dom=e.target;
 		dom.value+=(dom.value==""?"":" ")+suo.ksa.keyGet(e.keyCode);
 	},
@@ -1736,9 +1737,9 @@ var suo={
 		console.log(domContent);
 
 		let domTab=suo.domCreate2("div",{setName:["className"],setValue:["box_tab"]});
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,{setName:["tab"],setValue:["keys"]},"Keys"));
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["action"]},"Action"));
-			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["more"]},"More"));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,{setName:["tab"],setValue:["keys"]},suo.getI18n("con_keys")));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["action"]},suo.getI18n("con_actions")));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["more"]},suo.getI18n("con_others")));
 		domContent.appendChild(domTab);
 
 		let domTabbox=suo.domCreate2("div",{setName:["className"],setValue:["box_tabbox"]});
@@ -1933,7 +1934,7 @@ var suo={
 			// +"<input id='box_reset' type='button' value='"+suo.getI18n("btn_reset")+"' style='height:20px;line-height:20px;min-width:60px;margin:1px;float:right;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);'>",
 			_resetBtn=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_btnkeyrst","button",suo.getI18n("btn_reset")]},null,null,null);
 			metabox=suo.domCreate2("div",null,_str,"padding:3px 0;");
-			codebox=suo.domCreate2("input",{setName:["type","value","className","readonly"],setValue:["text",suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ.codes)),"box_keyvalue",""]});
+			codebox=suo.domCreate2("input",{setName:["type","value","className","readonly","placeholder","title"],setValue:["text",suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ.codes)),"box_keyvalue","",suo.getI18n("tip_enterkeys"),suo.getI18n("tip_enterkeys")]});
 
 		dom.appendChild(codebox);
 		dom.appendChild(_resetBtn);
@@ -2747,7 +2748,7 @@ var suo={
 		//show about
 		if(localStorage.getItem("showabout")){
 				suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-				suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
+				suo.clickMenuLI(document.querySelector("li[data-id0='13'][data-id1='0']"));
 				localStorage.removeItem("showabout");
 		}
 		//init webstore url

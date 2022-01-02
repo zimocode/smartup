@@ -485,21 +485,22 @@
                 <span class="init-delay init_radio change change_radio" data-confele="keytype" style="display: inline-block;margin-left: 20px;">
                     <input id="dca_keynone" class="init-delay change change_radio" data-confele="none" value="none" type="radio" name="keytype"><label for="dca_keynone" data-i18n="con_dcakeynone"></label><br />
 
-                    <input id="dca_keyctrl" class="init-delay change change_radio" data-confele="ctrl" value="ctrl" type="radio" name="keytype"><label for="dca_keyctrl" data-i18n="con_dcakeyctrl"></label><br />
-                    <select name="" id="" class="init-delay setmargin change-select" data-confele="ctrl">
+                    <input id="dca_keyctrl" class="init-delay change change_radio" data-confele="hotkey" value="hotkey" type="radio" name="keytype"><label for="dca_keyctrl" data-i18n="con_dcakeyctrl"></label><br />
+                    <select name="" id="" class="init-delay setmargin change-select" data-confele="hotkey">
                         <option value="alt" data-i18n="s_alt">Alt</option>
                         <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
                         <option value="shift" data-i18n="s_shift">Shift</option>
                     </select><br />
 
-                    <input id="dca_keycus" class="init-delay change change_radio" data-confele="cus" value="cus" type="radio" name="keytype"><label for="dca_keycus" data-i18n="con_dcakeycus"></label><br />
-                    <input id="dca_keycusbox" class="init-delay setmargin" data-confele="cus" type="text" readonly="readonly">
+                    <input id="dca_keycus" class="init-delay change change_radio" data-confele="cuskey" value="cuskey" type="radio" name="keytype"><label for="dca_keycus" data-i18n="con_dcakeycus"></label><br />
+                    <input id="dca_keycusbox" class="init-delay setmargin" data-confele="cuskey" type="text" readonly="readonly">
                     <input id="dca_keycusreset" type="button" name="" value="RESET"><br />
                 </span><br />
 
 
                 <input class="init-delay change-checkbox" data-confele="box" type="checkbox"><label data-i18n="con_dcabox"></label><br />
-                <input class="init-delay change-checkbox" data-confele="confirm" type="checkbox"><label data-i18n="con_dcaconfirm"></label>
+                <input class="init-delay change-checkbox" data-confele="confirm" type="checkbox"><label data-i18n="con_dcaconfirm"></label><br />
+                <input class="init-delay change-checkbox" data-confele="selnothing" type="checkbox"><label data-i18n="con_dcaselnothing"></label>
             </div>
         </div>
         <div data-confobj="dca|actions" class="set set-111 confobj">
@@ -514,7 +515,7 @@
             <div class="setname" data-i18n="stnm_settings"></div>
             <div class="setcontent">
                 <label for="con-timeout" data-i18n="con_timeout"></label><br />
-                <input class="init uirange change-range" data-confele="timeout" type="range" min="100" max="10000" step="100" style="margin-left:24px;"><span class="uirangebox">2</span><span class="box_unit">( ms )</span><br />
+                <input class="init-delay uirange change-range" data-confele="timeout" type="range" min="200" max="2000" step="100" style="margin-left:24px;"><span class="uirangebox">2</span><span class="box_unit">( ms )</span><br />
             </div>
         </div>
         <div data-confobj="ksa|actions" class="set set-121 confobj">
