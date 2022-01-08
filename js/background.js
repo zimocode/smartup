@@ -760,7 +760,7 @@ var getDefault={
 				},
 				dca:{
 					settings:{
-						keytype:"hotkey",
+						keytype:"none",
 						hotkey:"ctrl",
 						cuskey:"",
 						confirm:false,
@@ -793,7 +793,7 @@ var getDefault={
 						checks:[
 							{type:"n_pin",value:false}
 						],
-						codes:[79,69,87],
+						codes:[78,69,87],
 						ctrl:false,
 						alt:false,
 						shift:false						

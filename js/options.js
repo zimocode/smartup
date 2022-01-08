@@ -2763,7 +2763,7 @@ var suo={
 		//show log
 		if(localStorage.getItem("showlog")=="true"){
 			suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-			suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
+			suo.clickMenuLI(document.querySelector("li[data-id0='13'][data-id1='0']"));
 			localStorage.removeItem("showlog");
 		}
 		//show about
