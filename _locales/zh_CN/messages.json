@@ -1774,5 +1774,14 @@
   },
   "tip_enterkeys":{
     "message":"使用键盘输入按键"
+  },
+  "reopenincognito":{
+    "message":"在隐身窗口中重新打开"
+  },
+  "n_reopenkeep":{
+    "message":"保留原始标签页"
+  },
+  "s_incogback":{
+    "message":"隐身窗口（后台）"
   }
 }

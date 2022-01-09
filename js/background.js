@@ -1626,6 +1626,13 @@ var sub={
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
 		},
+		reopenincognito:function(){
+			chrome.windows.create({url:sub.curTab.url,incognito:true,state:sub.getConfValue("selects","n_optype")=="s_incog"?"normal":"minimized"},function(window){
+				if(!sub.getConfValue("checks","n_reopenkeep")){
+					chrome.tabs.remove(sub.curTab.id);
+				}
+			})
+		},
 		open:function(){//chk
 			sub.open(sub.getConfValue("texts","n_url"),sub.getConfValue("selects","n_optype"),sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],sub.getConfValue("checks","n_pin"));
 		},
