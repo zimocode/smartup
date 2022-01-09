@@ -79,7 +79,8 @@ var getDefault={
 						fnwges:false,
 						fnpop:false,
 						fnicon:false,
-						fnctm:false
+						fnctm:false,
+						fndca:false
 					},
 					engine:{
 						txtengine:[
@@ -755,6 +756,47 @@ var getDefault={
 							name:"optionspage"
 						}
 					]
+				},
+				dca:{
+					settings:{
+						keytype:"none",
+						hotkey:"ctrl",
+						cuskey:"",
+						confirm:false,
+						box:false,
+						selnothing:true
+					},
+					actions:[
+						{
+							name:"newtab",
+							selects:[
+								{type:"n_optype",value:"n_new"},
+								{type:"n_position",value:"s_default"}
+							],
+							checks:[
+								{type:"n_pin",value:false}
+							]
+						}
+					]
+				},
+				ksa:{
+					settings:{
+						timeout:1000
+					},
+					actions:[{
+						name:"newtab",
+						selects:[
+							{type:"n_optype",value:"n_new"},
+							{type:"n_position",value:"s_default"}
+						],
+						checks:[
+							{type:"n_pin",value:false}
+						],
+						codes:[78,69,87],
+						ctrl:false,
+						alt:false,
+						shift:false						
+					}]
 				},
 				about:{
 					donatedev:{
@@ -3859,6 +3901,16 @@ var sub={
 				}
 				sub.initCurrent(sender,sub.theConf)
 				break;
+			case"action_dca":
+				sub.theConf=config.dca.actions[0];
+				if(sub.theConf.name=="scroll"){//fix action scrollame});
+					window.setTimeout(function(){
+						sub.initCurrent(sender,sub.theConf);
+					},200)
+					return
+				}
+				sub.initCurrent(sender,sub.theConf)				
+				break;
 			case"gettip":
 				sub.theConf=getConf();
 				let _sendConf={};
@@ -3887,6 +3939,28 @@ var sub={
 				console.log(_sendConf)
 				sendResponse(_sendConf);
 				break;
+			case"action_ksa":
+				sub.theConf=config.ksa.actions[sub.message.id];
+				if(sub.theConf.name=="paste"){//for action paste
+					sendResponse(sub.theConf);//error log, if none sendResponse
+					sub.checkPermission(["clipboardRead"],null,function(){
+						var domCB=document.createElement("textarea");
+							domCB.classList.add("su_cb_textarea");
+						document.body.appendChild(domCB);
+						domCB.focus();
+						document.execCommand("paste");
+						sub.theConf.paste=domCB.value;
+						sub.theConf.typeAction="paste";
+						chrome.tabs.sendMessage(sender.tab.id,{type:"actionPaste",value:sub.theConf},function(response){
+							domCB.remove();
+						});
+					});
+				}else{
+					console.log("s")
+					sendResponse(sub.theConf);
+				}
+				sub.initCurrent(sender,sub.theConf);
+				break		
 			case"action":
 				sub.theConf=getConf();
 				sub.theConf.type="action";
@@ -3905,6 +3979,7 @@ var sub={
 						});
 					});
 				}else{
+					console.log("s")
 					sendResponse(sub.theConf);
 				}
 				sub.initCurrent(sender,sub.theConf);

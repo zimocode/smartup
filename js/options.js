@@ -31,7 +31,7 @@ var suo={
 		sizePos:{},
 		menuPin:true,
 		boxmove:{},
-		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2]]
+		sort:[[2,2],[4,2],[4,3],[4,4],[7,1],[9,1],[10,2],[12,1]]
 	},
 	boxShowFrom:null,
 	selects:["xx"],
@@ -42,7 +42,27 @@ var suo={
 			suo.init();
 			suo.initMenu();
 			suo.initI18n();
-			var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch"];
+			// var itemArray=["mges","tdrg","ldrg","idrg","txtengine","imgengine","script","tsdrg","lsdrg","isdrg","rges","wges","pop","icon","ctm","touch","dca","ksa"];
+			var itemArray=["txtengine","imgengine","script"];
+
+			var arrayFn=Object.getOwnPropertyNames(config.general.fnswitch);
+			for(var i=0;i<arrayFn.length;i++){
+				if(config.general.fnswitch[arrayFn[i]]){}else{
+					continue;
+				}
+				if(arrayFn[i].substr(2)=="drg"){
+					itemArray.push("tdrg");
+					itemArray.push("ldrg");
+					itemArray.push("idrg");
+				}else if(arrayFn[i].substr(2)=="sdrg"){
+					itemArray.push("tsdrg");
+					itemArray.push("lsdrg");
+					itemArray.push("isdrg");
+				}else{
+					itemArray.push(arrayFn[i].substr(2));
+				}
+			}
+
 			for(var i=0;i<itemArray.length;i++){
 				suo.initListItem(itemArray[i]);
 			}
@@ -72,6 +92,7 @@ var suo={
 		window.addEventListener("mouseleave",this.handleEvent,false);
 		window.addEventListener("resize",this.handleEvent,false);
 		window.addEventListener("mousedown",this.handleEvent,false);
+		window.addEventListener("keydown",this.handleEvent,false);
 	},
 	handleEvent:function(e){
 		let getDragEle=function(ele){
@@ -82,6 +103,16 @@ var suo={
 			}
 		}
 		switch(e.type){
+			case"keydown":
+				console.log(e.target);
+				suo.itemEditDca(e);
+
+				//key edit ksa
+				console.log(e);
+				if(e.target.classList.contains("box_keyvalue")){
+					suo.keyEdit(e);
+				}
+				break;
 			case"mousedown":
 				if(e.button==0&&(e.target.classList.contains("box_head")||e.target.classList.contains("box_title"))){
 					var boxposX=e.target.classList.contains("box_head")?e.target.parentNode.offsetLeft:e.target.parentNode.parentNode.offsetLeft,
@@ -94,6 +125,13 @@ var suo={
 			case"click":
 				var ele=e.target;
 				switch(ele.id){
+					case"dca_keycusreset":
+						document.querySelector("#dca_keycusbox").value="";
+						suo.saveConf();
+						break;
+					case"dca_keycusbox":
+						suo.dcaKeycus(e);
+						break;
 					case"donate_btn_close":
 					case"donate_btn_hide":
 						suo.donateBox.hideDonate(ele);
@@ -149,6 +187,11 @@ var suo={
 						suo.saveConf2();
 						break;
 					case"btn_add":
+						if(suo.getDataset(e,"confobj","value").split("|")[0]=="ksa"){
+							e.target.dataset.confid=config.ksa.actions.length;
+							suo.itemEditKsa(e,"new");
+							break;
+						}
 						suo.itemAddBefore(e);
 						break;
 					case"conf_import":
@@ -181,6 +224,12 @@ var suo={
 						suo.saveConf2();
 						window.setTimeout(function(){window.location.reload()},500);
 						break;
+				}
+				if(ele.classList.contains("box_btnkeyrst")){
+					e.target.parentNode.querySelector(".box_keyvalue").value="";
+				}
+				if(ele.classList.contains("box_tabtitle")&&!ele.classList.contains("box_tabtitleactive")){
+					suo.tabSwitch(e);
 				}
 				if(ele.classList.contains("donate_cctext")){
 					ele.select();
@@ -248,7 +297,12 @@ var suo={
 					suo.clickMenuDiv(e);
 				}
 				if(ele.classList.contains("item_edit")){
-					suo.itemEditBefor(e);
+					console.log(e.target)
+					if(e.target.dataset.actiontype&&e.target.dataset.actiontype=="ksa"){
+						suo.itemEditKsa(e);
+					}else{
+						suo.itemEditBefor(e);
+					}
 				}
 				if(ele.classList.contains("item_add")){
 					suo.itemAddBefore(e);
@@ -509,6 +563,12 @@ var suo={
 				break;
 		}
 	},
+	keyEdit:function(e){
+		console.log(e);
+		editMode=true;
+		var dom=e.target;
+		dom.value+=(dom.value==""?"":" ")+suo.ksa.keyGet(e.keyCode);
+	},
 	showList:function(e){
 		var btnArray=[];
 		var _dom=suo.initAPPbox(btnArray,[400,230],suo.getI18n("tip_showlist"),"bg","showlist");
@@ -595,12 +655,14 @@ var suo={
 					dom.setAttribute(eele.setName[i],eele.setValue[i]);
 				}else if(eele.setName[i]=="checked"){
 					eele.setValue[i]?dom.setAttribute(eele.setName[i],"checked"):null;
+				}else if(eele.setName[i]=="readonly"){
+					dom.setAttribute(eele.setName[i],"");
 				}else{
 					dom[eele.setName[i]]=eele.setValue[i];
 				}
 			}
 		}
-		if(einner){}
+		if(einner){dom.innerHTML=einner}
 		if(ecss){
 			dom.style.cssText+=ecss;
 		}
@@ -871,6 +933,7 @@ var suo={
 			window.setTimeout(function(){
 				setDom.style.cssText+="opacity:.9;transition:all .9s ease-in-out;"
 			},10)
+			suo.initValue(setDom,true)
 		}
 		//document.querySelector("#nav_txt").innerText=ele.parentNode.previousSibling.innerText+" · "+ele.innerText;
 		console.log(setDom)
@@ -891,7 +954,8 @@ var suo={
 			||(ele.dataset.id0=="4"&&ele.dataset.id1=="4")
 			||(ele.dataset.id0=="7"&&ele.dataset.id1=="1")
 			||(ele.dataset.id0=="9"&&ele.dataset.id1=="1")
-			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")){
+			||(ele.dataset.id0=="10"&&ele.dataset.id1=="2")
+			||(ele.dataset.id0=="12"&&ele.dataset.id1=="1")){
 				if(ele.dataset.id0=="1"&&ele.dataset.id1=="2"){
 					suo.showBtnAdd(true,setDom.dataset.confobj+"|script",setDom);
 					return;
@@ -1070,11 +1134,14 @@ var suo={
 			var setcontent=suo.domCreate2("div");
 		}
 	},
-	initValue:function(){
+	initValue:function(delayDom,delay){
 		//return
 		suo.initId();
 		//return;
 		var doms=document.querySelectorAll(".init");
+		if(delay){
+			doms=delayDom.querySelectorAll(".init-delay");
+		}
 		for(var i=0;i<doms.length;i++){
 			var confOBJ=suo.getConfOBJ(doms[i]);
 			//var value//=confOBJ[doms[i].dataset.confele];
@@ -1277,9 +1344,14 @@ var suo={
 		var ele=e.target||e;
 		var domOBJ=document.querySelector("#m-"+ele.dataset.confele.substr(2,ele.dataset.confele.length-2));
 		if(ele.checked){
-			suo.domShow(domOBJ)
+			suo.domShow(domOBJ);
+			if(!config[ele.dataset.confele.substr(2)]){
+				config[ele.dataset.confele.substr(2)]=defaultConf[ele.dataset.confele.substr(2)];
+				suo.saveConf();
+			}
+			suo.initListItem(ele.dataset.confele.substr(2));
 		}else{
-			suo.domHide(domOBJ)
+			suo.domHide(domOBJ);
 		}
 	},
 	initPer:function(){
@@ -1326,6 +1398,7 @@ var suo={
 		switch(type){
 			case"mges":
 			case"touch":
+			case"ksa":
 				confOBJ=config[type].actions;
 				eleOBJ={setName:["className","title"],setValue:["item item_edit item_more item_"+type,suo.getI18n("tip_item")]};
 				actionType=type//+"actions";
@@ -1360,6 +1433,7 @@ var suo={
 			case"pop":
 			case"icon":
 			case"ctm":
+			case"dca":
 				confOBJ=config[type].actions;
 				eleOBJ={setName:["className"],setValue:["item item_edit item-"+type+" edit_"+type]};
 				actionType=type;
@@ -1406,11 +1480,26 @@ var suo={
 			}
 			return;
 		}
-		if(type=="icon"){
+		if(type=="icon"||type=="dca"){
 			for(var i=0;i<confOBJ.length;i++){
 				var liOBJ=suo.domCreate2("li",eleOBJ,"","padding-right:0;",{setName:["confid","actiontype"],setValue:[i,actionType]});
 				var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"width:160px;",{setName:["confid","actiontype"],setValue:[i,actionType]},(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name));
 				liOBJ.appendChild(liName);
+				domOBJ.appendChild(liOBJ);
+			}
+			return;
+		}
+		if(type=="ksa"){
+			for(var i=0;i<confOBJ.length;i++){
+				var liOBJ=suo.domCreate2("li",eleOBJ,"","padding-right:0;",{setName:["confid","actiontype"],setValue:[i,actionType]});
+				var liName=suo.domCreate2("span",{setName:["className"],setValue:["item_name item_edit"]},null,"width:160px;",{setName:["confid","actiontype"],setValue:[i,actionType]},(confOBJ[i].mydes&&confOBJ[i].mydes.type&&confOBJ[i].mydes.value)?confOBJ[i].mydes.value:suo.getI18n(confOBJ[i].name));
+				var liDel=suo.domCreate2("span",{setName:["className","title"],setValue:["item_del",suo.getI18n("tip_del")]},null,null,null,"x");
+				liOBJ.appendChild(liName);
+				liOBJ.appendChild(liDel);
+
+				var _domCode=suo.domCreate2("span",{setName:["className"],setValue:["item_dir item_edit"]},null,(confOBJ[i].note&&confOBJ[i].note.value?"height:18px;line-height:18px;":null),{setName:["confid","actiontype"],setValue:[i,actionType]},suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ[i].codes)));
+				liOBJ.appendChild(_domCode);
+
 				domOBJ.appendChild(liOBJ);
 			}
 			return;
@@ -1446,6 +1535,264 @@ var suo={
 			}
 			domOBJ.appendChild(liOBJ);
 		}
+	},
+	ksa:{
+		keyMap:[
+			{key:"Esc",code:27},
+			{key:"F1",code:112},
+			{key:"F2",code:113},
+			{key:"F3",code:114},
+			{key:"F4",code:115},
+			{key:"F5",code:116},
+			{key:"F6",code:117},
+			{key:"F7",code:118},
+			{key:"F8",code:119},
+			{key:"F9",code:120},
+			{key:"F10",code:121},
+			{key:"F11",code:122},
+			{key:"F12",code:123},
+			{key:"Insert",code:45},
+			{key:"Delete",code:46},
+			{key:"Home",code:36},
+			{key:"End",code:35},
+			{key:"`",code:192},
+			{key:"1",code:49},
+			{key:"2",code:50},
+			{key:"3",code:51},
+			{key:"4",code:52},
+			{key:"5",code:53},
+			{key:"6",code:54},
+			{key:"7",code:55},
+			{key:"8",code:56},
+			{key:"9",code:57},
+			{key:"0",code:48},
+			{key:"-",code:189},
+			{key:"=",code:187},
+			{key:"Backspace",code:8},
+			{key:"Tab",code:9},
+			{key:"Q",code:81},
+			{key:"W",code:87},
+			{key:"E",code:69},
+			{key:"R",code:82},
+			{key:"T",code:84},
+			{key:"Y",code:89},
+			{key:"U",code:85},
+			{key:"I",code:73},
+			{key:"O",code:79},
+			{key:"P",code:80},
+			{key:"[",code:219},
+			{key:"]",code:221},
+			//{key:"\\",code:220},
+			{key:"CapsLock",code:20},
+			{key:"A",code:65},
+			{key:"S",code:83},
+			{key:"D",code:68},
+			{key:"F",code:70},
+			{key:"G",code:71},
+			{key:"H",code:72},
+			{key:"J",code:74},
+			{key:"K",code:75},
+			{key:"L",code:76},
+			{key:";",code:186},
+			//{key:"'",code:222},
+			{key:"Enter",code:13},
+
+			{key:"Z",code:90},
+			{key:"X",code:88},
+			{key:"C",code:67},
+			{key:"V",code:86},
+			{key:"B",code:66},
+			{key:"N",code:78},
+			{key:"M",code:77},
+			{key:",",code:188},
+			{key:".",code:190},
+			{key:"/",code:191},
+			{key:"Space",code:32},
+			{key:"PageUp",code:33},
+			{key:"PageDown",code:34}
+		],
+		keyFormat:function(key){
+			var _str="";
+			for(var i=0;i<key.length;i++){
+				_str=(_str?_str+" ":"")+key[i].toString();
+			}
+			return _str;
+		},
+		keyGet:function(code){
+			if(!code){return ""}
+			code=code.toString();
+			var codes=code.split(",");
+			var keys=[];
+			for(var i=0;i<codes.length;i++){
+				for(var ii=0;ii<this.keyMap.length;ii++){
+					if(this.keyMap[ii].code==codes[i]){
+						keys.push(this.keyMap[ii].key);
+						break;
+					}
+				}			
+			}
+			return keys;
+		},
+		keyToCode:function(key){
+			if(!key){return "";}
+			var keys=key.split(" "),
+				codes=[];
+			for(var i=0;i<keys.length;i++){
+				for(var ii=0;ii<this.keyMap.length;ii++){
+					if(this.keyMap[ii].key==keys[i]){
+						codes.push(this.keyMap[ii].code);
+						break;
+					}
+				}
+			}
+			return codes;
+		}
+	},
+	dcaKeycus:function(e){
+		
+	},
+	getDataset2:function(e,type){
+		var ele=e.target||e;
+		var getdata=function(ele){
+			if(ele.dataset[type]==""||ele.dataset[type]){
+				return ele;
+			}else{
+				return arguments.callee(ele.parentNode);
+			}
+		}
+		return getdata(ele).dataset[type];
+	},
+	itemEditDca:function(e){
+		return;
+		if(!editMode||e.target.classList.contains("box_text")||e.target.classList.contains("box_note")||e.target.classList.contains("box_destext")){return;}
+		e.preventDefault();
+		var dombox=document.querySelector("smartkey.sk_apps_edit"),
+			domkeybox=dombox.querySelector(".box_keyvalue");
+		if(!sdo.cons.editedConf.conf.code){sdo.cons.editedConf.conf.code=[]}
+		var _keyarray=["ctrl","alt","shift"];
+		for(var i=0;i<_keyarray.length;i++){
+			var _dom=dombox.querySelector("#box_"+_keyarray[i]);
+			if(e[_keyarray[i]+"Key"]){
+				_dom.checked=true;
+			}else{
+				_dom.checked=false;
+			}
+		}
+		var _key=sdo.codeToKey(e.keyCode);
+		domkeybox.value+=_key?(" "+_key):"";
+		if(_key){
+			sdo.cons.editedConf.conf.code.push(e.keyCode);
+		}
+	},
+	itemEditKsa:function(e,editType){
+		let type=editType||"edit";
+		if(type=="new"){
+
+		}
+		function getDom(ele){
+			ele=ele.target||ele;
+			console.log(ele)
+			if(!ele.dataset.actiontype){
+				return arguments.callee(ele.parentNode);
+			}else{
+				return ele;
+			}
+		}
+		let dom=getDom(e);
+		let confId=suo.getDataset2(e,"confid"),
+			confArray=suo.getDataset2(e,"confobj").split("|"),
+			actionType=suo.getDataset2(e,"actiontype");
+		console.log(confArray);
+		console.log(dom);
+
+		let confOBJ=config;
+		for(var i=0;i<confArray.length;i++){
+			confOBJ=confOBJ[confArray[i]];
+		}
+
+		if(type=="edit"){
+			confOBJ=confOBJ[confId];
+		}else{
+			//var newOBJ;//={name:"none",direct:editDirect};
+			//	!editDirect?newOBJ={name:"none"}:newOBJ={name:"none",direct:editDirect};
+			var newOBJ={};
+			if(["txtengine","imgengine","script"].contains(actionType)){
+				newOBJ={name:"none",content:""}
+			}else{
+				!editDirect?newOBJ={name:"none"}:newOBJ={name:"none",direct:editDirect};
+			}
+
+			confOBJ[confOBJ.length]=newOBJ;
+			confOBJ=confOBJ[confOBJ.length-1];
+			//del last id
+			// dom.dataset.close="dellast";
+		}
+		console.log(confOBJ)
+
+		let btnArray=["",suo.getI18n("btn_cancel"),suo.getI18n("btn_save")],
+			btnArrayDel=[suo.getI18n("btn_del"),suo.getI18n("btn_cancel"),suo.getI18n("btn_save")];
+		if(type=="edit"){btnArray=btnArrayDel}
+
+		var titleOBJ={
+			newaction:suo.getI18n("title_newaction"),
+			newengine:suo.getI18n("title_newengine"),
+			newscript:suo.getI18n("title_newscript"),
+			editaction:suo.getI18n("title_editaction"),
+			editengine:suo.getI18n("title_editengine"),
+			editscript:suo.getI18n("title_editscript")
+		}
+
+		let domBox=suo.initAPPbox(btnArray,[400,230],titleOBJ.editaction,"bg",actionType);
+		domBox.dataset.id=confId;
+		domBox.dataset.confid=confId;
+		domBox.dataset.confobj=confArray.join("|");
+		suo.initPos(domBox);
+
+		//del last id when type=new
+		if(type=="new"){
+			domBox.dataset.close="dellast";			
+		}
+
+
+		let domContent=domBox.querySelector(".box_content");
+		console.log(domContent);
+
+		let domTab=suo.domCreate2("div",{setName:["className"],setValue:["box_tab"]});
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle box_tabtitleactive"]},null,null,{setName:["tab"],setValue:["keys"]},suo.getI18n("con_keys")));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["action"]},suo.getI18n("con_actions")));
+			domTab.appendChild(suo.domCreate2("span",{setName:["className"],setValue:["box_tabtitle"]},null,null,{setName:["tab"],setValue:["more"]},suo.getI18n("con_others")));
+		domContent.appendChild(domTab);
+
+		let domTabbox=suo.domCreate2("div",{setName:["className"],setValue:["box_tabbox"]});
+		let domTabListKeys=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistkeys box_tablistactive"]},null,null,{setName:["tab"],setValue:["keys"]});
+		let domTabListAction=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistaction"]},null,null,{setName:["tab"],setValue:["action"]});
+		let domTabListMore=suo.domCreate2("div",{setName:["className"],setValue:["box_tablist box_tablistmore"]},null,null,{setName:["tab"],setValue:["more"]});
+		domTabbox.appendChild(domTabListKeys);
+		domTabbox.appendChild(domTabListAction);
+		domTabbox.appendChild(domTabListMore);
+		domContent.appendChild(domTabbox);
+
+		domTabListKeys.appendChild(suo.itemKey(confOBJ));
+		domTabListAction.appendChild(suo.itemAction2(confOBJ,"mges"));
+		domTabListAction.appendChild(suo.itemOption(confOBJ,"mges"));
+		// domTabListAction.appendChild(suo.itemDes(confOBJ));
+		// domTabListAction.appendChild(suo.itemMore(confOBJ,"mges"));
+		domTabListMore.appendChild(suo.itemNote(confOBJ,"mges"));
+
+
+
+		// function getele(ele){
+		// 	ele=ele.target||ele;
+		// 	console.log(ele)
+		// 	if(!ele.dataset.actiontype){
+		// 		return arguments.callee(ele.parentNode);
+		// 	}else{
+		// 		return ele;
+		// 	}
+		// }
+		// var ele=getele(e);
+
+		// suo.itemEdit(suo.getDataset(ele,"confobj","value"),suo.getDataset(ele,"confid","value"),null,null,ele.dataset.actiontype);
 	},
 	itemEdit:function(confobj,confid,type,direct,actiontype){
 		console.log(direct);
@@ -1550,7 +1897,7 @@ var suo={
 			actionBox.appendChild(suo.itemMore(confOBJ,actiontype));
 			domContent.appendChild(actionBox);
 			domContent.appendChild(suo.domCreate2("div","","","clear:both;"));
-		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"){
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
 			var actionBox=suo.domCreate2("div",{setName:["className"],setValue:["actionbox"]});
 			var actionType=actionType;
 			var actionName=confOBJ.name;
@@ -1575,6 +1922,45 @@ var suo={
 			dom.style.cssText+="opacity:.98;top:"+(window.innerHeight-_height)/2+"px;";
 			boxBGOBJ?boxBGOBJ.style.cssText+="opacity:.8;":null;
 		},200)
+	},
+	tabSwitch:function(e){
+		console.log("tabSwitch");
+		let dom=suo.getAPPboxEle(e);
+		let tabId=e.target.dataset.tab;
+		let domTabs=dom.querySelectorAll(".box_tab>.box_tabtitle"),
+			domLists=dom.querySelectorAll(".box_tabbox>.box_tablist");
+		console.log(domTabs)
+		for(var i=0;i<domTabs.length;i++){
+			if(domTabs[i].dataset.tab==tabId){
+				domTabs[i].classList.add("box_tabtitleactive");
+			}else{
+				domTabs[i].classList.remove("box_tabtitleactive");
+			}
+		}
+		for(var i=0;i<domLists.length;i++){
+			if(domLists[i].dataset.tab==tabId){
+				domLists[i].classList.add("box_tablistactive");
+			}else{
+				domLists[i].classList.remove("box_tablistactive");
+			}
+		}
+	},
+	itemKey:function(confOBJ){
+		console.log("key");
+		console.log(confOBJ);
+		let dom=suo.domCreate2("div",{setName:["className"],setValue:["box_key"]}),
+			_str="<input id='box_ctrl' type='checkbox'"+(confOBJ.ctrl?"checked":"")+"><label for='box_ctrl'>Ctrl</label>"
+			+"<input id='box_alt' type='checkbox'"+(confOBJ.alt?"checked":"")+"><label for='box_alt'>Alt</label>"
+			+"<input id='box_shift' type='checkbox'"+(confOBJ.shift?"checked":"")+"><label for='box_shift'>Shift</label>",
+			// +"<input id='box_reset' type='button' value='"+suo.getI18n("btn_reset")+"' style='height:20px;line-height:20px;min-width:60px;margin:1px;float:right;box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.26);'>",
+			_resetBtn=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_btnkeyrst","button",suo.getI18n("btn_reset")]},null,null,null);
+			metabox=suo.domCreate2("div",null,_str,"padding:3px 0;");
+			codebox=suo.domCreate2("input",{setName:["type","value","className","readonly","placeholder","title"],setValue:["text",suo.ksa.keyFormat(suo.ksa.keyGet(confOBJ.codes)),"box_keyvalue","",suo.getI18n("tip_enterkeys"),suo.getI18n("tip_enterkeys")]});
+
+		dom.appendChild(codebox);
+		dom.appendChild(_resetBtn);
+		dom.appendChild(metabox);
+		return dom;
 	},
 	itemNote:function(confOBJ,type){
 		var dom=suo.domCreate2("div");
@@ -1633,7 +2019,7 @@ var suo={
 		var flag=0,index=0;
 		if("tsdrg lsdrg isdrg".indexOf(actionType)!=-1){
 			actionType=actionType.substr(0,1)+actionType.substr(2);
-		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"){
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
 			actionType="mges"
 		}
 		for(var i=0;i<actions[actionType+"_group"].length;i++){
@@ -1649,6 +2035,144 @@ var suo={
 		domSelect.selectedIndex=index;
 		return domSelect;
 	},
+	itemAction2:function(confOBJ,actionType){
+		let dom=suo.domCreate2("div",{setName:["className"],setValue:["box_action"]});
+
+		var valueOBJ={setName:["name","className"],setValue:[actionType,"box_select actionselect"]};
+		var domSelect=suo.domCreate2("select",valueOBJ,null,null,{setName:["actiontype"],setValue:[actionType]});//edom,eele,einner,ecss,edata,etxt
+		var flag=0,index=0;
+		if("tsdrg lsdrg isdrg".indexOf(actionType)!=-1){
+			actionType=actionType.substr(0,1)+actionType.substr(2);
+		}else if(actionType=="rges"||actionType=="wges"||actionType=="pop"||actionType=="icon"||actionType=="ctm"||actionType=="dca"){
+			actionType="mges"
+		}
+		for(var i=0;i<actions[actionType+"_group"].length;i++){
+			var domOptgroup=suo.domCreate2("optgroup",{setName:["label"],setValue:[suo.getI18n(actions[actionType+"_group"][i])]});
+			for(var j=0;j<actions[actionType][i].length;j++){
+				var domOption=suo.domCreate2("option",{setName:["value"],setValue:[actions[actionType][i][j]["name"]]},null,null,null,suo.getI18n(actions[actionType][i][j]["name"]));
+				domOptgroup.appendChild(domOption);
+				if(confOBJ.name==actions[actionType][i][j]["name"]){index=flag;}
+				flag+=1;
+			}
+			domSelect.appendChild(domOptgroup);
+		}
+		domSelect.selectedIndex=index;
+
+		dom.appendChild(domSelect);
+		return dom;
+	},
+	itemOption:function(confOBJ,actionType){
+		// fix new added options of actions dont show and delete droped options.
+		for(var i=0;i<actions[actionType].length;i++){
+			for(var ii=0;ii<actions[actionType][i].length;ii++){
+				if(actions[actionType][i][ii].name==confOBJ.name){
+					var arrayConfType=["selects","texts","checks","ranges"];
+					for(var act in arrayConfType){
+						if(actions[actionType][i][ii][arrayConfType[act]]){
+							var _arrayConf=[],
+								_arrayModel=[];
+							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
+								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							}
+
+							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
+								_arrayModel.push(actions[actionType][i][ii][arrayConfType[act]][jj]);
+							}
+
+							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
+								if(confOBJ[arrayConfType[act]]){
+									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
+										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									}
+								}else{
+									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
+									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+								}
+							}
+
+							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
+									confOBJ[arrayConfType[act]].splice(j,1);
+								}
+							}
+						}							
+					}
+					break;
+				}				
+			}
+		}
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_option box_more"]});
+
+		var domDes=suo.domCreate2("div",{setName:["className"],setValue:["box_desbox"]});
+		// var spacelabel=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
+		// var spacelabel2=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
+		var checkbox=suo.domCreate2("input",{setName:["id","className","type"],setValue:["box_mydes","box_desck","checkbox"]});
+			checkbox.checked=confOBJ.mydes?confOBJ.mydes.type:false;
+		var checklabel=suo.domCreate2("label","",null,null,null,suo.getI18n("tip_actionname"));
+		var destext=suo.domCreate2("input",{setName:["id","className","type","value"],setValue:["mydestext","box_destext","text",confOBJ.mydes?confOBJ.mydes.value:""]});
+		if(!confOBJ.mydes||!confOBJ.mydes.type){
+			destext.style.display="none";
+		}
+		checklabel.setAttribute("for","box_mydes");
+		domDes.appendChild(checkbox);
+		domDes.appendChild(checklabel);
+		domDes.appendChild(suo.domCreate2("br"));
+		domDes.appendChild(destext);
+		dom.appendChild(domDes);
+
+		if(confOBJ.texts){
+			for(var i=0;i<confOBJ.texts.length;i++){
+				//fix action of mail
+				if(confOBJ.texts[i].type=="n_mail_domain"){
+					var _css,_class;
+					if(confOBJ.selects[0].value=="s_gmailapps"){
+						_css="display:inline-block";
+						_class="confix confix-no";
+					}else{
+						_css="display:none";
+						_class="confix confix-yes"
+					}
+					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
+					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
+					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+					_div.appendChild(suo.domCreate2("br"));
+					dom.appendChild(_div);
+					continue;
+				}
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
+				dom.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.selects){
+			for(var i=0;i<confOBJ.selects.length;i++){
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.selects[i].type)));
+				dom.appendChild(suo.createMoreSelect(confOBJ.selects[i].type,confOBJ.selects[i].value,confOBJ));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.ranges){
+			console.log("range")
+			for(var i=0;i<confOBJ.ranges.length;i++){
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
+				dom.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.checks){
+			for(var i=0;i<confOBJ.checks.length;i++){
+				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
+				dom.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
+				dom.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
+				dom.appendChild(suo.domCreate2("br"));
+			}
+		}
+
+
+
+		return dom;
+	},
 	itemMore:function(confOBJ,actionType){
 		console.log(confOBJ)
 
@@ -1661,7 +2185,7 @@ var suo={
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
 								_arrayModel=[];
-							for(var jj=0;jj<confOBJ[arrayConfType[act]].length;jj++){
+							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
 								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
 							}
 
@@ -1909,6 +2433,23 @@ var suo={
 				confOBJ.ranges?(delete confOBJ.ranges):null;
 			}
 			//confOBJ.ranges=theRanges;
+
+			//keys
+			var theCodes=[],
+				codesOBJ=dom.querySelector(".box_keyvalue");
+			codesOBJ?theCodes=suo.ksa.keyToCode(codesOBJ.value):null;
+			if(theCodes.length>0){
+				confOBJ.codes=theCodes;
+			}else{
+				confOBJ.codes?(delete confOBJ.codes):null;
+			}
+
+			var codeCtrlOBJ=dom.querySelector(".box_key #box_ctrl"),
+				codeAltOBJ=dom.querySelector(".box_key #box_alt"),
+				codeShiftOBJ=dom.querySelector(".box_key #box_shift");
+			codeCtrlOBJ?confOBJ.ctrl=codeCtrlOBJ.checked:null;
+			codeAltOBJ?confOBJ.alt=codeAltOBJ.checked:null;
+			codeShiftOBJ?confOBJ.shift=codeShiftOBJ.checked:null;
 		}
 		suo.saveConf();
 		suo.initActionEle();
@@ -2066,8 +2607,15 @@ var suo={
 			// boxdom.querySelector("#mydesbox #mydestext").value="";
 			// boxdom.querySelector("#mydesbox #mydestext").style.display="none";
 		}
-		getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
-		getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
+		if(getele(ele).querySelector(".actionbox")){
+			getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
+			getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
+		}else if(getele(ele).querySelector(".box_option")){
+			getele(ele).querySelector(".box_option").innerHTML="";
+			getele(ele).querySelector(".box_option").appendChild(suo.itemOption(theOBJ,actionType));
+		}
+		// getele(ele).querySelector(".actionbox").appendChild(suo.itemDes(theOBJ));
+		// getele(ele).querySelector(".actionbox").appendChild(suo.itemMore(theOBJ,actionType));
 		return;
 	},
 	getPermission:function(permission){
@@ -2215,13 +2763,13 @@ var suo={
 		//show log
 		if(localStorage.getItem("showlog")=="true"){
 			suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-			suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
+			suo.clickMenuLI(document.querySelector("li[data-id0='13'][data-id1='0']"));
 			localStorage.removeItem("showlog");
 		}
 		//show about
 		if(localStorage.getItem("showabout")){
 				suo.clickMenuDiv(document.querySelector("div[data-confobj='about']"));
-				suo.clickMenuLI(document.querySelector("li[data-id0='11'][data-id1='5']"));
+				suo.clickMenuLI(document.querySelector("li[data-id0='13'][data-id1='0']"));
 				localStorage.removeItem("showabout");
 		}
 		//init webstore url
@@ -2276,7 +2824,7 @@ var suo={
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState == 4){
 				var xhrLog=JSON.parse(xhr.response);
-				var domlog=document.querySelector(".set.set-115.confobj>.setcontent");
+				var domlog=document.querySelector(".set.set-135.confobj>.setcontent");
 					domlog.textContent=""
 
 				var _detailsMore=suo.domCreate2("details");
@@ -2451,7 +2999,7 @@ var suo={
 		// btnOBJ.style.cssText+="display:block;";
 
 		if(!dom.querySelector("#btn_add")){
-			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj"],setValue:[confobj]}));
+			dom.appendChild(suo.domCreate2("img",{setName:["id","src","title"],setValue:["btn_add","../image/add.svg",suo.getI18n("tip_addnew")]},null,null,{setName:["confobj","actiontype"],setValue:[confobj,confobj.split("|")[0]]}));
 		};
 		if(!dom.querySelector(".btn_list")&&(confobj&&(confobj.indexOf("script")==-1&&confobj.indexOf("ctm")==-1&&confobj.indexOf("pop")==-1))){
 			dom.appendChild(suo.domCreate2("img",{setName:["className","src","title"],setValue:["btn_list","../image/list.svg",suo.getI18n("tip_showlist")]},null,null,{setName:["confobj"],setValue:[confobj]}));
@@ -2584,6 +3132,8 @@ var suo={
 		return getele(ele);
 	},
 	getDataset:function(e,type,returntype){
+		console.log(e);
+		console.log(type+"//"+returntype)
 		var ele=e.target||e;
 		var type=type?type:"confobj",
 			returntype=returntype?returntype:"ele";

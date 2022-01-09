@@ -478,7 +478,55 @@
                 <div style="clear:both;"></div>
             </div>
         </div>
-        <div class="set set-110 confobj" data-confobj="">
+        <div data-confobj="dca|settings" class="set set-110 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <span data-i18n="con_dcatrigger"></span><br />
+                <span class="init-delay init_radio change change_radio" data-confele="keytype" style="display: inline-block;margin-left: 20px;">
+                    <input id="dca_keynone" class="init-delay change change_radio" data-confele="none" value="none" type="radio" name="keytype"><label for="dca_keynone" data-i18n="con_dcakeynone"></label><br />
+
+                    <input id="dca_keyctrl" class="init-delay change change_radio" data-confele="hotkey" value="hotkey" type="radio" name="keytype"><label for="dca_keyctrl" data-i18n="con_dcakeyctrl"></label><br />
+                    <select name="" id="" class="init-delay setmargin change-select" data-confele="hotkey">
+                        <option value="alt" data-i18n="s_alt">Alt</option>
+                        <option value="ctrl" data-i18n="s_ctrl">Ctrl</option>
+                        <option value="shift" data-i18n="s_shift">Shift</option>
+                    </select><br />
+
+                    <input id="dca_keycus" class="init-delay change change_radio" data-confele="cuskey" value="cuskey" type="radio" name="keytype"><label for="dca_keycus" data-i18n="con_dcakeycus"></label><br />
+                    <input id="dca_keycusbox" class="init-delay setmargin" data-confele="cuskey" type="text" readonly="readonly">
+                    <input id="dca_keycusreset" type="button" name="" value="RESET"><br />
+                </span><br />
+
+
+                <input class="init-delay change-checkbox" data-confele="box" type="checkbox"><label data-i18n="con_dcabox"></label><br />
+                <input class="init-delay change-checkbox" data-confele="confirm" type="checkbox"><label data-i18n="con_dcaconfirm"></label><br />
+                <input class="init-delay change-checkbox" data-confele="selnothing" type="checkbox"><label data-i18n="con_dcaselnothing"></label>
+            </div>
+        </div>
+        <div data-confobj="dca|actions" class="set set-111 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="dca|actions">
+                <ul class="con-item ul_dca"></ul>
+                <div style="clear:both;"></div>
+                <!-- <div class="setdes" data-i18n="des_item"></div> -->
+            </div>
+        </div>
+        <div data-confobj="ksa|settings" class="set set-120 confobj">
+            <div class="setname" data-i18n="stnm_settings"></div>
+            <div class="setcontent">
+                <label for="con-timeout" data-i18n="con_timeout"></label><br />
+                <input class="init-delay uirange change-range" data-confele="timeout" type="range" min="200" max="2000" step="100" style="margin-left:24px;"><span class="uirangebox">2</span><span class="box_unit">( ms )</span><br />
+            </div>
+        </div>
+        <div data-confobj="ksa|actions" class="set set-121 confobj">
+            <div class="setname" data-i18n="stnm_action"></div>
+            <div class="setcontent" data-confobj="ksa|actions">
+                <ul class="con-item ul_ksa"></ul>
+                <div style="clear:both;"></div>
+                <div class="setdes" data-i18n="des_item"></div>
+            </div>
+        </div>
+        <div class="set set-130 confobj" data-confobj="">
             <div class="setname" data-i18n="about"></div>
             <div class="setcontent">
                 <div id="about_main">
@@ -507,21 +555,21 @@
                 </div>
             </div>
         </div>
-        <div class="set set-111 confobj" data-confobj="about|donatedev">
+        <div class="set set-131 confobj" data-confobj="about|donatedev">
             <div class="setname" data-i18n="donatedev"></div>
             <div class="setcontent">
                 <input class="init change-checkbox" data-confele="ad" type="checkbox"><label data-i18n="con_ad"></label><br />
                 <div class="setdes" data-i18n="des_ad" style="padding-top:0;"></div>
             </div>
         </div>
-        <div class="set set-112 confobj" data-confobj="">
+        <div class="set set-132 confobj" data-confobj="">
             <div class="setname" data-i18n="moreext"></div>
             <div class="setcontent">
                 <div id="con_moreextlist"></div>
                 <div class="setdes" data-i18n="des_moreextlist"></div>
             </div>
         </div>
-        <div class="set set-113 confobj" data-confobj="">
+        <div class="set set-133 confobj" data-confobj="">
             <div class="setname" data-i18n="translate"></div>
             <div class="setcontent">
                 Want this extension to show in your native language? If you are familiar with English, you can help us translate this extension into your native language. Please contact us by email: crexme@gmail.com .<br />
@@ -543,7 +591,7 @@
                 </table>
             </div>
         </div>
-        <div class="set set-114 confobj" data-confobj="">
+        <div class="set set-134 confobj" data-confobj="">
             <div class="setname" data-i18n="thanks"></div>
             <div class="setcontent">
                 <ul class="thanks_ul">
@@ -568,7 +616,7 @@
                 </ul>
             </div>
         </div>
-        <div class="set set-115 confobj" data-confobj="">
+        <div class="set set-135 confobj" data-confobj="">
             <div class="setname" data-i18n="changelog"></div>
             <div class="setcontent">
             </div>
