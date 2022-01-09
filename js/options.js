@@ -631,7 +631,7 @@ var suo={
 		}
 	},
 	getI18n:function(str){
-		//console.log(str)
+		console.log(str)
 		if(["n_mute","n_stop","n_reload","n_move","n_detach","n_switchtab","n_copytab","n_copytabele_target","n_bookmark","n_savepage","n_mail_target"].contains(str)){
 			str="n_tab";
 		}
@@ -1047,30 +1047,14 @@ var suo={
 			domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:["add_from_select"]},null,null,null,"Add new ..."));
 		}else{
 			let _obj={};
-			//special action
 			_obj=(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type])?actionOptions.special[confOBJ.name][type]:actionOptions.selects[type];
 			console.log(_obj)
-			//for(var i=0;i<actionOptions.selects[type].length;i++){
-			for(i=0;i<actionOptions.selects[type].length;i++){
-				// _obj=(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type])?actionOptions.special[confOBJ.name][type]:actionOptions.selects[type];
-				// console.log(_obj)
+			for(i=0;i<_obj.length;i++){
 				domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[_obj[i]]},null,null,null,type=="n_voicename"?_obj[i]:suo.getI18n(_obj[i])));
 				if(type=="script"){
 					if(i==value){index=i}
 				}else{
 					if(value==_obj[i]){index=i;}
-				}
-				continue;
-				//special action
-				if(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type]){
-					domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[actionOptions.special[confOBJ.name][type][i]]},null,null,null,type=="n_voicename"?actionOptions.special[confOBJ.name][type][i]:suo.getI18n(actionOptions.special[confOBJ.name][type][i])));
-				}else{
-					domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[actionOptions.selects[type][i]]},null,null,null,type=="n_voicename"?actionOptions.selects[type][i]:suo.getI18n(actionOptions.selects[type][i])));
-				}
-				if(type=="script"){
-					if(i==value){index=i}
-				}else{
-					if(value==actionOptions.selects[type][i]){index=i;}
 				}
 			}
 		}

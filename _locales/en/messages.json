@@ -1799,5 +1799,14 @@
   },
   "tip_enterkeys":{
     "message":"Use keyboard to enter keys"
+  },
+  "reopenincognito":{
+    "message":"Reopen in Incognito Window"
+  },
+  "n_reopenkeep":{
+    "message":"Keep the original tab"
+  },
+  "s_incogback":{
+    "message":"Incognito (background)"
   }
 }

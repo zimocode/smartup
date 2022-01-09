@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"7.0.131.1131",
+			"date":"2022.01.09",
+			"content":[
+				"new action: Reopen in Incognito Window"
+			]
+		},
+		{
 			"ver":"7.0.130.1130",
 			"date":"2022.01.08",
 			"content":[

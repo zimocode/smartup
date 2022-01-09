@@ -32,7 +32,8 @@ let actions={
 			{name:"detach",selects:["n_tab"]},//movetowin
 			{name:"pin",selects:["n_tab"]},
 			{name:"duplicate",selects:["n_tab"],checks:["n_duplicatetype"]},
-			{name:"copytabele",selects:["n_tab_single","n_copytabele_content"]}
+			{name:"copytabele",selects:["n_tab_single","n_copytabele_content"]},
+			{name:"reopenincognito",selects:["n_optype"],checks:["n_reopenkeep"]}
 		],
 		[//group window
 			{name:"newwin",selects:["n_wintype"],checks:["n_winincog"]},
@@ -214,6 +215,9 @@ let actionOptions={
 		decrement:{
 			n_optype:["s_current","s_currentwin","s_new","s_back","s_win","s_winback","s_incog"]
 		},
+		reopenincognito:{
+			n_optype:["s_incog","s_incogback"]
+		}
 	},
 	selects:{
 		n_tab:["s_current","s_others","s_all","s_head","s_last","s_left","s_right","s_lefts","s_rights"],
@@ -278,7 +282,8 @@ let actionOptions={
 		n_closeConfirm:true,
 		n_dialog:false,
 		n_duplicatetype:false,
-		n_effect:true
+		n_effect:true,
+		n_reopenkeep:false
 	}
 }
 
