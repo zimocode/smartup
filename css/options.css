@@ -22,6 +22,16 @@
 	background-color: rgba(0,0,0,.3);
 }
 
+/**/
+select,
+textarea,
+input[type=checkbox]
+input[type=button],
+input[type=text],
+input[type=range]{
+	outline: none;
+}
+
 html{
 	font-family: arial,sans-serif;
 }
@@ -2094,7 +2104,9 @@ menu #menu_donate span{
 	margin: 0;
 }
 .box_content{
+	box-sizing: border-box;
 	border-radius: 0;
+	padding: 4px;
 }
 .box_submit{
 	background-color: #8e99f3;

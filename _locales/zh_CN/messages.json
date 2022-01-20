@@ -1783,5 +1783,8 @@
   },
   "s_incogback":{
     "message":"隐身窗口（后台）"
+  },
+  "tip_closemulticonfirm":{
+    "message":"你正在尝试关闭多个标签页。 你确定你要继续吗？"
   }
 }

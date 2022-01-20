@@ -956,9 +956,9 @@ var sue={
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
 	if(message.type=="set_confirm"){
-		sendResponse({type:message.type,message:true});
-		if(!confirm("You are try to close multiple tabs. Are you sure you want to continue?")){
-			//sendResponse({type:message.type,message:true});
+		// sendResponse({type:message.type,message:true});
+		if(confirm(chrome.i18n.getMessage("tip_closemulticonfirm"))){
+			sendResponse({type:message.type,message:true});
 		}
 	}
 	if(message.type=="status"){

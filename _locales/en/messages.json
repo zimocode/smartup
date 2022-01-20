@@ -1808,5 +1808,8 @@
   },
   "s_incogback":{
     "message":"Incognito (background)"
+  },
+  "tip_closemulticonfirm":{
+    "message":"You are trying to close multiple tabs. Are you sure you want to continue?"
   }
 }
