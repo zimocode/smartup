@@ -1,11 +1,11 @@
 {
 	"log": [
 		{
-			"ver":"7.0.143.1132",
+			"ver":"7.0.143.1133",
 			"date":"2022.01.20",
 			"content":[
 				"new action: Reopen in Incognito Window",
-				"fix bugs: #190"
+				"fix bugs: #190, #191"
 			]
 		},
 		{

@@ -58,7 +58,8 @@ input[type=range]{
 	/*rgba(75, 75, 75, 0.8) !important; */
 	border: 1px solid transparent; 
 	border-radius: 5px;
-	-webkit-user-select: none;
+	user-select: none;
+	-moz-user-select:none;
 	-webkit-appearance: none !important;
 }
 input[type=range]:focus{
@@ -73,7 +74,8 @@ input[type=range]::-webkit-slider-thumb{
 	background: #e7e9fd; 
 	border: 1px solid #d0d9ff; 
 	box-shadow: 1px 1px 1px #000;
-	-webkit-user-select: none;
+	user-select: none;
+	-moz-user-select:none;
 	-webkit-appearance: none !important; 
 
 	width: 34px;
@@ -415,7 +417,6 @@ smartup.su_apps{
 	border-radius: 2px;
 	opacity: 0;
 	transition:all .4s ease-in-out;
-	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
 }
@@ -437,7 +438,6 @@ smartup.su_apps{
 	display: inline-block;
 	padding-top: 0;
 	font-size: 18px;
-	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
 	margin-top: 6px;
@@ -457,8 +457,8 @@ smartup.su_apps{
 	text-align: center;
 	font-family: arial,sans-serif;
 	transition:all .4s ease-in-out;
-	-webkit-user-select: none !important;
 	user-select: none !important;
+	-moz-user-select:none !important;
 }
 .box_btn_close:hover{
 	background: red;
@@ -1273,7 +1273,8 @@ overflow: hidden;
 	border: 1px solid #d0d9ff;
 	border-radius: 5px;
 	padding: 10px;
-	-webkit-user-select:auto;
+	user-select:text;
+	-moz-user-select:text;
 }
 .box_check{
 
