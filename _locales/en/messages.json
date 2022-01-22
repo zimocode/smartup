@@ -1808,5 +1808,14 @@
   },
   "s_incogback":{
     "message":"Incognito (background)"
+  },
+  "tip_closemulticonfirm":{
+    "message":"You are trying to close multiple tabs. Are you sure you want to continue?"
+  },
+  "n_factorreset":{
+    "message":"Reset default zoom factor as(%): "
+  },
+  "n_factorload":{
+    "message":"set the factor when page loaded or reloaded as default one"
   }
 }

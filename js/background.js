@@ -917,6 +917,9 @@ var appConfmodel={
 }
 
 var sub={
+	temp:{
+		zoom:[]
+	},
 	cons:{
 		pretab:[],
 		fullstate:null,
@@ -2226,16 +2229,25 @@ var sub={
 				sub.cons.zoom=sub.getConfValue("selects","n_zoom");
 				chrome.tabs.executeScript({file:"js/inject/zoom.js",runAt:"document_start"},function(){})
 			}else{
+				var factorDefault=1;
+				var factorReset=parseInt(sub.getConfValue("texts","n_factorreset"))/100,
+					factorLoad=sub.getConfValue("checks","n_factorload");
+				if(factorLoad){
+					factorDefault=sub.temp.zoom[sub.curTab.id];
+				}else{
+					factorDefault=factorReset?factorReset:1;
+				}
+
 				switch(sub.theConf.selects[0].value){
 					case"s_in":
 						chrome.tabs.getZoom(function(zoom){
 							zoom=Math.abs(zoom.toFixed(2));
 							if(zoom==5){
-								chrome.tabs.setZoom(1);
+								chrome.tabs.setZoom(factorDefault);
 								return;
 							}else{
-								zoom=zoom==5?1:zoom;
-								zoom=Math.abs((zoom>=1?(1+((zoom-1)?(zoom-1):.05)*2):(zoom+.15)).toFixed(2));
+								zoom=zoom==5?factorDefault:zoom;
+								zoom=Math.abs((zoom>=factorDefault?(factorDefault+factorDefault*((zoom-factorDefault)?(zoom-factorDefault):.05)*2):(zoom<factorDefault?factorDefault:(zoom+factorDefault*.15))).toFixed(2));
 								zoom=zoom>5?5:zoom;
 								chrome.tabs.setZoom(zoom);								
 							}
@@ -2245,15 +2257,15 @@ var sub={
 						chrome.tabs.getZoom(function(zoom){
 							zoom=Math.abs(zoom.toFixed(2));
 							if(zoom==.25){
-								chrome.tabs.setZoom(1);
+								chrome.tabs.setZoom(factorDefault);
 								return;	
 							}else{
 								if(zoom>2){
-									zoom=Math.abs((zoom-((zoom-1)*.2)).toFixed(2));
-								}else if(zoom>1){
-									zoom=Math.abs((zoom-.45).toFixed(2));
-								}else if(zoom<=1){
-									zoom=Math.abs((zoom-.15).toFixed(2));
+									zoom=Math.abs((zoom-((zoom-factorDefault)*.2)).toFixed(2));
+								}else if(zoom>factorDefault){
+									zoom=Math.abs((zoom-factorDefault*.45).toFixed(2));
+								}else if(zoom<=factorDefault){
+									zoom=Math.abs((zoom-factorDefault*.15).toFixed(2));
 								}
 								zoom=zoom<.25?.25:zoom;
 								chrome.tabs.setZoom(zoom);								
@@ -2261,7 +2273,7 @@ var sub={
 						})
 						break;
 					case"s_reset":
-						chrome.tabs.setZoom(1.0)
+						chrome.tabs.setZoom(factorDefault);
 						break;
 				}	
 			}
@@ -4893,6 +4905,7 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
 	sub.CTMclick(info,tab);
 })
 chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
+	console.log(tabId);
 	sub.setIcon("normal",tabId,changeInfo,tab);
 	if(changeInfo.status=="complete"){
 		chrome.tabs.sendMessage(tabId,{type:"status"},function(response){
@@ -4901,6 +4914,16 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 			}
 		});
 	}
+
+	// get factor for action zoom
+	chrome.tabs.getZoom(tabId,function(zoomFactor){
+		if(!sub.temp.zoom[tabId]){
+			sub.temp.zoom[tabId]=zoomFactor;
+		}else{
+			sub.temp.zoom[tabId]=zoomFactor;
+		}
+	})
+
 })
 chrome.tabs.onRemoved.addListener(function(tabId){
 	if(sub.cons.autoreload&&sub.cons.autoreload[tabId]){

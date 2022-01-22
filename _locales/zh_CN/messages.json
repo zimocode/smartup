@@ -1783,5 +1783,14 @@
   },
   "s_incogback":{
     "message":"隐身窗口（后台）"
+  },
+  "tip_closemulticonfirm":{
+    "message":"你正在尝试关闭多个标签页。 你确定你要继续吗？"
+  },
+  "n_factorreset":{
+    "message":"设置页面默认缩放系数为（%）："
+  },
+  "n_factorload":{
+    "message":"设置页面载入或重新加载时的缩放系数为默认值"
   }
 }

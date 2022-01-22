@@ -116,7 +116,7 @@ let actions={
 			{name:"bookmark",selects:["n_tab"],checks:["n_notif","n_closetab"]},
 			{name:"script",selects:["n_script"],checks:["n_jq"]},
 			{name:"source",selects:["n_optype","n_position"],checks:["n_pin"]},
-			{name:"zoom",selects:["n_zoom"]},
+			{name:"zoom",selects:["n_zoom"],texts:["n_factorreset"],checks:["n_factorload"]},
 			{name:"savepage",selects:["n_tab"],checks:["n_closetab","n_dlbar","n_notif"]},
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
@@ -259,7 +259,8 @@ let actionOptions={
 		n_npkey_n:"next,pnnext,next ›,›,>",
 		n_npkey_p:"previous,pnprev,‹ prev,‹,<",
 		n_num:"5",
-		n_mail_prefix:"Interesting Page:"
+		n_mail_prefix:"Interesting Page:",
+		n_factorreset:"100"
 	},
 	ranges:{
 		n_pitch:1,
@@ -283,7 +284,8 @@ let actionOptions={
 		n_dialog:false,
 		n_duplicatetype:false,
 		n_effect:true,
-		n_reopenkeep:false
+		n_reopenkeep:false,
+		n_factorreset:false
 	}
 }
 
