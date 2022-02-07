@@ -2865,7 +2865,7 @@ var suo={
 	},
 	fixURL:function(url){
 		//if()
-		var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","moz-extension://","about://","about:"];
+		var fixstrs=["file///","extension://","http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","moz-extension://","about://","about:"];
 		var theFlag=false;
 		for(var i=0;i<fixstrs.length;i++){
 			if(url.indexOf(fixstrs[i])==0){
