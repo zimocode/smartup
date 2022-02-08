@@ -116,7 +116,7 @@ let actions={
 			{name:"bookmark",selects:["n_tab"],checks:["n_notif","n_closetab"]},
 			{name:"script",selects:["n_script"],checks:["n_jq"]},
 			{name:"source",selects:["n_optype","n_position"],checks:["n_pin"]},
-			{name:"zoom",selects:["n_zoom"],texts:["n_factorreset"],checks:["n_factorload"]},
+			{name:"zoom",selects:["n_zoom"],/*texts:["n_factorreset"],*/checks:["n_factorload"],checktexts:["n_factordefault"]},
 			{name:"savepage",selects:["n_tab"],checks:["n_closetab","n_dlbar","n_notif"]},
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
@@ -286,6 +286,12 @@ let actionOptions={
 		n_effect:true,
 		n_reopenkeep:false,
 		n_factorreset:false
+	},
+	checktexts:{
+		n_factordefault:{
+			check:false,
+			text:"100"
+		}
 	}
 }
 

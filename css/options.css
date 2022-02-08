@@ -1241,12 +1241,19 @@ overflow: hidden;
 	display: inline-block;
 	background-color: transparent;
 }
-.boxtext{
+.boxtext
+.box_text{
 	max-width: 138px;
 	min-width: 0 !important;
 	display: inline-block;
 	margin-left: 0;
 	margin: 0;
+}
+.box_text_checktext{
+	width: 32px !important;
+	min-width: unset !important;
+	margin-left: 2px !important;
+	float: right !important;
 }
 
 .boxarea{
@@ -1276,8 +1283,9 @@ overflow: hidden;
 	user-select:text;
 	-moz-user-select:text;
 }
-.box_check{
-
+.box_check,
+.option_checktext{
+	margin-left: 0;
 }
 
 /* ui */
@@ -2048,7 +2056,7 @@ menu #menu_donate span{
 	padding: 0;
 }
 .box_tab{
-	margin: -1px;
+	margin: -5px;
 	background-color: #8e99f3;
 	box-sizing: border-box;
 	height: 24px;

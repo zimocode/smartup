@@ -631,7 +631,7 @@ var suo={
 		}
 	},
 	getI18n:function(str){
-		console.log(str)
+		// console.log(str)
 		if(["n_mute","n_stop","n_reload","n_move","n_detach","n_switchtab","n_copytab","n_copytabele_target","n_bookmark","n_savepage","n_mail_target"].contains(str)){
 			str="n_tab";
 		}
@@ -1096,6 +1096,33 @@ var suo={
 		var domSpan=suo.domCreate2("span",{setName:["className"],setValue:["box_range_value"]},null,null,null,value?value:(actionOptions.ranges[type]?actionOptions.ranges[type]:""))
 		dom.appendChild(domRange);
 		dom.appendChild(domSpan);
+		return dom;
+	},
+	createMoreChecktext:function(type,value){
+		var valueCheck,valueLabel,valueText,
+			domCheck,domLabel,domText,dom;
+		valueCheck={
+			setName:["id","className","type","checked","name"],
+			setValue:[type,"option_checktext","checkbox",value==undefined?(actionOptions.checktexts[type].checked?actionOptions.checktexts[type].checked:false):value.checked,type]
+		}
+		domCheck=suo.domCreate2("input",valueCheck);
+
+		valueLabel={
+			setName:["id","for"],
+			setValue:[type,type]
+		}
+		domLabel=suo.domCreate2("label",valueLabel,null,null,null,suo.getI18n(type));
+
+		valueText={
+			setName:["name","type","value","className"],
+			setValue:[type,"text",value?value.text:(actionOptions.checktexts[type]?actionOptions.checktexts[type].text:""),"box_text_checktext"]
+		}
+		domText=suo.domCreate2("input",valueText);
+
+		dom=suo.domCreate2("div",{setName:["className"],setValue:["box_checktext"]});
+		dom.appendChild(domCheck);
+		dom.appendChild(domLabel);
+		dom.appendChild(domText);
 		return dom;
 	},
 	set:{
@@ -2050,7 +2077,7 @@ var suo={
 		for(var i=0;i<actions[actionType].length;i++){
 			for(var ii=0;ii<actions[actionType][i].length;ii++){
 				if(actions[actionType][i][ii].name==confOBJ.name){
-					var arrayConfType=["selects","texts","checks","ranges"];
+					var arrayConfType=["selects","texts","checks","ranges","checktexts"];
 					for(var act in arrayConfType){
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
@@ -2079,7 +2106,9 @@ var suo={
 									confOBJ[arrayConfType[act]].splice(j,1);
 								}
 							}
-						}							
+						}else{
+							delete confOBJ[arrayConfType[act]];
+						}
 					}
 					break;
 				}				
@@ -2152,8 +2181,11 @@ var suo={
 				dom.appendChild(suo.domCreate2("br"));
 			}
 		}
-
-
+		if(confOBJ.checktexts){
+			for(var i=0;i<confOBJ.checktexts.length;i++){
+				dom.appendChild(suo.createMoreChecktext(confOBJ.checktexts[i].type,confOBJ.checktexts[i].value));
+			}
+		}
 
 		return dom;
 	},
@@ -2164,7 +2196,7 @@ var suo={
 		for(var i=0;i<actions[actionType].length;i++){
 			for(var ii=0;ii<actions[actionType][i].length;ii++){
 				if(actions[actionType][i][ii].name==confOBJ.name){
-					var arrayConfType=["selects","texts","checks","ranges"];
+					var arrayConfType=["selects","texts","checks","ranges","checktexts"];
 					for(var act in arrayConfType){
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
@@ -2193,7 +2225,9 @@ var suo={
 									confOBJ[arrayConfType[act]].splice(j,1);
 								}
 							}
-						}							
+						}else{
+							delete confOBJ[arrayConfType[act]];
+						}
 					}
 					break;
 				}				
@@ -2246,6 +2280,11 @@ var suo={
 				domMore.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
 				domMore.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
 				domMore.appendChild(suo.domCreate2("br"));
+			}
+		}
+		if(confOBJ.checktexts){
+			for(var i=0;i<confOBJ.checktexts.length;i++){
+				domMore.appendChild(suo.createMoreChecktext(confOBJ.checktexts[i].type,confOBJ.checktexts[i].value));
 			}
 		}
 		return domMore;
@@ -2388,7 +2427,7 @@ var suo={
 
 			//checks
 			var theChecks=[];
-			var checksOBJ=dom.querySelectorAll(".box_more input[type=checkbox]");
+			var checksOBJ=dom.querySelectorAll(".box_more .box_check[type=checkbox]");
 			for(var i=0;i<checksOBJ.length;i++){
 				var thisOBJ={};
 				thisOBJ.type=checksOBJ[i].name;
@@ -2434,6 +2473,24 @@ var suo={
 			codeCtrlOBJ?confOBJ.ctrl=codeCtrlOBJ.checked:null;
 			codeAltOBJ?confOBJ.alt=codeAltOBJ.checked:null;
 			codeShiftOBJ?confOBJ.shift=codeShiftOBJ.checked:null;
+
+			//checktext
+			console.log(dom);
+			var theChecktexts=[],
+				checktextsOBJ=dom.querySelectorAll(".box_checktext");
+			for(var i=0;i<checktextsOBJ.length;i++){
+				var checktextsConf={};
+					checktextsConf.value={};
+				checktextsConf.type=checktextsOBJ[i].querySelector("input[type=checkbox]").name;
+				checktextsConf.value.checked=checktextsOBJ[i].querySelector("input[type=checkbox]").checked;
+				checktextsConf.value.text=checktextsOBJ[i].querySelector("input[type=text]").value;
+				theChecktexts.push(checktextsConf);
+			}
+			if(theChecktexts.length>0){
+				confOBJ.checktexts=theChecktexts;
+			}else{
+				confOBJ.checktexts?(delete confOBJ.checktexts):null;
+			}
 		}
 		suo.saveConf();
 		suo.initActionEle();
