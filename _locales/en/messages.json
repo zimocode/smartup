@@ -1817,5 +1817,8 @@
   },
   "n_factorload":{
     "message":"set the factor when page loaded or reloaded as default one"
+  },
+  "r_factor":{
+    "message":"Customize the default zoom factor: "
   }
 }

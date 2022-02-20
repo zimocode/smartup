@@ -116,7 +116,7 @@ let actions={
 			{name:"bookmark",selects:["n_tab"],checks:["n_notif","n_closetab"]},
 			{name:"script",selects:["n_script"],checks:["n_jq"]},
 			{name:"source",selects:["n_optype","n_position"],checks:["n_pin"]},
-			{name:"zoom",selects:["n_zoom"],/*texts:["n_factorreset"],*/checks:["n_factorload"],checktexts:["n_factordefault"]},
+			{name:"zoom",selects:["n_zoom"],/*texts:["n_factorreset"],*/checks:["n_factorload"],checktexts:["n_factordefault"],radios:["r_factor"]},
 			{name:"savepage",selects:["n_tab"],checks:["n_closetab","n_dlbar","n_notif"]},
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
@@ -291,6 +291,34 @@ let actionOptions={
 		n_factordefault:{
 			check:false,
 			text:"100"
+		}
+	},
+	radios:{
+		r_factor:{
+			value:"radio_factordefault",
+			options:[
+				{
+					name:"radio_factordefault",
+					type:"default"						
+				},
+				{
+					name:"radio_factorcustom",
+					type:"text",
+					value:"100"
+				},
+				{
+					name:"radio_factorloaded",
+					type:"select",
+					value:1,
+					settings:["select_test0","select_test1"]						
+				},
+				{
+					name:"radio_factortest",
+					type:"range",
+					value:5,
+					settings:[1,10,1,"%"]/*min,max,step,unit*/						
+				}
+			]
 		}
 	}
 }
