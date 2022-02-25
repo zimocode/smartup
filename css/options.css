@@ -1651,7 +1651,7 @@ summary:hover{
 .box_range{
 	width: 115px;
 }
-.box_range_value{
+.box_rangevalue{
 	margin: 0 3px;
 	border-bottom: 1px solid #d0d9ff;
 	width: 30px !important;
@@ -1659,6 +1659,11 @@ summary:hover{
 	text-align: center;
 	font-size: 13px;
 	color: #000;
+}
+.box_rangeunit{
+	display: inline-block;
+	width: 30px;
+	opacity: 0.7;	
 }
 .box_range_parent{
 	margin: 5px 0;

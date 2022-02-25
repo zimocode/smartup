@@ -1082,20 +1082,28 @@ var suo={
 		var domCheck=suo.domCreate2("input",valueOBJ);
 		return domCheck;
 	},
-	createMoreRange:function(type,value){
-		var rangeModel={
-			n_pitch:[0,2,.1],
-			n_volume:[0,1,.1],
-			n_rate:[.1,10,.1]
+	createMoreRange:function(conf){
+		console.log(conf);
+		if(conf.value==undefined){conf.value=actionOptions.ranges[conf.type].value}
+
+		var dom=suo.domCreate2("div"),
+			labelRange=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.type));
+		dom.appendChild(labelRange);
+
+		var arrayOptions=actionOptions.ranges[conf.type].options;
+
+		var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_range/*sss*/","range",arrayOptions[0],arrayOptions[1],arrayOptions[2],conf.value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+		dom.appendChild(_range);
+
+		var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_rangevalue"]},null,null,null,conf.value);
+		dom.appendChild(_text);
+
+		if(arrayOptions[3]){
+			_range.style.cssText+="width:83px;";
+			var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_rangeunit"]},null,null,null," ( "+arrayOptions[3]+" ) ");
+			dom.appendChild(_unit);
 		}
-		var dom=suo.domCreate2("span",{setName:["className"],setValue:["box_range_parent"]});
-		var valueOBJ={
-			setName:["name","type","value","className","min","max","step"],
-			setValue:[type,"range",value?value:(actionOptions.ranges[type]?actionOptions.ranges[type]:""),"box_range",rangeModel[type][0],rangeModel[type][1],rangeModel[type][2]]};
-		var domRange=suo.domCreate2("input",valueOBJ);
-		var domSpan=suo.domCreate2("span",{setName:["className"],setValue:["box_range_value"]},null,null,null,value?value:(actionOptions.ranges[type]?actionOptions.ranges[type]:""))
-		dom.appendChild(domRange);
-		dom.appendChild(domSpan);
+
 		return dom;
 	},
 	createMoreChecktext:function(type,value){
@@ -1171,13 +1179,11 @@ var suo={
 					_dom.appendChild(_select);
 					break;
 				case"range":
-					console.log(conf.value)
 					var _div=suo.domCreate2("div",{setName:["className"],setValue:["box_radiooptionrangebox"]});
-					var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",arrayOptions[i].settings[0],arrayOptions[i].settings[1],arrayOptions[i].settings[2],conf.options.value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
-					var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,conf.options.value);
+					var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",arrayOptions[i].settings[0],arrayOptions[i].settings[1],arrayOptions[i].settings[2],conf.options.type=="range"?conf.options.value:arrayOptions[i].value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+					var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,_range.value);
 					var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+arrayOptions[i].settings[3]+" ) ");
 					_div.appendChild(_range);
-					// _dom.appendChild(_range);
 					_div.appendChild(_text);
 					_div.appendChild(_unit);
 					_dom.appendChild(_div);
@@ -2231,9 +2237,7 @@ var suo={
 		if(confOBJ.ranges){
 			console.log("range")
 			for(var i=0;i<confOBJ.ranges.length;i++){
-				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
-				dom.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
-				dom.appendChild(suo.domCreate2("br"));
+				dom.appendChild(suo.createMoreRange(confOBJ.ranges[i]));
 			}
 		}
 		if(confOBJ.checks){
@@ -2249,7 +2253,11 @@ var suo={
 				dom.appendChild(suo.createMoreChecktext(confOBJ.checktexts[i].type,confOBJ.checktexts[i].value));
 			}
 		}
-
+		if(confOBJ.radios){
+			for(var i=0;i<confOBJ.radios.length;i++){
+				dom.appendChild(suo.createMoreRadio(confOBJ.radios[i]));
+			}
+		}
 		return dom;
 	},
 	itemMore:function(confOBJ,actionType){
@@ -2331,10 +2339,9 @@ var suo={
 		}
 		if(confOBJ.ranges){
 			console.log("range")
+			console.log(confOBJ);
 			for(var i=0;i<confOBJ.ranges.length;i++){
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
-				domMore.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
-				domMore.appendChild(suo.domCreate2("br"));
+				domMore.appendChild(suo.createMoreRange(confOBJ.ranges[i]));
 			}
 		}
 		if(confOBJ.checks){

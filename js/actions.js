@@ -263,9 +263,21 @@ let actionOptions={
 		n_factorreset:"100"
 	},
 	ranges:{
-		n_pitch:1,
-		n_volume:1,
-		n_rate:1
+		n_pitch:{
+			value:1,
+			options:[0.1,2,0.1,"%"]
+		},
+		n_volume:{
+			value:1,
+			options:[0.1,2,0.1]
+		},
+		n_rate:{
+			value:1,
+			options:[0.1,2,0.1]
+		}
+		// n_pitch:1,
+		// n_volume:1,
+		// n_rate:1
 	},
 	checks:{
 		n_dlbar:true,
