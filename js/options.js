@@ -1429,7 +1429,13 @@ var suo={
 				config[ele.dataset.confele.substr(2)]=defaultConf[ele.dataset.confele.substr(2)];
 				suo.saveConf();
 			}
-			suo.initListItem(ele.dataset.confele.substr(2));
+			if(ele.dataset.confele.substr(2)=="drg"||ele.dataset.confele.substr(2)=="sdrg"){
+				suo.initListItem("t"+ele.dataset.confele.substr(2));
+				suo.initListItem("l"+ele.dataset.confele.substr(2));
+				suo.initListItem("i"+ele.dataset.confele.substr(2));
+			}else{
+				suo.initListItem(ele.dataset.confele.substr(2));
+			}
 		}else{
 			suo.domHide(domOBJ);
 		}
