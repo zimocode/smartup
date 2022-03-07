@@ -116,7 +116,7 @@ let actions={
 			{name:"bookmark",selects:["n_tab"],checks:["n_notif","n_closetab"]},
 			{name:"script",selects:["n_script"],checks:["n_jq"]},
 			{name:"source",selects:["n_optype","n_position"],checks:["n_pin"]},
-			{name:"zoom",selects:["n_zoom"],/*texts:["n_factorreset"],*/checks:["n_factorload"],checktexts:["n_factordefault"],radios:["r_factor"]},
+			{name:"zoom",selects:["n_zoom"],/**/texts:["t_test","n_factorreset"],checks:["c_testdefault","c_testtext","c_testselect","c_testrange","c_testradio"],radios:["r_test"]},
 			{name:"savepage",selects:["n_tab"],checks:["n_closetab","n_dlbar","n_notif"]},
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
@@ -256,6 +256,7 @@ let actionOptions={
 		n_snap:["s_left","s_right"]
 	},
 	texts:{
+		t_test:"test",
 		n_npkey_n:"next,pnnext,next ›,›,>",
 		n_npkey_p:"previous,pnprev,‹ prev,‹,<",
 		n_num:"5",
@@ -263,9 +264,13 @@ let actionOptions={
 		n_factorreset:"100"
 	},
 	ranges:{
+		r_test:{
+			value:1,
+			options:[0.1,2,0.1,"%"]/*min,max,step,unit*/
+		},
 		n_pitch:{
 			value:1,
-			options:[0.1,2,0.1,"%"]
+			options:[0.1,2,0.1]
 		},
 		n_volume:{
 			value:1,
@@ -275,9 +280,6 @@ let actionOptions={
 			value:1,
 			options:[0.1,2,0.1]
 		}
-		// n_pitch:1,
-		// n_volume:1,
-		// n_rate:1
 	},
 	checks:{
 		n_dlbar:true,
@@ -297,7 +299,65 @@ let actionOptions={
 		n_duplicatetype:false,
 		n_effect:true,
 		n_reopenkeep:false,
-		n_factorreset:false
+		n_factorreset:false,
+		c_testdefault:{
+			value:true,
+			typeCheck:"default",
+			options:{}
+		},
+		c_testtext:{
+			value:false,
+			typeCheck:"text",
+			options:{
+				valueOption:"100"
+			}
+		},
+		c_testselect:{
+			value:true,
+			typeCheck:"select",
+			options:{
+				valueOption:1,
+				settings:["select_test0","select_test1"]
+			}
+		},
+		c_testrange:{
+			value:true,
+			typeCheck:"range",
+			options:{
+				valueOption:7,
+				settings:[1,10,1,"%"]/*min,max,step,unit*/
+			}
+		},
+		c_testradio:{
+			value:true,
+			typeCheck:"radio",
+			options:{
+				valueOption:"cr_testselect",
+				settings:[
+					{
+						name:"cr_testdefault",
+						typeSetting:"default"						
+					},
+					{
+						name:"cr_testtext",
+						typeSetting:"text",
+						valueSetting:"100"
+					},
+					{
+						name:"cr_testselect",
+						typeSetting:"select",
+						valueSetting:1,
+						moreSetting:["select_test0","select_test1"]						
+					},
+					{
+						name:"cr_testrange",
+						typeSetting:"range",
+						valueSetting:5,
+						moreSetting:[1,10,1,"%"]/*min,max,step,unit*/						
+					}
+				]
+			}
+		}
 	},
 	checktexts:{
 		n_factordefault:{
@@ -306,28 +366,59 @@ let actionOptions={
 		}
 	},
 	radios:{
+		r_test:{
+			// value:"radio_testtext",
+			typeRadio:"text",
+			options:{
+				valueOption:"radio_testtext",
+				settings:[
+					{
+						name:"radio_testdefault",
+						typeSetting:"default"						
+					},
+					{
+						name:"radio_testtext",
+						typeSetting:"text",
+						valueSetting:"100"
+					},
+					{
+						name:"radio_testselect",
+						typeSetting:"select",
+						valueSetting:1,
+						moreSetting:["select_test0","select_test1"]						
+					},
+					{
+						name:"radio_testrange",
+						typeSetting:"range",
+						valueSetting:5,
+						moreSetting:[1,10,1,"%"]/*min,max,step,unit*/						
+					}
+				]
+			}
+		},
 		r_factor:{
-			value:"radio_factordefault",
+			value:true,
+			valueOption:"radio_testtext",
 			options:[
 				{
-					name:"radio_factordefault",
-					type:"default"						
+					name:"radio_testdefault",
+					typeSetting:"default"						
 				},
 				{
-					name:"radio_factorcustom",
-					type:"text",
-					value:"100"
+					name:"radio_testtext",
+					typeSetting:"text",
+					valueSetting:"100"
 				},
 				{
-					name:"radio_factorloaded",
-					type:"select",
-					value:1,
+					name:"radio_testselect",
+					typeSetting:"select",
+					valueSetting:1,
 					settings:["select_test0","select_test1"]						
 				},
 				{
-					name:"radio_factortest",
-					type:"range",
-					value:5,
+					name:"radio_testrange",
+					typeSetting:"range",
+					valueSetting:5,
 					settings:[1,10,1,"%"]/*min,max,step,unit*/						
 				}
 			]

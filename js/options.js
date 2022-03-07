@@ -333,6 +333,26 @@ var suo={
 				break;
 			case"change":
 				console.log("change");
+				// show or hide chek with text/range/radio/select
+				if(e.target.classList.contains("box_check")){
+					if(e.target.nextSibling&&e.target.nextSibling.nextSibling){
+						if(e.target.checked){
+							e.target.nextSibling.nextSibling.style.cssText+="display:block;";
+						}else{
+							e.target.nextSibling.nextSibling.style.cssText+="display:none;";
+						}
+					}
+				}
+				// show or hide radio options
+				if(e.target.classList.contains("box_radiooption")){
+					var _domRadioList=e.target.parentNode.parentNode.querySelectorAll(".box_radiolist");
+					for(var i=0;i<_domRadioList.length;i++){
+						_domRadioList[i].style.cssText+="display:none;";
+					}
+					if(e.target.checked&&e.target.parentNode.querySelector(".box_radiolist")){
+						e.target.parentNode.querySelector(".box_radiolist").style.cssText+="display:block;";
+					}
+				}
 				if(e.target.dataset.confele=="mouseup"&&e.target.checked){
 					suo.checkPermission(["browserSettings"],null,null,"");
 					break;
@@ -1061,38 +1081,152 @@ var suo={
 		domSelect.selectedIndex=index;
 		return domSelect;
 	},
-	createMoreText:function(type,value){
-		//console.log("createMoretext")
-		var valueOBJ={setName:["name","className"],setValue:[type,"box_select"]};
-		var valueOBJ={
-			setName:["name","type","value","className"],
-			setValue:[type,"text",value?value:(actionOptions.texts[type]?actionOptions.texts[type]:""),"boxtext"]};
-		var domText=suo.domCreate2("input",valueOBJ);
-		return domText;
-	},
-	createMoreCheck:function(type,value){
-		// var valueOBJ={
-		// 	setName:["id","className","type","checked","name"],
-		// 	setValue:[type,"box_check","checkbox",value?value:(actionOptions.checks[type]?actionOptions.checks[type]:false),type]
-		// };
-		var valueOBJ={
-			setName:["id","className","type","checked","name"],
-			setValue:[type,"box_check","checkbox",value==undefined?(actionOptions.checks[type]?actionOptions.checks[type]:false):value,type]
-		};
-		var domCheck=suo.domCreate2("input",valueOBJ);
-		return domCheck;
-	},
-	createMoreRange:function(conf){
-		console.log(conf);
-		if(conf.value==undefined){conf.value=actionOptions.ranges[conf.type].value}
+	createMoreText:function(_conf){
+		var conf=JSON.parse(JSON.stringify(_conf));
+		if(conf.value==undefined){
+			conf.value=actionOptions.texts[conf.type];
+		}
 
-		var dom=suo.domCreate2("div"),
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]});
+		var labelText=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.type)),
+			domText=suo.domCreate2("input",{setName:["name","type","value","className"],setValue:[conf.type,"text",conf.value,"box_text"]});
+
+		dom.appendChild(labelText);
+		dom.appendChild(domText);
+		return dom;
+	},
+	createMoreCheck:function(_conf){
+		console.log(_conf);
+		var _time=parseInt((new Date().getTime())/1000)+parseInt(Math.random()*1000).toString();
+
+		// copy all actionOptions elements to new conf
+		var conf=JSON.parse(JSON.stringify(_conf));
+		for(var i in actionOptions.checks[conf.type]){
+			if(conf[i]==undefined){
+				conf[i]=actionOptions.checks[conf.type][i];
+			}
+		}
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]});
+		var labelCheck=suo.domCreate2("label",{setName:["id","for"],setValue:[conf.type,conf.type]},null,null,null,suo.getI18n(conf.type)),
+			domCheck=suo.domCreate2("input",{setName:["id","className","type","name"],setValue:[conf.type,"box_check","checkbox",conf.type]
+		});
+		dom.appendChild(domCheck);
+		dom.appendChild(labelCheck);
+
+		if(conf.typeCheck){
+			domCheck.checked=conf.value;
+			var _checkList=suo.domCreate2("div",{setName:["className"],setValue:["box_checklist"]},null,conf.value?"display:block;":"display:none;");
+
+			switch(conf.typeCheck){
+				case"default":
+
+					break;
+				case"text":
+					var domText=suo.domCreate2("input",{setName:["name","type","value","className"],setValue:[conf.type,"text",conf.valueOption==undefined?actionOptions.checks[conf.type].options.valueOption:conf.valueOption,"box_checktext"]
+					});
+					_checkList.appendChild(domText);
+					break;
+				case"select":
+					var domSelect=suo.domCreate2("select",{setName:["name","className"],setValue:[conf.type,"box_checkselect"]});
+					for(i=0;i<conf.options.settings.length;i++){
+						domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[conf.options.settings[i]]},null,null,null,suo.getI18n(conf.options.settings[i])));
+					}
+					domSelect.selectedIndex=conf.valueOption==undefined?conf.options.valueOption:conf.valueOption;
+					_checkList.appendChild(domSelect);
+					break;
+				case"range":
+					var domRangeBox=suo.domCreate2("div",{setName:["className"],setValue:["box_checkrange"]});
+					var domRange=suo.domCreate2("input",{setName:["className","name","type","min","max","step","value"],setValue:["change box_range",conf.type,"range",conf.options.settings[0],conf.options.settings[1],conf.options.settings[2],conf.valueOption==undefined?conf.options.valueOption:conf.valueOption]},null,null,{setName:["typechange"],setValue:["actionedit"]}),
+						domText=suo.domCreate2("span",{setName:["className"],setValue:["box_rangevalue"]},null,null,null,domRange.value);
+					domRangeBox.appendChild(domRange);
+					domRangeBox.appendChild(domText);
+
+					if(conf.options.settings[3]){
+						var domUnit=suo.domCreate2("span",{setName:["className"],setValue:["box_rangeunit"]},null,null,null," ( "+conf.options.settings[3]+" ) ");
+						domRangeBox.appendChild(domUnit);
+					}
+
+					_checkList.appendChild(domRangeBox);
+					break;
+				case"radio":
+					var domRadio=suo.domCreate2("div",{setName:["className"],setValue:["box_checkradio"]});
+					for(var i=0;i<conf.options.settings.length;i++){
+						var _dom=suo.domCreate2("div",null,null,"clear:both;"),
+							_option=suo.domCreate2("input",{setName:["id","className","type","name","value"],setValue:["box_radiooption_"+i+_time,"box_radiooption","radio",conf.typeCheck,conf.options.settings[i].name]}),
+							_label=suo.domCreate2("label",{setName:["className","for"],setValue:["box_radiooptionlabel","box_radiooption_"+i+_time]},null,null,null,suo.getI18n(conf.options.settings[i].name));
+						_dom.appendChild(_option);
+						_dom.appendChild(_label);
+						domRadio.appendChild(_dom);
+
+						i==0?_option.checked=true:null;
+						if(conf.valueOption==undefined){
+							if(conf.options.valueOption==conf.options.settings[i].name){_option.checked=true;}
+						}else{
+							if(conf.valueOption==conf.options.settings[i].name){_option.checked=true;}
+						}
+
+						var _radioList=suo.domCreate2("div",{setName:["className"],setValue:["box_radiolist"]});
+						switch(conf.options.settings[i].typeSetting){
+							case"text":
+								var _text=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_radiooptiontext","text",conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]});
+								_radioList.appendChild(_text);
+								break;
+							case"select":
+								var _select=suo.domCreate2("select",{setName:["className"],setValue:["box_radiooptionselect"]});
+								for(var ii=0;ii<conf.options.settings[i].moreSetting.length;ii++){
+									var _selectOption=suo.domCreate2("option",null,null,null,null,suo.getI18n(conf.options.settings[i].moreSetting[ii]));
+									_select.appendChild(_selectOption);
+								}
+								_select.selectedIndex=0;
+								_select.selectedIndex=conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting;
+								_radioList.appendChild(_select);
+								break;
+							case"range":
+								var _div=suo.domCreate2("div",{setName:["className"],setValue:["box_radiooptionrangebox"]}),
+									_range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",conf.options.settings[i].moreSetting[0],conf.options.settings[i].moreSetting[1],conf.options.settings[i].moreSetting[2],conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]},null,null,{setName:["typechange"],setValue:["actionedit"]}),
+									_text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,_range.value),
+									_unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+conf.options.settings[i].moreSetting[3]+" ) ");
+								_div.appendChild(_range);
+								_div.appendChild(_text);
+								_div.appendChild(_unit);
+								_radioList.appendChild(_div);
+								break;
+						}
+
+						if(_radioList.hasChildNodes()){
+							_dom.appendChild(_radioList);
+							if(_option.checked){
+								_radioList.style.cssText+="display:block;";
+							}
+						}
+					}
+					_checkList.appendChild(domRadio);
+					break;
+			}
+			_checkList.hasChildNodes()?dom.appendChild(_checkList):null;
+		}else{
+			domCheck.checked=conf.value;
+		}
+
+		return dom;
+	},
+	createMoreRange:function(_conf){
+		var conf=JSON.parse(JSON.stringify(_conf));
+		if(conf.value==undefined){
+			for(var i in actionOptions.ranges[conf.type]){
+				conf[i]=actionOptions.ranges[conf.type][i];
+			}
+		}
+		console.log(conf);
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]}),
 			labelRange=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.type));
 		dom.appendChild(labelRange);
 
 		var arrayOptions=actionOptions.ranges[conf.type].options;
 
-		var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_range/*sss*/","range",arrayOptions[0],arrayOptions[1],arrayOptions[2],conf.value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+		var _range=suo.domCreate2("input",{setName:["className","type","name","min","max","step","value"],setValue:["change box_range","range",conf.type,arrayOptions[0],arrayOptions[1],arrayOptions[2],conf.value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
 		dom.appendChild(_range);
 
 		var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_rangevalue"]},null,null,null,conf.value);
@@ -1133,61 +1267,79 @@ var suo={
 		dom.appendChild(domText);
 		return dom;
 	},
-	createMoreRadio:function(conf/*radioName,value*/){
-		console.log(conf);
-		// value=(value==undefined?actionOptions.radios[radioName].value:value);
-		if(!conf.options){conf.options=actionOptions.radios[conf.type].options[0]}
-		// console.log(value);
+	createMoreRadio:function(_conf){
+		var _time=parseInt((new Date().getTime())/1000)+parseInt(Math.random()*1000).toString();
 
-		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_radio"]},null,null,{setName:["confobj"],setValue:[conf.type]});
+		// copy all actionOptions elements to new conf
+		var conf=JSON.parse(JSON.stringify(_conf));
+		for(var i in actionOptions.radios[conf.type]){
+			if(conf[i]==undefined){
+				conf[i]=actionOptions.radios[conf.type][i];
+			}
+		}
+		console.log(conf);
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]},null,null,{setName:["confobj"],setValue:[conf.type]});
 		var labelRadio,domOption;
 
 		labelRadio=suo.domCreate2("span",{setName:["className"],setValue:["box_radiolabel"]},null,null,null,suo.getI18n(conf.type));
 		dom.appendChild(labelRadio);
 
-		domOption=suo.domCreate2("div",{setName:["className"],setValue:["box_radiobox"]});
+		domOption=suo.domCreate2("div",{setName:["className"],setValue:["box_radiobox"]},null,null,{setName:["confobj"],setValue:[conf.type]});
 		dom.appendChild(domOption);
 
 
-		var arrayOptions=actionOptions.radios[conf.type].options;
-		for(var i=0;i<arrayOptions.length;i++){
-			console.log(arrayOptions[i]);
+		// var arrayOptions=actionOptions.radios[conf.type].options;
+		var arrayOptions=conf.options;
+		for(var i=0;i<conf.options.settings.length;i++){
 			var _dom=suo.domCreate2("div");
-			var _domRadio=suo.domCreate2("input",{setName:["id","className","type","name","value"],setValue:["box_radiooption_"+i,"box_radiooption","radio",conf.type,arrayOptions[i].name]});
-			if(conf.options.name==arrayOptions[i].name){_domRadio.checked=true;}
-			var _domLabel=suo.domCreate2("label",{setName:["className","for"],setValue:["box_radiooptionlabel","box_radiooption_"+i]},null,null,null,suo.getI18n(arrayOptions[i].name));
+			var _option=suo.domCreate2("input",{setName:["id","className","type","name","value"],setValue:["box_radiooption_"+i+_time,"box_radiooption","radio",conf.type,conf.options.settings[i].name]});
+			// if(conf.value==conf.options.settings[i].name){_option.checked=true;}
+			var _domLabel=suo.domCreate2("label",{setName:["className","for"],setValue:["box_radiooptionlabel","box_radiooption_"+i+_time]},null,null,null,suo.getI18n(conf.options.settings[i].name));
 
-			_dom.appendChild(_domRadio);
+			_dom.appendChild(_option);
 			_dom.appendChild(_domLabel);
 			domOption.appendChild(_dom);
 
-					console.log("text")
-			switch(arrayOptions[i].type){
+			i==0?_option.checked=true:null;
+			if(conf.valueOption==undefined){
+				if(conf.options.valueOption==conf.options.settings[i].name){_option.checked=true;}
+			}else{
+				if(conf.valueOption==conf.options.settings[i].name){_option.checked=true;}
+			}
+
+			var _radioList=suo.domCreate2("div",{setName:["className"],setValue:["box_radiolist"]});
+			switch(conf.options.settings[i].typeSetting){
 				case"text":
-					var _text=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_radiooptiontext","text",arrayOptions[i].value]});
-					_dom.appendChild(_text);
+					var _text=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_radiooptiontext","text",conf.value==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]});
+					_radioList.appendChild(_text);
 					break;
 				case"select":
 					var _select=suo.domCreate2("select",{setName:["className"],setValue:["box_radiooptionselect"]});
-					for(var ii=0;ii<arrayOptions[i].settings.length;ii++){
-						var _selectOption=suo.domCreate2("option",null,null,null,null,suo.getI18n(arrayOptions[i].settings[ii]));
+					for(var ii=0;ii<conf.options.settings[i].moreSetting.length;ii++){
+						var _selectOption=suo.domCreate2("option",null,null,null,null,suo.getI18n(conf.options.settings[i].moreSetting[ii]));
 						_select.appendChild(_selectOption);
-						if(ii==conf.options.value){
-							_select.selectedIndex=ii;
-						}
 					}
-					_dom.appendChild(_select);
+
+					_select.selectedIndex=0;
+					_select.selectedIndex=conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting;
+
+					_radioList.appendChild(_select);
 					break;
 				case"range":
 					var _div=suo.domCreate2("div",{setName:["className"],setValue:["box_radiooptionrangebox"]});
-					var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",arrayOptions[i].settings[0],arrayOptions[i].settings[1],arrayOptions[i].settings[2],conf.options.type=="range"?conf.options.value:arrayOptions[i].value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+					var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",conf.options.settings[i].moreSetting[0],conf.options.settings[i].moreSetting[1],conf.options.settings[i].moreSetting[2],conf.value==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]},null,null,{setName:["typechange"],setValue:["actionedit"]});
 					var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,_range.value);
-					var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+arrayOptions[i].settings[3]+" ) ");
+					var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+conf.options.settings[i].moreSetting[3]+" ) ");
 					_div.appendChild(_range);
 					_div.appendChild(_text);
 					_div.appendChild(_unit);
-					_dom.appendChild(_div);
+					_radioList.appendChild(_div);
 					break;
+			}
+			if(_radioList.hasChildNodes()){
+				_dom.appendChild(_radioList);
+				_option.checked?_radioList.style.cssText+="display:block;":null;
 			}
 		}
 
@@ -2211,26 +2363,23 @@ var suo={
 
 		if(confOBJ.texts){
 			for(var i=0;i<confOBJ.texts.length;i++){
-				//fix action of mail
 				if(confOBJ.texts[i].type=="n_mail_domain"){
 					var _css,_class;
+					console.log(confOBJ.selects[0].value)
 					if(confOBJ.selects[0].value=="s_gmailapps"){
-						_css="display:inline-block";
+						_css="display:inline-block;";
 						_class="confix confix-no";
 					}else{
-						_css="display:none";
+						_css="display:none;";
 						_class="confix confix-yes"
 					}
-					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
-					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
-					_div.appendChild(suo.domCreate2("br"));
-					dom.appendChild(_div);
+					var domText=suo.createMoreText(confOBJ.texts[i]);
+						domText.className=_class;
+						domText.style.cssText+=_css;
+					dom.appendChild(domText);
 					continue;
 				}
-				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-				dom.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
-				dom.appendChild(suo.domCreate2("br"));
+				dom.appendChild(suo.createMoreText(confOBJ.texts[i]));
 			}
 		}
 		if(confOBJ.selects){
@@ -2248,10 +2397,7 @@ var suo={
 		}
 		if(confOBJ.checks){
 			for(var i=0;i<confOBJ.checks.length;i++){
-				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
-				dom.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
-				dom.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
-				dom.appendChild(suo.domCreate2("br"));
+				dom.appendChild(suo.createMoreCheck(confOBJ.checks[i]));
 			}
 		}
 		if(confOBJ.checktexts){
@@ -2268,18 +2414,19 @@ var suo={
 	},
 	itemMore:function(confOBJ,actionType){
 		console.log(confOBJ)
+		var conf=JSON.parse(JSON.stringify(confOBJ));
 
 		// fix new added options of actions dont show and delete droped options.
 		for(var i=0;i<actions[actionType].length;i++){
 			for(var ii=0;ii<actions[actionType][i].length;ii++){
-				if(actions[actionType][i][ii].name==confOBJ.name){
+				if(actions[actionType][i][ii].name==conf.name){
 					var arrayConfType=["selects","texts","checks","ranges","checktexts","radios"];
 					for(var act in arrayConfType){
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
 								_arrayModel=[];
-							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
-								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							for(var jj=0;conf[arrayConfType[act]]&&jj<conf[arrayConfType[act]].length;jj++){
+								_arrayConf.push(conf[arrayConfType[act]][jj].type);
 							}
 
 							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
@@ -2287,23 +2434,23 @@ var suo={
 							}
 
 							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
-								if(confOBJ[arrayConfType[act]]){
+								if(conf[arrayConfType[act]]){
 									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
-										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+										conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 									}
 								}else{
-									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
-									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									if(!conf[arrayConfType[act]]){conf[arrayConfType[act]]=[]}
+									conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 								}
 							}
 
-							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
-								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
-									confOBJ[arrayConfType[act]].splice(j,1);
+							for(var j=0;conf[arrayConfType[act]]&&j<conf[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(conf[arrayConfType[act]][j].type)){
+									conf[arrayConfType[act]].splice(j,1);
 								}
 							}
 						}else{
-							delete confOBJ[arrayConfType[act]];
+							delete conf[arrayConfType[act]];
 						}
 					}
 					break;
@@ -2312,60 +2459,64 @@ var suo={
 		}
 
 		var domMore=suo.domCreate2("div",{setName:["className"],setValue:["box_more"]});
-		if(confOBJ.texts){
+		if(conf.texts){
 			for(var i=0;i<confOBJ.texts.length;i++){
-				//fix action of mail
 				if(confOBJ.texts[i].type=="n_mail_domain"){
 					var _css,_class;
+					console.log(confOBJ.selects[0].value)
 					if(confOBJ.selects[0].value=="s_gmailapps"){
-						_css="display:inline-block";
+						_css="display:inline-block;";
 						_class="confix confix-no";
 					}else{
-						_css="display:none";
+						_css="display:none;";
 						_class="confix confix-yes"
 					}
-					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
-					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
-					_div.appendChild(suo.domCreate2("br"));
-					domMore.appendChild(_div);
+					var domText=suo.createMoreText(confOBJ.texts[i]);
+						domText.className=_class;
+						domText.style.cssText+=_css;
+					domMore.appendChild(domText);
 					continue;
 				}
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-				domMore.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+				domMore.appendChild(suo.createMoreText(confOBJ.texts[i]));
+			}
+		}
+		if(conf.selects){
+			for(var i=0;i<conf.selects.length;i++){
+				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.selects[i].type)));
+				domMore.appendChild(suo.createMoreSelect(conf.selects[i].type,conf.selects[i].value,conf));
 				domMore.appendChild(suo.domCreate2("br"));
 			}
 		}
-		if(confOBJ.selects){
-			for(var i=0;i<confOBJ.selects.length;i++){
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.selects[i].type)));
-				domMore.appendChild(suo.createMoreSelect(confOBJ.selects[i].type,confOBJ.selects[i].value,confOBJ));
-				domMore.appendChild(suo.domCreate2("br"));
-			}
-		}
-		if(confOBJ.ranges){
+		if(conf.ranges){
 			console.log("range")
-			console.log(confOBJ);
-			for(var i=0;i<confOBJ.ranges.length;i++){
-				domMore.appendChild(suo.createMoreRange(confOBJ.ranges[i]));
+			console.log(conf);
+			for(var i=0;i<conf.ranges.length;i++){
+				domMore.appendChild(suo.createMoreRange(conf.ranges[i]));
 			}
 		}
-		if(confOBJ.checks){
-			for(var i=0;i<confOBJ.checks.length;i++){
-				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
-				domMore.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
-				domMore.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
-				domMore.appendChild(suo.domCreate2("br"));
+		if(conf.checks){
+			console.log(conf.checks);
+			for(var i=0;i<conf.checks.length;i++){
+				console.log("%c"+conf.checks[i].type,"color:green;font-size:16px;");
+				console.log(actionOptions.checks[conf.checks[i].type])
+				if(actionOptions.checks[conf.checks[i].type]!=undefined){
+					console.log("%c"+conf.checks[i].type,"color:blue;font-size:16px;");
+					domMore.appendChild(suo.createMoreCheck(conf.checks[i]))
+				}else{
+					console.log(conf.checks[i].type);
+					// domMore.appendChild(suo.createMoreCheck(conf.checks[i]))
+					conf.checks.splice(i,1);
+				}
 			}
 		}
-		if(confOBJ.checktexts){
-			for(var i=0;i<confOBJ.checktexts.length;i++){
-				domMore.appendChild(suo.createMoreChecktext(confOBJ.checktexts[i].type,confOBJ.checktexts[i].value));
+		if(conf.checktexts){
+			for(var i=0;i<conf.checktexts.length;i++){
+				domMore.appendChild(suo.createMoreChecktext(conf.checktexts[i].type,conf.checktexts[i].value));
 			}
 		}
-		if(confOBJ.radios){
-			for(var i=0;i<confOBJ.radios.length;i++){
-				domMore.appendChild(suo.createMoreRadio(confOBJ.radios[i]));
+		if(conf.radios){
+			for(var i=0;i<conf.radios.length;i++){
+				domMore.appendChild(suo.createMoreRadio(conf.radios[i]));
 			}
 		}
 		return domMore;
@@ -2488,7 +2639,7 @@ var suo={
 
 			//texts
 			var theTexts=[];
-			var textsOBJ=dom.querySelectorAll(".box_more input.boxtext");
+			var textsOBJ=dom.querySelectorAll(".box_more input.box_text");
 			for(var i=0;i<textsOBJ.length;i++){
 				var thisOBJ={};
 				thisOBJ.type=textsOBJ[i].name;
@@ -2510,17 +2661,39 @@ var suo={
 			var theChecks=[];
 			var checksOBJ=dom.querySelectorAll(".box_more .box_check[type=checkbox]");
 			for(var i=0;i<checksOBJ.length;i++){
-				var thisOBJ={};
-				thisOBJ.type=checksOBJ[i].name;
-				thisOBJ.value=checksOBJ[i].checked;
-				theChecks.push(thisOBJ);
+				var _confobj={};
+					_confobj.type=checksOBJ[i].name;
+					_confobj.value=checksOBJ[i].checked;
+				var _checkList=checksOBJ[i].parentNode.querySelector(".box_checklist");
+
+				if(_confobj.value&&_checkList){
+					if(_checkList.querySelector("input[type=radio]")){ // check with radio
+						_confobj.typeCheck="radio";
+						_confobj.valueOption=_checkList.querySelector("input[type=radio]:checked").value;
+						var _radioList=_checkList.querySelector("input[type=radio]:checked").parentNode.querySelector(".box_radiolist");
+						if(_radioList){
+							if(_radioList.querySelector("select")){
+								_confobj.valueSetting=_radioList.querySelector("select").selectedIndex;
+							}else{
+								_confobj.valueSetting=_radioList.querySelector("input").value;
+							}
+						}
+					}else if(_checkList.querySelector("select")){ // check with select
+						_confobj.typeCheck="select";
+						_confobj.valueOption=_checkList.querySelector("select").selectedIndex;
+					}else if(_checkList.querySelector("input")){ // check with text/range
+						_confobj.typeCheck=_checkList.querySelector("input").type;
+						_confobj.valueOption=_checkList.querySelector("input").value;
+					}
+				}
+				console.log(_confobj);
+				theChecks.push(_confobj);
 			}
 			if(theChecks.length>0){
 				confOBJ.checks=theChecks;
 			}else{
 				confOBJ.checks?(delete confOBJ.checks):null;
 			}
-			//confOBJ.checks=theChecks;
 
 			//ranges
 			var theRanges=[];
@@ -2555,23 +2728,20 @@ var suo={
 			codeAltOBJ?confOBJ.alt=codeAltOBJ.checked:null;
 			codeShiftOBJ?confOBJ.shift=codeShiftOBJ.checked:null;
 
-			//checktext
-			console.log(dom);
-			var theChecktexts=[],
-				checktextsOBJ=dom.querySelectorAll(".box_checktext");
-			for(var i=0;i<checktextsOBJ.length;i++){
-				var checktextsConf={};
-					checktextsConf.value={};
-				checktextsConf.type=checktextsOBJ[i].querySelector("input[type=checkbox]").name;
-				checktextsConf.value.checked=checktextsOBJ[i].querySelector("input[type=checkbox]").checked;
-				checktextsConf.value.text=checktextsOBJ[i].querySelector("input[type=text]").value;
-				theChecktexts.push(checktextsConf);
+			// radio
+			var theRadios=[],
+				radiosOBJ=dom.querySelectorAll("box_radio");
+			for(var i=0;i<radiosOBJ.length;i++){
+				var _confobj={};
+					_confobj.type=radiosOBJ[i].name;
+					_confobj.value=radiosOBJ[i].checked;
+				var _checkList=radiosOBJ[i].parentNode.querySelector(".box_checklist");
+
+				if(_confobj.value&&_checkList){
+
+				}			
 			}
-			if(theChecktexts.length>0){
-				confOBJ.checktexts=theChecktexts;
-			}else{
-				confOBJ.checktexts?(delete confOBJ.checktexts):null;
-			}
+
 
 			// radio
 			var theRadios=[],
@@ -2585,6 +2755,7 @@ var suo={
 				// _conf.value=radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]").value;
 
 				var _selectedObj=radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]:checked").parentNode;
+				_conf.value=radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]:checked").value;
 				console.log(_selectedObj)
 				// radio with text
 				if(_selectedObj.querySelector("input.box_radiooptiontext[type=text]")){
@@ -2592,7 +2763,7 @@ var suo={
 					_conf.options={};
 					_conf.options={
 						name:radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]:checked").value,
-						type:"text",
+						typeOption:"text",
 						value:_selectedObj.querySelector("input.box_radiooptiontext[type=text]").value
 					}
 				}else if(_selectedObj.querySelector("select.box_radiooptionselect")){
@@ -2600,7 +2771,7 @@ var suo={
 					_conf.options={};
 					_conf.options={
 						name:radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]:checked").value,
-						type:"select",
+						typeOption:"select",
 						value:_selectedObj.querySelector("select.box_radiooptionselect").selectedIndex
 					}
 				}else if(_selectedObj.querySelector("input.box_radiooptionrange[type=range]")){
@@ -2608,7 +2779,7 @@ var suo={
 					_conf.options={};
 					_conf.options={
 						name:radiosOBJ[i].querySelector("input.box_radiooption[type=radio][name="+radiosOBJ[i].dataset.confobj+"]:checked").value,
-						type:"range",
+						typeOption:"range",
 						value:_selectedObj.querySelector("input.box_radiooptionrange[type=range]").value
 					}
 				}
@@ -2622,7 +2793,7 @@ var suo={
 				confOBJ.radios?(delete confOBJ.radios):null;
 			}
 			console.log(confOBJ)
-			// return;
+			return;
 		}
 		suo.saveConf();
 		suo.initActionEle();
