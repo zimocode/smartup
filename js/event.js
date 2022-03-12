@@ -152,7 +152,7 @@ var sue={
 				if(sue.inDrg&&config.drg.settings.clickcancel){console.log("cancel");sue.break=true;sue.stopMges(e);}
 				break;
 			case"keydown":
-				console.log(e.keyCode);
+				// console.log(e.keyCode);
 				if(!editMode&&config.general.fnswitch.fnksa){
 					sue.ksa.action(e);
 				}
@@ -251,6 +251,13 @@ var sue={
 					e.preventDefault();
 					sue.cons.switchtab.contextmenu=false;
 				}
+				// fix context menu selected elements
+				sue.selEle={};
+				sue.selEle.txt=window.getSelection().toString();
+				sue.selEle.lnk=document.activeElement.href;
+				sue.selEle.img=document.activeElement.src;
+				sue.selEle.str=document.activeElement.text;
+				sue.startEle=e.target;
 				
 				break;
 			case"mousemove":
@@ -400,6 +407,12 @@ var sue={
 
 		sue.selEle={};
 		sue.selEle.txt=window.getSelection().toString();
+		// fix firefox get selection frome textbox
+		if(browserType=="fx"){
+			if(e.target.tagName.toLowerCase=="textarea"||(e.target.tagName.toLowerCase=="input"&&e.target.type=="text")){
+				sue.selEle.txt=e.target.value.substring(e.target.selectionStart,e.target.selectionEnd);
+			}
+		}
 		sue.selEle.lnk=e.href||e.target.href;
 		sue.selEle.img=sue.selEle.img?sue.selEle.img:e.target.src;
 		sue.selEle.str=e.target.innerText;
@@ -544,6 +557,12 @@ var sue={
 
 		//sue.selEle={};
 		sue.selEle.txt=window.getSelection().toString();
+		// fix firefox get selection frome textbox
+		if(browserType=="fx"){
+			if(e.target.tagName.toLowerCase()=="textarea"||(e.target.tagName.toLowerCase()=="input"&&e.target.type.toLowerCase()=="text")){
+				sue.selEle.txt=e.target.value.substring(e.target.selectionStart,e.target.selectionEnd);
+			}
+		}
 		sue.selEle.lnk=e.href||e.target.href;
 		sue.selEle.img=sue.selEle.img?sue.selEle.img:e.target.src;
 		sue.selEle.str=e.target.innerText;
@@ -956,9 +975,9 @@ var sue={
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	console.log(message)
 	if(message.type=="set_confirm"){
-		sendResponse({type:message.type,message:true});
-		if(!confirm("You are try to close multiple tabs. Are you sure you want to continue?")){
-			//sendResponse({type:message.type,message:true});
+		// sendResponse({type:message.type,message:true});
+		if(confirm(chrome.i18n.getMessage("tip_closemulticonfirm"))){
+			sendResponse({type:message.type,message:true});
 		}
 	}
 	if(message.type=="status"){
@@ -967,6 +986,12 @@ chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	if(message.type=="icon"||message.type=="pop"){//icon action
 		sue.selEle={};
 		sue.selEle.txt=window.getSelection().toString();
+		// fix firefox get selection frome textbox
+		if(browserType=="fx"){
+			if(e.target.tagName.toLowerCase=="textarea"||(e.target.tagName.toLowerCase=="input"&&e.target.type=="text")){
+				sue.selEle.txt=e.target.value.substring(e.target.selectionStart,e.target.selectionEnd);
+			}
+		}
 		console.log(sue.selEle)
 		sendResponse({type:"action_"+message.type,selEle:sue.selEle});
 	}

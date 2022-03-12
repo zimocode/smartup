@@ -916,6 +916,9 @@ var appConfmodel={
 }
 
 var sub={
+	temp:{
+		zoom:[]
+	},
 	cons:{
 		pretab:[],
 		fullstate:null,
@@ -1084,6 +1087,16 @@ var sub={
 		// 		break;
 		// }
 		return _value;
+	},
+	getConfData:function(type,value){
+		var _data;
+		for(var i=0;i<(sub.theConf[type]?sub.theConf[type].length:0);i++){
+			if(sub.theConf[type][i].type==value){
+				_data=sub.theConf[type][i];
+				break;
+			}
+		}
+		return _data;
 	},
 	getId:function(value){
 		var theId=[];
@@ -1624,6 +1637,13 @@ var sub={
 			var thepers=["sessions"];
 			var theorgs;
 			sub.checkPermission(thepers,theorgs,theFunction);
+		},
+		reopenincognito:function(){
+			chrome.windows.create({url:sub.curTab.url,incognito:true,state:sub.getConfValue("selects","n_optype")=="s_incog"?"normal":"minimized"},function(window){
+				if(!sub.getConfValue("checks","n_reopenkeep")){
+					chrome.tabs.remove(sub.curTab.id);
+				}
+			})
 		},
 		open:function(){//chk
 			sub.open(sub.getConfValue("texts","n_url"),sub.getConfValue("selects","n_optype"),sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],sub.getConfValue("checks","n_pin"));
@@ -2218,42 +2238,49 @@ var sub={
 				sub.cons.zoom=sub.getConfValue("selects","n_zoom");
 				chrome.tabs.executeScript({file:"js/inject/zoom.js",runAt:"document_start"},function(){})
 			}else{
+				var factorDefault=1;
+				console.log(sub.getConfData("checks","c_factor"));
+				var _confData=sub.getConfData("checks","c_factor");
+				var factorCus=_confData.value?(_confData.valueOption=="cl_factorcustom"?parseInt(_confData.valueSetting)/100:false):false,
+					factorLoaded=_confData.value?(_confData.valueOption=="cl_factorloaded"?true:false):false;
+				if(factorLoaded){
+					factorDefault=sub.temp.zoom[sub.curTab.id];
+				}else{
+					factorDefault=factorCus?factorCus:1;
+				}
+				console.log(factorDefault);
+
+				var zoomRange=[25,33,50,67,75,80,90,100,110,125,150,175,200,250,300,400,500];
+
 				switch(sub.theConf.selects[0].value){
 					case"s_in":
 						chrome.tabs.getZoom(function(zoom){
-							zoom=Math.abs(zoom.toFixed(2));
-							if(zoom==5){
-								chrome.tabs.setZoom(1);
-								return;
-							}else{
-								zoom=zoom==5?1:zoom;
-								zoom=Math.abs((zoom>=1?(1+((zoom-1)?(zoom-1):.05)*2):(zoom+.15)).toFixed(2));
-								zoom=zoom>5?5:zoom;
-								chrome.tabs.setZoom(zoom);								
+							zoom=parseFloat(zoom.toFixed(2));
+							for(var i=zoomRange.length-1;i>=0;i--){
+								if(zoom>=parseFloat((zoomRange[i]/100).toFixed(2))){
+									zoom=parseFloat((zoomRange[(i==zoomRange.length-1?0:i+1)]/100).toFixed(2));
+									zoom=zoom<factorDefault?factorDefault:zoom;
+									chrome.tabs.setZoom(zoom);
+									break;
+								}
 							}
 						})
 						break;
 					case"s_out":
 						chrome.tabs.getZoom(function(zoom){
-							zoom=Math.abs(zoom.toFixed(2));
-							if(zoom==.25){
-								chrome.tabs.setZoom(1);
-								return;	
-							}else{
-								if(zoom>2){
-									zoom=Math.abs((zoom-((zoom-1)*.2)).toFixed(2));
-								}else if(zoom>1){
-									zoom=Math.abs((zoom-.45).toFixed(2));
-								}else if(zoom<=1){
-									zoom=Math.abs((zoom-.15).toFixed(2));
+							zoom=parseFloat(zoom.toFixed(2));
+							for(var i=0;i<zoomRange.length;i++){
+								if(zoom<parseFloat((zoomRange[i]/100).toFixed(2))){
+									zoom=parseFloat((zoomRange[(i==0?0:i-2)]/100).toFixed(2));
+									zoom=zoom<factorDefault?zoom:factorDefault;
+									chrome.tabs.setZoom(zoom);
+									break;
 								}
-								zoom=zoom<.25?.25:zoom;
-								chrome.tabs.setZoom(zoom);								
 							}
 						})
 						break;
 					case"s_reset":
-						chrome.tabs.setZoom(1.0)
+						chrome.tabs.setZoom(factorDefault);
 						break;
 				}	
 			}
@@ -4885,6 +4912,7 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
 	sub.CTMclick(info,tab);
 })
 chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
+	console.log(tabId);
 	sub.setIcon("normal",tabId,changeInfo,tab);
 	if(changeInfo.status=="complete"){
 		chrome.tabs.sendMessage(tabId,{type:"status"},function(response){
@@ -4893,6 +4921,16 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
 			}
 		});
 	}
+
+	// get factor for action zoom
+	chrome.tabs.getZoom(tabId,function(zoomFactor){
+		if(!sub.temp.zoom[tabId]){
+			sub.temp.zoom[tabId]=zoomFactor;
+		}else{
+			sub.temp.zoom[tabId]=zoomFactor;
+		}
+	})
+
 })
 chrome.tabs.onRemoved.addListener(function(tabId){
 	if(sub.cons.autoreload&&sub.cons.autoreload[tabId]){

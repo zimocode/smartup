@@ -1774,5 +1774,26 @@
   },
   "tip_enterkeys":{
     "message":"使用键盘输入按键"
+  },
+  "reopenincognito":{
+    "message":"在隐身窗口中重新打开"
+  },
+  "n_reopenkeep":{
+    "message":"保留原始标签页"
+  },
+  "s_incogback":{
+    "message":"隐身窗口（后台）"
+  },
+  "tip_closemulticonfirm":{
+    "message":"你正在尝试关闭多个标签页。 你确定你要继续吗？"
+  },
+  "cl_factorcustom":{
+    "message":"设置页面默认缩放系数为（%）："
+  },
+  "cl_factorloaded":{
+    "message":"加载或重新加载时从页面中获取缩放系数"
+  },
+  "c_factor":{
+    "message":"自定义默认缩放系数"
   }
 }

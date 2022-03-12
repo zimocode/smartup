@@ -333,6 +333,26 @@ var suo={
 				break;
 			case"change":
 				console.log("change");
+				// show or hide chek with text/range/radio/select
+				if(e.target.classList.contains("box_check")){
+					if(e.target.nextSibling&&e.target.nextSibling.nextSibling){
+						if(e.target.checked){
+							e.target.nextSibling.nextSibling.style.cssText+="display:block;";
+						}else{
+							e.target.nextSibling.nextSibling.style.cssText+="display:none;";
+						}
+					}
+				}
+				// show or hide radio options
+				if(e.target.classList.contains("box_radiooption")){
+					var _domRadioList=e.target.parentNode.parentNode.querySelectorAll(".box_radiolist");
+					for(var i=0;i<_domRadioList.length;i++){
+						_domRadioList[i].style.cssText+="display:none;";
+					}
+					if(e.target.checked&&e.target.parentNode.querySelector(".box_radiolist")){
+						e.target.parentNode.querySelector(".box_radiolist").style.cssText+="display:block;";
+					}
+				}
 				if(e.target.dataset.confele=="mouseup"&&e.target.checked){
 					suo.checkPermission(["browserSettings"],null,null,"");
 					break;
@@ -631,7 +651,7 @@ var suo={
 		}
 	},
 	getI18n:function(str){
-		//console.log(str)
+		// console.log(str)
 		if(["n_mute","n_stop","n_reload","n_move","n_detach","n_switchtab","n_copytab","n_copytabele_target","n_bookmark","n_savepage","n_mail_target"].contains(str)){
 			str="n_tab";
 		}
@@ -1047,71 +1067,254 @@ var suo={
 			domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:["add_from_select"]},null,null,null,"Add new ..."));
 		}else{
 			let _obj={};
-			//special action
 			_obj=(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type])?actionOptions.special[confOBJ.name][type]:actionOptions.selects[type];
 			console.log(_obj)
-			//for(var i=0;i<actionOptions.selects[type].length;i++){
-			for(i=0;i<actionOptions.selects[type].length;i++){
-				// _obj=(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type])?actionOptions.special[confOBJ.name][type]:actionOptions.selects[type];
-				// console.log(_obj)
+			for(i=0;i<_obj.length;i++){
 				domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[_obj[i]]},null,null,null,type=="n_voicename"?_obj[i]:suo.getI18n(_obj[i])));
 				if(type=="script"){
 					if(i==value){index=i}
 				}else{
 					if(value==_obj[i]){index=i;}
 				}
-				continue;
-				//special action
-				if(actionOptions.special[confOBJ.name]&&actionOptions.special[confOBJ.name][type]){
-					domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[actionOptions.special[confOBJ.name][type][i]]},null,null,null,type=="n_voicename"?actionOptions.special[confOBJ.name][type][i]:suo.getI18n(actionOptions.special[confOBJ.name][type][i])));
-				}else{
-					domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[actionOptions.selects[type][i]]},null,null,null,type=="n_voicename"?actionOptions.selects[type][i]:suo.getI18n(actionOptions.selects[type][i])));
-				}
-				if(type=="script"){
-					if(i==value){index=i}
-				}else{
-					if(value==actionOptions.selects[type][i]){index=i;}
-				}
 			}
 		}
 		domSelect.selectedIndex=index;
 		return domSelect;
 	},
-	createMoreText:function(type,value){
-		//console.log("createMoretext")
-		var valueOBJ={setName:["name","className"],setValue:[type,"box_select"]};
-		var valueOBJ={
-			setName:["name","type","value","className"],
-			setValue:[type,"text",value?value:(actionOptions.texts[type]?actionOptions.texts[type]:""),"boxtext"]};
-		var domText=suo.domCreate2("input",valueOBJ);
-		return domText;
-	},
-	createMoreCheck:function(type,value){
-		// var valueOBJ={
-		// 	setName:["id","className","type","checked","name"],
-		// 	setValue:[type,"box_check","checkbox",value?value:(actionOptions.checks[type]?actionOptions.checks[type]:false),type]
-		// };
-		var valueOBJ={
-			setName:["id","className","type","checked","name"],
-			setValue:[type,"box_check","checkbox",value==undefined?(actionOptions.checks[type]?actionOptions.checks[type]:false):value,type]
-		};
-		var domCheck=suo.domCreate2("input",valueOBJ);
-		return domCheck;
-	},
-	createMoreRange:function(type,value){
-		var rangeModel={
-			n_pitch:[0,2,.1],
-			n_volume:[0,1,.1],
-			n_rate:[.1,10,.1]
+	createMoreText:function(_conf){
+		var conf=JSON.parse(JSON.stringify(_conf));
+		if(conf.value==undefined){
+			conf.value=actionOptions.texts[conf.type];
 		}
-		var dom=suo.domCreate2("span",{setName:["className"],setValue:["box_range_parent"]});
-		var valueOBJ={
-			setName:["name","type","value","className","min","max","step"],
-			setValue:[type,"range",value?value:(actionOptions.ranges[type]?actionOptions.ranges[type]:""),"box_range",rangeModel[type][0],rangeModel[type][1],rangeModel[type][2]]};
-		var domRange=suo.domCreate2("input",valueOBJ);
-		var domSpan=suo.domCreate2("span",{setName:["className"],setValue:["box_range_value"]},null,null,null,value?value:(actionOptions.ranges[type]?actionOptions.ranges[type]:""))
-		dom.appendChild(domRange);
-		dom.appendChild(domSpan);
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]});
+		var labelText=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.type)),
+			domText=suo.domCreate2("input",{setName:["name","type","value","className"],setValue:[conf.type,"text",conf.value,"box_text"]});
+
+		dom.appendChild(labelText);
+		dom.appendChild(domText);
+		return dom;
+	},
+	createMoreCheck:function(_conf){
+		var _time=parseInt((new Date().getTime())/1000)+parseInt(Math.random()*1000).toString();
+
+		// copy all actionOptions elements to new conf
+		var conf=JSON.parse(JSON.stringify(_conf));
+		for(var i in actionOptions.checks[conf.type]){
+			if(conf[i]==undefined){
+				conf[i]=actionOptions.checks[conf.type][i];
+			}
+		}
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]}),
+			labelCheck=suo.domCreate2("label",{setName:["id","for"],setValue:[conf.type,conf.type]},null,null,null,suo.getI18n(conf.type)),
+			domCheck=suo.domCreate2("input",{setName:["id","className","type","name"],setValue:[conf.type,"box_check","checkbox",conf.type]
+		});
+		dom.appendChild(domCheck);
+		dom.appendChild(labelCheck);
+
+		if(conf.typeCheck){
+			domCheck.checked=conf.value;
+			var _checkList=suo.domCreate2("div",{setName:["className"],setValue:["box_checklist"]},null,conf.value?"display:block;":"display:none;");
+
+			switch(conf.typeCheck){
+				case"default":
+
+					break;
+				case"text":
+					var domText=suo.domCreate2("input",{setName:["name","type","value","className"],setValue:[conf.type,"text",conf.valueOption==undefined?actionOptions.checks[conf.type].options.valueOption:conf.valueOption,"box_checktext"]
+					});
+					_checkList.appendChild(domText);
+					break;
+				case"select":
+					var domSelect=suo.domCreate2("select",{setName:["name","className"],setValue:[conf.type,"box_checkselect"]});
+					for(i=0;i<conf.options.settings.length;i++){
+						domSelect.appendChild(suo.domCreate2("option",{setName:["value"],setValue:[conf.options.settings[i]]},null,null,null,suo.getI18n(conf.options.settings[i])));
+					}
+					domSelect.selectedIndex=0;
+					domSelect.value=conf.valueOption==undefined?conf.options.valueOption:conf.valueOption;
+					_checkList.appendChild(domSelect);
+					break;
+				case"range":
+					var domRangeBox=suo.domCreate2("div",{setName:["className"],setValue:["box_checkrange"]});
+					var domRange=suo.domCreate2("input",{setName:["className","name","type","min","max","step","value"],setValue:["change box_range",conf.type,"range",conf.options.settings[0],conf.options.settings[1],conf.options.settings[2],conf.valueOption==undefined?conf.options.valueOption:conf.valueOption]},null,null,{setName:["typechange"],setValue:["actionedit"]}),
+						domText=suo.domCreate2("span",{setName:["className"],setValue:["box_rangevalue"]},null,null,null,domRange.value);
+					domRangeBox.appendChild(domRange);
+					domRangeBox.appendChild(domText);
+
+					if(conf.options.settings[3]){
+						var domUnit=suo.domCreate2("span",{setName:["className"],setValue:["box_rangeunit"]},null,null,null," ( "+conf.options.settings[3]+" ) ");
+						domRangeBox.appendChild(domUnit);
+					}
+
+					_checkList.appendChild(domRangeBox);
+					break;
+				case"radio":
+					var domRadio=suo.domCreate2("div",{setName:["className"],setValue:["box_checkradio"]});
+					for(var i=0;i<conf.options.settings.length;i++){
+						var _dom=suo.domCreate2("div",null,null,"clear:both;"),
+							_option=suo.domCreate2("input",{setName:["id","className","type","name","value"],setValue:["box_radiooption_"+i+_time,"box_radiooption","radio",conf.typeCheck,conf.options.settings[i].name]}),
+							_label=suo.domCreate2("label",{setName:["className","for"],setValue:["box_radiooptionlabel","box_radiooption_"+i+_time]},null,null,null,suo.getI18n(conf.options.settings[i].name));
+						_dom.appendChild(_option);
+						_dom.appendChild(_label);
+						domRadio.appendChild(_dom);
+
+						// i==0?_option.checked=true:null;
+						if(conf.valueOption==undefined){
+							if(conf.options.valueOption==conf.options.settings[i].name){_option.checked=true;}
+						}else{
+							if(conf.valueOption==conf.options.settings[i].name){_option.checked=true;}
+						}
+
+						var _radioList=suo.domCreate2("div",{setName:["className"],setValue:["box_radiolist"]});
+						switch(conf.options.settings[i].typeSetting){
+							case"text":
+								var _text=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_radiooptiontext","text",conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]});
+								_radioList.appendChild(_text);
+								break;
+							case"select":
+								var _select=suo.domCreate2("select",{setName:["className"],setValue:["box_radiooptionselect"]});
+								for(var ii=0;ii<conf.options.settings[i].moreSetting.length;ii++){
+									var _selectOption=suo.domCreate2("option",null,null,null,null,suo.getI18n(conf.options.settings[i].moreSetting[ii]));
+									_select.appendChild(_selectOption);
+								}
+								_select.selectedIndex=0;
+								_select.value=conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting;
+								_radioList.appendChild(_select);
+								break;
+							case"range":
+								var _div=suo.domCreate2("div",{setName:["className"],setValue:["box_radiooptionrangebox"]}),
+									_range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",conf.options.settings[i].moreSetting[0],conf.options.settings[i].moreSetting[1],conf.options.settings[i].moreSetting[2],conf.valueOption==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]},null,null,{setName:["typechange"],setValue:["actionedit"]}),
+									_text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,_range.value),
+									_unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+conf.options.settings[i].moreSetting[3]+" ) ");
+								_div.appendChild(_range);
+								_div.appendChild(_text);
+								_div.appendChild(_unit);
+								_radioList.appendChild(_div);
+								break;
+						}
+
+						if(_radioList.hasChildNodes()){
+							_dom.appendChild(_radioList);
+							if(_option.checked){
+								_radioList.style.cssText+="display:block;";
+							}
+						}
+					}
+					_checkList.appendChild(domRadio);
+					break;
+			}
+			_checkList.hasChildNodes()?dom.appendChild(_checkList):null;
+		}else{
+			domCheck.checked=conf.value;
+		}
+
+		return dom;
+	},
+	createMoreRange:function(_conf){
+		console.log(_conf)
+		var conf=JSON.parse(JSON.stringify(_conf));
+		if(conf.value==undefined){
+			for(var i in actionOptions.ranges[conf.type]){
+				conf[i]=actionOptions.ranges[conf.type][i];
+			}
+		}
+		console.log(conf);
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]}),
+			labelRange=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.type));
+		dom.appendChild(labelRange);
+
+		var arrayOptions=actionOptions.ranges[conf.type].options;
+
+		var _range=suo.domCreate2("input",{setName:["className","type","name","min","max","step","value"],setValue:["change box_range","range",conf.type,arrayOptions[0],arrayOptions[1],arrayOptions[2],conf.value]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+		dom.appendChild(_range);
+
+		var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_rangevalue"]},null,null,null,conf.value);
+		dom.appendChild(_text);
+
+		if(arrayOptions[3]){
+			_range.style.cssText+="width:83px;";
+			var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_rangeunit"]},null,null,null," ( "+arrayOptions[3]+" ) ");
+			dom.appendChild(_unit);
+		}
+
+		return dom;
+	},
+	createMoreRadio:function(_conf){
+		var _time=parseInt((new Date().getTime())/1000)+parseInt(Math.random()*1000).toString();
+
+		// copy all actionOptions elements to new conf
+		var conf=JSON.parse(JSON.stringify(_conf));
+		for(var i in actionOptions.radios[conf.type]){
+			if(conf[i]==undefined){
+				conf[i]=actionOptions.radios[conf.type][i];
+			}
+		}
+		console.log(conf);
+
+		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_optionlist"]},null,null,{setName:["confobj"],setValue:[conf.type]}),
+			labelRadio=suo.domCreate2("span",{setName:["className"],setValue:["box_radiolabel"]},null,null,null,suo.getI18n(conf.type)),
+			domOption=suo.domCreate2("div",{setName:["className"],setValue:["box_radio"]},null,null,{setName:["confobj"],setValue:[conf.type]});
+		dom.appendChild(labelRadio);
+		dom.appendChild(domOption);
+
+		// var arrayOptions=actionOptions.radios[conf.type].options;
+		var arrayOptions=conf.options;
+		for(var i=0;i<conf.options.settings.length;i++){
+			var _dom=suo.domCreate2("div"),
+				_option=suo.domCreate2("input",{setName:["id","className","type","name","value"],setValue:["box_radiooption_"+i+_time,"box_radiooption","radio",conf.type,conf.options.settings[i].name]}),
+				_domLabel=suo.domCreate2("label",{setName:["className","for"],setValue:["box_radiooptionlabel","box_radiooption_"+i+_time]},null,null,null,suo.getI18n(conf.options.settings[i].name));
+
+			_dom.appendChild(_option);
+			_dom.appendChild(_domLabel);
+			domOption.appendChild(_dom);
+
+			// set checked option
+			console.log(conf.value)
+			// i==0?_option.checked=true:null;
+			if(conf.value==undefined){
+				if(conf.options.valueOption==conf.options.settings[i].name){_option.checked=true;}
+			}else{
+				console.log(conf.value)
+				if(conf.value==conf.options.settings[i].name){_option.checked=true;}
+			}
+
+			var _radioList=suo.domCreate2("div",{setName:["className"],setValue:["box_radiolist"]});
+			switch(conf.options.settings[i].typeSetting){
+				case"text":
+					var _text=suo.domCreate2("input",{setName:["className","type","value"],setValue:["box_radiooptiontext","text",conf.value==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]});
+					_radioList.appendChild(_text);
+					break;
+				case"select":
+					var _select=suo.domCreate2("select",{setName:["className"],setValue:["box_radiooptionselect"]});
+					for(var ii=0;ii<conf.options.settings[i].moreSetting.length;ii++){
+						var _selectOption=suo.domCreate2("option",null,null,null,null,suo.getI18n(conf.options.settings[i].moreSetting[ii]));
+						_select.appendChild(_selectOption);
+					}
+
+					_select.selectedIndex=0;
+					_select.value=conf.value==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting;
+
+					_radioList.appendChild(_select);
+					break;
+				case"range":
+					var _div=suo.domCreate2("div",{setName:["className"],setValue:["box_radiooptionrangebox"]});
+					var _range=suo.domCreate2("input",{setName:["className","type","min","max","step","value"],setValue:["change box_radiooptionrange","range",conf.options.settings[i].moreSetting[0],conf.options.settings[i].moreSetting[1],conf.options.settings[i].moreSetting[2],conf.value==conf.options.settings[i].name?conf.valueSetting:conf.options.settings[i].valueSetting]},null,null,{setName:["typechange"],setValue:["actionedit"]});
+					var _text=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangetext"]},null,null,null,_range.value);
+					var _unit=suo.domCreate2("span",{setName:["className"],setValue:["box_radiooptionrangeunit"]},null,null,null," ( "+conf.options.settings[i].moreSetting[3]+" ) ");
+					_div.appendChild(_range);
+					_div.appendChild(_text);
+					_div.appendChild(_unit);
+					_radioList.appendChild(_div);
+					break;
+			}
+			if(_radioList.hasChildNodes()){
+				_dom.appendChild(_radioList);
+				_option.checked?_radioList.style.cssText+="display:block;":null;
+			}
+		}
+
 		return dom;
 	},
 	set:{
@@ -1336,6 +1539,7 @@ var suo={
 		// let _value="";
 		// if(e.target.dataset.confele=="opacity")
 		e.target.nextSibling.textContent=e.target.value;
+		if(e.target.dataset&&e.target.dataset.typechange=="actionedit"){return;}
 		var confOBJ=suo.getConfOBJ(e);
 		confOBJ[e.target.dataset.confele]=e.target.value;
 		suo.saveConf();
@@ -1349,7 +1553,13 @@ var suo={
 				config[ele.dataset.confele.substr(2)]=defaultConf[ele.dataset.confele.substr(2)];
 				suo.saveConf();
 			}
-			suo.initListItem(ele.dataset.confele.substr(2));
+			if(ele.dataset.confele.substr(2)=="drg"||ele.dataset.confele.substr(2)=="sdrg"){
+				suo.initListItem("t"+ele.dataset.confele.substr(2));
+				suo.initListItem("l"+ele.dataset.confele.substr(2));
+				suo.initListItem("i"+ele.dataset.confele.substr(2));
+			}else{
+				suo.initListItem(ele.dataset.confele.substr(2));
+			}
 		}else{
 			suo.domHide(domOBJ);
 		}
@@ -2063,16 +2273,17 @@ var suo={
 	},
 	itemOption:function(confOBJ,actionType){
 		// fix new added options of actions dont show and delete droped options.
+		var conf=JSON.parse(JSON.stringify(confOBJ));
 		for(var i=0;i<actions[actionType].length;i++){
 			for(var ii=0;ii<actions[actionType][i].length;ii++){
-				if(actions[actionType][i][ii].name==confOBJ.name){
-					var arrayConfType=["selects","texts","checks","ranges"];
+				if(actions[actionType][i][ii].name==conf.name){
+					var arrayConfType=["selects","texts","checks","ranges","radios"];
 					for(var act in arrayConfType){
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
 								_arrayModel=[];
-							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
-								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							for(var jj=0;conf[arrayConfType[act]]&&jj<conf[arrayConfType[act]].length;jj++){
+								_arrayConf.push(conf[arrayConfType[act]][jj].type);
 							}
 
 							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
@@ -2080,27 +2291,30 @@ var suo={
 							}
 
 							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
-								if(confOBJ[arrayConfType[act]]){
+								if(conf[arrayConfType[act]]){
 									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
-										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+										conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 									}
 								}else{
-									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
-									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									if(!conf[arrayConfType[act]]){conf[arrayConfType[act]]=[]}
+									conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 								}
 							}
 
-							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
-								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
-									confOBJ[arrayConfType[act]].splice(j,1);
+							for(var j=0;conf[arrayConfType[act]]&&j<conf[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(conf[arrayConfType[act]][j].type)){
+									conf[arrayConfType[act]].splice(j,1);
 								}
 							}
-						}							
+						}else{
+							delete conf[arrayConfType[act]];
+						}
 					}
 					break;
 				}				
 			}
 		}
+		console.log(conf);
 
 		var dom=suo.domCreate2("div",{setName:["className"],setValue:["box_option box_more"]});
 
@@ -2108,10 +2322,10 @@ var suo={
 		// var spacelabel=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
 		// var spacelabel2=suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},"");
 		var checkbox=suo.domCreate2("input",{setName:["id","className","type"],setValue:["box_mydes","box_desck","checkbox"]});
-			checkbox.checked=confOBJ.mydes?confOBJ.mydes.type:false;
+			checkbox.checked=conf.mydes?conf.mydes.type:false;
 		var checklabel=suo.domCreate2("label","",null,null,null,suo.getI18n("tip_actionname"));
-		var destext=suo.domCreate2("input",{setName:["id","className","type","value"],setValue:["mydestext","box_destext","text",confOBJ.mydes?confOBJ.mydes.value:""]});
-		if(!confOBJ.mydes||!confOBJ.mydes.type){
+		var destext=suo.domCreate2("input",{setName:["id","className","type","value"],setValue:["mydestext","box_destext","text",conf.mydes?conf.mydes.value:""]});
+		if(!conf.mydes||!conf.mydes.type){
 			destext.style.display="none";
 		}
 		checklabel.setAttribute("for","box_mydes");
@@ -2121,72 +2335,68 @@ var suo={
 		domDes.appendChild(destext);
 		dom.appendChild(domDes);
 
-		if(confOBJ.texts){
-			for(var i=0;i<confOBJ.texts.length;i++){
-				//fix action of mail
-				if(confOBJ.texts[i].type=="n_mail_domain"){
+		if(conf.texts){
+			for(var i=0;i<conf.texts.length;i++){
+				if(conf.texts[i].type=="n_mail_domain"){
 					var _css,_class;
-					if(confOBJ.selects[0].value=="s_gmailapps"){
-						_css="display:inline-block";
+					console.log(conf.selects[0].value)
+					if(conf.selects[0].value=="s_gmailapps"){
+						_css="display:inline-block;";
 						_class="confix confix-no";
 					}else{
-						_css="display:none";
+						_css="display:none;";
 						_class="confix confix-yes"
 					}
-					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
-					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
-					_div.appendChild(suo.domCreate2("br"));
-					dom.appendChild(_div);
+					var domText=suo.createMoreText(conf.texts[i]);
+						domText.className=_class;
+						domText.style.cssText+=_css;
+					dom.appendChild(domText);
 					continue;
 				}
-				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-				dom.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+				dom.appendChild(suo.createMoreText(conf.texts[i]));
+			}
+		}
+		if(conf.selects){
+			for(var i=0;i<conf.selects.length;i++){
+				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.selects[i].type)));
+				dom.appendChild(suo.createMoreSelect(conf.selects[i].type,conf.selects[i].value,conf));
 				dom.appendChild(suo.domCreate2("br"));
 			}
 		}
-		if(confOBJ.selects){
-			for(var i=0;i<confOBJ.selects.length;i++){
-				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.selects[i].type)));
-				dom.appendChild(suo.createMoreSelect(confOBJ.selects[i].type,confOBJ.selects[i].value,confOBJ));
-				dom.appendChild(suo.domCreate2("br"));
-			}
-		}
-		if(confOBJ.ranges){
+		if(conf.ranges){
 			console.log("range")
-			for(var i=0;i<confOBJ.ranges.length;i++){
-				dom.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
-				dom.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
-				dom.appendChild(suo.domCreate2("br"));
+			for(var i=0;i<conf.ranges.length;i++){
+				dom.appendChild(suo.createMoreRange(conf.ranges[i]));
 			}
 		}
-		if(confOBJ.checks){
-			for(var i=0;i<confOBJ.checks.length;i++){
-				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
-				dom.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
-				dom.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
-				dom.appendChild(suo.domCreate2("br"));
+		if(conf.checks){
+			for(var i=0;i<conf.checks.length;i++){
+				dom.appendChild(suo.createMoreCheck(conf.checks[i]));
 			}
 		}
-
-
-
+		if(conf.radios){
+			for(var i=0;i<conf.radios.length;i++){
+				dom.appendChild(suo.createMoreRadio(conf.radios[i]));
+			}
+		}
 		return dom;
 	},
 	itemMore:function(confOBJ,actionType){
 		console.log(confOBJ)
+		console.log(actionType);
+		var conf=JSON.parse(JSON.stringify(confOBJ));
 
 		// fix new added options of actions dont show and delete droped options.
 		for(var i=0;i<actions[actionType].length;i++){
 			for(var ii=0;ii<actions[actionType][i].length;ii++){
-				if(actions[actionType][i][ii].name==confOBJ.name){
-					var arrayConfType=["selects","texts","checks","ranges"];
+				if(actions[actionType][i][ii].name==conf.name){
+					var arrayConfType=["selects","texts","checks","ranges","radios"];
 					for(var act in arrayConfType){
 						if(actions[actionType][i][ii][arrayConfType[act]]){
 							var _arrayConf=[],
 								_arrayModel=[];
-							for(var jj=0;confOBJ[arrayConfType[act]]&&jj<confOBJ[arrayConfType[act]].length;jj++){
-								_arrayConf.push(confOBJ[arrayConfType[act]][jj].type);
+							for(var jj=0;conf[arrayConfType[act]]&&jj<conf[arrayConfType[act]].length;jj++){
+								_arrayConf.push(conf[arrayConfType[act]][jj].type);
 							}
 
 							for(var jj=0;jj<actions[actionType][i][ii][arrayConfType[act]].length;jj++){
@@ -2194,74 +2404,87 @@ var suo={
 							}
 
 							for(var j=0;j<actions[actionType][i][ii][arrayConfType[act]].length;j++){
-								if(confOBJ[arrayConfType[act]]){
+								if(conf[arrayConfType[act]]){
 									if(!_arrayConf.contains(actions[actionType][i][ii][arrayConfType[act]][j])){
-										confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+										conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 									}
 								}else{
-									if(!confOBJ[arrayConfType[act]]){confOBJ[arrayConfType[act]]=[]}
-									confOBJ[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
+									if(!conf[arrayConfType[act]]){conf[arrayConfType[act]]=[]}
+									conf[arrayConfType[act]].push({type:actions[actionType][i][ii][arrayConfType[act]][j]});
 								}
 							}
 
-							for(var j=0;confOBJ[arrayConfType[act]]&&j<confOBJ[arrayConfType[act]].length;j++){
-								if(!_arrayModel.contains(confOBJ[arrayConfType[act]][j].type)){
-									confOBJ[arrayConfType[act]].splice(j,1);
+							console.log(_arrayModel)
+							for(var j=0;conf[arrayConfType[act]]&&j<conf[arrayConfType[act]].length;j++){
+								if(!_arrayModel.contains(conf[arrayConfType[act]][j].type)){
+									conf[arrayConfType[act]].splice(j,1);
 								}
 							}
-						}							
+						}else{
+							delete conf[arrayConfType[act]];
+						}
 					}
 					break;
 				}				
 			}
 		}
 
+		console.log(conf);
+
 		var domMore=suo.domCreate2("div",{setName:["className"],setValue:["box_more"]});
-		if(confOBJ.texts){
+		if(conf.texts){
 			for(var i=0;i<confOBJ.texts.length;i++){
-				//fix action of mail
 				if(confOBJ.texts[i].type=="n_mail_domain"){
 					var _css,_class;
+					console.log(confOBJ.selects[0].value)
 					if(confOBJ.selects[0].value=="s_gmailapps"){
-						_css="display:inline-block";
+						_css="display:inline-block;";
 						_class="confix confix-no";
 					}else{
-						_css="display:none";
+						_css="display:none;";
 						_class="confix confix-yes"
 					}
-					var _div=suo.domCreate2("div",{setName:["className"],setValue:[_class]},null,_css)
-					_div.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-					_div.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
-					_div.appendChild(suo.domCreate2("br"));
-					domMore.appendChild(_div);
+					var domText=suo.createMoreText(confOBJ.texts[i]);
+						domText.className=_class;
+						domText.style.cssText+=_css;
+					domMore.appendChild(domText);
 					continue;
 				}
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.texts[i].type)));
-				domMore.appendChild(suo.createMoreText(confOBJ.texts[i].type,confOBJ.texts[i].value));
+				domMore.appendChild(suo.createMoreText(confOBJ.texts[i]));
+			}
+		}
+		if(conf.selects){
+			for(var i=0;i<conf.selects.length;i++){
+				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(conf.selects[i].type)));
+				domMore.appendChild(suo.createMoreSelect(conf.selects[i].type,conf.selects[i].value,conf));
 				domMore.appendChild(suo.domCreate2("br"));
 			}
 		}
-		if(confOBJ.selects){
-			for(var i=0;i<confOBJ.selects.length;i++){
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.selects[i].type)));
-				domMore.appendChild(suo.createMoreSelect(confOBJ.selects[i].type,confOBJ.selects[i].value,confOBJ));
-				domMore.appendChild(suo.domCreate2("br"));
-			}
-		}
-		if(confOBJ.ranges){
+		if(conf.ranges){
 			console.log("range")
-			for(var i=0;i<confOBJ.ranges.length;i++){
-				domMore.appendChild(suo.domCreate2("label",{setName:["className"],setValue:["boxlabel"]},null,null,null,suo.getI18n(confOBJ.ranges[i].type)));
-				domMore.appendChild(suo.createMoreRange(confOBJ.ranges[i].type,confOBJ.ranges[i].value));
-				domMore.appendChild(suo.domCreate2("br"));
+			console.log(conf);
+			for(var i=0;i<conf.ranges.length;i++){
+				domMore.appendChild(suo.createMoreRange(conf.ranges[i]));
 			}
 		}
-		if(confOBJ.checks){
-			for(var i=0;i<confOBJ.checks.length;i++){
-				//domMore.appendChild(suo.domCreate2("input",{setName:["id","className","type","checked","name"],setValue:[confOBJ.checks[i].type,"box_check","checkbox",confOBJ.checks[i].value,confOBJ.checks[i].type]}));
-				domMore.appendChild(suo.createMoreCheck(confOBJ.checks[i].type,confOBJ.checks[i].value))
-				domMore.appendChild(suo.domCreate2("label",{setName:["id","for"],setValue:[confOBJ.checks[i].type,confOBJ.checks[i].type]},null,null,null,suo.getI18n(confOBJ.checks[i].type)));
-				domMore.appendChild(suo.domCreate2("br"));
+		if(conf.checks){
+			console.log(conf.checks);
+			for(var i=0;i<conf.checks.length;i++){
+				console.log("%c"+conf.checks[i].type,"color:green;font-size:16px;");
+				console.log(actionOptions.checks[conf.checks[i].type])
+				if(actionOptions.checks[conf.checks[i].type]!=undefined){
+					console.log("%c"+conf.checks[i].type,"color:blue;font-size:16px;");
+					domMore.appendChild(suo.createMoreCheck(conf.checks[i]))
+				}else{
+					console.log(conf.checks[i].type);
+					// domMore.appendChild(suo.createMoreCheck(conf.checks[i]))
+					conf.checks.splice(i,1);
+				}
+			}
+		}
+		if(conf.radios){
+			for(var i=0;i<conf.radios.length;i++){
+				domMore.appendChild(suo.createMoreRadio(conf.radios[i]));
 			}
 		}
 		return domMore;
@@ -2384,7 +2607,7 @@ var suo={
 
 			//texts
 			var theTexts=[];
-			var textsOBJ=dom.querySelectorAll(".box_more input.boxtext");
+			var textsOBJ=dom.querySelectorAll(".box_more input.box_text");
 			for(var i=0;i<textsOBJ.length;i++){
 				var thisOBJ={};
 				thisOBJ.type=textsOBJ[i].name;
@@ -2404,23 +2627,45 @@ var suo={
 
 			//checks
 			var theChecks=[];
-			var checksOBJ=dom.querySelectorAll(".box_more input[type=checkbox]");
+			var checksOBJ=dom.querySelectorAll(".box_more .box_check[type=checkbox]");
 			for(var i=0;i<checksOBJ.length;i++){
-				var thisOBJ={};
-				thisOBJ.type=checksOBJ[i].name;
-				thisOBJ.value=checksOBJ[i].checked;
-				theChecks.push(thisOBJ);
+				var _confobj={};
+					_confobj.type=checksOBJ[i].name;
+					_confobj.value=checksOBJ[i].checked;
+				var _checkList=checksOBJ[i].parentNode.querySelector(".box_checklist");
+
+				if(_confobj.value&&_checkList){
+					if(_checkList.querySelector("input[type=radio]")){ // check with radio
+						_confobj.typeCheck="radio";
+						_confobj.valueOption=_checkList.querySelector("input[type=radio]:checked").value;
+						var _radioList=_checkList.querySelector("input[type=radio]:checked").parentNode.querySelector(".box_radiolist");
+						if(_radioList){
+							if(_radioList.querySelector("select")){
+								_confobj.valueSetting=_radioList.querySelector("select").value;
+							}else{
+								_confobj.valueSetting=_radioList.querySelector("input").value;
+							}
+						}
+					}else if(_checkList.querySelector("select")){ // check with select
+						_confobj.typeCheck="select";
+						_confobj.valueOption=_checkList.querySelector("select").value;
+					}else if(_checkList.querySelector("input")){ // check with text/range
+						_confobj.typeCheck=_checkList.querySelector("input").type;
+						_confobj.valueOption=_checkList.querySelector("input").value;
+					}
+				}
+				console.log(_confobj);
+				theChecks.push(_confobj);
 			}
 			if(theChecks.length>0){
 				confOBJ.checks=theChecks;
 			}else{
 				confOBJ.checks?(delete confOBJ.checks):null;
 			}
-			//confOBJ.checks=theChecks;
 
 			//ranges
 			var theRanges=[];
-			var rangesOBJ=dom.querySelectorAll(".box_more input[type=range]");
+			var rangesOBJ=dom.querySelectorAll(".box_optionlist>input[type=range]");
 			for(var i=0;i<rangesOBJ.length;i++){
 				var thisOBJ={};
 				thisOBJ.type=rangesOBJ[i].name;
@@ -2450,6 +2695,35 @@ var suo={
 			codeCtrlOBJ?confOBJ.ctrl=codeCtrlOBJ.checked:null;
 			codeAltOBJ?confOBJ.alt=codeAltOBJ.checked:null;
 			codeShiftOBJ?confOBJ.shift=codeShiftOBJ.checked:null;
+
+			// radio
+			var theRadios=[],
+				radiosOBJ=dom.querySelectorAll(".box_radio");
+			for(var i=0;i<radiosOBJ.length;i++){
+				var _checkRadio=radiosOBJ[i].querySelector("input.box_radiooption[type=radio]:checked");
+				var _confobj={};
+					_confobj.type=_checkRadio.name;
+					_confobj.value=_checkRadio.value;
+				var _radioList=_checkRadio.parentNode.querySelector(".box_radiolist");
+
+				if(_confobj.value&&_radioList){
+					if(_radioList.querySelector("select")){ // radio with select
+						_confobj.typeRadio="select";
+						_confobj.valueSetting=_radioList.querySelector("select").value;
+					}else if(_radioList.querySelector("input")){ // radio with text/range
+						_confobj.typeRadio=_radioList.querySelector("input").type;
+						_confobj.valueSetting=_radioList.querySelector("input").value;
+					}
+				}
+				theRadios.push(_confobj);
+			}
+			if(theRadios.length>0){
+				confOBJ.radios=theRadios;
+			}else{
+				confOBJ.radios?(delete confOBJ.radios):null;
+			}
+			console.log(confOBJ)
+			// return;
 		}
 		suo.saveConf();
 		suo.initActionEle();
@@ -2881,7 +3155,7 @@ var suo={
 	},
 	fixURL:function(url){
 		//if()
-		var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","moz-extension://","about://","about:"];
+		var fixstrs=["file///","extension://","http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","moz-extension://","about://","about:"];
 		var theFlag=false;
 		for(var i=0;i<fixstrs.length;i++){
 			if(url.indexOf(fixstrs[i])==0){

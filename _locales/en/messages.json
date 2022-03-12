@@ -1799,5 +1799,26 @@
   },
   "tip_enterkeys":{
     "message":"Use keyboard to enter keys"
+  },
+  "reopenincognito":{
+    "message":"Reopen in Incognito Window"
+  },
+  "n_reopenkeep":{
+    "message":"Keep the original tab"
+  },
+  "s_incogback":{
+    "message":"Incognito (background)"
+  },
+  "tip_closemulticonfirm":{
+    "message":"You are trying to close multiple tabs. Are you sure you want to continue?"
+  },
+  "cl_factorcustom":{
+    "message":"Set custom zoom factor (%):"
+  },
+  "cl_factorloaded":{
+    "message":"The factor which get from the page when loaded or reloaded"
+  },
+  "c_factor":{
+    "message":"Customize the default zoom factor"
   }
 }

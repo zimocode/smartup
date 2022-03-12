@@ -1,6 +1,17 @@
 {
 	"log": [
 		{
+			"ver":"7.1.376.1147",
+			"date":"2022.03.12",
+			"content":[
+				"new action: Reopen in Incognito Window",
+				"action zoom: add new options, Reset default zoom factor as(%) and set the factor when page loaded or reloaded as default one",
+				"new option type: check with text/range/radio, radio",
+				"fix bugs: #190, #191, #183, #182, #194",
+				"fix bugs: context menu action cant get link's url"
+			]
+		},
+		{
 			"ver":"7.0.130.1130",
 			"date":"2022.01.08",
 			"content":[

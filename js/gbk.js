@@ -1,5 +1,5 @@
 /*!
- * gbk.js v0.3.0
+ * gbk.js v0.2.3
  * Homepage https://github.com/cnwhy/GBK.js
  * License MIT
  */
@@ -16,15 +16,11 @@
 			decode: function (arr) {
 				var str = "";
 				for (var n = 0, max = arr.length; n < max; n++) {
-					var code = arr[n] & 0xff;
-					if (code > 0x80 && n + 1 < max) {
-						var code1 = arr[n + 1] & 0xff;
-						if(code1 >= 0x40){
-							code = gbk_us[(code << 8 | code1) - arr_index];
-							n++;
-						}
+					var Code = arr[n];
+					if (Code & 0x80) {
+						Code = gbk_us[(Code << 8 | arr[++n]) - arr_index];
 					}
-					str += String.fromCharCode(code);
+					str += String.fromCharCode(Code || 63);
 				}
 				return str;
 			},
@@ -72,39 +68,25 @@
 					})
 				},
 				decode:function(enstr){
-					enstr = String(enstr);
-					var outStr = '';
-					for(var i=0; i<enstr.length; i++){
-						var char = enstr.charAt(i);
-						if(char === '%' && i + 2 < enstr.length){ 
-							var code1 = parseInt(enstr.substr(i+1,2),16);
-							if(!isNaN(code1)){
-								var _i = i + 2;
-								if(code1 > 0x80){
-									var code2;
-									if(enstr.charAt(_i+1) === '%'){
-										code2 = parseInt(enstr.substr(_i+2,2),16);
-										_i += 3;
-									}else{
-										code2 = enstr.charCodeAt(_i+1);
-										_i += 1;
-									}
-									if(code2 >= 0x40){
-										i = _i;
-										outStr += GBK.decode([code1,code2]);
-										continue;
-									}
+					return enstr.replace(/(%[\dA-Za-z]{2})+/g,function(a,b,c){
+						var str = '';
+						var arr = a.match(/.../g);
+						for(var i=0; i < arr.length; i++){
+							var hex = arr[i];
+							var code = parseInt(hex.substr(1),16);
+							if(code & 0x80){
+								str += GBK.decode([code,parseInt(arr[++i].substr(1),16)]);
+							}else{
+								var char = String.fromCharCode(code);
+								if(isPass(char)){
+									str += hex;
 								}else{
-									i += 2;
-									outStr += String.fromCharCode(code1);
-									continue;
+									str += char;
 								}
 							}
 						}
-						outStr += char;
-					}
-					return outStr;
-
+						return str;
+					})
 				}
 			}
 		}
