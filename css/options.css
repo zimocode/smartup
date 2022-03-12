@@ -2145,6 +2145,7 @@ smartup.su_apps{
 	display: inline-block;
 	margin: 2px 0;
 }
+.box_radio,
 .box_radiobox,
 .box_checkradio{
 	margin-left: 16px;
@@ -2152,6 +2153,7 @@ smartup.su_apps{
 	border-left: 1px solid #ccc0;
 	transition: all .4s ease-in-out;
 }
+.box_radio:hover,
 .box_radiobox:hover,
 .box_checkradio:hover{
 	border-left: 1px solid #ccc9;

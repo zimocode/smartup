@@ -116,7 +116,7 @@ let actions={
 			{name:"bookmark",selects:["n_tab"],checks:["n_notif","n_closetab"]},
 			{name:"script",selects:["n_script"],checks:["n_jq"]},
 			{name:"source",selects:["n_optype","n_position"],checks:["n_pin"]},
-			{name:"zoom",selects:["n_zoom"],/**/texts:["t_test","n_factorreset"],checks:["c_testdefault","c_testtext","c_testselect","c_testrange","c_testradio"],radios:["r_test"]},
+			{name:"zoom",selects:["n_zoom"],checks:["c_factor"]},
 			{name:"savepage",selects:["n_tab"],checks:["n_closetab","n_dlbar","n_notif"]},
 			{name:"mail",selects:["n_mail","n_tab"],texts:["n_mail_prefix","n_mail_domain"]},
 			{name:"print"},
@@ -260,11 +260,10 @@ let actionOptions={
 		n_npkey_n:"next,pnnext,next ›,›,>",
 		n_npkey_p:"previous,pnprev,‹ prev,‹,<",
 		n_num:"5",
-		n_mail_prefix:"Interesting Page:",
-		n_factorreset:"100"
+		n_mail_prefix:"Interesting Page:"
 	},
 	ranges:{
-		r_test:{
+		rg_test:{
 			value:1,
 			options:[0.1,2,0.1,"%"]/*min,max,step,unit*/
 		},
@@ -299,7 +298,24 @@ let actionOptions={
 		n_duplicatetype:false,
 		n_effect:true,
 		n_reopenkeep:false,
-		n_factorreset:false,
+		c_factor:{
+			value:false,
+			typeCheck:"radio",
+			options:{
+				valueOption:"cl_factorcustom",
+				settings:[
+					{
+						name:"cl_factorcustom",
+						typeSetting:"text",
+						valueSetting:"100"
+					},
+					{
+						name:"cl_factorloaded",
+						typeSetting:"default"						
+					}
+				]
+			}
+		},
 		c_testdefault:{
 			value:true,
 			typeCheck:"default",
@@ -316,7 +332,7 @@ let actionOptions={
 			value:true,
 			typeCheck:"select",
 			options:{
-				valueOption:1,
+				valueOption:"select_test1",
 				settings:["select_test0","select_test1"]
 			}
 		},
@@ -346,7 +362,7 @@ let actionOptions={
 					{
 						name:"cr_testselect",
 						typeSetting:"select",
-						valueSetting:1,
+						valueSetting:"select_test1",
 						moreSetting:["select_test0","select_test1"]						
 					},
 					{
@@ -359,16 +375,10 @@ let actionOptions={
 			}
 		}
 	},
-	checktexts:{
-		n_factordefault:{
-			check:false,
-			text:"100"
-		}
-	},
 	radios:{
-		r_test:{
+		rd_test:{
 			// value:"radio_testtext",
-			typeRadio:"text",
+			// typeRadio:"text",
 			options:{
 				valueOption:"radio_testtext",
 				settings:[
@@ -384,7 +394,7 @@ let actionOptions={
 					{
 						name:"radio_testselect",
 						typeSetting:"select",
-						valueSetting:1,
+						valueSetting:"select_test1",
 						moreSetting:["select_test0","select_test1"]						
 					},
 					{
@@ -395,33 +405,6 @@ let actionOptions={
 					}
 				]
 			}
-		},
-		r_factor:{
-			value:true,
-			valueOption:"radio_testtext",
-			options:[
-				{
-					name:"radio_testdefault",
-					typeSetting:"default"						
-				},
-				{
-					name:"radio_testtext",
-					typeSetting:"text",
-					valueSetting:"100"
-				},
-				{
-					name:"radio_testselect",
-					typeSetting:"select",
-					valueSetting:1,
-					settings:["select_test0","select_test1"]						
-				},
-				{
-					name:"radio_testrange",
-					typeSetting:"range",
-					valueSetting:5,
-					settings:[1,10,1,"%"]/*min,max,step,unit*/						
-				}
-			]
 		}
 	}
 }

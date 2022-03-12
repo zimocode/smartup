@@ -1089,6 +1089,16 @@ var sub={
 		// }
 		return _value;
 	},
+	getConfData:function(type,value){
+		var _data;
+		for(var i=0;i<(sub.theConf[type]?sub.theConf[type].length:0);i++){
+			if(sub.theConf[type][i].type==value){
+				_data=sub.theConf[type][i];
+				break;
+			}
+		}
+		return _data;
+	},
 	getId:function(value){
 		var theId=[];
 		switch(value){
@@ -2230,12 +2240,14 @@ var sub={
 				chrome.tabs.executeScript({file:"js/inject/zoom.js",runAt:"document_start"},function(){})
 			}else{
 				var factorDefault=1;
-				var factorReset=parseInt(sub.getConfValue("texts","n_factorreset"))/100,
-					factorLoad=sub.getConfValue("checks","n_factorload");
-				if(factorLoad){
+				console.log(sub.getConfData("checks","c_factor"));
+				var _confData=sub.getConfData("checks","c_factor");
+				var factorCus=_confData.value?(_confData.valueOption=="cl_factorcustom"?parseInt(_confData.valueSetting)/100:false):false,
+					factorLoaded=_confData.value?(_confData.valueOption=="cl_factorloaded"?true:false):false;
+				if(factorLoaded){
 					factorDefault=sub.temp.zoom[sub.curTab.id];
 				}else{
-					factorDefault=factorReset?factorReset:1;
+					factorDefault=factorCus?factorCus:1;
 				}
 				console.log(factorDefault);
 

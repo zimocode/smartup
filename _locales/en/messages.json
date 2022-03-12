@@ -1812,13 +1812,13 @@
   "tip_closemulticonfirm":{
     "message":"You are trying to close multiple tabs. Are you sure you want to continue?"
   },
-  "n_factordefault":{
-    "message":"Set default zoom factor as (%):"
+  "cl_factorcustom":{
+    "message":"Set custom zoom factor (%):"
   },
-  "n_factorload":{
-    "message":"set the factor when page loaded or reloaded as default one"
+  "cl_factorloaded":{
+    "message":"The factor which get from the page when loaded or reloaded"
   },
-  "r_factor":{
-    "message":"Customize the default zoom factor: "
+  "c_factor":{
+    "message":"Customize the default zoom factor"
   }
 }
