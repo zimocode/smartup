@@ -1089,6 +1089,16 @@ var sub={
 		// }
 		return _value;
 	},
+	getConfData:function(type,value){
+		var _data;
+		for(var i=0;i<(sub.theConf[type]?sub.theConf[type].length:0);i++){
+			if(sub.theConf[type][i].type==value){
+				_data=sub.theConf[type][i];
+				break;
+			}
+		}
+		return _data;
+	},
 	getId:function(value){
 		var theId=[];
 		switch(value){
@@ -2230,45 +2240,43 @@ var sub={
 				chrome.tabs.executeScript({file:"js/inject/zoom.js",runAt:"document_start"},function(){})
 			}else{
 				var factorDefault=1;
-				var factorReset=parseInt(sub.getConfValue("texts","n_factorreset"))/100,
-					factorLoad=sub.getConfValue("checks","n_factorload");
-				if(factorLoad){
+				console.log(sub.getConfData("checks","c_factor"));
+				var _confData=sub.getConfData("checks","c_factor");
+				var factorCus=_confData.value?(_confData.valueOption=="cl_factorcustom"?parseInt(_confData.valueSetting)/100:false):false,
+					factorLoaded=_confData.value?(_confData.valueOption=="cl_factorloaded"?true:false):false;
+				if(factorLoaded){
 					factorDefault=sub.temp.zoom[sub.curTab.id];
 				}else{
-					factorDefault=factorReset?factorReset:1;
+					factorDefault=factorCus?factorCus:1;
 				}
+				console.log(factorDefault);
+
+				var zoomRange=[25,33,50,67,75,80,90,100,110,125,150,175,200,250,300,400,500];
 
 				switch(sub.theConf.selects[0].value){
 					case"s_in":
 						chrome.tabs.getZoom(function(zoom){
-							zoom=Math.abs(zoom.toFixed(2));
-							if(zoom==5){
-								chrome.tabs.setZoom(factorDefault);
-								return;
-							}else{
-								zoom=zoom==5?factorDefault:zoom;
-								zoom=Math.abs((zoom>=factorDefault?(factorDefault+factorDefault*((zoom-factorDefault)?(zoom-factorDefault):.05)*2):(zoom<factorDefault?factorDefault:(zoom+factorDefault*.15))).toFixed(2));
-								zoom=zoom>5?5:zoom;
-								chrome.tabs.setZoom(zoom);								
+							zoom=parseFloat(zoom.toFixed(2));
+							for(var i=zoomRange.length-1;i>=0;i--){
+								if(zoom>=parseFloat((zoomRange[i]/100).toFixed(2))){
+									zoom=parseFloat((zoomRange[(i==zoomRange.length-1?0:i+1)]/100).toFixed(2));
+									zoom=zoom<factorDefault?factorDefault:zoom;
+									chrome.tabs.setZoom(zoom);
+									break;
+								}
 							}
 						})
 						break;
 					case"s_out":
 						chrome.tabs.getZoom(function(zoom){
-							zoom=Math.abs(zoom.toFixed(2));
-							if(zoom==.25){
-								chrome.tabs.setZoom(factorDefault);
-								return;	
-							}else{
-								if(zoom>2){
-									zoom=Math.abs((zoom-((zoom-factorDefault)*.2)).toFixed(2));
-								}else if(zoom>factorDefault){
-									zoom=Math.abs((zoom-factorDefault*.45).toFixed(2));
-								}else if(zoom<=factorDefault){
-									zoom=Math.abs((zoom-factorDefault*.15).toFixed(2));
+							zoom=parseFloat(zoom.toFixed(2));
+							for(var i=0;i<zoomRange.length;i++){
+								if(zoom<parseFloat((zoomRange[i]/100).toFixed(2))){
+									zoom=parseFloat((zoomRange[(i==0?0:i-2)]/100).toFixed(2));
+									zoom=zoom<factorDefault?zoom:factorDefault;
+									chrome.tabs.setZoom(zoom);
+									break;
 								}
-								zoom=zoom<.25?.25:zoom;
-								chrome.tabs.setZoom(zoom);								
 							}
 						})
 						break;
