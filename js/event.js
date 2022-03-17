@@ -559,7 +559,7 @@ var sue={
 		sue.selEle.txt=window.getSelection().toString();
 		// fix firefox get selection frome textbox
 		if(browserType=="fx"){
-			if(e.target.tagName.toLowerCase()=="textarea"||(e.target.tagName.toLowerCase()=="input"&&e.target.type.toLowerCase()=="text")){
+			if(e.target&&e.target.tagName&&(e.target.tagName.toLowerCase()=="textarea"||(e.target.tagName.toLowerCase()=="input"&&e.target.type.toLowerCase()=="text"))){
 				sue.selEle.txt=e.target.value.substring(e.target.selectionStart,e.target.selectionEnd);
 			}
 		}
