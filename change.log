@@ -1,8 +1,8 @@
 {
 	"log": [
 		{
-			"ver":"7.1.376.1147",
-			"date":"2022.03.12",
+			"ver":"7.1.382.1148",
+			"date":"2022.03.17",
 			"content":[
 				"new action: Reopen in Incognito Window",
 				"action zoom: add new options, Reset default zoom factor as(%) and set the factor when page loaded or reloaded as default one",
