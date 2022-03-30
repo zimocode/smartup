@@ -69,7 +69,7 @@
     "message": "显示更新提示"
   },
   "con_miniappnotif":{
-    "message": "显示来至迷你应用的提示"
+    "message": "显示来自迷你应用的提示"
   },
   "con_linux": {
     "message": "设置通过双击鼠标右键来打开右键菜单。"
@@ -141,7 +141,7 @@
     "message":"按[ESC]键取消当前操作"
   },
   "con_background":{
-    "message":"使Chrome一直保持后台运行以加快smartup手势的响应速度。（需要请求background权限）"
+    "message":"使Chrome一直保持后台运行以加快smartUp手势的响应速度。（需要请求background权限）"
   },
   "con_draggable":{
     "message":"当被拖动元素被设置为可拖动时[draggable=true]，禁用拖曳"
