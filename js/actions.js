@@ -69,8 +69,8 @@ let actions={
 			{name:"saveimg",checks:["n_notif"]},
 			{name:"saveimgas",checks:["n_notif"]},
 			{name:"copyimgurl"},
-			{name:"imgsearch",selects:["n_imgengine","n_encoding","n_optype","n_position"],checks:["n_pin"]},
-			{name:"copyimg"}
+			{name:"copyimg"},
+			{name:"imgsearch",selects:["n_imgengine","n_encoding","n_optype","n_position"],checks:["n_pin"]}
 		],
 
 		[//group chrome

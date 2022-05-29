@@ -2092,14 +2092,7 @@ var sub={
 		},
 		copyimg:function(){
 			if(!sub.message.selEle.img){return;}
-			let theFunction=function(){
-				fetch(sub.message.selEle.img)
-				.then(response => response.arrayBuffer())
-				.then(buffer => chrome.clipboard.setImageData(buffer,(sub.message.selEle.img.substr(sub.message.selEle.img.length-4)==".jpg"?"jpeg":"png")))
-			}
-
-			let thepers=["clipboardWrite"],theorgs;
-			sub.checkPermission(thepers,theorgs,theFunction);
+			chrome.tabs.executeScript({file:"js/inject/copyimg.js",runAt:"document_start",allFrames:true},function(){})
 		},
 		imgsearch:function(){
 			if(!sub.message.selEle.img){return;}
@@ -4945,6 +4938,19 @@ chrome.runtime.onMessageExternal.addListener(function(message,sender,sendRespons
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	sub.funOnMessage(message,sender,sendResponse);
+});
+chrome.runtime.onConnect.addListener(function(port) {
+	switch(port.name){
+		case"fn_copyimg":
+			port.onMessage.addListener(async function(msg){
+				var _img=await fetch(sub.message.selEle.img);
+					_img=await _img.blob();
+					_img=await URL.createObjectURL(_img);
+				console.log(_img);
+				port.postMessage(_img);
+			})
+			break;
+	}
 });
 loadConfig();
 //browsersettings
