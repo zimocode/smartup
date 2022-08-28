@@ -2152,6 +2152,9 @@ var sub={
 				case"s_cr_flag":
 					theURL="chrome://flags";
 					break;
+				case"s_cr_about":
+					theURL="chrome://about";
+					break;
 			}
 			sub.open(theURL,theTarget,theIndex,thePin);	
 		},

@@ -241,7 +241,7 @@ let actionOptions={
 		n_effect:["s_on","s_off"],
 		n_jq:["s_yes","s_no"],
 		n_copytabele_content:["s_tabele_title","s_tabele_url","s_tabele_aslnk"],
-		n_crpages:["s_cr_set","s_cr_ext","s_cr_history","s_cr_app","s_cr_bookmark","s_cr_dl","s_cr_flag"],
+		n_crpages:["s_cr_set","s_cr_ext","s_cr_history","s_cr_app","s_cr_bookmark","s_cr_dl","s_cr_flag","s_cr_about"],
 		n_dlbar:["s_yes","s_no"],
 		n_encoding:["s_none","s_unicode","s_uri","s_uric","s_uricgbk"],
 		n_zoom:["s_in","s_out","s_reset"],

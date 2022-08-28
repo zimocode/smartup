@@ -347,6 +347,9 @@
   "s_cr_flag":{
     "message":"Flags"
   },
+  "s_cr_about":{
+    "message":"URLs List"
+  },
   "s_unicode":{
     "message":"Unicode"
   },
