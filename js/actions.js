@@ -281,6 +281,8 @@ let actionOptions={
 		}
 	},
 	checks:{
+		n_close_keep:false,
+
 		n_dlbar:true,
 		n_notif:true,
 		n_closetab:false,
