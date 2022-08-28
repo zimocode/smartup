@@ -2791,7 +2791,7 @@ var sub={
 		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin);
 		var fixURL=function(url){
 			//if()
-			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
+			var fixstrs=["http://","https://","ftp://","chrome://","extension://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
 			var theFlag=false;
 			for(var i=0;i<fixstrs.length;i++){
 				if(url.indexOf(fixstrs[i])==0){

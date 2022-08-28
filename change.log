@@ -1,10 +1,11 @@
 {
 	"log": [
 		{
-			"ver":"7.1.1120.1152",
+			"ver":"7.1.1120.1153",
 			"date":"2022.08.28",
 			"content":[
 				"new option - URLs list for internal pages",
+				"upgrade fixURL",
 				"fix bugs: #171, #238, #244, #252"
 			]
 		},
