@@ -1759,7 +1759,7 @@ var sub={
 		newwin:function(){//chk
 			var theType=sub.getConfValue("selects","n_wintype").substr(2),
 				theIncog=sub.getConfValue("checks","n_winincog");
-			chrome.windows.create({type:theType,incognito:theIncog});
+			chrome.windows.create({type:theType,incognito:theIncog,url:(browserType=="fx"?"about:newtab":"chrome://newtab")});
 		},
 		closewin:function(){
 			var theWin=sub.getConfValue("selects","n_win");
@@ -2788,7 +2788,7 @@ var sub={
 	},
 	open:function(url,target,position,pin,flag){
 		chrome.windows.getAll(function(windows){console.log(windows.length)})
-		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin);
+		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin+"\nflag:"+flag);
 		var fixURL=function(url){
 			//if()
 			var fixstrs=["http://","https://","ftp://","chrome://","extension://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
@@ -2811,6 +2811,7 @@ var sub={
 		}else{
 			url=fixURL(url)
 		}
+		if(!url){url=browserType=="fx"?"about:newtab":"chrome://newtab"}
 		//if(!url){/*return;*/}else{url=fixURL(url)}
 		var theTarget=target,
 			theURL=url,
@@ -2842,16 +2843,19 @@ var sub={
 			chrome.windows.getAll(function(windows){
 				var _flag=false;
 				for(var i=0;i<windows.length;i++){
+					console.log(windows)
 					if(windows[i].incognito/*||i==windows.length-1*/){
 						_flag=windows[i].id;
 						break;
 					}
 				}
+				console.log(_flag)
 				if(_flag===0||_flag){
 					chrome.windows.update(_flag,{focused:true});
 					chrome.tabs.create({windowId:_flag,url:theURL,active:theTarget=="s_back"?false:true,index:thePos,pinned:thePin})
 				}else{
-					chrome.windows.create({url:theURL,incognito:true},function(window){
+					chrome.windows.create({url:theURL?theURL:"",incognito:true},function(window){
+						if(!window){return;}
 						chrome.tabs.update(window.tabs[0].id,{pinned:thePin});
 					})
 				}
