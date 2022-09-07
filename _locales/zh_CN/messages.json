@@ -344,6 +344,9 @@
   "s_cr_flag":{
     "message":"Flags"
   },
+  "s_cr_about":{
+    "message":"内部地址列表"
+  },
   "s_unicode":{
     "message":"Unicode"
   },

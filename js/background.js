@@ -1758,7 +1758,7 @@ var sub={
 		newwin:function(){//chk
 			var theType=sub.getConfValue("selects","n_wintype").substr(2),
 				theIncog=sub.getConfValue("checks","n_winincog");
-			chrome.windows.create({type:theType,incognito:theIncog});
+			chrome.windows.create({type:theType,incognito:theIncog,url:(browserType=="fx"?"about:newtab":"chrome://newtab")});
 		},
 		closewin:function(){
 			var theWin=sub.getConfValue("selects","n_win");
@@ -2091,14 +2091,7 @@ var sub={
 		},
 		copyimg:function(){
 			if(!sub.message.selEle.img){return;}
-			let theFunction=function(){
-				fetch(sub.message.selEle.img)
-				.then(response => response.arrayBuffer())
-				.then(buffer => chrome.clipboard.setImageData(buffer,(sub.message.selEle.img.substr(sub.message.selEle.img.length-4)==".jpg"?"jpeg":"png")))
-			}
-
-			let thepers=["clipboardWrite"],theorgs;
-			sub.checkPermission(thepers,theorgs,theFunction);
+			chrome.tabs.executeScript({file:"js/inject/copyimg.js",runAt:"document_start",allFrames:true},function(){})
 		},
 		imgsearch:function(){
 			if(!sub.message.selEle.img){return;}
@@ -2157,6 +2150,9 @@ var sub={
 					break;
 				case"s_cr_flag":
 					theURL="chrome://flags";
+					break;
+				case"s_cr_about":
+					theURL="chrome://about";
 					break;
 			}
 			sub.open(theURL,theTarget,theIndex,thePin);	
@@ -2791,10 +2787,10 @@ var sub={
 	},
 	open:function(url,target,position,pin,flag){
 		chrome.windows.getAll(function(windows){console.log(windows.length)})
-		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin);
+		console.log("url:"+url+"\ntarget:"+target+"\nindex:"+position+"\npin:"+pin+"\nflag:"+flag);
 		var fixURL=function(url){
 			//if()
-			var fixstrs=["http://","https://","ftp://","chrome://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
+			var fixstrs=["http://","https://","ftp://","chrome://","extension://","chrome-extension://","view-source:chrome-extension://","view-source:","moz-extension://","ms-browser-extension://","about:","file:///"];
 			var theFlag=false;
 			for(var i=0;i<fixstrs.length;i++){
 				if(url.indexOf(fixstrs[i])==0){
@@ -2814,6 +2810,7 @@ var sub={
 		}else{
 			url=fixURL(url)
 		}
+		if(!url){url=browserType=="fx"?"about:newtab":"chrome://newtab"}
 		//if(!url){/*return;*/}else{url=fixURL(url)}
 		var theTarget=target,
 			theURL=url,
@@ -2845,16 +2842,19 @@ var sub={
 			chrome.windows.getAll(function(windows){
 				var _flag=false;
 				for(var i=0;i<windows.length;i++){
+					console.log(windows)
 					if(windows[i].incognito/*||i==windows.length-1*/){
 						_flag=windows[i].id;
 						break;
 					}
 				}
+				console.log(_flag)
 				if(_flag===0||_flag){
 					chrome.windows.update(_flag,{focused:true});
 					chrome.tabs.create({windowId:_flag,url:theURL,active:theTarget=="s_back"?false:true,index:thePos,pinned:thePin})
 				}else{
-					chrome.windows.create({url:theURL,incognito:true},function(window){
+					chrome.windows.create({url:theURL?theURL:"",incognito:true},function(window){
+						if(!window){return;}
 						chrome.tabs.update(window.tabs[0].id,{pinned:thePin});
 					})
 				}
@@ -4944,6 +4944,19 @@ chrome.runtime.onMessageExternal.addListener(function(message,sender,sendRespons
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse) {
 	sub.funOnMessage(message,sender,sendResponse);
+});
+chrome.runtime.onConnect.addListener(function(port) {
+	switch(port.name){
+		case"fn_copyimg":
+			port.onMessage.addListener(async function(msg){
+				var _img=await fetch(sub.message.selEle.img);
+					_img=await _img.blob();
+					_img=await URL.createObjectURL(_img);
+				console.log(_img);
+				port.postMessage(_img);
+			})
+			break;
+	}
 });
 loadConfig();
 //browsersettings
