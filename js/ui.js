@@ -175,7 +175,7 @@ var menuModel={
 	fn:["general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca","ksa"],
 	main:["fnswitch","general","mges","sdrg","drg","rges","wges","pop","icon","ctm","touch","dca","ksa","about"],
 	fnswitch:["setting"],
-	general:["setting",/*"fnswitch",*/"searchmgr","scriptmgr","linux","per","conf"],
+	general:["setting",/*"fnswitch",*/"searchmgr","scriptmgr","linux","exclusion","per","conf"],
 	mges:["setting","ui","gesmgr"],
 	sdrg:["setting","tsdrg","lsdrg","isdrg"],
 	drg:["setting","ui","tdrg","ldrg","idrg"],

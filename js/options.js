@@ -37,6 +37,7 @@ var suo={
 	selects:["xx"],
 	begin:function(){
 		suo.initActionEle();//init engine/script list
+		suo.initNewAdded();
 
 		window.setTimeout(function(){
 			suo.init();
@@ -72,8 +73,17 @@ var suo={
 			suo.initUI("drg");
 			suo.initUI("touch");
 			suo.initValue();
+			suo.initExclusion();
 			suo.initEnd();
 		},100)
+	},
+	initNewAdded:()=>{
+		console.log("initNewAdded")
+		console.log(!config.general.exclusion)
+		// exclusion - black/white list
+		if (!config.general.exclusion){
+			config.general.exclusion=defaultConf.general.exclusion;
+		}
 	},
 	init:function(){
 		console.log("begin");
@@ -324,6 +334,12 @@ var suo={
 				if(ele.classList.contains("btn_list")){
 					suo.showList(e);
 				}
+				if(ele.classList.contains("exclusion_add")){
+					suo.exclusionAdd(e);
+				}
+				if(ele.classList.contains("exclusion_del")){
+					suo.exclusionDel(e);
+				}
 				break;
 			case"mouseup":
 				suo.cons.boxmove.enable=false;
@@ -541,6 +557,9 @@ var suo={
 						dom.style.display="none";
 					}
 				}
+				if(e.target.name&&e.target.name=="exclusiontype"){
+					suo.initExclusion();
+				}
 				break;
 			case"mouseover":
 				if(e.target.classList.contains("menuplusimg")){
@@ -581,6 +600,48 @@ var suo={
 				break;
 			case"mouseleave":
 				break;
+		}
+	},
+	initExclusion:()=>{
+		var _doms=document.querySelectorAll(".set>.setcontent>ul.exclusionwrap");
+		for(var i=0;i<_doms.length;i++){
+			_doms[i].innerText="";
+			var _conf=config.general.exclusion[_doms[i].dataset.confele];
+			for(var ii=0;ii<_conf.length;ii++){
+				var _li=suo.domCreate2("li",{setName:["className"],setValue:["exclusion_list"]},null,null,{setName:["id"],setValue:[ii]},_conf[ii]);
+				var _btn=suo.domCreate2("span",{setName:["className"],setValue:["exclusion_del"]},null,null,null,"x");
+				_li.appendChild(_btn);
+				_doms[i].appendChild(_li);
+			}
+		}
+		if(config.general.exclusion.exclusiontype=="black"){
+			document.querySelector("#exclusion_black").style.cssText+="display:block;";
+			document.querySelector("#exclusion_white").style.cssText+="display:none;";
+		}else{
+			document.querySelector("#exclusion_white").style.cssText+="display:block;";
+			document.querySelector("#exclusion_black").style.cssText+="display:none;";
+		}
+	},
+	exclusionDel:e=>{
+		var _dom=e.target.parentNode;
+		var _id=_dom.dataset.id;
+		var _conf=config.general.exclusion[_dom.parentNode.dataset.confele];
+		_conf.splice(_id,1);
+		suo.saveConf();
+		suo.initExclusion();
+	},
+	exclusionAdd:e=>{
+		var _conf=config.general.exclusion[e.target.dataset.confele];
+		var _dom=e.target.parentNode.querySelector("input[type=text]");
+		if(_dom.value){
+			if(_conf.contains(_dom.value)){
+				suo.showMsgBox("repeat","error")
+			}else{
+				_conf.push(_dom.value);
+				_dom.value="";
+				suo.saveConf();
+				suo.initExclusion();
+			}
 		}
 	},
 	keyEdit:function(e){
@@ -1349,6 +1410,7 @@ var suo={
 			var confOBJ=suo.getConfOBJ(doms[i]);
 			//var value//=confOBJ[doms[i].dataset.confele];
 			var _confele=doms[i].dataset.confele.split("|");
+			// if(!confOBJ){continue;}
 			var value=confOBJ[_confele[0]];
 			for(var ii=1;ii<_confele.length;ii++){
 				value=value[_confele[ii]]

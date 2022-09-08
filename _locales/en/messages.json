@@ -1823,5 +1823,35 @@
   },
   "c_factor":{
     "message":"Customize the default zoom factor"
+  },
+  "exclusion":{
+    "message":"Exclusion"
+  },
+  "stnm_exclusiontype":{
+    "message":"Exclusion Type"
+  },
+  "exclusion_enable":{
+    "message":"Enable exclusion feature"
+  },
+  "exclusion_black":{
+    "message":"Blacklist mode"
+  },
+  "exclusion_white":{
+    "message":"Whitelist mode"
+  },
+  "des_black":{
+    "message":"smartUp will stop working in listed URLs."
+  },
+  "des_white":{
+    "message":"smartUp will ONLY works in listed URLs."
+  },
+  "stnm_exclusion_match":{
+    "message":"Manage match URLs"
+  },
+  "des_exclusion_match":{
+    "message":"The match pattern allows \"*\" wildcards."
+  },
+  "btn_add":{
+    "message":"ADD"
   }
 }

@@ -1,6 +1,13 @@
 {
 	"log": [
 		{
+			"ver":"7.1.1218.1156",
+			"date":"2022.09.08",
+			"content":[
+				"new: exclusion (blacklist/whitelist)"
+			]
+		},
+		{
 			"ver":"7.1.1212.1154",
 			"date":"2022.09.02",
 			"content":[

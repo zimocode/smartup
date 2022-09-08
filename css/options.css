@@ -2210,3 +2210,53 @@ smartup.su_apps{
 	transition: background .4s ease-in-out;
 }
 /*////////////*/
+.exclusionwrap{
+	list-style-type: none;
+	padding: 16px 0;
+	margin-top: 16px;
+	max-width: 290px;
+	border-radius: 2px;
+	/*border: 1px solid #fff0;*/
+	background-color: #00000008;
+	transition: background .4s ease-in-out;
+}
+.exclusionwrap:hover{
+	/*border: 1px solid #ccc;*/
+}
+.exclusionwrap>li{
+	position: relative;
+	padding: 0 8px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	transition: background .4s ease-in-out;
+}
+.exclusionwrap>li:hover{
+	background-color: #a6baff;
+}
+.exclusionwrap>li:hover span{
+	opacity: 0.5;
+	right: 4px;
+	top: 4px;
+}
+.exclusionwrap>li>span{
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	/* padding: 0 2px; */
+	border-radius: 100%;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	text-align: center;
+	opacity: 0;
+	transition: background .4s ease-in-out;
+}
+.exclusionwrap>li>span:hover{
+	border: 1px solid red;
+	background-color: red;
+	color: #fff;
+	cursor: pointer;
+}

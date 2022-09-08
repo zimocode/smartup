@@ -104,6 +104,12 @@ var getDefault={
 					},
 					sync:{
 						autosync:true
+					},
+					exclusion:{
+						exclusion:true,
+						exclusiontype:"black",
+						black:["*.test.com"],
+						white:["*.example.com"]
 					}
 				},
 				mges:{
@@ -2811,7 +2817,7 @@ var sub={
 		}else{
 			url=fixURL(url)
 		}
-		if(!url){url=browserType=="fx"?"about:newtab":"chrome://newtab"}
+		// if(!url){url=browserType=="fx"?"about:newtab":"chrome://newtab"}
 		//if(!url){/*return;*/}else{url=fixURL(url)}
 		var theTarget=target,
 			theURL=url,
@@ -2871,6 +2877,7 @@ var sub={
 			}
 		if(!theURL){delete createProperties.url}
 		if(!(thePos||thePos===0)){delete createProperties.index}
+		console.log(createProperties)
 		chrome.tabs.create(createProperties);
 
 		//(thePos||thePos===0)?chrome.tabs.create({url:theURL,active:theTarget=="s_back"?false:true,index:thePos,pinned:thePin}):chrome.tabs.create({url:theURL,active:theTarget=="s_back"?false:true,pinned:thePin})
