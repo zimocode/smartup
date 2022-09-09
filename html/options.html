@@ -167,7 +167,30 @@
                 <div class="opt_des" data-i18n="des_mouseup"></div>
             </div>
         </div>
-        <div class="set set-14" data-confobj="" data-conf0="" data-conf1="">
+        <div class="set set-14" data-confobj="general|exclusion">
+            <div class="setname" data-i18n="stnm_exclusiontype"></div>
+            <div class="setcontent">
+                <input id="con_exclusion" class="init change-checkbox" data-confele="exclusion" type="checkbox"><label for="con_exclusion" data-i18n="exclusion_enable"></label>
+                <div class="init init_radio change change_radio" data-confele="exclusiontype" style="margin-left: 20px;">
+                    <input class="initid change change_radio" type="radio" name="exclusiontype" data-confele="black" value="black" checked><label><span data-i18n="exclusion_black"></span><br /><span class="label_br" data-i18n="des_black"></span></label><br />
+                    <input class="initid change change_radio" type="radio" name="exclusiontype" data-confele="white" value="white" style="margin-top:10px;"><label><span data-i18n="exclusion_white"></span><br /><span class="label_br" data-i18n="des_white"></span></label>
+                </div>
+            </div>
+            <div class="setname" data-i18n="stnm_exclusion_match"></div>
+            <div class="setcontent" id="exclusion_black">
+                <input type="text" name=""><input class="exclusion_add" type="button" data-i18n="btn_add" data-confele="black">
+                <ul class="exclusionwrap" data-confele="black">
+                </ul>
+                <div class="setdes" data-i18n="des_exclusion_match"></div>
+            </div>
+            <div class="setcontent" id="exclusion_white">
+                <input type="text" name=""><input class="exclusion_add" type="button" data-i18n="btn_add" data-confele="white">
+                <ul class="exclusionwrap" data-confele="white">
+                </ul>
+                <div class="setdes" data-i18n="des_exclusion_match"></div>
+            </div>
+        </div>
+        <div class="set set-15" data-confobj="" data-conf0="" data-conf1="">
             <div class="setname" data-i18n="stnm_per_pers"></div>
             <div class="setcontent">
                 <ul class="con-item ul_pers confobj" data-confobj="per_pers"></ul>
@@ -180,7 +203,7 @@
             </div> -->
             <div class="setdes" data-i18n="des_pers"></div>
         </div>
-        <div id="set-conf" class="set set-15" data-confobj="general|sync">
+        <div id="set-conf" class="set set-16" data-confobj="general|sync">
             <div class="setname" data-i18n="stnm_importconf"></div>
             <div class="setcontent">
                 <input type="file" id="import_file"><br />

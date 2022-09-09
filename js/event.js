@@ -47,6 +47,28 @@ var sue={
 	},
 	init:function(){
 		if(!devMode){console.log=function(){return;}}
+		var exclusionCheck=function(type){
+			var _conf=config.general.exclusion[type];
+			var _url=document.URL;
+			for(var i=0;i<_conf.length;i++){
+				console.log(_conf[i])
+				if(sue.exclusionMatch(_conf[i],_url)){
+					console.log("match")
+					if(type=="black"){
+						return true;
+					}else{
+						return false;
+					}
+				}
+			}
+			return type=="black"?false:true;
+		}
+		if(config.general.exclusion&&config.general.exclusion.exclusion){
+			if(exclusionCheck(config.general.exclusion.exclusiontype)){
+				console.log("dddd")
+				return;
+			}
+		}
 		sue.initHandle();
 		sue.uistyle={};
 		sue.uistyle.mges=[];
@@ -257,7 +279,7 @@ var sue={
 				sue.selEle.lnk=document.activeElement.href;
 				sue.selEle.img=document.activeElement.src;
 				sue.selEle.str=document.activeElement.text;
-				sue.startEle=e.target;
+				// sue.startEle=e.target;
 				
 				break;
 			case"mousemove":
@@ -329,6 +351,33 @@ var sue={
 				}	
 				break;
 		}
+	},
+	exclusionMatch:(pattern,url)=>{
+		var m = url.length;
+		var n = pattern.length;
+		var dp = new Array;
+		for(var i=0;i<m+1;i++){
+			var newArray = new Array(n+1).fill(false);
+			dp.push(newArray);
+		}
+		dp[0][0] = true;
+		for (var i = 1; i <= n; ++i) {
+			if (pattern.charAt(i - 1) == '*') {
+					dp[0][i] = true;
+				} else {
+					break;
+				}
+			 }
+		for (var i = 1; i <= m; ++i) {
+			for (var j = 1; j <= n; ++j) {
+				if (pattern.charAt(j - 1) == '*') {
+					dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
+				} else if (pattern.charAt(j - 1) == '?' || url.charAt(i - 1) == pattern.charAt(j - 1)) {
+					dp[i][j] = dp[i - 1][j - 1];
+				}
+			}
+		}
+		return dp[m][n];
 	},
 	ksa:{
 		timeout:null,

@@ -822,7 +822,7 @@
     "message": "搜索引擎"
   },
   "scriptmgr": {
-    "message": "用户脚本"
+    "message": "自定义脚本"
   },
   "linux": {
     "message": "Linux/OSX选项"
@@ -1798,5 +1798,38 @@
   },
   "c_factor":{
     "message":"自定义默认缩放系数"
+  },
+  "exclusion":{
+   "message":"例外"
+  },
+  "stnm_exclusiontype":{
+   "message":"例外类型"
+  },
+  "exclusion_enable":{
+   "message":"启用例外功能"
+  },
+  "exclusion_black":{
+   "message":"黑名单模式"
+  },
+  "exclusion_white":{
+   "message":"白名单模式"
+  },
+  "des_black":{
+   "message":"smartUp将不会在匹配的网址中运行。"
+  },
+  "des_white":{
+   "message":"smartUp仅在匹配的网址中运行。"
+  },
+  "stnm_exclusion_match":{
+   "message":"管理匹配网址"
+  },
+  "des_exclusion_match":{
+   "message":"匹配模式允许使用 \"*\" 通配符。"
+  },
+  "btn_add":{
+   "message":"添加"
+  },
+  "tip_exclusion_repeat":{
+   "message":"匹配网址重复。"
   }
 }
