@@ -279,7 +279,7 @@ var sue={
 				sue.selEle.lnk=document.activeElement.href;
 				sue.selEle.img=document.activeElement.src;
 				sue.selEle.str=document.activeElement.text;
-				sue.startEle=e.target;
+				// sue.startEle=e.target;
 				
 				break;
 			case"mousemove":

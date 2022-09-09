@@ -1656,25 +1656,21 @@ var sub={
 			sub.open(sub.getConfValue("texts","n_url"),sub.getConfValue("selects","n_optype"),sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],sub.getConfValue("checks","n_pin"));
 		},
 		openclip:function(){//chk
-			var theTarget=sub.getConfValue("selects","n_optype"),
-				theIndex=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
-				thePin=sub.getConfValue("checks","n_pin");
-			var theURL,
-				clipOBJ=document.body.appendChild(document.createElement("textarea"));
-			clipOBJ.focus();
-			document.execCommand('paste');
-			theURL=clipOBJ.value;
-			clipOBJ.remove();
-
-			sub.open(theURL,theTarget,theIndex,thePin);
-			//sub.open(theURL,sub.getConfValue("selects","n_optype"),sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],sub.getConfValue("checks","n_pin"));
-
-			////////////
-			// var theTarget=sub.getConfValue("selects","n_optype"),
-			// 	theIndex=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
-			// 	thePin=sub.getConfValue("checks","n_pin");
-			// var theURL=browserType=="cr"?"chrome://newtab":"about:blank";
-			// sub.open(theURL,theTarget,theIndex,thePin);
+			var theFunction=function(){
+				var theTarget=sub.getConfValue("selects","n_optype"),
+					theIndex=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
+					thePin=sub.getConfValue("checks","n_pin");
+				var theURL,
+					clipOBJ=document.body.appendChild(document.createElement("textarea"));
+				clipOBJ.focus();
+				document.execCommand('paste');
+				theURL=clipOBJ.value;
+				clipOBJ.remove();
+				sub.open(theURL,theTarget,theIndex,thePin);
+			}
+			var thepers=["clipboardRead"];
+			var theorgs;
+			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		switchtab:function(){
 			var id=sub.getId(sub.getConfValue("selects","n_tab_lrhl"))[0];
@@ -1907,40 +1903,44 @@ var sub={
 		},
 		txtsearchclip:function(){
 			console.log("txtsearchclip")
-			let _str,_obj=document.body.appendChild(document.createElement("textarea"));
-				_obj.focus();
-			document.execCommand('paste');
-			_str=_obj.value;
-			console.log(_obj)
-			_obj.remove();
+			var theFunction=function(){
+				let _str,_obj=document.body.appendChild(document.createElement("textarea"));
+					_obj.focus();
+				document.execCommand('paste');
+				_str=_obj.value;
+				console.log(_obj)
+				_obj.remove();
 
-			let _url,_txt,
-				_engine=sub.getConfValue("selects","n_txtengine"),
-				_target=sub.getConfValue("selects","n_optype"),
-				_code=sub.getConfValue("selects","n_encoding"),
-				_index=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
-				_pin=sub.getConfValue("checks","n_pin");
-			switch(_code){
-				case"s_unicode":
-					_txt=escape(_str);
-					break;
-				case"s_uri":
-					_txt=encodeURI(_str);
-					break;
-				case"s_uric":
-					_txt=encodeURIComponent(_str);
-					break;
-				case"s_uricgbk":
-					_txt=GBK.URI.encodeURI(_str);
-					break;
-				default:
-					_txt=_str;
-					break;
+				let _url,_txt,
+					_engine=sub.getConfValue("selects","n_txtengine"),
+					_target=sub.getConfValue("selects","n_optype"),
+					_code=sub.getConfValue("selects","n_encoding"),
+					_index=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
+					_pin=sub.getConfValue("checks","n_pin");
+				switch(_code){
+					case"s_unicode":
+						_txt=escape(_str);
+						break;
+					case"s_uri":
+						_txt=encodeURI(_str);
+						break;
+					case"s_uric":
+						_txt=encodeURIComponent(_str);
+						break;
+					case"s_uricgbk":
+						_txt=GBK.URI.encodeURI(_str);
+						break;
+					default:
+						_txt=_str;
+						break;
+				}
+				_engine=config.general.engine.txtengine[_engine].content;
+				_url=_engine.replace(/%s/g,_txt);
+				sub.open(_url,_target,_index,_pin);
 			}
-			_engine=config.general.engine.txtengine[_engine].content;
-			_url=_engine.replace(/%s/g,_txt);
-
-			sub.open(_url,_target,_index,_pin);
+			var thepers=["clipboardRead"];
+			var theorgs;
+			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		tts:function(){
 			if(!sub.message.selEle.txt){return;}
@@ -4001,7 +4001,7 @@ var sub={
 				sub.theConf.type="action";
 				if(sub.theConf.name=="paste"){//for action paste
 					sendResponse(sub.theConf);//error log, if none sendResponse
-					sub.checkPermission(["clipboardRead"],null,function(){
+					sub.checkPermission(["clipboardRead","clipboardWrite"],null,function(){
 						var domCB=document.createElement("textarea");
 							domCB.classList.add("su_cb_textarea");
 						document.body.appendChild(domCB);
