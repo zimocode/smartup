@@ -2243,7 +2243,8 @@ smartup.su_apps{
 	position: absolute;
 	right: 0;
 	top: 0;
-	border: 1px solid #ccc;
+	color: #fff;
+	border: 1px solid #fff;
 	font-size: 12px;
 	/* padding: 0 2px; */
 	border-radius: 100%;

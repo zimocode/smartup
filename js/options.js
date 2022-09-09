@@ -635,7 +635,7 @@ var suo={
 		var _dom=e.target.parentNode.querySelector("input[type=text]");
 		if(_dom.value){
 			if(_conf.contains(_dom.value)){
-				suo.showMsgBox("repeat","error")
+				suo.showMsgBox(suo.getI18n("tip_exclusion_repeat"),"error",5)
 			}else{
 				_conf.push(_dom.value);
 				_dom.value="";

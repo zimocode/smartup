@@ -1853,5 +1853,8 @@
   },
   "btn_add":{
     "message":"ADD"
+  },
+  "tip_exclusion_repeat":{
+    "message":"The match URL repeated."
   }
 }

@@ -106,10 +106,10 @@ var getDefault={
 						autosync:true
 					},
 					exclusion:{
-						exclusion:true,
+						exclusion:false,
 						exclusiontype:"black",
-						black:["*.test.com"],
-						white:["*.example.com"]
+						black:["*.test.com/*"],
+						white:["*.example.com/*"]
 					}
 				},
 				mges:{
