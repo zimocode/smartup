@@ -1,10 +1,11 @@
 {
 	"log": [
 		{
-			"ver":"7.1.1220.1158",
-			"date":"2022.09.09",
+			"ver":"7.1.1225.1160",
+			"date":"2022.09.14",
 			"content":[
 				"new: exclusion (blacklist/whitelist)",
+				"upgrade readme",
 				"fix bugs: #263"
 			]
 		},
