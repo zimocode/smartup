@@ -21,8 +21,7 @@ Array.prototype.containsAll=function(ele){
 	}
 }
 
-console.log("d")
-var devMode=true;
+var devMode=false;
 var	config,
 	defaultConf,
 	_SYNC,
@@ -2644,7 +2643,7 @@ var sub={
 			var _appname="appslist";
 			sub.initAppconf(_appname);
 			var _obj={}
-			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet","notepad","shorturl"/**/];
+			_obj.apps=["rss","tablist","random","extmgm","recentbk","recentht","recentclosed","synced","base64","qr","numc","speaker","jslist","lottery","convertcase","autoreload","homepage","magnet"/*,"notepad","shorturl"*/];
 			chrome.tabs.saveAsPDF?_obj.apps.push("savepdf"):null;
 			navigator.language=="zh-CN"?_obj.apps.push("tbkjx"):null;
 			sub.cons[_appname]=_obj;

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"minimum_chrome_version": "22",
-	"name": "smartUp Gestures(Beta)",
+	"name": "__MSG_ext_name__",
 	"short_name":"smartUp",
 	"version": "7.1.1220.1158",
 	"description": "__MSG_ext_des__",
