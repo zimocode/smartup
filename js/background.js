@@ -1758,7 +1758,7 @@ var sub={
 		newwin:function(){//chk
 			var theType=sub.getConfValue("selects","n_wintype").substr(2),
 				theIncog=sub.getConfValue("checks","n_winincog");
-			chrome.windows.create({type:theType,incognito:theIncog,url:(browserType=="fx"?"about:newtab":"chrome://newtab")});
+			chrome.windows.create({type:theType,incognito:theIncog,url:(browserType=="fx"?undefined:"chrome://newtab")});
 		},
 		closewin:function(){
 			var theWin=sub.getConfValue("selects","n_win");
@@ -2810,7 +2810,7 @@ var sub={
 		}else{
 			url=fixURL(url)
 		}
-		if(!url){url=browserType=="fx"?"about:newtab":"chrome://newtab"}
+		if(!url){url=browserType=="fx"?undefined:"chrome://newtab"}
 		//if(!url){/*return;*/}else{url=fixURL(url)}
 		var theTarget=target,
 			theURL=url,
@@ -2853,7 +2853,7 @@ var sub={
 					chrome.windows.update(_flag,{focused:true});
 					chrome.tabs.create({windowId:_flag,url:theURL,active:theTarget=="s_back"?false:true,index:thePos,pinned:thePin})
 				}else{
-					chrome.windows.create({url:theURL?theURL:"",incognito:true},function(window){
+					chrome.windows.create({url:theURL||flag=="newtab"?theURL:"",incognito:true},function(window){
 						if(!window){return;}
 						chrome.tabs.update(window.tabs[0].id,{pinned:thePin});
 					})
