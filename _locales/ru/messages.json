@@ -1412,4 +1412,91 @@
   "ext_allver":{
     "message":"Все версии:"
   }
+    "exclusion":{
+    "message":"Исключения"
+  },
+  "stnm_exclusiontype":{
+    "message":"Метод исключений"
+  },
+  "exclusion_enable":{
+    "message":"Включить исключения"
+  },
+  "exclusion_black":{
+    "message":"Чёрный список"
+  },
+  "exclusion_white":{
+    "message":"Белый список"
+  },
+  "des_black":{
+    "message":"smartUp не будет работать на перечисленных адресах."
+  },
+  "des_white":{
+    "message":"smartUp будет работать ТОЛЬКО на перечисленных адресах."
+  },
+"stnm_exclusion_match":{
+    "message":"Управление списком адресов"
+  },
+  "des_exclusion_match":{
+    "message":"Шаблон соответствия допускает подстановочные знаки \"*\"."
+  },
+  "btn_add":{
+    "message":"Добавить"
+  },
+  "donatedev":{
+    "message":"Поддержать разработчика"
+  },
+  "moreext":{
+    "message":"Больше расширений"
+  },
+  "des_moreextlist":{
+    "message":"Эти расширения разработаны мной. Можете установить их и использовать."
+  },
+  "dca":{
+    "message":"Действия двойным кликом"
+  },
+  "con_dcatrigger":{
+    "message":"Для активации держать клавишу:"
+  },
+  "con_dcakeynone":{
+    "message":"Никакую."
+  },
+  "con_dcakeyctrl": {
+    "message": "Alt Ctrl или Shift:"
+  },
+  "con_dcakeycus": {
+    "message": "Свои клавиши:"
+  },
+  "con_dcabox": {
+    "message": "Активировать в полях ввода."
+  },
+  "con_dcaconfirm":{
+    "message": "Необходимо подтверждение перед действием."
+  },
+  "con_dcaselnothing":{
+    "message": "Включено только тогда, когда ничего не выделено"
+  },
+  "ksa":{
+    "message": "Действия горячих клавиш"
+  },
+  "con_keys":{
+    "message": "КЛАВИШИ"
+  },
+  "con_actions":{
+    "message": "ДЕЙСТВИЯ"
+  },
+  "con_others":{
+    "message": "ОСТАЛЬНОЕ"
+  },
+  tip_enterkeys":{
+    "message":"Используйте клавиатуру, чтобы ввести клавиши"
+  },
+  "reopenincognito":{
+    "message":"Переоткрыть в режиме инкогнито"
+  },
+  "n_reopenkeep":{
+    "message":"Оставить оригинальную вкладку"
+  },
+  "s_incogback":{
+    "message":"Инкогнито (в фоне)"
+  },
 }
