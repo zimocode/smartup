@@ -1487,7 +1487,7 @@
   "con_others":{
     "message": "ОСТАЛЬНОЕ"
   },
-  tip_enterkeys":{
+  "tip_enterkeys":{
     "message":"Используйте клавиатуру, чтобы ввести клавиши"
   },
   "reopenincognito":{
