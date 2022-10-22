@@ -1,6 +1,14 @@
 {
 	"log": [
 		{
+			"ver":"7.1.1355.1161",
+			"date":"2022.10.22",
+			"content":[
+				"Update ru translation, by TuTAH1",
+				"fix bugs: #273"
+			]
+		},
+		{
 			"ver":"7.1.1225.1160",
 			"date":"2022.09.14",
 			"content":[
