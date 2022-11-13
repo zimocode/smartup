@@ -1411,8 +1411,8 @@
   },
   "ext_allver":{
     "message":"Все версии:"
-  }
-    "exclusion":{
+  },
+  "exclusion":{
     "message":"Исключения"
   },
   "stnm_exclusiontype":{
