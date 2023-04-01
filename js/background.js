@@ -89,7 +89,7 @@ var getDefault={
 						],
 						imgengine:[
 							{name:"Google Images",content:"https://lens.google.com/uploadbyurl?url=%s"},
-							{name:"Bing Images",content:"http://www.bing.com/images/searchbyimage?&imgurl=%s"}
+							{name:"Bing Images",content:"https://www.bing.com/images/search?q=imgurl:%s"}
 						]
 					},
 					script:{
@@ -4975,5 +4975,21 @@ if(chrome.browserSettings&&chrome.browserSettings.contextMenuShowEvent){
 	sub.checkPermission(["browserSettings"],null,null,sub.getI18n("perdes_browsersettings"));
 	localStorage.setItem("flag_mouseup","true");
 }
+
+chrome.runtime.onInstalled.addListener(function(details){
+	switch(details.reason){
+		case"update":
+			for(var i in config.general.engine.imgengine){
+				if(config.general.engine.imgengine[i].content=="https://www.google.com/searchbyimage?image_url=%s"){
+					config.general.engine.imgengine[i].content="https://lens.google.com/uploadbyurl?url=%s";
+					sub.saveConf();
+				}else if(config.general.engine.imgengine[i].content=="http://www.bing.com/images/searchbyimage?&imgurl=%s"){
+					config.general.engine.imgengine[i].content="https://www.bing.com/images/search?q=imgurl:%s";
+					sub.saveConf();
+				}
+			}
+			break;
+	}
+})
 
 console.log("end")
