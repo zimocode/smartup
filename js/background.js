@@ -21,7 +21,7 @@ Array.prototype.containsAll=function(ele){
 	}
 }
 
-var devMode=true;
+var devMode=false;
 var	config,
 	defaultConf,
 	_SYNC,
@@ -88,7 +88,7 @@ var getDefault={
 							{name:"Bing",content:"http://www.bing.com/search?q=%s"}
 						],
 						imgengine:[
-							{name:"Google Images",content:"https://www.google.com/searchbyimage?image_url=%s"},
+							{name:"Google Images",content:"https://lens.google.com/uploadbyurl?url=%s"},
 							{name:"Bing Images",content:"http://www.bing.com/images/searchbyimage?&imgurl=%s"}
 						]
 					},
