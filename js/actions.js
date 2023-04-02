@@ -433,7 +433,7 @@ chrome.tts?chrome.tts.getVoices(function(voice){
 }):null;
 
 //copy image
-(chrome.clipboard&&chrome.clipboard.setImageData)?null:actionRemove(["copyimg"]);
+// (chrome.clipboard&&chrome.clipboard.setImageData)?null:actionRemove(["copyimg"]);
 
 //save pdf
 (!chrome.tabs.saveAsPDF)?actionRemove(["savepdf"]):null;
