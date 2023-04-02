@@ -46,29 +46,13 @@ var sue={
 		}
 	},
 	init:function(){
-		if(!devMode){console.log=function(){return;}}
-		var exclusionCheck=function(type){
-			var _conf=config.general.exclusion[type];
-			var _url=document.URL;
-			for(var i=0;i<_conf.length;i++){
-				console.log(_conf[i])
-				if(sue.exclusionMatch(_conf[i],_url)){
-					console.log("match")
-					if(type=="black"){
-						return true;
-					}else{
-						return false;
-					}
-				}
-			}
-			return type=="black"?false:true;
+		!devMode && (console.log = () => {});
+
+		if (config.general.exclusion?.exclusion && sue.exclusionMatch(config.general.exclusion.exclusiontype)) {
+			console.log("dddd");
+			return;
 		}
-		if(config.general.exclusion&&config.general.exclusion.exclusion){
-			if(exclusionCheck(config.general.exclusion.exclusiontype)){
-				console.log("dddd")
-				return;
-			}
-		}
+
 		sue.initHandle();
 		sue.uistyle={};
 		sue.uistyle.mges=[];
@@ -352,32 +336,12 @@ var sue={
 				break;
 		}
 	},
-	exclusionMatch:(pattern,url)=>{
-		var m = url.length;
-		var n = pattern.length;
-		var dp = new Array;
-		for(var i=0;i<m+1;i++){
-			var newArray = new Array(n+1).fill(false);
-			dp.push(newArray);
-		}
-		dp[0][0] = true;
-		for (var i = 1; i <= n; ++i) {
-			if (pattern.charAt(i - 1) == '*') {
-					dp[0][i] = true;
-				} else {
-					break;
-				}
-			 }
-		for (var i = 1; i <= m; ++i) {
-			for (var j = 1; j <= n; ++j) {
-				if (pattern.charAt(j - 1) == '*') {
-					dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
-				} else if (pattern.charAt(j - 1) == '?' || url.charAt(i - 1) == pattern.charAt(j - 1)) {
-					dp[i][j] = dp[i - 1][j - 1];
-				}
-			}
-		}
-		return dp[m][n];
+	exclusionMatch:(type)=>{
+		const patterns = config.general.exclusion[type];
+		const url = `${window.location.host}${window.location.pathname.replace(/\/$/, "")}`;
+		const regexes = patterns.map(pattern => new RegExp('^' + pattern.replace('*', '.*') + '$'));
+		const exclusion= regexes.some(regex => regex.test(url));
+		return type === "black" ? exclusion : !exclusion;
 	},
 	ksa:{
 		timeout:null,
@@ -1133,3 +1097,13 @@ chrome.runtime.sendMessage(extID,{type:"evt_getconf"},function(response){
 		sue.init();
 	}
 });
+
+
+function isUrlMatch(url, patterns) {
+  const regexes = patterns.map(pattern => new RegExp('^' + pattern.replace('*', '.*') + '$'));
+  return regexes.some(regex => regex.test(url));
+}
+const url = 'https://www.example.com';
+const whitelist = ['https://*.example.com', 'https://www.example.org'];
+const isMatch = isUrlMatch(url, whitelist);
+console.log(isMatch); // true
