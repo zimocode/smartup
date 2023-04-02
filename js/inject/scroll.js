@@ -10,19 +10,19 @@ var fn_scroll={
 			switch(response.type){
 				case"up":
 					_options.left=document.documentElement.offsetLeft;
-					_options.top=-(window.document.height==window.innerHeight?0:(window.innerHeight-20));
+					_options.top=-(window.document.height==window.innerHeight?0:(window.innerHeight*0.88));
 					break;
 				case"down":
 					_options.left=document.documentElement.offsetLeft;
-					_options.top=(window.document.height==window.innerHeight?0:(window.innerHeight-20));
+					_options.top=(window.document.height==window.innerHeight?0:(window.innerHeight*0.88));
 					break;
 				case"left":
-					_options.left=-(window.innerWidth-20);
-					_options.top=0;
+					_options.left=-(window.document.width==window.innerWidth?0:(window.innerWidth-20));
+					_options.top=document.documentElement.offsetTop;
 					break;
 				case"right":
-					_options.left=(window.innerWidth-20);
-					_options.top=0;
+					_options.left=(window.document.width==window.innerWidth?0:(window.innerWidth-20));
+					_options.top=document.documentElement.offsetTop;
 					break;
 				case"top":
 					_options.left=document.documentElement.offsetLeft;
@@ -34,11 +34,11 @@ var fn_scroll={
 					break;
 				case"leftmost":
 					_options.left=-(window.pageXOffset+50);
-					_options.top=0;
+					_options.top=document.documentElement.offsetTop;
 					break;
 				case"rightmost":
 					_options.left=Math.max(document.body.offsetWidth,document.body.clientWidth,document.body.scrollWidth,document.documentElement.clientWidth,document.documentElement.offsetWidth,document.documentElement.scrollWidth)-window.innerWidth-window.pageXOffset+50;
-					_options.top=0;
+					_options.top=document.documentElement.offsetTop;
 					break;
 			}
 			window.scrollBy(_options);
