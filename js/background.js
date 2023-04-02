@@ -2400,43 +2400,24 @@ var sub={
 			// }
 		},
 		snap:function(){
-			// chrome.windows.update(sub.curWin.id,{state:(sub.curWin.state=="normal"?"maximized":"normal")},function(window){
-			// 	sub.curWin.state=window.state;
-			// })
-
-			if(sub.cons.snapstate){
-				chrome.windows.update(sub.curWin.id,{
-					height:sub.cons.snapstate.height,
-					width:sub.cons.snapstate.width,
-					top:sub.cons.snapstate.top,
-					left:sub.cons.snapstate.left,
-					state:sub.cons.snapstate.winstate
-				},function(){
-					delete sub.cons.snapstate;
-				})
+			if (sub.cons.snapstate) {
+				const { snapstate } = sub.cons;
+				chrome.windows.update(sub.curWin.id, sub.cons.snapstate, () => delete sub.cons.snapstate);
 				return;
 			}
 
-			var _snap=sub.getConfValue("selects","n_snap"),
-				_height=screen.availHeight;
-			var _width=screen.availWidth/2;
-			chrome.windows.getCurrent(function(window){
-				sub.cons.snapstate={
-					snap:true,
-					height:window.height,
-					width:window.width,
-					left:window.left,
-					top:window.top,
-					winstate:window.state
-				}
+			const _snap = sub.getConfValue("selects", "n_snap");
+			const [_height, _width]=[screen.availHeight , _snap === "s_left" ? 0 : parseInt(screen.availWidth / 2)]
 
-				chrome.windows.update(window.id,{
-					height:_height,
-					width:_width,
-					top:0,
-					left:(_snap=="s_left"?0:_width)
-				})
-			})
+			sub.cons.snapstate = {
+				height: sub.curWin.height,
+				width: sub.curWin.width,
+				left: sub.curWin.left,
+				top: sub.curWin.top,
+				state: sub.curWin.state,
+			};
+
+			chrome.windows.update(sub.curWin.id, { height: _height, width: _width, top: 0, left: _width });
 		},
 		set_bk:function(){
 			let theFunction=function(){
