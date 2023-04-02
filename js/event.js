@@ -576,10 +576,33 @@ var sue={
 				sue.selEle.txt=e.target.value.substring(e.target.selectionStart,e.target.selectionEnd);
 			}
 		}
+		console.log(e.target);
 		sue.selEle.lnk=e.href||e.target.href;
 		sue.selEle.img=sue.selEle.img?sue.selEle.img:e.target.src;
 		sue.selEle.str=e.target.innerText;
 		sue.startEle=e.target;
+
+		// get link obj
+		const link = event.target.closest('a');
+		link && (sue.selEle.objLnk = {href: link.href, innerText: link.innerText});
+
+		// var objLnk=((e)=>{
+		// 	let target = event.target;
+		// 	while (target && target.tagName !== 'A') {
+		// 		target = target.parentNode;
+		// 	}
+		// 	if (target) {
+		// 		console.log(target.href); // 打印链接地址
+		// 		return target;
+		// 	}
+		// })()
+		// if(objLnk){
+		// 	sue.selEle.objLnk={
+		// 		href:objLnk.href,
+		// 		innerText:objLnk.innerText
+		// 	}
+		// }
+
 
 		//txt to url for mges
 		if(type=="mges"&&config.mges.settings.txttourl&&sue.regURL(sue.selEle.txt)){

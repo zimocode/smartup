@@ -1962,9 +1962,11 @@ var sub={
 		},
 		//link
 		openlnk:function(){//lnk
-			if(!sub.message.selEle.lnk){return;}
+			console.log(sub.message.selEle)
+			console.log(sub.message.selEle.objLnk)
+			if(!sub.message.selEle.lnk&&!sub.message.selEle.objLnk){return;}
 			var _optype=sub.getConfValue("selects","n_optype"),
-				_url=sub.message.selEle.lnk,
+				_url=sub.message.selEle.lnk||sub.message.selEle.objLnk.href,
 				_position=sub.getIndex(sub.getConfValue("selects","n_position"),"new")[0],
 				_pin=sub.getConfValue("checks","n_pin");
 			sub.open(_url,_optype,_position,_pin);
