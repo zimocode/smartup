@@ -1,9 +1,10 @@
 {
 	"log": [
 		{
-			"ver":"7.2.486.1164",
+			"ver":"7.2.486.1165",
 			"date":"2023.04.02",
 			"content":[
+				"new translation: pt_BR, by JNylson",
 				"fix image engine: #293, #321, #294",
 				"fix bugs: #316, #311, #290, #284, #301，#119，#219"
 			]

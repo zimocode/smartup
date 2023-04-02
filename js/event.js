@@ -583,26 +583,8 @@ var sue={
 		sue.startEle=e.target;
 
 		// get link obj
-		const link = event.target.closest('a');
+		const link = e.target.closest('a');
 		link && (sue.selEle.objLnk = {href: link.href, innerText: link.innerText});
-
-		// var objLnk=((e)=>{
-		// 	let target = event.target;
-		// 	while (target && target.tagName !== 'A') {
-		// 		target = target.parentNode;
-		// 	}
-		// 	if (target) {
-		// 		console.log(target.href); // 打印链接地址
-		// 		return target;
-		// 	}
-		// })()
-		// if(objLnk){
-		// 	sue.selEle.objLnk={
-		// 		href:objLnk.href,
-		// 		innerText:objLnk.innerText
-		// 	}
-		// }
-
 
 		//txt to url for mges
 		if(type=="mges"&&config.mges.settings.txttourl&&sue.regURL(sue.selEle.txt)){
