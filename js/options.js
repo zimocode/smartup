@@ -76,6 +76,24 @@ var suo={
 			suo.initExclusion();
 			suo.initEnd();
 		},100)
+		suo.welcome();
+		suo.adInline();
+	},
+	adInline:()=>{
+		const inlineAd = suo.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-inline" && !ad.on);
+		inlineAd && document.querySelector("#ad-inline")?.remove();
+	},
+	welcome:()=>{
+		const oninstallAd = suo.cons.reason!="install" || suo.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-oninstall_popin" && !ad.on);
+		if (oninstallAd) return;
+
+		const dom=(suo.initAPPbox([],[800,230],"SmartUp has been installed successfully, and the following is an advertisement provided by the sponsor.","bg","showlist"));
+		const domMain=dom.querySelector(".box_main");
+			domMain.innerText="";
+
+		const domAd=suo.domCreate2("iframe",{setName:["src","width","height","iframeborder"],setValue:["https://www.usechatgpt.ai",window.innerWidth*0.8,window.innerHeight*0.8,"none"]});
+		domMain.appendChild(domAd);
+		suo.initPos(dom)
 	},
 	initNewAdded:()=>{
 		console.log("initNewAdded")
@@ -234,6 +252,10 @@ var suo={
 						suo.saveConf2();
 						window.setTimeout(function(){window.location.reload()},500);
 						break;
+					case"btn_closead":
+						var domAd=e.target.parentNode.parentNode;
+						domAd.parentNode.removeChild(domAd);
+						break
 				}
 				if(ele.classList.contains("box_btnkeyrst")){
 					e.target.parentNode.querySelector(".box_keyvalue").value="";
@@ -3536,41 +3558,10 @@ var suo={
 	donateBox:{
 		init:function(){
 			chrome.runtime.sendMessage({type:"getDonateData"},function(response){
-				let localType=navigator.language,
-					_url="https://apis.zimoapps.com/su";
-					// _url="http://127.0.0.1:3000/su";
-				localType=localType.replace("-","_");
-				fetch(_url,{
-					method:"GET",
-					cache:"no-cache"
-				}).then(response=>response.json())
-				.then(response=>{
-					suo.cons.xhrDonate=response;
-					suo.donateBox.show();
-					let data={
-						donate:[],
-						ad:[]
-					}
-					if(response[0]&&response[0]["on"]&&response[0].donate[0][localType]){
-						data.donate.push(response[0].donate[0][localType]);
-					}else{
-						if(response[0].donate[0]["default"]){
-							data.donate.push(response[0].donate[0]["default"]);
-						}else{
-							data.donate.length=0;
-						}
-					}
-					if(response[1]&&response[1]["on"]&&response[1].ad[0][localType]){
-						data.ad.push(response[1].ad[0][localType]);
-					}else{
-						if(response[1].ad[0]["default"]){
-							data.ad.push(response[1].ad[0]["default"]);
-						}else{
-							data.ad.length=0;
-						}
-					}
-					suo.donateBox.dom(data);
-				})
+				console.log(response.value);
+				suo.cons.donateData=response.value;
+				suo.donateBox.show();
+				suo.donateBox.dom(response.value);
 			})
 		},
 		dom:function(items){
@@ -3656,6 +3647,8 @@ var suo={
 				console.log("cc")
 				suo.donateBox.switchCcli(document.querySelector("#donate_content li.donate_ccli[data-id='0']"))
 			}
+
+
 		},
 		switchCcli:function(dom){
 			console.log(dom)
@@ -3719,10 +3712,13 @@ var suo={
 	}
 }
 chrome.runtime.sendMessage({type:"opt_getconf"},function(response){
+	console.log(response)
 	defaultConf=response.defaultConf;
 	config=response.config;
 	suo.cons.os=response.os;
 	devMode=response.devMode;
+	suo.cons.donateData=response.donateData;
+	suo.cons.reason=response.reason;
 	suo.begin();
 })
 chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){

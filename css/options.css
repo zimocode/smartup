@@ -137,7 +137,7 @@ nav{
 	font-size: 28px;
 	font-weight: bold;
 	height: 64px;
-	line-height: 64px;
+/*	line-height: 64px;*/
 	padding: 0 10px;
 	position: fixed;
 	top: 0;
@@ -194,6 +194,7 @@ nav #nav_txt{
 	text-overflow: ellipsis;
 	display: block;
 	transition:all .4s ease-in-out;
+	margin-top: 16px;
 }
 nav #nav_btn{
 	/*width: 100px;*/

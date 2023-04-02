@@ -3782,8 +3782,11 @@ var sub={
 					defaultConf:defaultConf,
 					config:config,
 					devMode:devMode,
-					os:sub.cons.os
+					os:sub.cons.os,
+					donateData:sub.cons.donateData,
+					reason:sub.cons.reason
 				}
+				message.type==="opt_getconf"?sub.cons.reason="update":null;
 				sendResponse(_conf);
 				break;
 			case"opt_getpers":
@@ -4003,9 +4006,6 @@ var sub={
 				break
 			case"getDonateData":
 				sendResponse({type:"donateData",value:sub.cons.donateData})
-				break;
-			case"setDonateData":
-				sub.cons.donateData=message.value;
 				break;
 			case"appsAction":
 				sub.apps[message.app][message.action](message,sender,sendResponse);
@@ -4844,37 +4844,52 @@ else{
 				}
 			}
 		})
-		if(details.reason=="install"){
-			chrome.tabs.create({url:"../html/options.html"});
-		}
-		if(details.reason=="update"){
-			chrome.storage.sync.get(function(items){
-				if(devMode||(items.general&&items.general.settings.notif)){
-					var notif={
-				        type:"list",
-				        title:sub.getI18n("notif_title_update"),
-				        message:"",
-				        iconUrl: "icon.png",
-				        items: [],
-				        buttons:[
-							{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.svg"},
-							{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.svg"}
-						]
+		sub.cons.reason=details.reason;
+		switch(details.reason){
+			case"update":
+				for(var i in config.general.engine.imgengine){
+					if(config.general.engine.imgengine[i].content=="https://www.google.com/searchbyimage?image_url=%s"){
+						config.general.engine.imgengine[i].content="https://lens.google.com/uploadbyurl?url=%s";
+						sub.saveConf();
+					}else if(config.general.engine.imgengine[i].content=="http://www.bing.com/images/searchbyimage?&imgurl=%s"){
+						config.general.engine.imgengine[i].content="https://www.bing.com/images/search?q=imgurl:%s";
+						sub.saveConf();
 					}
-					var xhr = new XMLHttpRequest();
-					xhr.onreadystatechange=function(){
-						if (xhr.readyState == 4){
-							var items=JSON.parse(DOMPurify.sanitize(xhr.response));
-							for(var i=0;i<items.log[0].content.length;i++){
-								notif.items.push({title:i+1+". ",message:items.log[0].content[i]});
-							}
-							chrome.notifications.create("",notif,function(){})
-						}
-					}
-					xhr.open('GET',"../change.log", true);
-					xhr.send();
 				}
-			})		
+				chrome.storage.sync.get(function(items){
+					if(devMode||(items.general&&items.general.settings.notif)){
+						var notif={
+					        type:"list",
+					        title:sub.getI18n("notif_title_update"),
+					        message:"",
+					        iconUrl: "icon.png",
+					        items: [],
+					        buttons:[
+								{title:sub.getI18n("notif_btn_open"),iconUrl:"image/open.svg"},
+								{title:/*chrome.i18n.getMessage*/sub.getI18n("review"),iconUrl:"image/star.svg"}
+							]
+						}
+						var xhr = new XMLHttpRequest();
+						xhr.onreadystatechange=function(){
+							if (xhr.readyState == 4){
+								var items=JSON.parse(DOMPurify.sanitize(xhr.response));
+								for(var i=0;i<items.log[0].content.length;i++){
+									notif.items.push({title:i+1+". ",message:items.log[0].content[i]});
+								}
+								chrome.notifications.create("",notif,function(){})
+							}
+						}
+						xhr.open('GET',"../change.log", true);
+						xhr.send();
+					}
+				})
+				break;
+			case"install":
+				chrome.tabs.create({url:"../html/options.html"});
+				const oninstallAd = sub.cons.reason!="install" || sub.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-oninstall_popup" && !ad.on);
+				if (oninstallAd) break;
+				chrome.tabs.create({url:"https://www.usechatgpt.ai/partner-referral?ref=smartupgestures"});
+				break;
 		}
 	})
 }
@@ -4959,20 +4974,41 @@ if(chrome.browserSettings&&chrome.browserSettings.contextMenuShowEvent){
 	localStorage.setItem("flag_mouseup","true");
 }
 
-chrome.runtime.onInstalled.addListener(function(details){
-	switch(details.reason){
-		case"update":
-			for(var i in config.general.engine.imgengine){
-				if(config.general.engine.imgengine[i].content=="https://www.google.com/searchbyimage?image_url=%s"){
-					config.general.engine.imgengine[i].content="https://lens.google.com/uploadbyurl?url=%s";
-					sub.saveConf();
-				}else if(config.general.engine.imgengine[i].content=="http://www.bing.com/images/searchbyimage?&imgurl=%s"){
-					config.general.engine.imgengine[i].content="https://www.bing.com/images/search?q=imgurl:%s";
-					sub.saveConf();
-				}
+getDonate=()=>{
+	let localType=navigator.language,
+		_url="https://apis.zimoapps.com/su";
+		// _url="http://172.30.246.4:1024/su";
+	localType=localType.replace("-","_");
+	fetch(_url,{
+		method:"GET",
+		cache:"no-cache"
+	}).then(response=>response.json())
+	.then(response=>{
+		let data={
+			donate:[],
+			ad:[]
+		}
+		if(response[0]&&response[0]["on"]&&response[0].donate[0][localType]){
+			data.donate.push(response[0].donate[0][localType]);
+		}else{
+			if(response[0].donate[0]["default"]){
+				data.donate.push(response[0].donate[0]["default"]);
+			}else{
+				data.donate.length=0;
 			}
-			break;
-	}
-})
-
+		}
+		if(response[1]&&response[1]["on"]&&response[1].ad[0][localType]){
+			data.ad.push(response[1].ad[0][localType]);
+		}else{
+			if(response[1].ad[0]["default"]){
+				data.ad.push(response[1].ad[0]["default"]);
+			}else{
+				data.ad.length=0;
+			}
+		}
+		sub.cons.donateData=data;
+		console.log(sub.cons.donateData);
+	})
+}
+getDonate();
 console.log("end")

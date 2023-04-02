@@ -1120,13 +1120,3 @@ chrome.runtime.sendMessage(extID,{type:"evt_getconf"},function(response){
 		sue.init();
 	}
 });
-
-
-function isUrlMatch(url, patterns) {
-  const regexes = patterns.map(pattern => new RegExp('^' + pattern.replace('*', '.*') + '$'));
-  return regexes.some(regex => regex.test(url));
-}
-const url = 'https://www.example.com';
-const whitelist = ['https://*.example.com', 'https://www.example.org'];
-const isMatch = isUrlMatch(url, whitelist);
-console.log(isMatch); // true
