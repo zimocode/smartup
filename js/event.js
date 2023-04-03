@@ -583,7 +583,7 @@ var sue={
 		sue.startEle=e.target;
 
 		// get link obj
-		const link = e.target.closest('a');
+		const link = e?.target?.closest?.('a');
 		link && (sue.selEle.objLnk = {href: link.href, innerText: link.innerText});
 
 		//txt to url for mges
