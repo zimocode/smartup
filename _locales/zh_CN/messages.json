@@ -1445,27 +1445,6 @@
   "des_adlist1":{
     "message":"可以通过如下路径来开启或者关闭：关于>支持开发。"
   },
-  "lottery":{
-    "message":"彩票开奖数据"
-  },
-  "lottery_type":{
-    "message":"彩种："
-  },
-  "lottery_term":{
-    "message":"期号："
-  },
-  "lottery_dlt":{
-    "message":"大乐透"
-  },
-  "lottery_pls":{
-    "message":"排列3"
-  },
-  "lottery_ssq":{
-    "message":"双色球"
-  },
-  "lottery_sd":{
-    "message":"福彩3D"
-  },
   "pxmovie":{
     "message":"破晓电影最近更新"
   },

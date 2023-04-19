@@ -95,7 +95,6 @@ let actions={
 			{name:"speaker"},
 			{name:"jslist"},
 			{name:"savepdf"},
-			{name:"lottery"},
 			{name:"convertcase"},
 			{name:"autoreload"},
 			{name:"homepage"},

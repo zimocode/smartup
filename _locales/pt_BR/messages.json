@@ -839,27 +839,6 @@
    "linux": {
       "message": "Configurações do Linux/Mac"
    },
-   "lottery": {
-      "message": "Dados de loteria"
-   },
-   "lottery_dlt": {
-      "message": "Da Le Tou"
-   },
-   "lottery_pls": {
-      "message": "Pai Lie San"
-   },
-   "lottery_sd": {
-      "message": "Fucai 3D"
-   },
-   "lottery_ssq": {
-      "message": "Shuang Se Qiu"
-   },
-   "lottery_term": {
-      "message": "Termo de loteria:"
-   },
-   "lottery_type": {
-      "message": "Tipo de loteria:"
-   },
    "lsdrg": {
       "message": "Ações de link"
    },
