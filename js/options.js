@@ -76,8 +76,8 @@ var suo={
 			suo.initExclusion();
 			suo.initEnd();
 		},100)
-		suo.welcome();
-		suo.adInline();
+		// suo.welcome();
+		// suo.adInline();
 	},
 	adInline:()=>{
 		const inlineAd = suo.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-inline" && !ad.on);

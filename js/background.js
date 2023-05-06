@@ -4738,9 +4738,9 @@ else{
 				break;
 			case"install":
 				chrome.tabs.create({url:"../html/options.html"});
-				const oninstallAd = sub.cons.reason!="install" || sub.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-oninstall_popup" && !ad.on);
-				if (oninstallAd) break;
-				chrome.tabs.create({url:"https://www.usechatgpt.ai/partner-referral?ref=smartupgestures"});
+				// const oninstallAd = sub.cons.reason!="install" || sub.cons.donateData?.ad[0]?.find(ad => ad.type === "ad-oninstall_popup" && !ad.on);
+				// if (oninstallAd) break;
+				// chrome.tabs.create({url:"https://www.usechatgpt.ai/partner-referral?ref=smartupgestures"});
 				break;
 		}
 	})
