@@ -339,7 +339,8 @@ var sue={
 	exclusionMatch:(type)=>{
 		const patterns = config.general.exclusion[type];
 		const url = `${window.location.host}${window.location.pathname.replace(/\/$/, "")}`;
-		const regexes = patterns.map(pattern => new RegExp('^' + pattern.replace('*', '.*') + '$'));
+		const regexes = patterns.map(pattern => new RegExp('^' + pattern.replace(/\*/g, '.*') + '$'));
+		console.log(regexes);
 		const exclusion= regexes.some(regex => regex.test(url));
 		return type === "black" ? exclusion : !exclusion;
 	},
