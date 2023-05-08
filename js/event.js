@@ -97,6 +97,13 @@ var sue={
 		if(config.general.fnswitch.fndca){
 			window.addEventListener("dblclick",this.handleEvent,false);
 		}
+		
+		document.addEventListener('selectionchange', () => {
+			const selection = window.getSelection().toString()
+			if (window._previousSelection == undefined || (selection && selection !== window._previousSelection)) {
+				window._previousSelection = selection
+			}
+		})
 	},
 	initHandle2:function(){
 		sue.document.addEventListener("mousemove",this.handleEvent,false);

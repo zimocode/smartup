@@ -2228,7 +2228,8 @@ var sub={
 		},
 		script:function(){
 			var _script=sub.getConfValue("selects","n_script");
-			chrome.tabs.executeScript({code:config.general.script.script[_script].content,runAt:"document_start"},function(){})
+			const code = config.general.script.script[_script].content.replace(/\%s/g, 'window._previousSelection')
+			chrome.tabs.executeScript({code,runAt:"document_start"},function(){})
 		},
 		source:function(){
 			var theTarget=sub.getConfValue("selects","n_optype"),
