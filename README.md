@@ -35,6 +35,12 @@ smartUP Gestures has ben uploaded to these browser's extension store, you'll ins
 | Edge | [https://microsoftedge.microsoft.com/addons/detail/elponhbfjjjihgeijofonnflefhcbckp](https://microsoftedge.microsoft.com/addons/detail/elponhbfjjjihgeijofonnflefhcbckp) |
 | Firefox | [https://addons.mozilla.org/firefox/addon/smartup/](https://addons.mozilla.org/firefox/addon/smartup/) |
 
+### Build right click helper
+```shell
+# On Ubuntu dependency of robotgo: libx11-dev xcb libxcb-xkb-dev x11-xkb-utils libx11-xcb-dev libxkbcommon-x11-dev libxtst-dev libpng++-dev
+(cd rightClickHelper && go mod tidy && go build -ldflags "-s -w" -o rightClickHelper rightClickHelper.go)
+```
+
 ## License
 
 [![License](https://img.shields.io/github/license/zimocode/smartup?logo=github&logoColor=white)](LICENSE)

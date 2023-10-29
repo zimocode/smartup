@@ -27,7 +27,7 @@ var	config,
 	_SYNC,
 	browserType,
 	timerSaveConf;
-let localConfig;
+let localConfig,nativeListener;
 
 //check browser
 if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
@@ -42,6 +42,13 @@ if(browserType!="cr"){
 	chrome.storage.sync=chrome.storage.local;
 }
 
+nativeListener = chrome.runtime.connectNative("com.smartup.rightclickhelper");
+nativeListener.onMessage.addListener((msg)=>{
+    console.log('onNativeMessage',msg)
+});
+nativeListener.onDisconnect.addListener(()=>{
+    nativeListener = null;
+});
 
 var getDefault={
 	i18n:function(str){
@@ -313,7 +320,7 @@ var getDefault={
 						{
 							direct:"U",
 							name:"none"
-							
+
 						},
 						{
 							direct:"R",
@@ -361,7 +368,7 @@ var getDefault={
 						{
 							direct:"U",
 							name:"none"
-							
+
 						},
 						{
 							direct:"R",
@@ -407,7 +414,7 @@ var getDefault={
 						{
 							direct:"U",
 							name:"none"
-							
+
 						},
 						{
 							direct:"R",
@@ -439,7 +446,7 @@ var getDefault={
 							name:"none"
 						}
 					],
-				},	
+				},
 				drg:{
 					settings:{
 						holdkey:"ctrl",
@@ -801,7 +808,7 @@ var getDefault={
 						codes:[78,69,87],
 						ctrl:false,
 						alt:false,
-						shift:false						
+						shift:false
 					}]
 				},
 				about:{
@@ -809,7 +816,7 @@ var getDefault={
 						ad:true
 					}
 				}
-			}	
+			}
 		switch(navigator.language.toLowerCase()){
 			case"zh-cn":
 				var OBJ={};
@@ -887,7 +894,7 @@ let loadConfig=function(noInit,type){
 					});
 				}else{
 					config=items.config;
-				}				
+				}
 			}
 			needInit();
 			//sub.init();
@@ -994,7 +1001,7 @@ var sub={
 				for(var i=0;i<fnArray.length;i++){
 					var menuId=chrome.contextMenus.create({contexts:["all"],title:sub.getI18n(fnArray[i]),type:"checkbox",checked:config.general.fnswitch["fn"+fnArray[i]],enabled:(fnArray[i]=="ctm"?false:true)}, function(){});
 					sub.ctm.fn.push({id:i,fnName:"fn"+fnArray[i],menuId:menuId});
-				}				
+				}
 			}
 			if(config.ctm.settings.homepage){
 				chrome.contextMenus.create({contexts:["all"],type:"separator"}, function(){});
@@ -1215,7 +1222,7 @@ var sub={
 			case"s_head":
 				theIndex.push(0);
 				break;
-			case"s_last":			
+			case"s_last":
 				if(_new){
 					theIndex.push(sub.curWin.tabs.length);
 				}else{
@@ -1284,7 +1291,7 @@ var sub={
 	insertTest:function(appname){
 		//console.log("appname")
 		//chrome.tabs.sendMessage(curTab.id,{type:"apptype",apptype:appname},function(response){});
-		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){console.log(response)})',runAt:"document_start"});	
+		chrome.tabs.executeScript({code:'chrome.runtime.sendMessage({type:"apps_test",apptype:"'+appname+'",value:sue.apps.enable,appjs:appType["'+appname+'"]},function(response){console.log(response)})',runAt:"document_start"});
 	},
 	checkPermission:function(thepers,theorgs,theFunction,msg){
 		console.log(thepers+"/"+theorgs+"/"+theFunction+"/"+msg)
@@ -1406,8 +1413,8 @@ var sub={
 				sub.cons.next.pin=sub.getConfValue("checks","n_pin");
 				sub.cons.next.optype=sub.getConfValue("selects","n_optype");
 				sub.cons.next.keywds=(sub.getConfValue("texts","n_npkey_n")||sub.getConfValue("texts","n_npkey_p")).split(",");
-				chrome.tabs.executeScript({file:"js/namespace.js",runAt:"document_start",allFrames:true},function(){})	
-				chrome.tabs.executeScript({file:"js/inject/np.js",runAt:"document_start",allFrames:true},function(){})				
+				chrome.tabs.executeScript({file:"js/namespace.js",runAt:"document_start",allFrames:true},function(){})
+				chrome.tabs.executeScript({file:"js/inject/np.js",runAt:"document_start",allFrames:true},function(){})
 			}
 		},
 		previous:function(){
@@ -1472,7 +1479,7 @@ var sub={
 						chrome.tabs.remove(ids,function(){
 							(selvalue!="s_default")?chrome.tabs.update(selid,{active:true}):null;
 						});
-					}					
+					}
 				}
 				if(ids.length>1&&sub.getConfValue("checks","n_closeConfirm")){
 					chrome.tabs.sendMessage(sub.curTab.id,{type:"set_confirm"},function(response){
@@ -1482,7 +1489,7 @@ var sub={
 					});
 				}else{
 					_funClose();
-				}			
+				}
 			}
 			if(value_closePin){
 				let ids_pinned,i=0,ii=0;
@@ -1747,10 +1754,10 @@ var sub={
 						case"s_tabele_aslnk":
 							clipOBJ.value='<a href="'+cptarget.url+'">'+cptarget.title+'<\/a>';
 							break;
-					}	
+					}
 					clipOBJ.select();
 					document.execCommand('copy');
-					clipOBJ.remove();				
+					clipOBJ.remove();
 				})
 			}
 			var thepers=["clipboardWrite"];
@@ -1786,7 +1793,7 @@ var sub={
 			})
 		},
 		min:function(){
-			chrome.windows.update(sub.curWin.id,{state:"minimized"})			
+			chrome.windows.update(sub.curWin.id,{state:"minimized"})
 		},
 		full:function(){
 			var t;
@@ -1864,7 +1871,7 @@ var sub={
 				clipOBJ.value=sub.message.selEle.txt;
 				clipOBJ.select();
 				document.execCommand('copy');
-				clipOBJ.remove();				
+				clipOBJ.remove();
 			}
 			var thepers=["clipboardWrite"];
 			var theorgs;
@@ -1986,7 +1993,7 @@ var sub={
 						chrome.bookmarks.create({url:_url,title:_str});
 						_notif=="s_yes"?sub.showNotif("basic",sub.getI18n("notif_title"),sub.getI18n("notif_con_bkadd")):null;
 					}
-				})				
+				})
 			}
 			var thepers=["bookmarks"];
 			var theorgs;
@@ -1999,7 +2006,7 @@ var sub={
 				clipOBJ.value=sub.message.selEle.lnk;
 				clipOBJ.select();
 				document.execCommand('copy');
-				clipOBJ.remove();				
+				clipOBJ.remove();
 			}
 			var thepers=["clipboardWrite"];
 			var theorgs;
@@ -2012,7 +2019,7 @@ var sub={
 				clipOBJ.value=sub.message.selEle.str;
 				clipOBJ.select();
 				document.execCommand('copy');
-				clipOBJ.remove();				
+				clipOBJ.remove();
 			}
 			var thepers=["clipboardWrite"];
 			var theorgs;
@@ -2025,7 +2032,7 @@ var sub={
 				clipOBJ.value='<a href="'+sub.message.selEle.lnk+'">'+sub.message.selEle.str+'<\/a>';
 				clipOBJ.select();
 				document.execCommand('copy');
-				clipOBJ.remove();			
+				clipOBJ.remove();
 			}
 			var thepers=["clipboardWrite"];
 			var theorgs;
@@ -2049,7 +2056,7 @@ var sub={
 				var _url=sub.message.selEle.img,
 					//_dlbar=sub.getConfValue("checks","n_dlbar"),
 					_notif=sub.getConfValue("checks","n_notif");
-				//chrome.downloads.setShelfEnabled?chrome.downloads.setShelfEnabled(_dlbar==""?true:_dlbar):null;	
+				//chrome.downloads.setShelfEnabled?chrome.downloads.setShelfEnabled(_dlbar==""?true:_dlbar):null;
 				chrome.downloads.download({url:_url},function(id){
 					if(!id){
 						_notif?sub.showNotif("basic",sub.getI18n("notif_title"),sub.getI18n("notif_con_dnimgerr")):null;
@@ -2077,7 +2084,7 @@ var sub={
 						}else{
 							_notif?sub.showNotif("basic",sub.getI18n("notif_title"),sub.getI18n("notif_con_dnimg")):null;
 						}
-				})				
+				})
 			}
 			var thepers=["downloads"/*,"downloads.shelf"*/];
 			var theorgs;
@@ -2163,7 +2170,7 @@ var sub={
 					theURL="chrome://about";
 					break;
 			}
-			sub.open(theURL,theTarget,theIndex,thePin);	
+			sub.open(theURL,theTarget,theIndex,thePin);
 		},
 		restart:function(){
 			chrome.tabs.create({url:"chrome://restart/",active:false})
@@ -2220,7 +2227,7 @@ var sub={
 							}
 						})
 					})
-				}			
+				}
 			}
 			var thepers=["bookmarks"];
 			var theorgs;
@@ -2286,7 +2293,7 @@ var sub={
 					case"s_reset":
 						chrome.tabs.setZoom(factorDefault);
 						break;
-				}	
+				}
 			}
 		},
 		savepage:function(){
@@ -2310,7 +2317,7 @@ var sub={
 							})
 						})
 					})
-				}				
+				}
 			}
 			var thepers=["pageCapture","downloads"];
 			var theorgs;
@@ -2493,7 +2500,7 @@ var sub={
 			}
 			var thepers=["topSites"];
 			var theorgs;
-			sub.checkPermission(thepers,theorgs,theFunction);		
+			sub.checkPermission(thepers,theorgs,theFunction);
 		},
 		autoreload:function(){
 			var _appname="autoreload";
@@ -2565,7 +2572,7 @@ var sub={
 				chrome.bookmarks.getRecent(parseInt(config.apps[_appname].n_num),function(bkArray){
 					_obj.bk=bkArray;
 					sub.cons[_appname]=_obj;
-					sub.insertTest(_appname);	
+					sub.insertTest(_appname);
 				})
 			}
 			var thepers=["bookmarks"];
@@ -2692,7 +2699,7 @@ var sub={
 							}
 						}
 						config.apps.extmgm.exts=_newExts;
-						sub.insertTest(_appname);					
+						sub.insertTest(_appname);
 					})
 				}else{
 					sub.insertTest(_appname);
@@ -2929,7 +2936,7 @@ var sub={
 		    var dbobj=db.transaction(["config"], "readwrite").objectStore("config");
 		    var dbadd=dbobj.put({config:config,id:config.version});
 		    dbadd.onsuccess=function(e){
-		    	sub.upgrade["_"+ver](ver!=defaultConf.version?true:false);	
+		    	sub.upgrade["_"+ver](ver!=defaultConf.version?true:false);
 		    }
 		}
 	},
@@ -3079,7 +3086,7 @@ var sub={
 				}
 			}
 			config.version=44;
-			sub.saveConf(true);	
+			sub.saveConf(true);
 		},
 		_43:function(){
 			config.general.settings.timeoutvalue=config.general.settings.timeoutvalue*1000;
@@ -3123,7 +3130,7 @@ var sub={
 					if(_obj[j][i].tip){
 						delete _obj[j][i].tip;
 					}
-				}			
+				}
 			}
 			if(config.wges.settings){delete config.wges.settings}
 			if(config.rges.settings){delete config.rges.settings}
@@ -3169,7 +3176,7 @@ var sub={
 				}
 				if(config.apps.recentbk){
 					config.apps.recentbk.n_pin=(config.apps.recentbk.n_pin=="s_unpin")?false:true;
-				}				
+				}
 			}
 
 			config.version=36;
@@ -3249,7 +3256,7 @@ var sub={
 								if(["n_notif"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_yes"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(_obj.name=="savepage"){
@@ -3266,7 +3273,7 @@ var sub={
 								if(["n_winincog"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_yes"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(_obj.name=="reload"){
@@ -3274,7 +3281,7 @@ var sub={
 								if(["n_reload_clear"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_yes"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(_obj.name=="script"){
@@ -3282,7 +3289,7 @@ var sub={
 								if(["n_jq"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_yes"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(["next","previous","newtab","open","openclip","txtsearch","openlnk","openimg","imgsearch","crpages","source",""].contains(_obj.name)){
@@ -3290,7 +3297,7 @@ var sub={
 								if(["n_pin"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_pin"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(_obj.name=="scroll"){
@@ -3298,7 +3305,7 @@ var sub={
 								if(["n_effect"].contains(_obj.selects[j].type)){
 									_obj.checks.push({type:_obj.selects[j].type,value:(_obj.selects[j].value=="s_on"?true:false)});
 									_obj.selects.splice(j,1);
-									
+
 								}
 							}
 						}else if(_obj.name=="pin"){
@@ -3341,7 +3348,7 @@ var sub={
 									config[_drgtype0[i]][_drgtype[ii]][iii].selects[j].value="s_back";
 								}
 							}
-						}	
+						}
 					}
 				}
 			}
@@ -3514,7 +3521,7 @@ var sub={
 						n_target:"s_back",
 						n_index_new:"s_default",
 						n_pin:"s_unpin",
-						n_appwin_close:false						
+						n_appwin_close:false
 					}}
 					config.apps.rss.feed.push(_obj.texts[0].value);
 					_flag=true;
@@ -3528,7 +3535,7 @@ var sub={
 						texts:[],
 						checks:[],
 						selects:[]
-					}					
+					}
 				}
 			}
 			delete config.plus.menuPin;
@@ -3577,7 +3584,7 @@ var sub={
 				config.drg.ui.tip.withdir=true;
 				config.drg.ui.direct.width=defaultConf.drg.ui.direct.width;
 				config.drg.ui.direct.style=defaultConf.drg.ui.direct.style;
-				config.drg.ui.allaction=defaultConf.drg.ui.allaction;		
+				config.drg.ui.allaction=defaultConf.drg.ui.allaction;
 			}
 			config.version=2.7;
 			sub.saveConf(true);
@@ -3610,7 +3617,7 @@ var sub={
 					if(obj[ii][i].name=="script"&&obj[ii][i].texts){
 						delete obj[ii][i].texts;
 					}
-				}				
+				}
 			}
 			config.general.settings.theme="colorful";
 			config.version=2.8;
@@ -3735,7 +3742,7 @@ var sub={
 						if(_erraction.contains(config[_drgtype0[i]][_drgtype[ii]][iii].name)&&!config[_drgtype0[i]][_drgtype[ii]][iii].selects){
 							config[_drgtype0[i]][_drgtype[ii]][iii].selects={}
 							config[_drgtype0[i]][_drgtype[ii]][iii].selects=_errobj[config[_drgtype0[i]][_drgtype[ii]][iii].name]
-						}	
+						}
 					}
 				}
 			}
@@ -3767,7 +3774,7 @@ var sub={
 					theConf={name:null/*,mydes:null*/}
 				}
 			}
-			return theConf;			
+			return theConf;
 		}
 		switch(message.type){
 			case"evt_getconf":
@@ -3830,7 +3837,7 @@ var sub={
 					chrome.tabs.executeScript({file:"js/inject/"+message.apptype+".js",runAt:"document_start"},function(){
 
 					});
-				}		
+				}
 				if(!message.value){
 					chrome.tabs.insertCSS({file:"css/apps_basic.css",runAt:"document_start"},function(){})
 					chrome.tabs.executeScript({file:"js/apps_basic.js",runAt:"document_start"},function(){_fun();})
@@ -3925,7 +3932,7 @@ var sub={
 					},200)
 					return
 				}
-				sub.initCurrent(sender,sub.theConf)				
+				sub.initCurrent(sender,sub.theConf)
 				break;
 			case"gettip":
 				sub.theConf=getConf();
@@ -3976,7 +3983,7 @@ var sub={
 					sendResponse(sub.theConf);
 				}
 				sub.initCurrent(sender,sub.theConf);
-				break		
+				break
 			case"action":
 				sub.theConf=getConf();
 				sub.theConf.type="action";
@@ -4007,6 +4014,9 @@ var sub={
 				sub.apps[message.app][message.action](message,sender,sendResponse);
 				//sub.appsAction(message,sendResponse);
 				break;
+			case"sendRightClick":
+                nativeListener.postMessage(message.sendValue);
+				break;
 		}
 	},
 	appsAction:function(message,sendResponse){
@@ -4026,7 +4036,7 @@ var sub={
 					sub.cons.autoreload[sender.tab.id].timeRemain=message.value.interval;
 					sub.cons.autoreload[sender.tab.id].iconCountdown=message.value.iconCountdown;
 					sub.cons.autoreload[sender.tab.id].bypassCache=message.value.bypassCache;
-					
+
 					if(sub.cons.autoreload[sender.tab.id].iconCountdown){
 						chrome.browserAction.setBadgeText({text:sub.cons.autoreload[sender.tab.id].timeRemain.toString(),tabId:sender.tab.id});
 						sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
@@ -4036,7 +4046,7 @@ var sub={
 					}else{
 						sub.cons.autoreload[sender.tab.id].countDown=window.setInterval(function(){
 							sub.cons.autoreload[sender.tab.id].timeRemain--;
-						},1000)	
+						},1000)
 					}
 					sub.cons.autoreload[sender.tab.id].timer=window.setInterval(function(){
 						chrome.tabs.reload(sender.tab.id,{bypassCache:sub.cons.autoreload[sender.tab.id].bypassCache});
@@ -4110,7 +4120,7 @@ var sub={
 		},
 		tablist:{
 			tabClose:function(message){
-				message.value?chrome.tabs.remove(Number(message.value)):null;			
+				message.value?chrome.tabs.remove(Number(message.value)):null;
 			},
 			tabSwitch:function(message){
 				message.value?chrome.tabs.update(Number(message.value),{active:true}):null;
@@ -4224,7 +4234,7 @@ var sub={
 						}
 					}
 				}
-				
+
 				sendResponse({exts:_exts})
 				// let _config=config.apps.extmgm.exts[message.value].id,
 				// 	_exts=[];
@@ -4236,7 +4246,7 @@ var sub={
 				// 		}
 				// 	}
 				// }
-				
+
 				// sendResponse({exts:_exts})
 			},
 			getAllExt:function(message,sender,sendResponse){
@@ -4329,7 +4339,7 @@ var sub={
 							console.log(data)
 							chrome.tabs.sendMessage(sender.tab.id,{type:"list",value:data});
 						}
-						reader.readAsText(blob, 'GBK') 
+						reader.readAsText(blob, 'GBK')
 					})
 			},
 			getData:function(message,sender,sendResponse){
@@ -4376,7 +4386,7 @@ var sub={
 
 							chrome.tabs.sendMessage(sender.tab.id,{type:"data",value:data});
 						}
-						reader.readAsText(blob, 'GBK') 
+						reader.readAsText(blob, 'GBK')
 					})
 			}
 		},
@@ -4431,7 +4441,7 @@ var sub={
 				let response=await fetch(data.imageURL);
 					response=await response.blob();
 				let reader = new FileReader();
-				reader.readAsDataURL(response); 
+				reader.readAsDataURL(response);
 				reader.onloadend = function(){
 					data.base64=reader.result;
 					(async function(){
@@ -4439,7 +4449,7 @@ var sub={
 						await sub.IDB.itemModify(db,"bingimg",0,data);
 						if(localStorage.getItem("homepageURL")!=data.imageURL){
 							localStorage.setItem("homepageURL",data.imageURL);
-						}						
+						}
 					})();
 				}
 			},
@@ -4505,7 +4515,7 @@ var sub={
 					console.log("get")
 					message.type="appsListener_get";
 					message.data=data;
-					chrome.tabs.sendMessage(sender.tab.id,message);	
+					chrome.tabs.sendMessage(sender.tab.id,message);
 				}
 			},
 			set:async function(message,sender,sendResponse){
@@ -4571,7 +4581,7 @@ var sub={
 							resolve(db);
 						})()
 						break;
-				}				
+				}
 			})
 		},
 		itemDel:function(db,storeName,key){
@@ -4682,7 +4692,7 @@ else{
 	chrome.runtime.getPlatformInfo(function(info){
 		sub.cons.os=info.os;
 		sub.checkMouseup();
-	})	
+	})
 }
 
 if(!chrome.runtime.onInstalled){}
@@ -4762,7 +4772,7 @@ else{
 				chrome.tabs.create({url:"https://chrome.google.com/webstore/detail/"+chrome.runtime.id+"?hl="+navigator.language});
 				break;
 		}
-	})	
+	})
 }
 
 chrome.contextMenus.onClicked.addListener(function(info,tab){
