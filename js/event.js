@@ -12,7 +12,7 @@ let devMode,
 	extDisable=false,
 	appType={},
 	extID="jialbkkmibnohldjdhbdckemnpdpngeb";
-	
+
 
 //check browser
 if(navigator.userAgent.toLowerCase().indexOf("firefox")!=-1){
@@ -33,7 +33,8 @@ var sue={
 		fix_linux_value:false,
 		fix_linux_timer:null,
 		os:"win",
-		drginbox:true
+		drginbox:true,
+		sendRightClickTimer:null,
 	},
 	apps:{
 		enable:false,
@@ -232,7 +233,7 @@ var sue={
 						sue.clearUI();
 						sue.drawing=false;
 						sue._lastX=e.clientX;
-						sue._lastY=e.clientY;					
+						sue._lastY=e.clientY;
 					}
 
 					//fix wges
@@ -264,7 +265,7 @@ var sue={
 				sue.selEle.img=document.activeElement.src;
 				sue.selEle.str=document.activeElement.text;
 				// sue.startEle=e.target;
-				
+
 				break;
 			case"mousemove":
 				if(sue.drawing&&e.buttons==config.mges.settings.model){
@@ -276,7 +277,7 @@ var sue={
 					&&((config.general.fnswitch.fndrg&&!e[config.drg.settings.holdkey+"Key"])
 										||(config.general.fnswitch.fnsdrg&&!e[config.sdrg.settings.holdkey+"Key"]))){
 					sue.lineDrawReady(e,config.general.fnswitch.fndrg?"drg":"sdrg");
-					
+
 					sue.inDrg=true;
 				}
 				break;
@@ -289,7 +290,7 @@ var sue={
 					if(config[sue.drawType[0]].settings.drgcursor){
 						e.dataTransfer.effectAllowed="move"
 						e.dataTransfer.dropEffect="move";
-						e.preventDefault();						
+						e.preventDefault();
 					}
 					//drag to text box, cancel
 					if(!sue.cons.drginbox&&config[sue.drawType[0]].settings.drgtobox&&e.target&&e.target.type&&(e.target.type=="textarea"||e.target.type=="text")){
@@ -332,7 +333,7 @@ var sue={
 						break;
 					}
 					chrome.runtime.sendMessage(extID,{type:"action_dca",sendValue:sendValue,selEle:sue.selEle});
-				}	
+				}
 				break;
 		}
 	},
@@ -355,7 +356,7 @@ var sue={
 				||e.keyCode==18){
 					return
 			}
-			sue.ksa.keyArray.push(e.keyCode)	
+			sue.ksa.keyArray.push(e.keyCode)
 			var key={
 				alt:e.altKey,
 				shift:e.shiftKey,
@@ -406,7 +407,7 @@ var sue={
 		return dom;
 	},
 	regURL:function(txt){
-		var reg=/^((http|https|ftp):\/\/)?(\w(\:\w)?@)?([0-9a-z_-]+\.)*?([a-z0-9-]+\.[a-z]{2,6}(\.[a-z]{2})?(\:[0-9]{2,6})?)((\/[^?#<>\/\\*":]*)+(\?[^#]*)?(#.*)?)?$/i; 
+		var reg=/^((http|https|ftp):\/\/)?(\w(\:\w)?@)?([0-9a-z_-]+\.)*?([a-z0-9-]+\.[a-z]{2,6}(\.[a-z]{2})?(\:[0-9]{2,6})?)((\/[^?#<>\/\\*":]*)+(\?[^#]*)?(#.*)?)?$/i;
 		return reg.test(txt.trim());
 	},
 	lineDrawReady_touch:function(e,type){
@@ -464,7 +465,7 @@ var sue={
 		}
 
 		var dir;
-		dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D"); 	
+		dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");
 
 		var lastDir=sue._dirArray.substr(sue._dirArray.length-1,1);
 		if(dir!=lastDir){
@@ -506,7 +507,7 @@ var sue={
 			boxOBJ.querySelector(".testbox").innerText=sue._dirArray;
 		}else{
 			sue.sendDir(sue._dirArray,"action",e);
-		}	
+		}
 		sue.drawing=false;
 		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
 		sue._dirArray="";
@@ -566,6 +567,21 @@ var sue={
 				}
 			}
 		}else if(type=="mges"){
+			sue.cons.sendRightClickTimer = window.setTimeout(function(){
+					var t = {x: e.screenX, y: e.screenY};
+					navigator.userAgent.match(/linux/i)
+					&& (e.screenX < window.screenLeft + Math.round(e.clientX * window.devicePixelRatio)
+						|| (0 == window.screenLeft && e.screenY < 55 + window.screenTop + Math.round(e.clientY * window.devicePixelRatio)))
+					&& ((t.x += window.screenLeft), (t.y += window.screenTop));
+
+					chrome.runtime.sendMessage(extID, {
+					    type: "sendRightClick", sendValue: {
+					        click: {x: t.x, y: t.y, b: 2},
+					        timestamp: Date.now()
+					    }
+					})
+
+			}, 100);
 			sue.drawType=["mges","actions"];
 		}
 
@@ -635,6 +651,7 @@ var sue={
 		return
 	},
 	lineDraw:function(e,type){
+		if(sue.cons.sendRightClickTimer){window.clearTimeout(sue.cons.sendRightClickTimer);}
 		var x=e.clientX;
 		var y=e.clientY;
 		var dx=Math.abs(x-sue._lastX);
@@ -671,7 +688,7 @@ var sue={
 				dir="d"
 			}
 		}else{
-			dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");    	
+			dir=dx>dy?(x<sue._lastX?"L":"R"):(y<sue._lastY?"U":"D");
 		}
 
 		var lastDir=sue._dirArray.substr(sue._dirArray.length-1,1);
@@ -733,7 +750,7 @@ var sue={
 				polyline.style.strokeWidth=config[sue.drawType[0]].ui.line.width;
 				polyline.style.fill="none";
 				this.polyline = polyline;
-				
+
 			svgtag.appendChild(polyline);
 			svgdiv.appendChild(svgtag);
 			sue.document.appendChild(svgdiv);
@@ -837,7 +854,7 @@ var sue={
 	ui_allaction:function(confOBJ,e){
 		if(!config[sue.drawType[0]].ui.allaction.enable){return;}
 		var uidom=sue.document.querySelector("div[data-suui=uibox][data-sustyle="+config[sue.drawType[0]].ui.allaction.style+"]");
-			
+
 		var _dom=uidom.querySelector("div[data-suui=allaction]");
 		if(!_dom){
 		    _dom=document.createElement("div");
@@ -888,7 +905,7 @@ var sue={
 					+"height: "+config[sue.drawType[0]].ui.tip.width+"px;"
 					+"'>"
 			}
-			return domdir;		
+			return domdir;
 		}else{
 			return "";
 		}
@@ -966,7 +983,7 @@ var sue={
 		}else{
 			sue.sendDir(sue._dirArray,"action",e);
 		}
-		
+
 		if(sue.timeout){window.clearTimeout(sue.timeout);sue.break=false;}
 		e.preventDefault();
 		sue._dirArray="";

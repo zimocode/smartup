@@ -41,6 +41,6 @@
 		"image/*",
 		"icon.png"
 	],
-	"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","unlimitedStorage","tts"],
+	"permissions": ["tabs","<all_urls>","notifications","storage","contextMenus","unlimitedStorage","tts","nativeMessaging"],
 	"optional_permissions": ["downloads","downloads.shelf","clipboardRead","clipboardWrite","bookmarks","history","management","sessions","pageCapture","background","topSites"]
 }
